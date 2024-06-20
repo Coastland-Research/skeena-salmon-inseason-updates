@@ -3,17 +3,7 @@ project:
   output-dir: docs
 
 website:
-  repo-url: https://github.com/Coastland-Research/sfntc-skeena-sockeye-inseason-updates.git
-  repo-actions: [edit, issue]
-  sidebar:
-    style: "floating"
-    search: true
-    contents:
-      - section: "Skeena Sockeye In-Season Updates"
-        contents:
-          - skeena_sockeye_in season_updates.qmd
-      
-
+  sidebar: false
 
 format:
   html:
