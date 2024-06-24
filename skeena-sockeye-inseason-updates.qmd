@@ -1,5 +1,6 @@
 ---
 title: "Skeena Sockeye In Season Update for SFNTC"
+subtitle: "June 24, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -23,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-06-21")
-tyee.date<-"June 21"
-fence.day<-as.Date("2024-06-21")
-fence.date<-"June 21"
+tyee.day<-as.Date("2024-06-23")
+tyee.date<-"June 23"
+fence.day<-as.Date("2024-06-23")
+fence.date<-"June 23"
 ```
 
 # Summary
@@ -37,11 +38,12 @@ fence.date<-"June 21"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 18,702 sockeye are estimated to have passed by Tyee, with about 1% of the run through to date.
+-   To date 21,762 sockeye are estimated to have passed by Tyee, with about 1.5% of the run through to date on average.
 
 -   It is too early to use the run timing to predict a final 2024 return of sockeye, however it is encouraging to see sockeye coming through already.
 
--   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (both marine and demo)
+-   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (both Area C and demo).
+
 -   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs when available.
 
 -   Appendix B includes information on run-timing of specific Skeena Conservation Units/stocks.
@@ -71,7 +73,7 @@ kable(stat3,caption=paste0("Cumulative escapement, TRTC, and catch to ",tyee.dat
 
 ```
 
-```{r tyee plot setup, echo=FALSE,warning=FALSE}
+```{r tyee plot setup, echo=FALSE,warning=FALSE,message=FALSE}
 escandtrtcdaily<-data%>%select(Date,Escapement=esctyee,TRTC=dailytrtc,`Average Escapement 85-21`=`ave85-21`,"2022"=esc22)%>%
   pivot_longer(2:5,values_to="Number of Sockeye",names_to="Type")%>%
   mutate(lt=case_when(Type=="Escapement"|Type=="TRTC"~"2023",
@@ -105,13 +107,45 @@ t2<-ggplot(escandtrtccum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt
   guides(linetype="none")
 ```
 
-```{r tyee plots,fig.height=5,results='asis',echo=FALSE,warning=FALSE,fig.cap="Daily (top) and cumulative (bottom) estimated escapement and TRTC (escapement + adjusted catch) at the Tyee test fishery versus the 1985-2021 average."}
+```{r tyee plots,fig.height=5,results='asis',echo=FALSE,messsage=FALSE,warning=FALSE,fig.cap="Daily (top) and cumulative (bottom) estimated escapement and TRTC (escapement + adjusted catch) at the Tyee test fishery versus the 1985-2023 average."}
 
 ggarrange(t1,t2,align="v",ncol=1)
 
 ```
 
-```{r,include=FALSE,fig.height=8,echo=FALSE,warning=FALSE,fig.cap="Cumulative estimated daily proportion of TRTC based on 1985-2021 average."}
+```{r tyee daily boxplot with current year, fig.height=5,echo=FALSE,message=FALSE,warning=FALSE,fig.cap="Daily run through Tyee (uncorrected) from 1970-2023. 2024 run is shown in purple."}
+daily<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee daily")
+
+gg.daily<-daily%>%
+  pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye")%>%
+  mutate(Year=as.numeric(Year))
+
+ggplot(gg.daily,aes(x=Date,y=Sockeye,group=Date))+
+  geom_boxplot(fill="white",alpha=.5)+
+      geom_line(data=gg.daily%>%filter(Year==2024),aes(x=Date,y=Sockeye,group=1),color="purple",linewidth=1)+
+  ylim(0,150000)+
+  theme_bw()
+```
+
+
+```{r tyee daily last 5 years, fig.height=5,echo=FALSE,warning=FALSE,message=FALSE,fig.cap="Daily run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."}
+gg.daily2<-gg.daily%>%filter(Year>=2020)%>%
+  mutate(per=ifelse(Year==2024,"current","past"))
+
+ggplot(gg.daily2,aes(x=Date,y=Sockeye,color=factor(Year),linewidth=per,alpha=per))+
+  geom_line()+
+  scale_linewidth_manual(values=c(2,1))+
+  scale_alpha_manual(values=c(1,.5))+
+  theme_bw()+
+  guides(alpha="none",linewidth="none")+
+  labs(color="")+
+  theme(legend.position = "bottom")
+
+
+```
+
+
+```{r,include=FALSE,fig.height=8,echo=FALSE,message=FALSE,warning=FALSE,fig.cap="Cumulative estimated daily proportion of TRTC based on 1985-2021 average."}
 i<-match(tyee.day,data$Date)
 
 early<-data$early[i]
@@ -186,7 +220,7 @@ ggplot(tyeemodel,aes(x=Date,y=`Number of Sockeye`/10^6,color=Timing))+
   theme(legend.position = "top")
 ```
 
-```{}
+```         
 ```
 
 \clearpage
