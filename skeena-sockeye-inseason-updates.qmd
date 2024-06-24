@@ -205,7 +205,7 @@ kable(stat1,caption="Forecasted sockeye final TRTC based on early, average and l
 
 ```
 
-```{r tyee model figure,fig.height=4,echo=FALSE,warning=FALSE,fig.cap="Forecasted final TRTC of Skeena sockeye based on the simple scalar run-timing model. The dashed horizontal show the median p50 value of the pre-season forecast (black), and the 90% confidence intervals (grey)."}
+```{r tyee model figure,fig.height=4,echo=FALSE,warning=FALSE,fig.cap="Forecasted final TRTC of Skeena sockeye based on the simple scalar run-timing model. The dashed horizontal lines show the median p50 value of the pre-season forecast (black), and the 90% confidence intervals (grey)."}
 tyeemodel<-data%>%select(Date,Early=early,Average=average,Late=late)%>%
   pivot_longer(2:4,values_to="Number of Sockeye",names_to="Timing")
 
