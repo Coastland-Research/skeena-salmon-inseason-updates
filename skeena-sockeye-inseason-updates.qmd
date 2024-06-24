@@ -205,7 +205,7 @@ kable(stat1,caption="Forecasted sockeye final TRTC based on early, average and l
 
 ```
 
-```{r tyee model figure,fig.height=4,echo=FALSE,warning=FALSE,fig.cap="Forecasted final TRTC of Skeena sockeye based on the simple scalar run-timing model."}
+```{r tyee model figure,fig.height=4,echo=FALSE,warning=FALSE,fig.cap="Forecasted final TRTC of Skeena sockeye based on the simple scalar run-timing model. The dashed horizontal show the median p50 value of the pre-season forecast (black), and the 90% confidence intervals (grey)."}
 tyeemodel<-data%>%select(Date,Early=early,Average=average,Late=late)%>%
   pivot_longer(2:4,values_to="Number of Sockeye",names_to="Timing")
 
@@ -215,7 +215,9 @@ ggplot(tyeemodel,aes(x=Date,y=`Number of Sockeye`/10^6,color=Timing))+
   scale_color_brewer(palette="Set1")+
   theme_classic()+
   ylim(0,10)+
-  geom_hline(yintercept=1.5,linetype="dashed",alpha=.5)+
+  geom_hline(yintercept=.580,linetype="dashed",alpha=.5,color="grey50")+
+  geom_hline(yintercept=1.5,linetype="dashed",alpha=.5,color="black")+
+  geom_hline(yintercept=4,linetype="dashed",alpha=.5,color="grey50")+
   grids(linetype = "dashed")+
   theme(legend.position = "top")
 ```
