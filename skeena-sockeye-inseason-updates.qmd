@@ -107,13 +107,27 @@ t2<-ggplot(escandtrtccum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt
   guides(linetype="none")
 ```
 
-```{r tyee plots,fig.height=5,results='asis',echo=FALSE,messsage=FALSE,warning=FALSE,fig.cap="Daily (top) and cumulative (bottom) estimated escapement and TRTC (escapement + adjusted catch) at the Tyee test fishery versus the 1985-2023 average."}
+```{r}
+#| label: fig-plot
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Daily (top) and cumulative (bottom) estimated escapement and TRTC (escapement + adjusted catch) at the Tyee test fishery versus the 1985-2023 average."
+#| fig-height: 5
 
 ggarrange(t1,t2,align="v",ncol=1)
 
 ```
 
-```{r tyee daily boxplot with current year, fig.height=5,echo=FALSE,message=FALSE,warning=FALSE,fig.cap="Daily run through Tyee (uncorrected) from 1970-2023. 2024 run is shown in purple."}
+```{r}
+#| label: fig-tyee
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily run through Tyee (uncorrected) from 1970-2023. 2024 run is shown in purple."
+#| fig-height: 5
+
 daily<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee daily")
 
 gg.daily<-daily%>%
@@ -128,7 +142,14 @@ ggplot(gg.daily,aes(x=Date,y=Sockeye,group=Date))+
 ```
 
 
-```{r tyee daily last 5 years, fig.height=5,echo=FALSE,warning=FALSE,message=FALSE,fig.cap="Daily run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."}
+```{r}
+#| label: fig-tyee2
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Daily run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."
+#| fig-height: 5
+
 gg.daily2<-gg.daily%>%filter(Year>=2020)%>%
   mutate(per=ifelse(Year==2024,"current","past"))
 
@@ -145,7 +166,15 @@ ggplot(gg.daily2,aes(x=Date,y=Sockeye,color=factor(Year),linewidth=per,alpha=per
 ```
 
 
-```{r,include=FALSE,fig.height=8,echo=FALSE,message=FALSE,warning=FALSE,fig.cap="Cumulative estimated daily proportion of TRTC based on 1985-2021 average."}
+```{r}
+#| label: fig-cumu
+#| include: false
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Cumulative estimated daily proportion of TRTC based on 1985-2021 average."
+#| fig-height: 8
+
 i<-match(tyee.day,data$Date)
 
 early<-data$early[i]
@@ -191,7 +220,10 @@ ggarrange(g1,g2,align="v",ncol=1)
 
 # Tyee run-timing model
 
-```{r tyee model table,echo=FALSE,results='asis'}
+```{r}
+#| label: fig-table
+#| echo: false
+#| results: asis
 
 i<-match(tyee.day,data$Date)
 
@@ -205,7 +237,13 @@ kable(stat1,caption="Forecasted sockeye final TRTC based on early, average and l
 
 ```
 
-```{r tyee model figure,fig.height=4,echo=FALSE,warning=FALSE,fig.cap="Forecasted final TRTC of Skeena sockeye based on the simple scalar run-timing model. The dashed horizontal lines show the median p50 value of the pre-season forecast (black), and the 90% confidence intervals (grey)."}
+```{r}
+#| label: fig-fore
+#| echo: false
+#| warning: false
+#| fig-cap: "Forecasted final TRTC of Skeena sockeye based on the simple scalar run-timing model. The dashed horizontal lines show the median p50 value of the pre-season forecast (black), and the 90% confidence intervals (grey)."
+#| fig-height: 4
+
 tyeemodel<-data%>%select(Date,Early=early,Average=average,Late=late)%>%
   pivot_longer(2:4,values_to="Number of Sockeye",names_to="Timing")
 
@@ -231,13 +269,21 @@ ggplot(tyeemodel,aes(x=Date,y=`Number of Sockeye`/10^6,color=Timing))+
 
 -   Will be added when available.
 
-```{r load fence data,echo=FALSE,results='asis',include=FALSE}
+```{r}
+#| echo: false
+#| results: asis
+#| include: false
 
 fence<-read_excel("data/tyee and catch and fence in-season updates 2023.xlsx",sheet="Babine")
 fence$Date<-as.Date(fence$Date)
 ```
 
-```{r fence summary table,echo=FALSE,results='asis',include=FALSE}
+```{r}
+#| label: fig-table2
+#| echo: false
+#| results: asis
+#| include: false
+
 i<-match(fence.day,fence$Date)
 
 totalrun<-fence$cumrun[i]
@@ -249,8 +295,11 @@ kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River f
 
 ```
 
-```{r fence plots,echo=FALSE,warning=FALSE,include=FALSE}
-  
+```{r}
+#| echo: false
+#| warning: false
+#| include: false
+
 fencedaily<-fence%>%select(Date,`2023 Total Return`=totalrun,`2022 Total Return`=dailyTR.2022,`Average 2011-2021`=`avg11-21`)%>%
   pivot_longer(2:4,values_to="Number of Sockeye",names_to="Type")%>%
   mutate(lt=case_when(Type=="2022 Total Return"|Type=="2023 Total Return"~"Annual",
@@ -280,7 +329,13 @@ b2<-ggplot(fencecum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
 
 ```
 
-```{r combined fence plot,fig.height=5.5,echo=FALSE,warning=FALSE,fig.cap="Top panel: Total run to Babine fence for 2023 compared to 2022 (recent highest year) and the average from 2011-2021. Bottom panel: Cumulative estimated run to the Babine fence for 2023 and the average from 2011-2021.",include=FALSE}
+```{r}
+#| label: fig-babine
+#| echo: false
+#| warning: false
+#| fig-cap: "Top panel: Total run to Babine fence for 2023 compared to 2022 (recent highest year) and the average from 2011-2021. Bottom panel: Cumulative estimated run to the Babine fence for 2023 and the average from 2011-2021."
+#| include: false
+#| fig-height: 5.5
 
 ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
 
@@ -290,7 +345,11 @@ ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
 
 -   Will be added when available.
 
-```{r fence jacks, echo=FALSE,warning=FALSE,include=FALSE}
+```{r}
+#| echo: false
+#| warning: false
+#| include: false
+
 fencejacks<-fence%>%select(Date,jacks=dailytotaljacks,`jack90-21`)%>%
   pivot_longer(2:3,values_to="Number of Sockeye",names_to="Type")%>%
   mutate(lt=case_when(Type=="jacks"~"Annual",
@@ -318,7 +377,13 @@ j2<-ggplot(jackscum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
 
 ```
 
-```{r babine jack plots,fig.height=6,echo=FALSE,warning=FALSE,fig.cap="Daily (top) and cumulative (bottom) estimated total run of sockeye jacks in 2023 at the Babine Fence versus the 1990-2021 average.",include=FALSE}
+```{r}
+#| label: fig-cumu_bab
+#| echo: false
+#| warning: false
+#| fig-cap: "Daily (top) and cumulative (bottom) estimated total run of sockeye jacks in 2023 at the Babine Fence versus the 1990-2021 average."
+#| include: false
+#| fig-height: 6
 
 ggarrange(j1,j2,align="v",ncol=1)
 
@@ -328,7 +393,12 @@ ggarrange(j1,j2,align="v",ncol=1)
 
 -   Will be added when available.
 
-```{r,echo=FALSE,fig.height=6,fig.cap="Estimated difference in sockeye between escapement past Tyee and the Babine Fence based on 3 week migration timing, 10% non-Babine stocks, and in-river FSC and demo catch to date. The solid blue line is the escapement past Tyee, the dotted green line is the expected run at the Babine fence, the solid black line is the actual total run at the fence, and the red line is the difference between the black line and green line (fence run - expected run).",include=FALSE}
+```{r}
+#| label: fig-diff
+#| echo: false
+#| fig-cap: "Estimated difference in sockeye between escapement past Tyee and the Babine Fence based on 3 week migration timing, 10% non-Babine stocks, and in-river FSC and demo catch to date. The solid blue line is the escapement past Tyee, the dotted green line is the expected run at the Babine fence, the solid black line is the actual total run at the fence, and the red line is the difference between the black line and green line (fence run - expected run)."
+#| include: false
+#| fig-height: 6
 
 #Explanation for figure
 #This comparison aims to provide a coarse idea on the catchability at Tyee. #The red line in the figure below shows the difference between the escapement #past Tyee and the total run being counted at the Babine Fence, based on some #assumptions. These assumptions include 3 week migration timing, 10% #non-Babine stock composition and a rough estimate of in-river FSC and demo #harvest to date between Tyee and Babine. In 2023 some sockeye were missed #due to the delay from wildfire evacuations, however DFO and LBN staff #indicate that no sockeye were visible below the fence when it was evacuated, #and therefore the number of sockeye missed was probably fairly low. #Additional analysis will be required to provide an estimate of the number of #missed sockeye.
@@ -361,7 +431,10 @@ ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count))+
 
 ```
 
-```{r hcr,echo=FALSE,warning=FALSE,include=FALSE}
+```{r}
+#| echo: false
+#| warning: false
+#| include: false
 
 hcr<-data.frame(TRTC=c(0,1050000,2000000,4000000,5000000),
                 HR=c(0,0,.2,.4,.4))
@@ -433,13 +506,26 @@ p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
 
 -   Will be added when available.
 
-```{r,fig.height=6,echo=FALSE,warning=FALSE,fig.cap="Top panel: The Skeena sockeye harvest control rule based on TRTC. Bottom panel: Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model.",include=FALSE}
+```{r}
+#| label: fig-skeena
+#| echo: false
+#| warning: false
+#| fig-cap: "Top panel: The Skeena sockeye harvest control rule based on TRTC. Bottom panel: Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."
+#| include: false
+#| fig-height: 6
 
 ggarrange(p1,p2,ncol=1,align="v")
 
 ```
 
-```{r,fig.height=6,echo=FALSE,warning=FALSE,fig.cap="Top panel: Area 4 gillnet and seine sockeye catch. Bottom panel: CPUE of gillnet and seine based on daily catch/daily effort. Note that some values are preliminary.",include=FALSE}
+```{r}
+#| label: fig-gill
+#| echo: false
+#| warning: false
+#| fig-cap: "Top panel: Area 4 gillnet and seine sockeye catch. Bottom panel: CPUE of gillnet and seine based on daily catch/daily effort. Note that some values are preliminary."
+#| include: false
+#| fig-height: 6
+
 ggarrange(p3,p4,ncol=1,align="v")
 ```
 
@@ -447,7 +533,13 @@ ggarrange(p3,p4,ncol=1,align="v")
 
 -   Will be added when available.
 
-```{r,fig.height=4,echo=FALSE,warning=FALSE,fig.cap="Catches of sockeye in First Nations Area 4 demo fisheries.",include=FALSE}
+```{r}
+#| label: fig-demo
+#| echo: false
+#| warning: false
+#| fig-cap: "Catches of sockeye in First Nations Area 4 demo fisheries."
+#| include: false
+#| fig-height: 4
 
 demo.data<-read_excel("data/tyee and catch and fence in-season updates 2023.xlsx",sheet="demo catches")
 demo.data$date<-as.Date(demo.data$date)
@@ -470,15 +562,21 @@ ggplot(demo.data,aes(x=date,y=pieces,fill=nation))+
   xlim(c(as.Date("2023-07-01"),as.Date("2023-09-01")))
 
 
-
-
 ```
 
 # Appendix A-Catch of pink, chum, coho, chinook and steelhead
 
 -   Will be added when available.
 
-```{r other species catch,fig.height=7,echo=FALSE,message=FALSE,warning=FALSE,fig.cap="Number of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks).",include=FALSE}
+```{r}
+#| label: fig-other
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Number of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks)."
+#| include: false
+#| fig-height: 7
+
 othercatch<-read_excel("data/tyee and catch and fence in-season updates 2023.xlsx",sheet="gncatch")
 
 #oc2<-othercatch%>%pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
@@ -531,7 +629,15 @@ ggplot(oc2,aes(x=Date,y=Catch,color=gear))+
 
 ```
 
-```{r other species gillnet cpue,fig.height=7,echo=FALSE,message=FALSE,warning=FALSE,fig.cap="CPUE of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks) by gillnets.",include=FALSE}
+```{r}
+#| label: fig-other_cpue
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "CPUE of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks) by gillnets."
+#| include: false
+#| fig-height: 7
+
 gncpue<-oc2%>%filter(gear=="gillnet")
 
 ggplot(gncpue,aes(x=Date,y=cpue))+
@@ -547,7 +653,16 @@ ggplot(gncpue,aes(x=Date,y=cpue))+
 \FloatBarrier
 \newpage
 ```
-```{r other species seine cpue,fig.height=7,echo=FALSE,message=FALSE,warning=FALSE,fig.cap="CPUE of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks) by seines.",include=FALSE}
+
+```{r}
+#| label: fig-seine
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "CPUE of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks) by seines."
+#| include: false
+#| fig-height: 7
+
 sncpue<-oc2%>%filter(gear=="seine")
 
 ggplot(sncpue,aes(x=Date,y=cpue))+
@@ -563,7 +678,14 @@ ggplot(sncpue,aes(x=Date,y=cpue))+
 \FloatBarrier
 \newpage
 ```
-```{r other species total catch by gear,fig.height=6,echo=FALSE,message=FALSE,warning=FALSE,fig.cap="Total catch of other species caught and kept or released (coho, pinks, chinook, chum and steelhead) by gillnets and seines in the marine Area 4 commercial fishery.",include=FALSE}
+```{r}
+#| label: fig-area4
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Total catch of other species caught and kept or released (coho, pinks, chinook, chum and steelhead) by gillnets and seines in the marine Area 4 commercial fishery."
+#| include: false
+#| fig-height: 6
 
 oc.total<-oc2%>%group_by(gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
 
@@ -593,7 +715,11 @@ Notes:
 
 -   Explorations on the differences between the average and ANNUAL run-timing standard deviations are underway for stocks with appropriate sample size.
 
-```{r,echo=FALSE,include=FALSE,warning=FALSE,message=FALSE}
+```{r}
+#| echo: false
+#| include: false
+#| warning: false
+#| message: false
 
 rt<-read_excel("data/rt karl.xlsx",sheet="Sheet1")
 
@@ -618,7 +744,13 @@ rtm2<-rtm%>%filter(dev>=152&dev<=258)%>%group_by(stock)%>%mutate(u=mean(dev))
 
 ```
 
-```{r,echo=FALSE,fig.cap="Boxplots of stock specific run-timing through Tyee. Based on 2000-2014 data provided by karl English from updated NBRR work. The filled area of the box represents 50% of the run." ,fig.height=8,warning=FALSE,message=FALSE}
+```{r}
+#| label: fig-boxp
+#| echo: false
+#| fig-cap: "Boxplots of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work. The filled area of the box represents 50% of the run."
+#| warning: false
+#| message: false
+#| fig-height: 8
 
 ggplot(rtm2,aes(x=dev,y=reorder(stock,dev,FUN=median),fill=stock))+
   geom_boxplot()+
@@ -631,7 +763,14 @@ ggplot(rtm2,aes(x=dev,y=reorder(stock,dev,FUN=median),fill=stock))+
 
 ```
 
-```{r,echo=FALSE,fig.cap="Histograms of stock specific run-timing through Tyee. Based on 2000-2014 data provided by karl English from updated NBRR work.",fig.height=8,warning=FALSE,message=FALSE}
+```{r}
+#| label: fig-hist
+#| echo: false
+#| fig-cap: "Histograms of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work."
+#| warning: false
+#| message: false
+#| fig-height: 8
+
 ggplot(rtm2,aes(x=dev))+
   geom_histogram(aes(fill=stock),binwidth = 5,alpha=.3)+
   facet_grid(reorder(stock,dev,FUN=median)~.,scales="free_y",switch="y")+
@@ -650,7 +789,14 @@ ggplot(rtm2,aes(x=dev))+
   
 ```
 
-```{r,echo=FALSE,fig.cap="Density plot of stock specific run-timing through Tyee. Based on 2000-2014 data provided by karl English from updated NBRR work.",fig.height=8,warning=FALSE,message=FALSE}
+```{r}
+#| label: fig-dens
+#| echo: false
+#| fig-cap: "Density plot of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work."
+#| warning: false
+#| message: false
+#| fig-height: 8
+
 ggplot(rtm2,aes(x=dev),color=stock)+
   geom_density(aes(fill=stock),alpha=.3)+
   #scale_fill_brewer(palette="Set1")+
@@ -674,7 +820,9 @@ ggplot(rtm2,aes(x=dev),color=stock)+
 #ggsave("Tyee stock run timing.png",dpi=600,height=8,width=7)
 ```
 
-```{r babine run timing stocks,include=FALSE}
+```{r}
+#| include: false
+
 babrt<-rtm%>%filter(stock%in%c("Babine W Early","Babine W Middle","Babine W Late","Babine Pinkut","Babine Fulton"))%>%
   mutate(fencert=dev+21)
 
