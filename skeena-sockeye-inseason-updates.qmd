@@ -1,6 +1,6 @@
 ---
 title: "Skeena Sockeye In Season Update for SFNTC"
-subtitle: "June 26, 2024"
+subtitle: "June 28, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-06-25")
-tyee.date<-"June 25"
-fence.day<-as.Date("2024-06-25")
-fence.date<-"June 25"
+tyee.day<-as.Date("2024-06-27")
+tyee.date<-"June 27"
+fence.day<-as.Date("2024-06-27")
+fence.date<-"June 27"
 ```
 
 # Summary
@@ -38,9 +38,9 @@ fence.date<-"June 25"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 23,813 sockeye are estimated to have passed by Tyee, with about 2.0% of the run through to date on average (0.6% if 1-week late, 5.2% if one week early).
+-   To date 25,843 sockeye are estimated to have passed by Tyee, with about 2.7% of the run through to date on average (0.9% if 1-week late, 6.8% if one week early).
 
--   It is too early to use the run timing to predict a final 2024 return of sockeye, however it is encouraging to see sockeye coming through already, however there was no catch of any species on June 25.
+-   It is too early to use the run timing to predict a final 2024 return of sockeye, however the 2024 return despite an early bump is tracking similar to 2020 and 2021, and well below average (Figures 1-3).
 
 -   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (both Area C and demo).
 
@@ -74,30 +74,33 @@ kable(stat3,caption=paste0("Cumulative escapement, TRTC, and catch to ",tyee.dat
 ```
 
 ```{r tyee plot setup, echo=FALSE,warning=FALSE,message=FALSE}
-escandtrtcdaily<-data%>%select(Date,Escapement=esctyee,TRTC=dailytrtc,`Average Escapement 85-21`=`ave85-21`,"2022"=esc22)%>%
+escandtrtcdaily<-data%>%select(Date,Escapement=esctyee,TRTC=`dailytrtc`,`Avg. Daily`=`average70-23`,"2023"=esc23)%>%
   pivot_longer(2:5,values_to="Number of Sockeye",names_to="Type")%>%
-  mutate(lt=case_when(Type=="Escapement"|Type=="TRTC"~"2023",
-                      Type=="Average Escapement 85-21"~"Average",
-                      Type=="2022"~"2023"))
+  mutate(lt=case_when(Type=="Escapement"|Type=="TRTC"~"2024",
+                      Type=="Avg. Daily"~"Average",
+                      Type=="2023"~"2023"))
 
 t1<-ggplot(escandtrtcdaily,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt,size=Type,alpha=Type))+
   geom_line()+
   scale_size_manual(values=c(1,1,1,1.1))+
   scale_alpha_manual(values=c(.5,1,1,1))+
   scale_color_manual(values=c("grey50","black","deepskyblue1","purple"))+
+  scale_linetype_manual(values=c("solid","solid","dashed"))+
   theme_classic()+
   grids(linetype = "dashed")+
   theme(legend.title = element_blank(),legend.position = "top")+
   guides(linetype="none")
 
-escandtrtccum<-data%>%select(Date,Escapement=cumtyee,TRTC=cumtrtc,`Average Escapement 85-21`=`cum85-21`,"2022"=cum22)%>%
+
+escandtrtccum<-data%>%select(Date,Escapement=cumtyee,TRTC=cumtrtc,`Avg. Cumulative`=`cum70-23`,"2023"=cum23)%>%
   pivot_longer(2:5,values_to="Number of Sockeye",names_to="Type")%>%
-  mutate(lt=case_when(Type=="Escapement"|Type=="TRTC"~"2023",
-                      Type=="Average Escapement 85-21"~"Average",
-                      Type=="2022"~"2023"))
+  mutate(lt=case_when(Type=="Escapement"|Type=="TRTC"~"2024",
+                      Type=="Avg. Cumulative"~"Average",
+                      Type=="2023"~"2023"))
 
 t2<-ggplot(escandtrtccum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt,alpha=Type))+
   geom_line(linewidth=1.1)+
+  scale_linetype_manual(values=c("solid","solid","dashed"))+
   scale_size_manual(values=c(1,1,1,1.1))+
   scale_alpha_manual(values=c(.5,1,1,1))+
   scale_color_manual(values=c("grey50","black","deepskyblue1","purple"))+
@@ -114,7 +117,7 @@ t2<-ggplot(escandtrtccum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt
 #| message: false
 #| warning: false
 #| fig-cap: "Daily (top) and cumulative (bottom) estimated escapement and TRTC (escapement + adjusted catch) at the Tyee test fishery versus the 1985-2023 average."
-#| fig-height: 5
+#| fig-height: 8
 
 ggarrange(t1,t2,align="v",ncol=1)
 
@@ -181,17 +184,19 @@ early<-data$early[i]
 average<-data$average[i]
 late<-data$late[i]
 
-pcum<-data%>%select(Date,cumtrtc,"Average (85-21)"=`pcum85-21`)%>%
+names(data)
+
+pcum<-datapcum<-data%>%select(Date,cumtrtc,"Average (70-23)"=`pcum70-23`)%>%
   mutate(`1.5M`=cumtrtc/1500000,
          `1.75M`=cumtrtc/1750000,
          `2M`=cumtrtc/2000000,
          `2.5M`=cumtrtc/2500000,
          `3M`=cumtrtc/3000000,
-         "Early (85-21)"=lead(`Average (85-21)`,7),
-         "Late (85-21)"=lag(`Average (85-21)`,7))%>%
+         "Early (70-23)"=lead(`Average (70-23)`,7),
+         "Late (70-23)"=lag(`Average (70-23)`,7))%>%
   select(-cumtrtc)%>%
   pivot_longer(2:9,names_to="Type",values_to="cp")%>%
-  mutate(Type=factor(Type,levels=c("Early (85-21)","Average (85-21)", "Late (85-21)"
+  mutate(Type=factor(Type,levels=c("Early (85-21)","Average (70-23)", "Late (85-21)"
                                    ,"1.5M","1.75M","2M","2.5M","3M")))
 
 cols<-RColorBrewer::brewer.pal(5, "Set1")
@@ -202,7 +207,7 @@ g1<-ggplot(pcum,aes(x=Date,y=cp,color=Type,linetype=Type))+
   scale_linetype_manual(values=c("dashed","dashed","dashed","solid","solid","solid","solid","solid"))+
   theme_bw()+
   labs(y="Cumulative Proportion")+
-  theme(legend.title=element_blank(),legend.position=c(.85,.35),legend.background = element_blank())
+  theme(legend.title=element_blank(),legend.position.inside=c(.85,.35),legend.background = element_blank())
 
 g2<-ggplot(pcum,aes(x=Date,y=cp,color=Type,linetype=Type))+
   geom_line(size=1)+
