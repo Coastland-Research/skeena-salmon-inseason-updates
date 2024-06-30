@@ -1,6 +1,6 @@
 ---
 title: "Skeena Sockeye In Season Update for SFNTC"
-subtitle: "June 28, 2024"
+subtitle: "June 30, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-06-27")
-tyee.date<-"June 27"
-fence.day<-as.Date("2024-06-27")
-fence.date<-"June 27"
+tyee.day<-as.Date("2024-06-29")
+tyee.date<-"June 29"
+fence.day<-as.Date("2024-06-29")
+fence.date<-"June 29"
 ```
 
 # Summary
@@ -38,11 +38,11 @@ fence.date<-"June 27"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 25,843 sockeye are estimated to have passed by Tyee, with about 2.7% of the run through to date on average (0.9% if 1-week late, 6.8% if one week early).
+-   To date 33,009 sockeye are estimated to have passed by Tyee, with about 3.5% of the run through to date on average (1.3% if 1-week late, 8.7% if one week early).
 
 -   It is too early to use the run timing to predict a final 2024 return of sockeye, however the 2024 return despite an early bump is tracking similar to 2020 and 2021, and well below average (Figures 1-3).
 
--   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (both Area C and demo).
+-   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (Area C gillnets, Area A seines, and First Nations demos).
 
 -   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs when available.
 
@@ -119,12 +119,12 @@ t2<-ggplot(escandtrtccum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt
 #| fig-cap: "Daily (top) and cumulative (bottom) estimated escapement and TRTC (escapement + adjusted catch) at the Tyee test fishery versus the 1985-2023 average."
 #| fig-height: 8
 
-ggarrange(t1,t2,align="v",ncol=1)
+ggarrange(t1,t2,align="v",ncol=1,common.legend = TRUE)
 
 ```
 
-```{r}
-#| label: fig-tyee
+```{r daily boxplot}
+#| label: fig-daily-boxplot
 #| echo: false
 #| message: false
 #| warning: false
@@ -142,6 +142,38 @@ ggplot(gg.daily,aes(x=Date,y=Sockeye,group=Date))+
       geom_line(data=gg.daily%>%filter(Year==2024),aes(x=Date,y=Sockeye,group=1),color="purple",linewidth=1)+
   ylim(0,150000)+
   theme_bw()
+```
+
+```{r daily cumulative boxplot}
+#| label: fig-dailt-cumulative-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily cumulative proportion of the sockeye run through Tyee (uncorrected) from 1970-2023. The 2024 run estiamtes are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
+#| fig-height: 5
+
+dailycum<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee pcum")
+
+gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
+  pivot_longer("1970":"2023",names_to="Year",values_to="Sockeye")%>%
+  mutate(Year=as.numeric(Year))
+
+data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
+  mutate(`1M`=cumtrtc/1000000,
+         `1.5M`=cumtrtc/1500000,
+         `2M`=cumtrtc/2000000)%>%
+  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")
+
+ggplot(gg.daily.pcum,aes(x=Date,y=Sockeye,group=Date))+
+  geom_boxplot(fill="white",color="grey70",alpha=.5)+
+    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=1),linewidth=1,lwd=2)+
+    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",lwd=1,linetype="dashed")+
+  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),lwd=1,linetype="dashed")+
+  #ylim(0,150000)+
+    theme_bw()+
+  ylim(0,.6)+
+  labs(color="Estimate",y="Cumulative Proportion of TRTC")
+
 ```
 
 
@@ -186,7 +218,7 @@ late<-data$late[i]
 
 names(data)
 
-pcum<-datapcum<-data%>%select(Date,cumtrtc,"Average (70-23)"=`pcum70-23`)%>%
+pcum<-data%>%select(Date,cumtrtc,"Average (70-23)"=`pcum70-23`)%>%
   mutate(`1.5M`=cumtrtc/1500000,
          `1.75M`=cumtrtc/1750000,
          `2M`=cumtrtc/2000000,
@@ -223,7 +255,10 @@ ggarrange(g1,g2,align="v",ncol=1)
 
 ```
 
-# Tyee run-timing model
+# In-Season TRTC Estimates
+
+This section shows the estimated final TRTC as predicted by the simple run-timing proportion Excel based spreadsheet tool. Accuracy of this model increases as the season progresses since run-timing uncertainty is large at the start of the year, and small at the end of the year. Catchability (how many sockeye each sockeye caught in the Tyee test fishery represents), the other component of the uncertainty in this model, is unknown until after the final TRTC accounting has been completed in the post-season. Tyee estimates typically have a range of +/- 20% from the true TRTC, with some years being greater than 20% error, and many years being less than 20% error. The 2024 catchability 
+is based on an average of the last 3 years.
 
 ```{r}
 #| label: fig-table
@@ -238,7 +273,7 @@ late<-round(data$late[i],0)
 
 stat1<-data.frame(`Run-Timing`=c("Early","Average","Late"),`Forecasted Final Run Size`=c(early,average,late))
 
-kable(stat1,caption="Forecasted sockeye final TRTC based on early, average and late run-timing.")
+kable(stat1,caption="Forecasted sockeye final TRTC based on 1 week early, average and 1 week late run-timing.")
 
 ```
 
