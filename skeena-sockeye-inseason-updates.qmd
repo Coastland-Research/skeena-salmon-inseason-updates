@@ -1,6 +1,6 @@
 ---
 title: "Skeena Sockeye In Season Update for SFNTC"
-subtitle: "July 2, 2024"
+subtitle: "July 3, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-01")
-tyee.date<-"July 1"
-fence.day<-as.Date("2024-07-01")
-fence.date<-"July 1"
+tyee.day<-as.Date("2024-07-02")
+tyee.date<-"July 2"
+fence.day<-as.Date("2024-07-02")
+fence.date<-"July 2"
 ```
 
 # Summary
@@ -38,9 +38,9 @@ fence.date<-"July 1"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 49,071 sockeye are estimated to have passed by Tyee, with about 4.6% of the run through to date on average (1.7% if 1-week late, 11.3% if one week early).
+-   To date 69,236 sockeye are estimated to have passed by Tyee, with about 5.2% of the run through to date on average (2.0% if 1-week late, 12.7% if one week early).
 
--   It is still too early to use the run timing to predict a final 2024 return of sockeye, however the 2024 return is tracking similar to 2021, below average, but with a bump up to larger daily runs in over the long weekend (Figures 1-4).
+-   It is still too early to use the run timing to predict a final 2024 return of sockeye, however the 2024 return is tracking similar to 2021, below average, but with a bump up to larger daily runs over the long weekend and yesterday (Figures 1-4).
 
 -   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (Area C gillnets, Area A seines, and First Nations demos).
 
@@ -540,6 +540,17 @@ p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
   labs(y="Sockeye CPUE")+
   expand_limits(y=0)
 
+```
+
+# Kitwanga Fence
+
+-   Will be added when available.
+
+```{r}
+#| label: kitwanga
+#| echo: false
+#| warning: false
+#| include: false
 ```
 
 # Area 4 Commercial Marine Catch
