@@ -1,6 +1,6 @@
 ---
 title: "Skeena Sockeye In Season Update for SFNTC"
-subtitle: "July 3, 2024"
+subtitle: "July 4, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-02")
-tyee.date<-"July 2"
-fence.day<-as.Date("2024-07-02")
-fence.date<-"July 2"
+tyee.day<-as.Date("2024-07-03")
+tyee.date<-"July 3"
+fence.day<-as.Date("2024-07-03")
+fence.date<-"July 3"
 ```
 
 # Summary
