@@ -1,5 +1,5 @@
 ---
-title: "Skeena Sockeye In Season Update for SFNTC"
+title: "Skeena Salmon In-Season Update for SFNTC"
 subtitle: "July 5, 2024"
 format: html
 editor: visual
