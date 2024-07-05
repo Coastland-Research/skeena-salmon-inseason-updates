@@ -38,9 +38,9 @@ fence.date<-"July 3"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 69,236 sockeye are estimated to have passed by Tyee, with about 5.2% of the run through to date on average (2.0% if 1-week late, 12.7% if one week early).
+-   To date 86,494 sockeye are estimated to have passed by Tyee, with about 5.9% of the run through to date on average (2.5% if 1-week late, 14.4% if one week early).
 
--   It is still too early to use the run timing to predict a final 2024 return of sockeye, however the 2024 return is tracking similar to 2021, below average, but with a bump up to larger daily runs over the long weekend and yesterday (Figures 1-4).
+-   It is still too early to use the run timing to predict a final 2024 return of sockeye, however the 2024 return is tracking similar to 2021, below average, but with a bump up to larger daily runs over the long weekend and over the last couple of days (Figures 1-4).
 
 -   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (Area C gillnets, Area A seines, and First Nations demos).
 
@@ -49,6 +49,10 @@ fence.date<-"July 3"
 -   Appendix B includes information on run-timing of specific Skeena Conservation Units/stocks.
 
 # Tyee Escapement and TRTC
+
+The section below shows various summaries of the sockeye run through Tyee to date, often in comparison with historical data. Data is uploaded from the DFO Tyee test fishery website (index and expanded estimates) almost daily.
+
+The DFO Tyee test fishery website can be found here: [Tyee test fishery website](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/skeenatyee-eng.html)
 
 ```{r tyee table,echo=FALSE,results='asis'}
 i<-match(tyee.day,data$Date)
@@ -149,7 +153,7 @@ ggplot(gg.daily,aes(x=Date,y=Sockeye,group=Date))+
 #| echo: false
 #| message: false
 #| warning: false
-#| fig-cap: "Daily cumulative proportion of the sockeye run through Tyee (uncorrected) from 1970-2023. The 2024 run estiamtes are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
+#| fig-cap: "Daily cumulative proportion of the sockeye run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
 dailycum<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee pcum")
@@ -172,10 +176,10 @@ ggplot(gg.daily.pcum,aes(x=Date,y=Sockeye,group=Date))+
   #ylim(0,150000)+
     theme_bw()+
   ylim(0,.6)+
-  labs(color="Estimate",y="Cumulative Proportion of TRTC")
+  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+  theme(legend.position = "bottom")
 
 ```
-
 
 ```{r}
 #| label: fig-tyee2
@@ -199,7 +203,6 @@ ggplot(gg.daily2,aes(x=Date,y=Sockeye,color=factor(Year),linewidth=per,alpha=per
 
 
 ```
-
 
 ```{r}
 #| label: fig-cumu
@@ -257,8 +260,7 @@ ggarrange(g1,g2,align="v",ncol=1)
 
 # In-Season TRTC Estimates
 
-This section shows the estimated final TRTC as predicted by the simple run-timing proportion Excel based spreadsheet tool. Accuracy of this model increases as the season progresses since run-timing uncertainty is large at the start of the year, and small at the end of the year. Catchability (how many sockeye each sockeye caught in the Tyee test fishery represents), the other component of the uncertainty in this model, is unknown until after the final TRTC accounting has been completed in the post-season. Tyee estimates typically have a range of +/- 20% from the true TRTC, with some years being greater than 20% error, and many years being less than 20% error. The 2024 catchability 
-is based on an average of the last 3 years.
+This section shows the estimated final TRTC as predicted by the simple run-timing proportion Excel based spreadsheet tool. Accuracy of this model increases as the season progresses since run-timing uncertainty is large at the start of the year, and small at the end of the year. Catchability (how many sockeye each sockeye caught in the Tyee test fishery represents), the other component of the uncertainty in this model, is unknown until after the final TRTC accounting has been completed in the post-season. Tyee estimates typically have a range of +/- 20% from the true TRTC, with some years being greater than 20% error, and many years being less than 20% error. The 2024 catchability is based on an average of the last 3 years.
 
 ```{r}
 #| label: fig-table
@@ -704,7 +706,6 @@ ggplot(gncpue,aes(x=Date,y=cpue))+
 \FloatBarrier
 \newpage
 ```
-
 ```{r}
 #| label: fig-seine
 #| echo: false
