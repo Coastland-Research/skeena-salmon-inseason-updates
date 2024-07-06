@@ -244,7 +244,7 @@ g1<-ggplot(pcum,aes(x=Date,y=cp,color=Type,linetype=Type))+
   scale_linetype_manual(values=c("dashed","dashed","dashed","solid","solid","solid","solid","solid"))+
   theme_bw()+
   labs(y="Cumulative Proportion")+
-  theme(legend.title=element_blank(),legend.position.inside=c(.85,.35),legend.background = element_blank())
+  theme(legend.title=element_blank(),legend.background = element_blank())
 
 g2<-ggplot(pcum,aes(x=Date,y=cp,color=Type,linetype=Type))+
   geom_line(size=1)+
