@@ -42,6 +42,8 @@ fence.date<-"July 4"
 
 -   It is still too early to use the run timing to predict a final 2024 return of sockeye, however the 2024 return is tracking similar to 2021, below average, but with a bump up to larger daily runs over the long weekend and over the last couple of days (Figures 1-4).
 
+-   We are currently at large tides, moving towards smaller tides which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
+
 -   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (Area C gillnets, Area A seines, and First Nations demos).
 
 -   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs when available.
@@ -259,6 +261,21 @@ g2<-ggplot(pcum,aes(x=Date,y=cp,color=Type,linetype=Type))+
 ggarrange(g1,g2,align="v",ncol=1)
 
 ```
+
+# Tide information at Port Edward {#tide-information-at-port-edward}
+
+Tides influence the movement of sockeye and other salmon migrating into the Skeena. The following image shows the tides at Port Edward for a period of \~ 1 week.
+
+<figure>
+
+<img src="/images/tides1.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+
+<figcaption>Tides at Port Edward</figcaption>
+
+</figure>
+
+Tide data from: 
+<a href="https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest" target="_blank">https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest</a>
 
 # In-Season TRTC Estimates
 
