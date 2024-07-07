@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update for SFNTC"
-subtitle: "July 5, 2024"
+subtitle: "July 7, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-04")
-tyee.date<-"July 4"
-fence.day<-as.Date("2024-07-04")
-fence.date<-"July 4"
+tyee.day<-as.Date("2024-07-06")
+tyee.date<-"July 6"
+fence.day<-as.Date("2024-07-06")
+fence.date<-"July 6"
 ```
 
 # Summary
@@ -38,19 +38,20 @@ fence.date<-"July 4"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 99,180 sockeye are estimated to have passed by Tyee, with about 6.8% of the run through to date on average (2.7% if 1-week late, 16.1% if one week early).
+-   To date 142,759 sockeye are estimated to have passed by Tyee, with about 8.7% of the run through to date on average (3.5% if 1-week late, 19.9% if one week early). Sockeye escapement has picked up over the last week and is now tracking above the median daily run through (Figures 1-4).
 
--   It is still too early to use the run timing to predict a final 2024 return of sockeye, however the 2024 return is tracking similar to 2021, below average, but with a bump up to larger daily runs over the long weekend and over the last couple of days (Figures 1-4).
+-   We are getting closer to the mid-point of the run, but at < 10% on average timing, it is still very early to make predictions on the final TRTC, however the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. On average, the run size prediction is 1.6M on average run-timing (Figure 5).
 
 -   We are currently at large tides, moving towards smaller tides which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
 
--   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (Area C gillnets, Area A seines, and First Nations demos).
+-   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (Area C gillnets, Area A seines, and First Nations demos). According to DFO, there are no commercial fisheries currently being planned (e.g. no opening dates yet).
 
 -   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs when available.
 
 -   Appendix B includes information on run-timing of specific Skeena Conservation Units/stocks.
 
-# Tyee Escapement and TRTC
+# Sockeye
+## Tyee Escapement and TRTC
 
 The section below shows various summaries of the sockeye run through Tyee to date, often in comparison with historical data. Data is uploaded from the DFO Tyee test fishery website (index and expanded estimates) almost daily.
 
@@ -262,7 +263,7 @@ ggarrange(g1,g2,align="v",ncol=1)
 
 ```
 
-# Tide information at Port Edward {#tide-information-at-port-edward}
+## Tide information at Port Edward {#tide-information-at-port-edward}
 
 Tides influence the movement of sockeye and other salmon migrating into the Skeena. The following image shows the tides at Port Edward for a period of \~ 1 week.
 
@@ -277,7 +278,7 @@ Tides influence the movement of sockeye and other salmon migrating into the Skee
 Tide data from: 
 <a href="https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest" target="_blank">https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest</a>
 
-# In-Season TRTC Estimates
+## In-Season TRTC Estimates
 
 This section shows the estimated final TRTC as predicted by the simple run-timing proportion Excel based spreadsheet tool. Accuracy of this model increases as the season progresses since run-timing uncertainty is large at the start of the year, and small at the end of the year. Catchability (how many sockeye each sockeye caught in the Tyee test fishery represents), the other component of the uncertainty in this model, is unknown until after the final TRTC accounting has been completed in the post-season. Tyee estimates typically have a range of +/- 20% from the true TRTC, with some years being greater than 20% error, and many years being less than 20% error. The 2024 catchability is based on an average of the last 3 years.
 
@@ -326,7 +327,7 @@ ggplot(tyeemodel,aes(x=Date,y=`Number of Sockeye`/10^6,color=Timing))+
 
 \clearpage
 
-# Babine Fence
+## Babine Fence
 
 -   Will be added when available.
 
@@ -402,7 +403,7 @@ ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
 
 ```
 
-# Babine Sockeye Jacks
+## Babine Sockeye Jacks
 
 -   Will be added when available.
 
@@ -450,7 +451,7 @@ ggarrange(j1,j2,align="v",ncol=1)
 
 ```
 
-# Babine comparison with Tyee
+## Babine comparison with Tyee
 
 -   Will be added when available.
 
@@ -563,9 +564,13 @@ p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
 
 ```
 
-# Kitwanga Fence
+## Kitwanga Sockeye
 
--   Will be added when available.
+-   The Kitwanga fence was installed and will be fish tight and counting for July 10.
+
+-   1 sockeye has been observed at the smolt fence already.
+
+-   More data will be added as it becomes available.
 
 ```{r}
 #| label: kitwanga
@@ -574,7 +579,17 @@ p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
 #| include: false
 ```
 
-# Area 4 Commercial Marine Catch
+# Chinook Salmon
+
+# Chum Salmon
+
+# Pink Salmon
+
+# Coho Salmon
+
+# Catch
+
+## Area 4 Commercial Marine Catch
 
 -   Will be added when available.
 
@@ -601,7 +616,7 @@ ggarrange(p1,p2,ncol=1,align="v")
 ggarrange(p3,p4,ncol=1,align="v")
 ```
 
-# First Nations Demo Catch
+## First Nations Demo Catch
 
 -   Will be added when available.
 
