@@ -40,7 +40,7 @@ fence.date<-"July 6"
 
 -   To date 142,759 sockeye are estimated to have passed by Tyee, with about 8.7% of the run through to date on average (3.5% if 1-week late, 19.9% if one week early). Sockeye escapement has picked up over the last week and is now tracking above the median daily run through (Figures 1-4).
 
--   We are getting closer to the mid-point of the run, but at < 10% on average timing, it is still very early to make predictions on the final TRTC, however the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. On average, the run size prediction is 1.6M on average run-timing (Figure 5).
+-   We are getting closer to the mid-point of the run, but at < 10% on average timing, it is still very early to make predictions on the final TRTC, however the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 1.6M on average run-timing (Figure 5).
 
 -   We are currently at large tides, moving towards smaller tides which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
 
