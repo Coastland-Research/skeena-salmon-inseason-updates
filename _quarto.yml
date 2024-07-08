@@ -6,6 +6,10 @@ website:
   sidebar:
     style: "docked"
     search: true
+    contents: 
+      - text: "Skeena Salmon In-Season Update for SFNTC"
+        href: skeena-salmon-inseason-updates.qmd
+      
   
   
 repo-url: https://github.com/elizabeth-hirsch/skeena-sockeye-inseason-updates.git
