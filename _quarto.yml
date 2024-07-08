@@ -3,7 +3,9 @@ project:
   output-dir: docs
 
 website:
-  sidebar: true
+  sidebar:
+    style: "docked"
+    search: true
   
   
 repo-url: https://github.com/elizabeth-hirsch/skeena-sockeye-inseason-updates.git
