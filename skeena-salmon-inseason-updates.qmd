@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update for SFNTC"
-subtitle: "July 7, 2024"
+subtitle: "July 8, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-06")
-tyee.date<-"July 6"
-fence.day<-as.Date("2024-07-06")
-fence.date<-"July 6"
+tyee.day<-as.Date("2024-07-07")
+tyee.date<-"July 7"
+fence.day<-as.Date("2024-07-07")
+fence.date<-"July 7"
 ```
 
 # Summary
@@ -38,11 +38,11 @@ fence.date<-"July 6"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 142,759 sockeye are estimated to have passed by Tyee, with about 8.7% of the run through to date on average (3.5% if 1-week late, 19.9% if one week early). Sockeye escapement has picked up over the last week and is now tracking above the median daily run through (Figures 1-4).
+-   To date 191,955 sockeye are estimated to have passed by Tyee, with about 9.9% of the run through to date on average (4.0% if 1-week late, 22% if one week early). Sockeye escapement has picked up over the last week and is now tracking well above the median daily run through (Figures 1-4).
 
--   We are getting closer to the mid-point of the run, but at \< 10% on average timing, it is still very early to make predictions on the final TRTC, however the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 1.6M on average run-timing (Figure 5).
+-   We are getting closer to the mid-point of the run, but at \< 10% on average timing, it is still very early to make predictions on the final TRTC, however the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 1.9M on average run-timing (Figure 5).
 
--   We are currently at large tides, moving towards smaller tides which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
+-   We are currently moving towards smaller tides which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
 
 -   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (Area C gillnets, Area A seines, and First Nations demos). According to DFO, there are no commercial fisheries currently being planned (e.g. no opening dates yet).
 
