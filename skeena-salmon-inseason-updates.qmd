@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update for SFNTC"
-subtitle: "July 8, 2024"
+subtitle: "July 9, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-07")
-tyee.date<-"July 7"
-fence.day<-as.Date("2024-07-07")
-fence.date<-"July 7"
+tyee.day<-as.Date("2024-07-08")
+tyee.date<-"July 8"
+fence.day<-as.Date("2024-07-08")
+fence.date<-"July 8"
 ```
 
 # Summary
@@ -38,9 +38,9 @@ fence.date<-"July 7"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 191,955 sockeye are estimated to have passed by Tyee, with about 9.9% of the run through to date on average (4.0% if 1-week late, 22% if one week early). Sockeye escapement has picked up over the last week and is now tracking well above the median daily run through (Figures 1-4).
+-   To date 217,964 sockeye are estimated to have passed by Tyee, with about 11.3% of the run through to date on average (4.6% if 1-week late, 24.2% if one week early). Sockeye escapement has picked up over the last week and is now tracking well above the median daily run (Figures 1-5).
 
--   We are getting closer to the mid-point of the run, but at \< 10% on average timing, it is still very early to make predictions on the final TRTC, however the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 1.9M on average run-timing (Figure 5).
+-   We are getting closer to the mid-point of the run, but at just over 10% on average timing, it is still very early to make predictions on the final TRTC, however, the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 1.9M on average run-timing (Figure 6).
 
 -   We are currently moving towards smaller tides which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
 
@@ -187,8 +187,12 @@ ggplot(gg.daily.pcum,aes(x=Date,y=Sockeye,group=Date))+
 
 ```
 
-```{r}
-#| label: fig-tyee2
+The following figure shows the daily run estimated at the Tyee test fishery for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Tyee daily estimates (note this does not include catch estimates in the marine commercial or Section 35(1) fisheries). These estimates are raw data from Tyee and therefore not corrected for catchability.
+
+Currently, daily run estimates are tracking close to the last 2 years, and higher than 2020 and 2021. See the next figure that shows the cumulative run through and the full season totals (unadjusted).
+
+```{r tyee recent daily estimates}
+#| label: fig-tyee-recent-daily
 #| echo: false
 #| warning: false
 #| message: false
@@ -207,6 +211,40 @@ ggplot(gg.daily2,aes(x=Date,y=Sockeye,color=factor(Year),linewidth=per,alpha=per
   labs(color="")+
   theme(legend.position = "bottom")
 
+
+```
+
+
+The following figure shows the cumulative daily run estimated at the Tyee test fishery for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Tyee total estimate to date (note this does not include catch estimates in the marine commercial or Section 35(1) fisheries). These estimates are raw data from Tyee and therefore not corrected for catchability.
+
+Currently, the 2024 run is tracking close to the last 2 years, and higher than 2020 and 2021.
+
+
+```{r tyee recent cumulative daily estimates}
+#| label: fig-tyee-recent-cum
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Daily cumulative run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."
+#| fig-height: 5
+
+daily.cum<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee cum")
+
+gg.daily.cum<-daily.cum%>%
+  pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye")%>%
+  mutate(Year=as.numeric(Year))%>%
+  filter(Year>=2020)%>%
+  mutate(per=ifelse(Year==2024,"current","past"))
+
+ggplot(gg.daily.cum,aes(x=Date,y=Sockeye,color=factor(Year),linewidth=per,alpha=per))+
+  geom_line()+
+  scale_linewidth_manual(values=c(2,1))+
+  scale_alpha_manual(values=c(1,.5))+
+  theme_bw()+
+  #scale_color_brewer(palette="Set1")+
+  guides(alpha="none",linewidth="none")+
+  labs(y="Cumulative Sockeye",color="")+
+  theme(legend.position = "bottom")
 
 ```
 
