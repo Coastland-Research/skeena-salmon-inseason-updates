@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update for SFNTC"
-subtitle: "July 9, 2024"
+subtitle: "July 10, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-08")
-tyee.date<-"July 8"
-fence.day<-as.Date("2024-07-08")
-fence.date<-"July 8"
+tyee.day<-as.Date("2024-07-09")
+tyee.date<-"July 9"
+fence.day<-as.Date("2024-07-09")
+fence.date<-"July 9"
 ```
 
 # Summary
@@ -38,11 +38,15 @@ fence.date<-"July 8"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 217,964 sockeye are estimated to have passed by Tyee, with about 11.3% of the run through to date on average (4.6% if 1-week late, 24.2% if one week early). Sockeye escapement has picked up over the last week and is now tracking well above the median daily run (Figures 1-5).
+-   To date 284.494 sockeye are estimated to have passed by Tyee, with about 12.7% of the run through to date on average (5.2% if 1-week late, 26.5% if one week early). Sockeye escapement has picked up over the last week and is now tracking well above the median daily run, with a large escapement yesterday (Figures 1-5).
 
--   We are getting closer to the mid-point of the run, but at just over 10% on average timing, it is still very early to make predictions on the final TRTC, however, the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 1.9M on average run-timing (Figure 6).
+-   We are getting closer to the mid-point of the run, but at just over 10% on average timing, it is still very early to make predictions on the final TRTC, however, the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 2.2M on average run-timing (4.8M if one week late and 1.2M if 1 week early) (Figure 6).
 
 -   We are currently moving towards smaller tides which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
+
+-   The Babine fence started operations July 9, with no salmon through to date.
+
+-   The Kitwanga fence started operations last week, with counts starting.
 
 -   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (Area C gillnets, Area A seines, and First Nations demos). According to DFO, there are no commercial fisheries currently being planned (e.g. no opening dates yet).
 
@@ -189,7 +193,7 @@ ggplot(gg.daily.pcum,aes(x=Date,y=Sockeye,group=Date))+
 
 The following figure shows the daily run estimated at the Tyee test fishery for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Tyee daily estimates (note this does not include catch estimates in the marine commercial or Section 35(1) fisheries). These estimates are raw data from Tyee and therefore not corrected for catchability.
 
-Currently, daily run estimates are tracking close to the last 2 years, and higher than 2020 and 2021. See the next figure that shows the cumulative run through and the full season totals (unadjusted).
+Currently, daily run estimates are tracking close to the last 2 years, and considerably higher than 2020 and 2021. See the next figure that shows the cumulative run through and the full season totals (unadjusted).
 
 ```{r tyee recent daily estimates}
 #| label: fig-tyee-recent-daily
@@ -217,7 +221,7 @@ ggplot(gg.daily2,aes(x=Date,y=Sockeye,color=factor(Year),linewidth=per,alpha=per
 
 The following figure shows the cumulative daily run estimated at the Tyee test fishery for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Tyee total estimate to date (note this does not include catch estimates in the marine commercial or Section 35(1) fisheries). These estimates are raw data from Tyee and therefore not corrected for catchability.
 
-Currently, the 2024 run is tracking close to the last 2 years, and higher than 2020 and 2021.
+Currently, the 2024 run is tracking close to the last 2 years, and considerably higher than 2020 and 2021.
 
 
 ```{r tyee recent cumulative daily estimates}
@@ -365,16 +369,16 @@ ggplot(tyeemodel,aes(x=Date,y=`Number of Sockeye`/10^6,color=Timing))+
 
 \clearpage
 
-## Babine Fence
+## Babine Sockeye
 
--   Will be added when available.
+The Babine fence started operations on July 9, with no salmon passing through to date. More data will be added to this section shortly.
 
 ```{r}
 #| echo: false
 #| results: asis
 #| include: false
 
-fence<-read_excel("data/tyee and catch and fence in-season updates 2023.xlsx",sheet="Babine")
+fence<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Babine")
 fence$Date<-as.Date(fence$Date)
 ```
 
@@ -441,7 +445,7 @@ ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
 
 ```
 
-## Babine Sockeye Jacks
+### Babine Sockeye Jacks
 
 -   Will be added when available.
 
