@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update for SFNTC"
-subtitle: "July 10, 2024"
+subtitle: "July 11, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-09")
-tyee.date<-"July 9"
-fence.day<-as.Date("2024-07-09")
-fence.date<-"July 9"
+tyee.day<-as.Date("2024-07-10")
+tyee.date<-"July 10"
+fence.day<-as.Date("2024-07-10")
+fence.date<-"July 10"
 ```
 
 # Summary
@@ -38,15 +38,15 @@ fence.date<-"July 9"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 284.494 sockeye are estimated to have passed by Tyee, with about 12.7% of the run through to date on average (5.2% if 1-week late, 26.5% if one week early). Sockeye escapement has picked up over the last week and is now tracking well above the median daily run, with a large escapement yesterday (Figures 1-5).
+-   To date 315,698 sockeye are estimated to have passed by Tyee, with about 14% of the run through to date on average (5.9% if 1-week late, 29.1% if one week early). Sockeye escapement has picked up over the last week and is now tracking well above the median daily run (Figures 1-5).
 
--   We are getting closer to the mid-point of the run, but at just over 10% on average timing, it is still very early to make predictions on the final TRTC, however, the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 2.2M on average run-timing (4.8M if one week late and 1.2M if 1 week early) (Figure 6).
+-   We are getting closer to the mid-point of the run, but at ~15% on average timing, it is still very early to make predictions on the final TRTC, however, the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 2.2M on average run-timing (4.7M if one week late and 1.2M if 1 week early) (Figure 6).
 
 -   We are currently moving towards smaller tides which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
 
 -   The Babine fence started operations July 9, with no salmon through to date.
 
--   The Kitwanga fence started operations last week, with counts starting.
+-   The Kitwanga fence started operations last week, with counts starting as of July 10.
 
 -   If sockeye return at the pre-season forecasted abundance, a small commercial fishery will be able to be prosecuted (Area C gillnets, Area A seines, and First Nations demos). According to DFO, there are no commercial fisheries currently being planned (e.g. no opening dates yet).
 
