@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update for SFNTC"
-subtitle: "July 11, 2024"
+subtitle: "July 12, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,10 +24,10 @@ data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-10")
-tyee.date<-"July 10"
-fence.day<-as.Date("2024-07-10")
-fence.date<-"July 10"
+tyee.day<-as.Date("2024-07-11")
+tyee.date<-"July 11"
+fence.day<-as.Date("2024-07-11")
+fence.date<-"July 11"
 ```
 
 # Summary
@@ -38,9 +38,9 @@ fence.date<-"July 10"
 
 -   The Tyee test fishery started on June 10.
 
--   To date 315,698 sockeye are estimated to have passed by Tyee, with about 14% of the run through to date on average (5.9% if 1-week late, 29.1% if one week early). Sockeye escapement has picked up over the last week and is now tracking well above the median daily run (Figures 1-5).
+-   To date 340,842 sockeye are estimated to have passed by Tyee, with about 16.1% of the run through to date on average (6.8% if 1-week late, 31.7% if one week early). Sockeye escapement has picked up over the last week and is continuing to be variable (Figures 1-5).
 
--   We are getting closer to the mid-point of the run, but at ~15% on average timing, it is still very early to make predictions on the final TRTC, however, the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 2.2M on average run-timing (4.7M if one week late and 1.2M if 1 week early) (Figure 6).
+-   We are getting closer to the mid-point of the run, but at ~15% on average timing, it is still very early to make predictions on the final TRTC, however, the excel model is increasing for all 3 run-timings, suggesting that the run may be coming in later than average. The current run size prediction is 2.1M on average run-timing (4.4M if one week late and 1.2M if 1 week early) (Figure 6). The next couple of weeks as we move towards the midpoint of the run will be important.
 
 -   We are currently moving towards smaller tides which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
 
@@ -136,7 +136,7 @@ ggarrange(t1,t2,align="v",ncol=1,common.legend = TRUE)
 ```
 
 ```{r daily boxplot}
-#| label: fig-daily-boxplot
+#| label: fig-daily-boxplot-sx
 #| echo: false
 #| message: false
 #| warning: false
@@ -157,7 +157,7 @@ ggplot(gg.daily,aes(x=Date,y=Sockeye,group=Date))+
 ```
 
 ```{r daily cumulative boxplot}
-#| label: fig-daily-cumulative-boxplot
+#| label: fig-daily-cumulative-boxplot-sx
 #| echo: false
 #| message: false
 #| warning: false
@@ -624,7 +624,8 @@ p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
 # Chinook Salmon
 
 ```{r daily boxplot chinook}
-#| label: fig-daily-boxplot
+#| label: fig-daily-boxplot-cn
+#| include: false
 #| echo: false
 #| message: false
 #| warning: false
@@ -649,7 +650,8 @@ ggplot(gg.daily,aes(x=Date,y=Chinook,group=Date))+
 
 this plot needs to be re-worked with cumulative proportion data and re-format the dates, which are not showing up properly. Same for all the other species.
 ```{r daily cumulative boxplot chinook}
-#| label: fig-daily-cumulative-boxplot
+#| label: fig-daily-cumulative-boxplot-cn
+#| include: false
 #| echo: false
 #| message: false
 #| warning: false
@@ -685,8 +687,9 @@ ggplot(gg.daily.pcum,aes(x=Date,y=Chinook,group=Date))+
 ```
 # Chum Salmon
 ```{r daily boxplot chum}
-#| label: fig-daily-boxplot
+#| label: fig-daily-boxplot-cm
 #| echo: false
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily run for Chum salmon through Tyee (uncorrected) from 1970-2023. 2023 run is shown in purple."
@@ -709,8 +712,9 @@ ggplot(gg.daily,aes(x=Date,y=Chum,group=Date))+
 ```
 
 ```{r daily cumulative boxplot chum}
-#| label: fig-daily-cumulative-boxplot
+#| label: fig-daily-cumulative-boxplot-cm
 #| echo: false
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily cumulative proportion of the Chum salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
@@ -747,8 +751,9 @@ ggplot(gg.daily.pcum,aes(x=Date,y=Chum,group=Date))+
 # Pink Salmon
 ## Even years 
 ```{r daily boxplot pink even}
-#| label: fig-daily-boxplot
+#| label: fig-daily-boxplot-pe
 #| echo: false
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily run for Pink salmon (even years) through Tyee (uncorrected) from 1970-2022. 2022 run is shown in purple."
@@ -771,8 +776,9 @@ ggplot(gg.daily,aes(x=Date,y=`Pink Salmon`, group=Date))+
 ```
 
 ```{r daily cumulative boxplot pink even}
-#| label: fig-daily-cumulative-boxplot
+#| label: fig-daily-cumulative-boxplot-pe
 #| echo: false
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
@@ -809,8 +815,9 @@ ggplot(gg.daily.pcum,aes(x=Date,y=`Pink Salmon`,group=Date))+
 ## Odd years
 
 ```{r daily boxplot pink odd}
-#| label: fig-daily-boxplot
+#| label: fig-daily-boxplot-po
 #| echo: false
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily run for Pink salmon (odd years) through Tyee (uncorrected) from 1957-2023. 2023 run is shown in purple."
@@ -833,8 +840,9 @@ ggplot(gg.daily,aes(x=Date,y=`Pink Salmon`, group=Date))+
 ```
 
 ```{r daily cumulative boxplot pink odd}
-#| label: fig-daily-cumulative-boxplot
+#| label: fig-daily-cumulative-boxplot-po
 #| echo: false
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
@@ -870,8 +878,9 @@ ggplot(gg.daily.pcum,aes(x=Date,y=`Pink Salmon`,group=Date))+
 
 # Coho Salmon
 ```{r daily boxplot coho}
-#| label: fig-daily-boxplot
+#| label: fig-daily-boxplot-co
 #| echo: false
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily run for Coho salmon through Tyee (uncorrected) from 1957-2023. 2023 run is shown in purple."
@@ -894,8 +903,9 @@ ggplot(gg.daily,aes(x=Date,y=Coho, group=Date))+
 ```
 
 ```{r daily cumulative boxplot coho}
-#| label: fig-daily-cumulative-boxplot
+#| label: fig-daily-cumulative-boxplot-co
 #| echo: false
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily cumulative proportion of the Coho run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
