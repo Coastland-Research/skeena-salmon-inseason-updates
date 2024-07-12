@@ -623,11 +623,311 @@ p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
 
 # Chinook Salmon
 
+```{r daily boxplot chinook}
+#| label: fig-daily-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily run for Chinook salmon through Tyee (uncorrected) from 1970-2023. 2023 run is shown in purple."
+#| fig-height: 5
+
+daily<-read_csv("data/tyee_indices_to2023_chinook.csv")
+
+gg.daily<-daily%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2023",names_to="Year",values_to="Chinook") %>%
+  mutate(Year=as.numeric(Year),
+         Date = as.Date((paste(MONTH,DAY,Year,sep= "-")), "%Y-%m-%d"))
+
+ggplot(gg.daily,aes(x=Date,y=Chinook,group=Date))+
+  geom_boxplot(fill="white",alpha=.5)+
+      geom_line(data=gg.daily%>%filter(Year==2023),aes(x=Date,y=Chinook,group=1),
+                color="purple",linewidth=1)+
+  #ylim(0,150000)+
+  theme_bw()
+```
+
+this plot needs to be re-worked with cumulative proportion data and re-format the dates, which are not showing up properly. Same for all the other species.
+```{r daily cumulative boxplot chinook}
+#| label: fig-daily-cumulative-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily cumulative proportion of the Chinook salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
+#| fig-height: 5
+
+dailycum<-read_csv("data/tyee_indices_to2023_chinook.csv")
+
+gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1970":"2023",names_to="Year",values_to="Chinook")%>%
+  mutate(Year=as.numeric(Year))
+
+data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
+  mutate(`1M`=cumtrtc/1000000,
+         `1.5M`=cumtrtc/1500000,
+         `2M`=cumtrtc/2000000)%>%
+  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")%>%
+  select(-cumtrtc)
+
+
+ggplot(gg.daily.pcum,aes(x=Date,y=Chinook,group=Date))+
+  geom_boxplot(fill="white",color="grey70",alpha=.5)+
+    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
+    geom_segment(aes(x=as.POSIXct("2023-06-01"),y=.5,xend=as.POSIXct("2023-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
+  geom_segment(aes(x=as.POSIXct("2023-07-24"),y=.5,xend=as.POSIXct("2023-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
+  #ylim(0,150000)+
+    theme_bw()+
+  ylim(0,.55)+
+  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+  theme(legend.position = "bottom")
+
+```
 # Chum Salmon
+```{r daily boxplot chum}
+#| label: fig-daily-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily run for Chum salmon through Tyee (uncorrected) from 1970-2023. 2023 run is shown in purple."
+#| fig-height: 5
+
+daily<-read_csv("data/tyee_indices_to2023_chum.csv")
+
+gg.daily<-daily%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2023",names_to="Year",values_to="Chum") %>%
+  mutate(Year=as.numeric(Year),
+         Date = as.Date((paste(MONTH,DAY,Year,sep= "-")), "%Y-%m-%d"))
+
+ggplot(gg.daily,aes(x=Date,y=Chum,group=Date))+
+  geom_boxplot(fill="white",alpha=.5)+
+      geom_line(data=gg.daily%>%filter(Year==2023),aes(x=Date,y=Chum,group=1),
+                color="purple",linewidth=1)+
+  #ylim(0,150000)+
+  theme_bw()
+```
+
+```{r daily cumulative boxplot chum}
+#| label: fig-daily-cumulative-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily cumulative proportion of the Chum salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
+#| fig-height: 5
+
+dailycum<-read_csv("data/tyee_indices_to2023_chum.csv")
+
+gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1970":"2023",names_to="Year",values_to="Chum")%>%
+  mutate(Year=as.numeric(Year))
+
+data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
+  mutate(`1M`=cumtrtc/1000000,
+         `1.5M`=cumtrtc/1500000,
+         `2M`=cumtrtc/2000000)%>%
+  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")%>%
+  select(-cumtrtc)
+
+
+ggplot(gg.daily.pcum,aes(x=Date,y=Chum,group=Date))+
+  geom_boxplot(fill="white",color="grey70",alpha=.5)+
+    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
+    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
+  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
+  #ylim(0,150000)+
+    theme_bw()+
+  ylim(0,.55)+
+  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+  theme(legend.position = "bottom")
+
+```
 
 # Pink Salmon
+## Even years 
+```{r daily boxplot pink even}
+#| label: fig-daily-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily run for Pink salmon (even years) through Tyee (uncorrected) from 1970-2022. 2022 run is shown in purple."
+#| fig-height: 5
+
+daily<-read_csv("data/tyee_indices_to2022_pink_even.csv")
+
+gg.daily<-daily%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2022",names_to="Year",values_to="Pink Salmon") %>%
+  mutate(Year=as.numeric(Year),
+         Date = as.Date((paste(MONTH,DAY,Year,sep= "-")), "%Y-%m-%d"))
+
+ggplot(gg.daily,aes(x=Date,y=`Pink Salmon`, group=Date))+
+  geom_boxplot(fill="white",alpha=.5)+
+      geom_line(data=gg.daily%>%filter(Year==2022),aes(x=Date,y=`Pink Salmon`,group=1),
+                color="purple",linewidth=1)+
+  #ylim(0,150000)+
+  theme_bw()
+```
+
+```{r daily cumulative boxplot pink even}
+#| label: fig-daily-cumulative-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
+#| fig-height: 5
+
+dailycum<-read_csv("data/tyee_indices_to2022_pink_even.csv")
+
+gg.daily.pcum<-dailycum%>%select("Date":"2022")%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1970":"2022",names_to="Year",values_to="Pink Salmon")%>%
+  mutate(Year=as.numeric(Year))
+
+data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
+  mutate(`1M`=cumtrtc/1000000,
+         `1.5M`=cumtrtc/1500000,
+         `2M`=cumtrtc/2000000)%>%
+  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")%>%
+  select(-cumtrtc)
+
+
+ggplot(gg.daily.pcum,aes(x=Date,y=`Pink Salmon`,group=Date))+
+  geom_boxplot(fill="white",color="grey70",alpha=.5)+
+    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
+    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
+  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
+  #ylim(0,150000)+
+    theme_bw()+
+  ylim(0,.55)+
+  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+  theme(legend.position = "bottom")
+
+```
+
+## Odd years
+
+```{r daily boxplot pink odd}
+#| label: fig-daily-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily run for Pink salmon (odd years) through Tyee (uncorrected) from 1957-2023. 2023 run is shown in purple."
+#| fig-height: 5
+
+daily<-read_csv("data/tyee_indices_to2023_pink_odd.csv")
+
+gg.daily<-daily%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1957":"2023",names_to="Year",values_to="Pink Salmon") %>%
+  mutate(Year=as.numeric(Year),
+         Date = as.Date((paste(MONTH,DAY,Year,sep= "-")), "%Y-%m-%d"))
+
+ggplot(gg.daily,aes(x=Date,y=`Pink Salmon`, group=Date))+
+  geom_boxplot(fill="white",alpha=.5)+
+      geom_line(data=gg.daily%>%filter(Year==2023),aes(x=Date,y=`Pink Salmon`,group=1),
+                color="purple",linewidth=1)+
+  #ylim(0,150000)+
+  theme_bw()
+```
+
+```{r daily cumulative boxplot pink odd}
+#| label: fig-daily-cumulative-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
+#| fig-height: 5
+
+dailycum<-read_csv("data/tyee_indices_to2023_pink_odd.csv")
+
+gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1971":"2023",names_to="Year",values_to="Pink Salmon")%>%
+  mutate(Year=as.numeric(Year))
+
+data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
+  mutate(`1M`=cumtrtc/1000000,
+         `1.5M`=cumtrtc/1500000,
+         `2M`=cumtrtc/2000000)%>%
+  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")%>%
+  select(-cumtrtc)
+
+
+ggplot(gg.daily.pcum,aes(x=Date,y=`Pink Salmon`,group=Date))+
+  geom_boxplot(fill="white",color="grey70",alpha=.5)+
+    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
+    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
+  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
+  #ylim(0,150000)+
+    theme_bw()+
+  ylim(0,.55)+
+  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+  theme(legend.position = "bottom")
+
+```
 
 # Coho Salmon
+```{r daily boxplot coho}
+#| label: fig-daily-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily run for Coho salmon through Tyee (uncorrected) from 1957-2023. 2023 run is shown in purple."
+#| fig-height: 5
+
+daily<-read_csv("data/tyee_indices_to2023_coho.csv")
+
+gg.daily<-daily%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2023",names_to="Year",values_to="Coho") %>%
+  mutate(Year=as.numeric(Year),
+         Date = as.Date((paste(MONTH,DAY,Year,sep= "-")), "%Y-%m-%d"))
+
+ggplot(gg.daily,aes(x=Date,y=Coho, group=Date))+
+  geom_boxplot(fill="white",alpha=.5)+
+      geom_line(data=gg.daily%>%filter(Year==2023),aes(x=Date,y=Coho,group=1),
+                color="purple",linewidth=1)+
+  #ylim(0,150000)+
+  theme_bw()
+```
+
+```{r daily cumulative boxplot coho}
+#| label: fig-daily-cumulative-boxplot
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily cumulative proportion of the Coho run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
+#| fig-height: 5
+
+dailycum<-read_csv("data/tyee_indices_to2023_coho.csv")
+
+gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1970":"2023",names_to="Year",values_to="Coho")%>%
+  mutate(Year=as.numeric(Year))
+
+data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
+  mutate(`1M`=cumtrtc/1000000,
+         `1.5M`=cumtrtc/1500000,
+         `2M`=cumtrtc/2000000)%>%
+  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")%>%
+  select(-cumtrtc)
+
+
+ggplot(gg.daily.pcum,aes(x=Date,y=`Coho`,group=Date))+
+  geom_boxplot(fill="white",color="grey70",alpha=.5)+
+    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
+    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
+  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
+  #ylim(0,150000)+
+    theme_bw()+
+  ylim(0,.55)+
+  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+  theme(legend.position = "bottom")
+
+```
 
 # Catch
 
