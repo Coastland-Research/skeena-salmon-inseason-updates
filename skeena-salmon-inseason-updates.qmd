@@ -721,7 +721,7 @@ scale_x_date(date_labels="%b", date_breaks="1 month") +
 #| fig-cap: "Daily cumulative proportion of the Chum salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
-dailycum<-read_csv("data/tyee_indices_to2023_chum.csv")
+dailycum<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")
 
 gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
   mutate_if(is.character, as.numeric) %>%
