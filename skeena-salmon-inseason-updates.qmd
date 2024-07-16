@@ -19,8 +19,9 @@ options(scipen=10000)
 ```
 
 ```{r loda data and format, include=FALSE}
-data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee")
-data$Date<-as.Date(data$Date)
+data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee") %>%
+  mutate(Date = as.Date(Date))
+#data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
@@ -612,7 +613,7 @@ p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
 #| warning: false
 #| fig-cap: "Daily run for Chinook salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple."
 #| fig-height: 5
-
+library(viridis)
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-MONTH,-DAY)
 cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=`large chinook`)
@@ -623,22 +624,44 @@ daily.index<-left_join(daily,cn2024,by="Date")%>%
 gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
   pivot_longer("1956":"2024",names_to="Year",values_to="Chinook") %>%
-  mutate(Year=as.numeric(Year))
+  mutate(Year=as.numeric(Year)) 
 
-gg.daily.quants<-gg.daily%>%
-  group_by(Date)%>%
-  summarise(quantile=scales::percent(c(.1,.25,.75,.9)),per=quantile(Chinook,c(.1,.25,.75,.9),na.rm=TRUE))
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(quantile10 = scales::percent(.1), 
+            quantile25 = scales::percent(.25), 
+            quantile50 = scales::percent(.50),
+            quantile75 = scales::percent(.75),
+            quantile90 = scales::percent(.9),
+            per10 = quantile(Chinook,.1, na.rm = TRUE), 
+            per25 = quantile(Chinook,.25, na.rm = TRUE), 
+            per50 = quantile(Chinook,.50, na.rm = TRUE),
+            per75 = quantile(Chinook,.75, na.rm = TRUE),
+            per90 = quantile(Chinook,.9, na.rm = TRUE))
 
-#,,gg.daily
-#         Date = as.Date(paste("2023", MONTH, DAY, sep="-"), "%Y-%m-%d"))
 
 ggplot(gg.daily,aes(x=Date,y=Chinook,group=Date))+
-  geom_boxplot(color="grey80")+
-    geom_line(data=gg.daily.quants,aes(x=Date,y=per,color=quantile,group=quantile)
-                ,linewidth=1)+
-    geom_line(data=gg.daily%>%filter(Year==2024),aes(x=Date,y=Chinook,group=1),
-                color="purple",linewidth=1)+
-  #scale_x_date(date_labels="%b", date_breaks="1 month") +
+  geom_boxplot(color="grey90")+
+    geom_line(data=gg.daily.quants,aes(x=Date, y=per10_90, group=quantile10_90),color="#1F968BFF",linewidth = 0.4,linetype ="dashed") +
+  geom_line(data=gg.daily.quants,aes(x=Date, y=per25, group=quantile25),color="#95D840FF", linewidth = .6, linetype = "dashed") +
+  geom_line(data=gg.daily.quants,aes(x=Date, y=per50, group=quantile50),color="#39568CFF", linewidth = 1, linetype = "dashed") +
+    geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Chinook, group = 1),color = "purple", linewidth = 1)+
+  theme_bw()
+
+##################
+
+library(ggplot2)
+library(dplyr)
+
+ggplot(gg.daily, aes(x = Date, y = Chinook, group = Date)) +
+  geom_boxplot(color = "grey90") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Chinook, group = 1, color = "2024 Data"), linewidth = 1) +
+  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
   theme_bw()
 
 ggsave("junk1.png")
@@ -670,12 +693,13 @@ mutate(chinook_cm = cumsum(Chinook), Date = as.Date((paste(MONTH,DAY,Year,sep= "
 
 
 ggplot(gg_daily_cum,aes(x=Date,y=Chinook,group=Date))+
-  geom_boxplot(fill="white",color="grey70",alpha=.5)+
-    #geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1)+
-    #geom_segment(aes(x=as.POSIXct("2023-06-01"),y=.5,xend=as.POSIXct("2023-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
-  #geom_segment(aes(x=as.POSIXct("2023-07-24"),y=.5,xend=as.POSIXct("2023-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
+  geom_point(color = "grey70") +
+  #geom_boxplot(fill="white",color="grey70",alpha=.5)+
+    geom_line(data=data2,aes(x=data2$date,y=p,color=estimate,group=estimate),linewidth=1)+
+    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
+  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
     theme_bw()+
-scale_x_date(date_breaks = "6 months",
+scale_x_date(date_breaks = "1 month",
              date_labels = "%B") +
   labs(color="Estimate",y="Chinook Cumulative Index")+
   theme(legend.position = "bottom")
