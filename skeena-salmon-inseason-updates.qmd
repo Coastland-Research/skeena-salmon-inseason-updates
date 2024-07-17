@@ -625,35 +625,62 @@ daily.index<-left_join(daily,cn2024,by="Date")%>%
 gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
   pivot_longer("1956":"2024",names_to="Year",values_to="Chinook") %>%
-  mutate(Year=as.numeric(Year)) 
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(Chinook,0))
 
 gg.daily.quants<-gg.daily %>%
   group_by(Date) %>%
-  summarise(quantile10 = scales::percent(.1), 
-            quantile25 = scales::percent(.25), 
-            quantile50 = scales::percent(.50),
-            quantile75 = scales::percent(.75),
-            quantile90 = scales::percent(.9),
-            per10 = quantile(Chinook,.1, na.rm = TRUE), 
+  summarise(per10 = quantile(Chinook,.1, na.rm = TRUE), 
             per25 = quantile(Chinook,.25, na.rm = TRUE), 
             per50 = quantile(Chinook,.50, na.rm = TRUE),
             per75 = quantile(Chinook,.75, na.rm = TRUE),
-            per90 = quantile(Chinook,.9, na.rm = TRUE))
+            per90 = quantile(Chinook,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(Chinook=(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
 
-##################
+years_out<-c("2008","2009","2010")
+gg.daily<-gg.daily%>%filter(!Year%in%years_out)
 
-ggplot(gg.daily, aes(x = Date, y = Chinook, group = Date)) +
-  geom_boxplot(color = "grey90") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
-  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Chinook, group = 1, color = "2024 Data"), linewidth = 1) +
-  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
-  theme_bw()
+ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Chinook, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Chinook,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,10)
 
-#ggsave("junk1.png")
+#gg.daily.quants<-gg.daily %>%
+ # group_by(Date) %>%
+#  summarise(quantile10 = scales::percent(.1), 
+ #           quantile25 = scales::percent(.25), 
+ #           quantile50 = scales::percent(.50),
+ #           quantile75 = scales::percent(.75),
+ #           quantile90 = scales::percent(.9),
+ #           per10 = quantile(Coho,.1, na.rm = TRUE), 
+ #           per25 = quantile(Coho,.25, na.rm = TRUE), 
+ #           per50 = quantile(Coho,.50, na.rm = TRUE),
+ #           per75 = quantile(Coho,.75, na.rm = TRUE),
+ #           per90 = quantile(Coho,.9, na.rm = TRUE))
+
+
+#ggplot(gg.daily, aes(x = Date, y = Coho, group = Date)) +
+#  geom_boxplot(color = "grey90") +
+#  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, #color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
+#  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, #color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
+#  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, #color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
+#  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, #color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
+#  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, #color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
+#  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Coho, #group = 1, color = "2024 Data"), linewidth = 1) +
+#  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
+#  theme_bw()
 
 ```
 
@@ -695,6 +722,9 @@ gg.daily.cum.quants<-gg.daily.cum %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
 ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
@@ -705,19 +735,16 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   theme_bw()+
   theme(legend.position = "bottom")
 
-  years_out<-c("2008","2009","2010")
-  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
-
-  ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
-  geom_line(data = gg.daily.cum %>% filter(Year <2000), aes(x = Date, y = cum_sum,group=Year,color="1956-2000"),
-            linewidth = .5,alpha=.5)+
-  geom_line(data = gg.daily.cum %>% filter(Year >=2000&Year<2024), aes(x = Date, y = cum_sum,group=Year,color="2000-2020"),
-            linewidth = .5,alpha=.5)+
-  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024"), linewidth = 2,alpha=.7)+
-  scale_color_manual(values=c("grey50","red","black"))+
-  labs(y="Cumulative Daily Index",color="Year Range")+
-  theme_bw()+
-  theme(legend.position = "bottom")
+#  ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+#  geom_line(data = gg.daily.cum %>% filter(Year <2000), aes(x = Date, y = cum_sum,group=Year,color="1956-2000"),
+#            linewidth = .5,alpha=.5)+
+#  geom_line(data = gg.daily.cum %>% filter(Year >=2000&Year<2024), aes(x = Date, y = cum_sum,group=Year,color="2000-2020"),
+#            linewidth = .5,alpha=.5)+
+#  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024"), linewidth = 2,alpha=.7)+
+#  scale_color_manual(values=c("grey50","red","black"))+
+#  labs(y="Cumulative Daily Index",color="Year Range")+
+#  theme_bw()+
+#  theme(legend.position = "bottom")
 
 ```
 
@@ -734,7 +761,7 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")%>%select(-MONTH,-DAY)
 cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
-  select(Date,"2024"=`chum`)
+  select(Date,"2024"=chum)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
   mutate(Date=as.Date(Date))
@@ -742,31 +769,37 @@ daily.index<-left_join(daily,cn2024,by="Date")%>%
 gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
   pivot_longer("1956":"2024",names_to="Year",values_to="Chum") %>%
-  mutate(Year=as.numeric(Year)) 
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(Chum,0))
 
 gg.daily.quants<-gg.daily %>%
   group_by(Date) %>%
-  summarise(quantile10 = scales::percent(.1), 
-            quantile25 = scales::percent(.25), 
-            quantile50 = scales::percent(.50),
-            quantile75 = scales::percent(.75),
-            quantile90 = scales::percent(.9),
-            per10 = quantile(Chum,.1, na.rm = TRUE), 
+  summarise(per10 = quantile(Chum,.1, na.rm = TRUE), 
             per25 = quantile(Chum,.25, na.rm = TRUE), 
             per50 = quantile(Chum,.50, na.rm = TRUE),
             per75 = quantile(Chum,.75, na.rm = TRUE),
-            per90 = quantile(Chum,.9, na.rm = TRUE))
+            per90 = quantile(Chum,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(Chum=(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
 
-ggplot(gg.daily, aes(x = Date, y = Chum, group = Date)) +
-  geom_boxplot(color = "grey90") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
-  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Chum, group = 1, color = "2024 Data"), linewidth = 1) +
-  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
-  theme_bw()
+  years_out<-c("2008","2009","2010")
+  gg.daily<-gg.daily%>%filter(!Year%in%years_out)
+  
+ggplot(gg.daily,aes(x=Date, y=Chum,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Chum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Chum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,5)
 
 ```
 
@@ -809,6 +842,10 @@ gg.daily.cum.quants<-gg.daily.cum %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
 ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
@@ -817,11 +854,8 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   scale_color_manual(values=c("grey50","purple","grey75","black"))+
   labs(y="Cumulative Daily Index",color="")+
   theme_bw()+
-  theme(legend.position = "bottom")
-
-  years_out<-c("2008","2009","2010")
-  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
-
+  theme(legend.position = "bottom")+
+  ylim(0,2000)
 
 
 ```
@@ -841,7 +875,7 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")%>%select(-MONTH,-DAY)
 cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
-  select(Date,"2024"= pink)
+  select(Date,"2024"=pink)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
   mutate(Date=as.Date(Date))
@@ -849,33 +883,38 @@ daily.index<-left_join(daily,cn2024,by="Date")%>%
 gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
   pivot_longer("1956":"2024",names_to="Year",values_to="Pink Salmon") %>%
-  mutate(Year=as.numeric(Year)) 
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Pink Salmon`,0))
+
 
 gg.daily.quants<-gg.daily %>%
   group_by(Date) %>%
-  summarise(quantile10 = scales::percent(.1), 
-            quantile25 = scales::percent(.25), 
-            quantile50 = scales::percent(.50),
-            quantile75 = scales::percent(.75),
-            quantile90 = scales::percent(.9),
-            per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
+  summarise(per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
             per25 = quantile(`Pink Salmon`,.25, na.rm = TRUE), 
             per50 = quantile(`Pink Salmon`,.50, na.rm = TRUE),
             per75 = quantile(`Pink Salmon`,.75, na.rm = TRUE),
-            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))
+            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Pink Salmon`=(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
 
-##################
-
-ggplot(gg.daily, aes(x = Date, y = `Pink Salmon`, group = Date)) +
-  geom_boxplot(color = "grey90") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
-  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = `Pink Salmon`, group = 1, color = "2024 Data"), linewidth = 1) +
-  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
-  theme_bw()
+ years_out<-c("2008","2009","2010")
+  gg.daily<-gg.daily%>%filter(!Year%in%years_out)
+  
+ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Pink Salmon`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2023), aes(x = Date, y = `Pink Salmon`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,5)
 
 ```
 
@@ -915,7 +954,9 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
-
+ years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
 ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
@@ -924,10 +965,8 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   scale_color_manual(values=c("grey50","purple","grey75","black"))+
   labs(y="Cumulative Daily Index",color="")+
   theme_bw()+
-  theme(legend.position = "bottom")
-
-  years_out<-c("2008","2009","2010")
-  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  theme(legend.position = "bottom") +
+  ylim(0,2000)
 
 ```
 
@@ -944,7 +983,7 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Odd")%>%select(-MONTH,-DAY)
 cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
-  select(Date,"2024"= pink)
+  select(Date,"2024"=pink)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
   mutate(Date=as.Date(Date))
@@ -952,33 +991,38 @@ daily.index<-left_join(daily,cn2024,by="Date")%>%
 gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
   pivot_longer("1957":"2023",names_to="Year",values_to="Pink Salmon") %>%
-  mutate(Year=as.numeric(Year)) 
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Pink Salmon`,0))
+
 
 gg.daily.quants<-gg.daily %>%
   group_by(Date) %>%
-  summarise(quantile10 = scales::percent(.1), 
-            quantile25 = scales::percent(.25), 
-            quantile50 = scales::percent(.50),
-            quantile75 = scales::percent(.75),
-            quantile90 = scales::percent(.9),
-            per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
+  summarise(per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
             per25 = quantile(`Pink Salmon`,.25, na.rm = TRUE), 
             per50 = quantile(`Pink Salmon`,.50, na.rm = TRUE),
             per75 = quantile(`Pink Salmon`,.75, na.rm = TRUE),
-            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))
+            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Pink Salmon`=(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
 
-##################
+years_out<-c("2008","2009","2010")
+  gg.daily<-gg.daily%>%filter(!Year%in%years_out)
 
-ggplot(gg.daily, aes(x = Date, y = `Pink Salmon`, group = Date)) +
-  geom_boxplot(color = "grey90") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
-  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
-  #geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = `Pink Salmon`, group = 1, color = "2024 Data"), linewidth = 1) +
-  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile")) + 
-  theme_bw()
+ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2023&Date<=today), aes(x = Date, y = `Pink Salmon`, group = 1, color = "2023 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2023), aes(x = Date, y = `Pink Salmon`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,10)
 ```
 
 ```{r daily cumulative boxplot pink odd}
@@ -1018,6 +1062,9 @@ gg.daily.cum.quants<-gg.daily.cum %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
+  years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
 ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   #geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
@@ -1026,11 +1073,8 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   scale_color_manual(values=c("grey50","grey75","black"))+
   labs(y="Cumulative Daily Index",color="")+
   theme_bw()+
-  theme(legend.position = "bottom")
-
-  years_out<-c("2008","2009","2010")
-  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
-
+  theme(legend.position = "bottom")+
+  ylim(0,4000)
 
 ```
 
@@ -1058,18 +1102,6 @@ gg.daily<-daily.index%>%
   mutate(Year=as.numeric(Year)) %>%
   mutate(Index=replace_na(Coho,0))
 
-#gg.daily.quants<-gg.daily %>%
- # group_by(Date) %>%
-#  summarise(quantile10 = scales::percent(.1), 
- #           quantile25 = scales::percent(.25), 
- #           quantile50 = scales::percent(.50),
- #           quantile75 = scales::percent(.75),
- #           quantile90 = scales::percent(.9),
- #           per10 = quantile(Coho,.1, na.rm = TRUE), 
- #           per25 = quantile(Coho,.25, na.rm = TRUE), 
- #           per50 = quantile(Coho,.50, na.rm = TRUE),
- #           per75 = quantile(Coho,.75, na.rm = TRUE),
- #           per90 = quantile(Coho,.9, na.rm = TRUE))
 
 gg.daily.quants<-gg.daily %>%
   group_by(Date) %>%
@@ -1086,17 +1118,9 @@ gg.daily.quants<-gg.daily %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
-#ggplot(gg.daily, aes(x = Date, y = Coho, group = Date)) +
-#  geom_boxplot(color = "grey90") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, #color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, #color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, #color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, #color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, #color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
-#  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Coho, #group = 1, color = "2024 Data"), linewidth = 1) +
-#  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
-#  theme_bw()
-
+  years_out<-c("2008","2009","2010")
+  gg.daily<-gg.daily%>%filter(!Year%in%years_out)
+  
 ggplot(gg.daily,aes(x=Date, y=Coho,group=Date))+
   geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Coho, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
@@ -1105,8 +1129,8 @@ ggplot(gg.daily,aes(x=Date, y=Coho,group=Date))+
   scale_color_manual(values=c("grey50","purple","grey75","black"))+
   labs(y="Daily Index",color="")+
   theme_bw()+
-  theme(legend.position = "bottom")
-
+  theme(legend.position = "bottom") +
+  ylim(0,5)
 
 ```
 
@@ -1147,6 +1171,9 @@ gg.daily.cum.quants<-gg.daily.cum %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
+  years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
 ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
@@ -1157,8 +1184,6 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   theme_bw()+
   theme(legend.position = "bottom")
 
-  years_out<-c("2008","2009","2010")
-  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
 
 
 ```
