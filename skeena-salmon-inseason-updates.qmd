@@ -614,7 +614,7 @@ p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
 #| warning: false
 #| fig-cap: "Daily run for Chinook salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple."
 #| fig-height: 5
-library(viridis)
+
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-MONTH,-DAY)
 cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=`large chinook`)
@@ -639,15 +639,6 @@ gg.daily.quants<-gg.daily %>%
             per50 = quantile(Chinook,.50, na.rm = TRUE),
             per75 = quantile(Chinook,.75, na.rm = TRUE),
             per90 = quantile(Chinook,.9, na.rm = TRUE))
-
-
-#ggplot(gg.daily,aes(x=Date,y=Chinook,group=Date))+
-#  geom_boxplot(color="grey90")+
-#    geom_line(data=gg.daily.quants,aes(x=Date, y=per10_90, group=quantile10_90),color="#1F968BFF",linewidth = #0.4,linetype ="dashed") +
-#  geom_line(data=gg.daily.quants,aes(x=Date, y=per25, group=quantile25),color="#95D840FF", linewidth = .6, linetype = #"dashed") +
-#  geom_line(data=gg.daily.quants,aes(x=Date, y=per50, group=quantile50),color="#39568CFF", linewidth = 1, linetype = #"dashed") +
-#    geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Chinook, group = 1),color = "purple", #linewidth = 1)+
-#  theme_bw()
 
 ##################
 
@@ -741,20 +732,42 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 #| fig-cap: "Daily run for Chum salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple."
 #| fig-height: 5
 
-daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=`chum`)
 
-gg.daily<-daily%>%
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1956":"2023",names_to="Year",values_to="Chum") %>%
-  mutate(Year=as.numeric(Year),
-         Date = as.Date(paste("2023", MONTH, DAY, sep="-"), "%Y-%m-%d"))
+  pivot_longer("1956":"2024",names_to="Year",values_to="Chum") %>%
+  mutate(Year=as.numeric(Year)) 
 
-ggplot(gg.daily,aes(x=Date,y=Chum,group=Date))+
-  geom_boxplot(fill="white",alpha=.5)+
-      geom_line(data=gg.daily%>%filter(Year==2023),aes(x=Date,y=Chum,group=1),
-                color="purple",linewidth=1)+
-scale_x_date(date_labels="%b", date_breaks="1 month") +
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(quantile10 = scales::percent(.1), 
+            quantile25 = scales::percent(.25), 
+            quantile50 = scales::percent(.50),
+            quantile75 = scales::percent(.75),
+            quantile90 = scales::percent(.9),
+            per10 = quantile(Chum,.1, na.rm = TRUE), 
+            per25 = quantile(Chum,.25, na.rm = TRUE), 
+            per50 = quantile(Chum,.50, na.rm = TRUE),
+            per75 = quantile(Chum,.75, na.rm = TRUE),
+            per90 = quantile(Chum,.9, na.rm = TRUE))
+
+ggplot(gg.daily, aes(x = Date, y = Chum, group = Date)) +
+  geom_boxplot(color = "grey90") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Chum, group = 1, color = "2024 Data"), linewidth = 1) +
+  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
   theme_bw()
+
 ```
 
 ```{r daily cumulative boxplot chum}
@@ -766,30 +779,50 @@ scale_x_date(date_labels="%b", date_breaks="1 month") +
 #| fig-cap: "Daily cumulative proportion of the Chum salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
-dailycum<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")
+# Read the CSV file
 
-gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=`chum`)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1970":"2023",names_to="Year",values_to="Chum")%>%
-  mutate(Year=as.numeric(Year))
+  pivot_longer("1956":"2024",names_to="Year",values_to="Chum") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(Chum,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Chum,.1, na.rm = TRUE), 
+            per25 = quantile(Chum,.25, na.rm = TRUE), 
+            per50 = quantile(Chum,.50, na.rm = TRUE),
+            per75 = quantile(Chum,.75, na.rm = TRUE),
+            per90 = quantile(Chum,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
 
-data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
-  mutate(`1M`=cumtrtc/1000000,
-         `1.5M`=cumtrtc/1500000,
-         `2M`=cumtrtc/2000000)%>%
-  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")%>%
-  select(-cumtrtc)
-
-ggplot(gg.daily.pcum,aes(x=Date,y=Chum,group=Date))+
-  geom_boxplot(fill="white",color="grey70",alpha=.5)+
-    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
-    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
-  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
-  #ylim(0,150000)+
-    theme_bw()+
-  ylim(0,.55)+
-  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
   theme(legend.position = "bottom")
+
+  years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+
+
 
 ```
 
@@ -806,22 +839,44 @@ ggplot(gg.daily.pcum,aes(x=Date,y=Chum,group=Date))+
 #| fig-cap: "Daily run for Pink salmon on even-numbered years through Tyee (uncorrected) from 1956-2022. 2022 run is shown in purple."
 #| fig-height: 5
 
-daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")
-fence<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Babine")
-fence$Date<-as.Date(fence$Date)
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"= pink)
 
-gg.daily<-daily%>%
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1956":"2022",names_to="Year",values_to="Pink salmon") %>%
-  mutate(Year=as.numeric(Year),
-         Date = as.Date(paste("2022", MONTH, DAY, sep="-"), "%Y-%m-%d"))
+  pivot_longer("1956":"2024",names_to="Year",values_to="Pink Salmon") %>%
+  mutate(Year=as.numeric(Year)) 
 
-ggplot(gg.daily,aes(x=Date,y=`Pink salmon`,group=Date))+
-  geom_boxplot(fill="white",alpha=.5)+
-      geom_line(data=gg.daily%>%filter(Year==2022),aes(x=Date,y=`Pink salmon`,group=1),
-                color="purple",linewidth=1)+
-scale_x_date(date_labels="%b", date_breaks="1 month") +
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(quantile10 = scales::percent(.1), 
+            quantile25 = scales::percent(.25), 
+            quantile50 = scales::percent(.50),
+            quantile75 = scales::percent(.75),
+            quantile90 = scales::percent(.9),
+            per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink Salmon`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink Salmon`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink Salmon`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))
+
+##################
+
+ggplot(gg.daily, aes(x = Date, y = `Pink Salmon`, group = Date)) +
+  geom_boxplot(color = "grey90") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = `Pink Salmon`, group = 1, color = "2024 Data"), linewidth = 1) +
+  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
   theme_bw()
+
 ```
 
 ```{r daily cumulative boxplot pink even}
@@ -833,30 +888,46 @@ scale_x_date(date_labels="%b", date_breaks="1 month") +
 #| fig-cap: "Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
-dailycum<-read_csv("data/tyee_indices_to2022_pink_even.csv")
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=pink)
 
-gg.daily.pcum<-dailycum%>%select("Date":"2022")%>%
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1970":"2022",names_to="Year",values_to="Pink Salmon")%>%
-  mutate(Year=as.numeric(Year))
+  pivot_longer("1956":"2024",names_to="Year",values_to="Pink Salmon") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Pink Salmon`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink Salmon`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink Salmon`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink Salmon`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
 
-data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
-  mutate(`1M`=cumtrtc/1000000,
-         `1.5M`=cumtrtc/1500000,
-         `2M`=cumtrtc/2000000)%>%
-  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")%>%
-  select(-cumtrtc)
-
-ggplot(gg.daily.pcum,aes(x=Date,y=`Pink Salmon`,group=Date))+
-  geom_boxplot(fill="white",color="grey70",alpha=.5)+
-    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
-    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
-  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
-  #ylim(0,150000)+
-    theme_bw()+
-  ylim(0,.55)+
-  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
   theme(legend.position = "bottom")
+
+  years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
 
 ```
 
@@ -871,19 +942,42 @@ ggplot(gg.daily.pcum,aes(x=Date,y=`Pink Salmon`,group=Date))+
 #| fig-cap: "Daily run for Pink salmon on odd-numbered years through Tyee (uncorrected) from 1957-2023. 2023 run is shown in purple."
 #| fig-height: 5
 
-daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Odd")
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Odd")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"= pink)
 
-gg.daily<-daily%>%
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1957":"2023",names_to="Year",values_to="Pink salmon") %>%
-  mutate(Year=as.numeric(Year),
-         Date = as.Date(paste("2023", MONTH, DAY, sep="-"), "%Y-%m-%d"))
+  pivot_longer("1957":"2023",names_to="Year",values_to="Pink Salmon") %>%
+  mutate(Year=as.numeric(Year)) 
 
-ggplot(gg.daily,aes(x=Date,y=`Pink salmon`,group=Date))+
-  geom_boxplot(fill="white",alpha=.5)+
-      geom_line(data=gg.daily%>%filter(Year==2023),aes(x=Date,y=`Pink salmon`,group=1),
-                color="purple",linewidth=1)+
-scale_x_date(date_labels="%b", date_breaks="1 month") +
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(quantile10 = scales::percent(.1), 
+            quantile25 = scales::percent(.25), 
+            quantile50 = scales::percent(.50),
+            quantile75 = scales::percent(.75),
+            quantile90 = scales::percent(.9),
+            per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink Salmon`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink Salmon`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink Salmon`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))
+
+##################
+
+ggplot(gg.daily, aes(x = Date, y = `Pink Salmon`, group = Date)) +
+  geom_boxplot(color = "grey90") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  #geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = `Pink Salmon`, group = 1, color = "2024 Data"), linewidth = 1) +
+  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile")) + 
   theme_bw()
 ```
 
@@ -896,31 +990,47 @@ scale_x_date(date_labels="%b", date_breaks="1 month") +
 #| fig-cap: "Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
-dailycum<-read_csv("data/tyee_indices_to2023_pink_odd.csv")
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Odd")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=pink)
 
-gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1971":"2023",names_to="Year",values_to="Pink Salmon")%>%
-  mutate(Year=as.numeric(Year))
+  pivot_longer("1957":"2023",names_to="Year",values_to="Pink Salmon") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Pink Salmon`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink Salmon`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink Salmon`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink Salmon`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
 
-data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
-  mutate(`1M`=cumtrtc/1000000,
-         `1.5M`=cumtrtc/1500000,
-         `2M`=cumtrtc/2000000)%>%
-  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")%>%
-  select(-cumtrtc)
-
-
-ggplot(gg.daily.pcum,aes(x=Date,y=`Pink Salmon`,group=Date))+
-  geom_boxplot(fill="white",color="grey70",alpha=.5)+
-    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
-    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
-  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
-  #ylim(0,150000)+
-    theme_bw()+
-  ylim(0,.55)+
-  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  #geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
   theme(legend.position = "bottom")
+
+  years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+
 
 ```
 
@@ -935,19 +1045,40 @@ ggplot(gg.daily.pcum,aes(x=Date,y=`Pink Salmon`,group=Date))+
 #| fig-cap: "Daily run for Coho salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple."
 #| fig-height: 5
 
-daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=coho)
 
-gg.daily<-daily%>%
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1956":"2023",names_to="Year",values_to="Coho") %>%
-  mutate(Year=as.numeric(Year),
-         Date = as.Date(paste("2023", MONTH, DAY, sep="-"), "%Y-%m-%d"))
+  pivot_longer("1956":"2024",names_to="Year",values_to="Coho") %>%
+  mutate(Year=as.numeric(Year)) 
 
-ggplot(gg.daily,aes(x=Date,y=Coho,group=Date))+
-  geom_boxplot(fill="white",alpha=.5)+
-      geom_line(data=gg.daily%>%filter(Year==2023),aes(x=Date,y=Coho,group=1),
-                color="purple",linewidth=1)+
-scale_x_date(date_labels="%b", date_breaks="1 month") +
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(quantile10 = scales::percent(.1), 
+            quantile25 = scales::percent(.25), 
+            quantile50 = scales::percent(.50),
+            quantile75 = scales::percent(.75),
+            quantile90 = scales::percent(.9),
+            per10 = quantile(Coho,.1, na.rm = TRUE), 
+            per25 = quantile(Coho,.25, na.rm = TRUE), 
+            per50 = quantile(Coho,.50, na.rm = TRUE),
+            per75 = quantile(Coho,.75, na.rm = TRUE),
+            per90 = quantile(Coho,.9, na.rm = TRUE))
+
+ggplot(gg.daily, aes(x = Date, y = Coho, group = Date)) +
+  geom_boxplot(color = "grey90") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
+  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
+  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Coho, group = 1, color = "2024 Data"), linewidth = 1) +
+  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
   theme_bw()
 ```
 
@@ -960,31 +1091,47 @@ scale_x_date(date_labels="%b", date_breaks="1 month") +
 #| fig-cap: "Daily cumulative proportion of the Coho run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
-dailycum<-read_csv("data/tyee_indices_to2023_coho.csv")
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=coho)
 
-gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1970":"2023",names_to="Year",values_to="Coho")%>%
-  mutate(Year=as.numeric(Year))
+  pivot_longer("1956":"2024",names_to="Year",values_to="Coho") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(Coho,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Coho,.1, na.rm = TRUE), 
+            per25 = quantile(Coho,.25, na.rm = TRUE), 
+            per50 = quantile(Coho,.50, na.rm = TRUE),
+            per75 = quantile(Coho,.75, na.rm = TRUE),
+            per90 = quantile(Coho,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
 
-data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
-  mutate(`1M`=cumtrtc/1000000,
-         `1.5M`=cumtrtc/1500000,
-         `2M`=cumtrtc/2000000)%>%
-  pivot_longer(`1M`:`2M`,names_to="estimate",values_to="p")%>%
-  select(-cumtrtc)
-
-
-ggplot(gg.daily.pcum,aes(x=Date,y=`Coho`,group=Date))+
-  geom_boxplot(fill="white",color="grey70",alpha=.5)+
-    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
-    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
-  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
-  #ylim(0,150000)+
-    theme_bw()+
-  ylim(0,.55)+
-  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
   theme(legend.position = "bottom")
+
+  years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+
 
 ```
 
