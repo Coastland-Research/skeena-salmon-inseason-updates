@@ -373,12 +373,12 @@ ggplot(tyeemodel,aes(x=Date,y=`Number of Sockeye`/10^6,color=Timing))+
 
 ### Babine Sockeye
 
-The Babine fence started operations on July 9, with no salmon passing through to date. More data will be added to this section shortly.
+The Babine fence started operations on July 9. This section shows information on the 2024 return of large and jack sockeye to the Babine fence.
 
 ```{r}
 #| echo: false
 #| results: asis
-#| include: false
+#| include: true
 
 fence<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Babine")
 fence$Date<-as.Date(fence$Date)
@@ -388,14 +388,14 @@ fence$Date<-as.Date(fence$Date)
 #| label: fig-table2
 #| echo: false
 #| results: asis
-#| include: false
+#| include: true
 
 i<-match(fence.day,fence$Date)
 
 totalrun<-fence$cumrun[i]
 cumjacks<-fence$cumjacks[i]
 
-stat2<-data.frame(`Babine Fence`=c("Large Sockeye","Jacks"),`Total Run`=c(totalrun,cumjacks))
+stat2<-tibble(`Babine Fence`=c("Large Sockeye","Jack Sockeye"),`Total Run`=c(totalrun,cumjacks))
 
 kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River fence to ",fence.date,".")) %>% kable_styling(latex_options = "HOLD_position")
 
@@ -404,21 +404,34 @@ kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River f
 ```{r}
 #| echo: false
 #| warning: false
-#| include: false
+#| include: true
 
 fencedaily<-fence%>%select(Date,`2023 Total Return`=totalrun,`2022 Total Return`=dailyTR.2022,`Average 2011-2021`=`avg11-21`)%>%
   pivot_longer(2:4,values_to="Number of Sockeye",names_to="Type")%>%
   mutate(lt=case_when(Type=="2022 Total Return"|Type=="2023 Total Return"~"Annual",
                       Type=="Average 2011-2021"~"Average"))
 
-b1<-ggplot(fencedaily,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
-  geom_line(size=1.1)+
-  scale_color_manual(values=c("grey50","deepskyblue3","black"))+
-  theme_classic()+
-  grids(linetype = "dashed")+
-  theme(legend.title = element_blank(),legend.position = "top")+
-  guides(linetype="none")+
-  labs(y="# of Large Sockeye")
+
+fencedaily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Sockeye')
+
+fence2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Babine")%>%
+  select(Date,`2024`=totalrun)%>%mutate(Date = as.Date(Date))
+
+daily.babine<-left_join(fencedaily,fence2024,by="Date")%>%
+  select(Date,"Average All Years"="avgall","2000-23 Average"=avg2000.2023,"2020-23 Average"=avg2020.2023,`2024`)%>%
+  pivot_longer("Average All Years":`2024`,names_to="period",values_to="sockeye")%>%
+  mutate(type=ifelse(period=="2024","now","then"))
+
+b1<-ggplot(daily.babine%>%filter(period!="2024"),aes(x=Date,y=sockeye,color=period))+
+  geom_line(linetype="longdash",alpha=.75)+
+  geom_line(data=daily.babine%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
+  geom_point(data=daily.babine%>%filter(period=="2024"),aes(x=Date,color="2024"),
+             size=1,pch=21,fill="purple",alpha=.75)+
+  scale_color_manual(values=c("darkgreen","blue","purple","firebrick"))+
+    theme_bw()+
+  labs(color="",y="Daily Large Sockeye")+
+  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
+  theme(legend.position="bottom")
 
 fencecum<-fence%>%select(Date,`2023 Total Return`=cumrun,`Average 2011-2021`=`cumavg11-21`,`2022 Total Return`=cumTR.2022)%>%
   pivot_longer(2:4,values_to="Number of Sockeye",names_to="Type")%>%
@@ -436,14 +449,16 @@ b2<-ggplot(fencecum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
 ```
 
 ```{r}
-#| label: fig-babine
+#| label: fig-babine-large-sockeye
 #| echo: false
 #| warning: false
-#| fig-cap: "Top panel: Total run to Babine fence for 2023 compared to 2022 (recent highest year) and the average from 2011-2021. Bottom panel: Cumulative estimated run to the Babine fence for 2023 and the average from 2011-2021."
-#| include: false
-#| fig-height: 5.5
+#| fig-cap: "Top panel: Total run of large sockeye (including harvest at the fence) to the Babine fence for 2024 compared to historical and recent averages." 
+#| include: true
+#| fig-height: 5
 
-ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
+#Bottom panel: Cumulative estimated run to the Babine fence for 2024 and the average from 2011-2021."
+b1
+#ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
 
 ```
 
@@ -480,7 +495,7 @@ j2<-ggplot(jackscum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
 ```
 
 ```{r}
-#| label: fig-cumu_bab
+#| label: fig-babine-jack-sockeye
 #| echo: false
 #| warning: false
 #| fig-cap: "Daily (top) and cumulative (bottom) estimated total run of sockeye jacks in 2023 at the Babine Fence versus the 1990-2021 average."
