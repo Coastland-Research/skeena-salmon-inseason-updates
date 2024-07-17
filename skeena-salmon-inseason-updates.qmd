@@ -25,11 +25,11 @@ data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",she
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-15")
-tyee.date<-"July 15"
-fence.day<-as.Date("2024-07-15")
-fence.date<-"July 15"
-today<-as.Date("2024-07-15")
+tyee.day<-as.Date("2024-07-16")
+tyee.date<-"July 16"
+fence.day<-as.Date("2024-07-16")
+fence.date<-"July 16"
+today<-as.Date("2024-07-16")
 ```
 
 # Summary
@@ -42,19 +42,19 @@ today<-as.Date("2024-07-15")
 
 -   We are currently moving towards larger tides again which may influence the migration of salmon into the Skeena River [(Tides section)](#tide-information-at-port-edward)
 
--   To date 509,398 sockeye are estimated to have passed by Tyee, with about 24.2% of the run through to date on average (11.3% if 1-week late, 43.2% if one week early). Sockeye escapement has picked up over the last week however is continuing to be variable (Figures 1-5).
+-   To date 530,085 sockeye are estimated to have passed by Tyee, with about 26.5% of the run through to date on average (12.7% if 1-week late, 46.2% if one week early). Sockeye escapement has picked up over the last week however is continuing to be variable (Figures 1-5).
 
--   We are getting closer to the mid-point of the run, but at \~25% on average timing, it is still early to make predictions on the final TRTC. The excel model was increasing for all 3 run-timings, however it has since stabilized, and is starting to decrease. The current run size prediction is 2.1M on average run-timing (4M if one week late and 1.25M if 1 week early) (Figure 6). The next week will be important as we move towards larger tides and towards the peak of the run, and will tell if we are tracking a 2022, 2023 or a something in between run.
+-   We are getting closer to the mid-point of the run, but at \~25% on average timing, it is still early to make predictions on the final TRTC. The excel model was increasing for all 3 run-timings, however it has since stabilized, and is starting to decrease. The current run size prediction is 2.0M on average run-timing (3.7M if one week late and 1.2M if 1 week early) (Figure 6). The next week will be important as we move towards larger tides and towards the peak of the run, and will tell if we are tracking a 2022, 2023 or a something in between run.
 
 -   Other salmon species figures are in progress to show the 2024 Tyee daily index in comparison with historical index values.
 
--   The Babine fence started operations July 9, with 34 large sockeye through. The Babine section of the report will be updated in the next few days, along with the Babine-Tyee comparison.
+-   The Babine fence started operations July 9, with 162 large sockeye through. The Babine section of the report will be updated in the next few days, along with the Babine-Tyee comparison.
 
 -   The Kitwanga fence started operations last week, with counts starting as of July 10.
 
--   Commercial fishing has started, with an Area C gillnet opening on July 13 - catch numbers will be updated as soon as they are available.
+-   Commercial fishing has started, with an Area C gillnet opening on July 13 - catch numbers will be updated shortly but preliminary sockeye catch is 7,173 pieces.
 
--   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated when information becomes available.
+-   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated shortly.
 
 -   Appendix B includes information on run-timing of specific Skeena Conservation Units/stocks.
 
@@ -651,7 +651,7 @@ ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
   geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Chinook, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Chinook,group=Year),
             linewidth = .5,alpha=.1)+
-  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  scale_color_manual(values=c("grey75","purple","grey50","black"))+
   labs(y="Daily Index",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
@@ -690,7 +690,7 @@ ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
 #| echo: false
 #| message: false
 #| warning: false
-#| fig-cap: "Daily cumulative proportion of the Chinook salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
+#| fig-cap: "Daily cumulative proportion of the Chinook salmon run through Tyee (uncorrected) from 1956-2023. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines."
 #| fig-height: 5
 ####
 # Read the CSV file
@@ -730,7 +730,7 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
             linewidth = .5,alpha=.1)+
-  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  scale_color_manual(values=c("grey75","purple","grey50","black"))+
   labs(y="Cumulative Daily Index",color="")+
   theme_bw()+
   theme(legend.position = "bottom")
