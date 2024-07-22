@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update for SFNTC"
-subtitle: "July 19, 2024"
+subtitle: "July 22, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -25,11 +25,11 @@ data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",she
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-18")
-tyee.date<-"July 18"
-fence.day<-as.Date("2024-07-18")
-fence.date<-"July 18"
-today<-as.Date("2024-07-18")
+tyee.day<-as.Date("2024-07-21")
+tyee.date<-"July 21"
+fence.day<-as.Date("2024-07-21")
+fence.date<-"July 21"
+today<-as.Date("2024-07-21")
 ```
 
 # Summary
@@ -40,23 +40,23 @@ today<-as.Date("2024-07-18")
 
 -   Tyee Test Fishery
 
-    -   Tides influence the migration of salmon into the Skeena River. We are currently moving towards larger tides. [(Tides section)](#tide-information-at-port-edward)
+    -   Tides influence the migration of salmon into the Skeena River. We are currently at large tides for the next few days and hopefully will see that drive large numbers of fish in. [(Tides section)](#tide-information-at-port-edward)
 
-    -   To date 582,080 sockeye are estimated to have passed by Tyee, with about 31.7% of the run through to date on average (16.1% if 1-week late, 52.2% if one week early). Sockeye escapement is not picking up for a large run and is continuing to be variable (Figures 1-5). Including commercial catch, the TRTC is around 590,000 (not including marine food fish and catch from the last few days).
+    -   To date 741,421 sockeye are estimated to have passed by Tyee, with about 40.2% of the run through to date on average (22% if 1-week late, 61% if one week early). Sockeye escapement is not picking up for a large run and is continuing to be variable (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate around 770,000 (not including marine food fish and catch from the last few days).
 
-    -   At \~30% on average timing, we are gaining a bit more confidence in predicting the final TRTC. The excel model was increasing for all 3 run-timings, however it stabilized briefly and now is decreasing significantly, especially in the late timing prediction. This may indicate a weaker mid-run and more average run-timing. We are also falling off the 2023 run now.
+    -   Nearing the midpoint of the run on average timing, we are gaining more confidence in predicting the final TRTC. The excel model increased in early July stabilized briefly, decreased significantly, and has stabilized again. We are still tracking just below the 2023 run.
 
-    -   The current run size prediction is 1.9M on average run-timing (3.3M if one week late and 1.2M if 1 week early) (Figure 6). The next week will be important as we move towards larger tides and towards the peak of the run, and will tell if we are tracking a 2022, 2023 or a something in between run. We should be seeing daily runs of between 30,000 and 60,000 to keep pace with the 2023 return.
+    -   The current run size prediction is 1.9M on average run-timing (3.1M if one week late and 1.3M if 1 week early) (Figure 6). The next week will be important towards the peak of the run on avearge run timing, and will tell if we are tracking a 2022, 2023 or a something in between run. We should be seeing daily runs of between 30,000 and 60,000 to keep pace with the 2023 return.
 
 -   Babine Sockeye
 
-    -   The Babine River fence started operations on July 9th. To date the total run is 939 large sockeye, with 1 jack sockeye to date. More details will be added here shortly along with 2 forecast methods.
+    -   The Babine River fence started operations on July 9th. To date the total run is 10,351 large sockeye, with 166 jack sockeye to date. More details will be added here shortly along with 2 forecast methods.
 
     -   The Babine comparison with Tyee will be updated as more sockeye arrive at the Babine fence.
 
 -   Tyee Other Species
 
-    -   The Chinook index remains very low and available evidence suggests a very low run.
+    -   The Chinook index remains very low and available evidence suggests a very low run and is tracking near the 10th percentile.
 
     -   Only a few chum salmon have started coming through Tyee.
 
@@ -76,7 +76,7 @@ today<-as.Date("2024-07-18")
 
 -   Commercial Fisheries
 
-    -   Commercial fishing has started, with an Area C gillnet opening on July 13 - catch numbers will be updated shortly but preliminary sockeye catch is 7,173 pieces.
+    -   Commercial fishing has started, with an Area C gillnet opening on July 13 - catch numbers will be updated shortly but preliminary sockeye catch is 7,173 pieces. There were also openings over the weekend on July 20 and 21.
 
 -   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated shortly.
 
@@ -227,7 +227,7 @@ ggplot(gg.daily.pcum,aes(x=Date,y=Sockeye,group=Date))+
   geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
   #ylim(0,150000)+
     theme_bw()+
-  ylim(0,.75)+
+  ylim(0,1)+
   labs(color="Estimate",y="Cumulative Proportion of TRTC")+
   theme(legend.position = "bottom")
 
@@ -442,7 +442,7 @@ daily.babine<-left_join(fencedaily,fence2024,by="Date")%>%
   mutate(type=ifelse(period=="2024","now","then"))
 
 b1<-ggplot(daily.babine%>%filter(period!="2024"),aes(x=Date,y=sockeye,color=period))+
-  geom_line(linetype="longdash",alpha=.75)+
+  geom_line(linetype="longdash",alpha=.5)+
   geom_line(data=daily.babine%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
   geom_point(data=daily.babine%>%filter(period=="2024"),aes(x=Date,color="2024"),
              size=1,pch=21,fill="purple",alpha=.75)+
@@ -471,7 +471,7 @@ b2<-ggplot(fencecum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
 #| label: fig-babine-large-sockeye
 #| echo: false
 #| warning: false
-#| fig-cap: "Top panel: Total run of large sockeye (including harvest at the fence) to the Babine fence for 2024 compared to historical and recent averages." 
+#| fig-cap: "Top panel: Total run of large sockeye (including harvest at the fence) to the Babine fence for 2024 (purple line) compared to historical and recent averages." 
 #| include: true
 #| fig-height: 5
 
@@ -566,7 +566,6 @@ ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count))+
   ylim(-250000,1500000)
 
 ```
-
 
 ## Chinook Salmon
 
@@ -939,7 +938,7 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 ```{r daily boxplot pink odd}
 #| label: fig-daily-boxplot-po
 #| echo: false
-#| include: true
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily run for Pink salmon on odd-numbered years through Tyee (uncorrected) from 1957-2023. 2023 run is shown in purple."
@@ -992,7 +991,7 @@ ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
 ```{r daily cumulative boxplot pink odd}
 #| label: fig-daily-cumulative-boxplot-po
 #| echo: false
-#| include: true
+#| include: false
 #| message: false
 #| warning: false
 #| fig-cap: "Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
