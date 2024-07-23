@@ -76,7 +76,7 @@ today<-as.Date("2024-07-21")
 
 -   Commercial Fisheries
 
-    -   Commercial fishing has started, with an Area C gillnet opening on July 13 - catch numbers will be updated shortly but preliminary sockeye catch is 7,173 pieces. There were also openings over the weekend on July 20 and 21.
+    -   Commercial fishing has started, with an Area C gillnet openings on July 13, 20 and 21, and First Nations demonstration fisheries on July 16. Preliminary sockeye catch in the Area C gillnet openings is ~ 37,000.
 
 -   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated shortly.
 
@@ -1396,10 +1396,10 @@ ggarrange(p3,p4,ncol=1,align="v")
 #| echo: false
 #| warning: false
 #| fig-cap: "Catches of sockeye in First Nations Area 4 demo fisheries."
-#| include: false
+#| include: true
 #| fig-height: 4
 
-demo.data<-read_excel("data/tyee and catch and fence in-season updates 2023.xlsx",sheet="demo catches")
+demo.data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="demo catches")
 demo.data$date<-as.Date(demo.data$date)
 
 demo.totals<-demo.data%>%group_by(Nation=nation)%>%summarise("Total Demo Sockeye Catch"=sum(pieces))
@@ -1411,13 +1411,13 @@ total.row<-tibble(Nation="Total","Total Demo Sockeye Catch"=total.demo.catch)
 demo.table<-rbind(demo.totals,total.row)
 
 kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%>%
-  row_spec(3,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
+  row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
 
 ggplot(demo.data,aes(x=date,y=pieces,fill=nation))+
   geom_col()+
   labs(y="Number of Sockeye",x="Date",fill="Nation")+
   theme_bw()+
-  xlim(c(as.Date("2023-07-01"),as.Date("2023-09-01")))
+  xlim(c(as.Date("2024-07-01"),as.Date("2024-09-01")))
 
 
 ```
