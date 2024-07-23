@@ -1389,7 +1389,7 @@ ggarrange(p3,p4,ncol=1,align="v")
 
 ## First Nations Demo Catch
 
--   Will be added when available.
+First Nations CSAF demonstration fisheries opened on July 16 in 2024. The catch associated with each demonstration fishery is determined using the weekly TAC. In 2024, the CTAC approach is being implemented, which means that the catch allocation of the demonstration fishery is no longer directly linked to what the commercial marine fishery catches each week. Catch by Nation/Nation group and gear type are shown below.
 
 ```{r}
 #| label: fig-demo
