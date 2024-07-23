@@ -399,15 +399,11 @@ The Babine fence started operations on July 9. This section shows information on
 #| results: asis
 #| include: true
 
-fence<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Babine")
+fence<-read_excel("data/babine data 2024.xlsx",sheet="Babine")
 fence$Date<-as.Date(fence$Date)
 ```
 
-```{r}
-#| label: fig-table2
-#| echo: false
-#| results: asis
-#| include: true
+```{r babine-sockeye-table,include=TRUE,echo=FALSE}
 
 i<-match(fence.day,fence$Date)
 
@@ -420,71 +416,176 @@ kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River f
 
 ```
 
-```{r}
-#| echo: false
-#| warning: false
-#| include: true
+```{r babine sockeye prep1,include=TRUE,echo=FALSE,warning=FALSE,message=FALSE}
 
-fencedaily<-fence%>%select(Date,`2023 Total Return`=totalrun,`2022 Total Return`=dailyTR.2022,`Average 2011-2021`=`avg11-21`)%>%
-  pivot_longer(2:4,values_to="Number of Sockeye",names_to="Type")%>%
-  mutate(lt=case_when(Type=="2022 Total Return"|Type=="2023 Total Return"~"Annual",
-                      Type=="Average 2011-2021"~"Average"))
+babine.sx.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Sockeye')
 
-
-fencedaily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Sockeye')
-
-fence2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Babine")%>%
+babine.sx.2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
   select(Date,`2024`=totalrun)%>%mutate(Date = as.Date(Date))
 
-daily.babine<-left_join(fencedaily,fence2024,by="Date")%>%
+babine.sx<-left_join(babine.sx.daily,babine.sx.2024,by="Date")%>%
   select(Date,"Average All Years"="avgall","2000-23 Average"=avg2000.2023,"2020-23 Average"=avg2020.2023,`2024`)%>%
   pivot_longer("Average All Years":`2024`,names_to="period",values_to="sockeye")%>%
   mutate(type=ifelse(period=="2024","now","then"))
 
-b1<-ggplot(daily.babine%>%filter(period!="2024"),aes(x=Date,y=sockeye,color=period))+
+b1<-ggplot(babine.sx%>%filter(period!="2024"),aes(x=Date,y=sockeye,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
   geom_line(linetype="longdash",alpha=.5)+
-  geom_line(data=daily.babine%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
-  geom_point(data=daily.babine%>%filter(period=="2024"),aes(x=Date,color="2024"),
+  geom_line(data=babine.sx%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
+  geom_point(data=babine.sx%>%filter(period=="2024"),aes(x=Date,color="2024"),
              size=1,pch=21,fill="purple",alpha=.75)+
-  scale_color_manual(values=c("darkgreen","blue","purple","firebrick"))+
+  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
     theme_bw()+
   labs(color="",y="Daily Large Sockeye")+
   #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
   theme(legend.position="bottom")
 
-fencecum<-fence%>%select(Date,`2023 Total Return`=cumrun,`Average 2011-2021`=`cumavg11-21`,`2022 Total Return`=cumTR.2022)%>%
-  pivot_longer(2:4,values_to="Number of Sockeye",names_to="Type")%>%
-  mutate(lt=case_when(Type=="2022 Total Return"|Type=="2023 Total Return"~"Annual",
-                      Type=="Average 2011-2021"~"Average"))
+babine.sx.cum<-babine.sx%>%
+  group_by(period)%>%
+  mutate(cum_sum=cumsum(replace_na(sockeye,0)))
 
-b2<-ggplot(fencecum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
-  geom_line(size=1.1)+
-  scale_color_manual(values=c("grey50","deepskyblue3","black"))+
-  theme_classic()+
-  grids(linetype = "dashed")+
-  theme(legend.title = element_blank(),legend.position = "top")+
-  guides(linetype="none")
+b2<-ggplot(babine.sx.cum%>%filter(period!="2024"),aes(x=Date,y=cum_sum,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
+  geom_line(linetype="longdash",alpha=.5)+
+  geom_line(data=babine.sx.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),alpha=.75)+
+  geom_point(data=babine.sx.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),
+             size=1,pch=21,fill="purple",alpha=.75)+
+  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
+    theme_bw()+
+  labs(color="",y="Cumulative Large Sockeye")+
+  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
+  theme(legend.position="bottom")
 
 ```
 
-```{r}
+```{r babine large sockeye daily and cum}
 #| label: fig-babine-large-sockeye
 #| echo: false
 #| warning: false
-#| fig-cap: "Top panel: Total run of large sockeye (including harvest at the fence) to the Babine fence for 2024 (purple line) compared to historical and recent averages." 
+#| fig-cap: "Top panel: Total run of large sockeye (including harvest at the fence) to the Babine fence for 2024 (purple line) compared to historical and recent averages. Bottom panel: Cumulative estimated run to the Babine fence (including harvest at the fence) for 2024 (purple line) compared to historical and recent averages." 
 #| include: true
+#| fig-height: 7
+
+ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
+
+```
+
+The following figures show the daily and cumulative run of sockeye estimated to the Babine fence for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Babine sockeye.
+
+```{r babine recent daily estimates}
+#| label: fig-babine-recent-daily
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Daily run of sockeye to the Babine fence since 2020. 2024 run is shown in purple."
+
+babine.sx.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Sockeye')
+
+babine.sx.2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,`2024`=totalrun)%>%mutate(Date = as.Date(Date))
+
+babine.sx.2<-left_join(babine.sx.daily,babine.sx.2024,by="Date")%>%
+  select(Date,"1946":"2023","2024")%>%
+  pivot_longer("1946":"2024",names_to="year",values_to="sockeye")%>%
+  filter(year>=2020)%>%
+  mutate(period=ifelse(year==2024,"now","then"))
+
+ggplot(babine.sx.2,aes(x=Date,y=sockeye,color=factor(year),linewidth=period,alpha=period))+
+  geom_line()+
+  scale_linewidth_manual(values=c(2,1))+
+  scale_alpha_manual(values=c(1,.5))+
+  theme_bw()+
+  guides(alpha="none",linewidth="none")+
+  labs(color="",y="Daily Large Sockeye")+
+  theme(legend.position = "bottom")
+
+```
+
+```{r babine recent cumulative daily estimates}
+#| label: fig-babine-recent-cum
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Daily cumulative run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."
 #| fig-height: 5
 
-#Bottom panel: Cumulative estimated run to the Babine fence for 2024 and the average from 2011-2021."
-b1
-#ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
+babine.sx.2<-left_join(babine.sx.daily,babine.sx.2024,by="Date")%>%
+  select(Date,"1946":"2023","2024")%>%
+  pivot_longer("1946":"2024",names_to="year",values_to="sockeye")%>%
+  filter(year>=2020&year<2024|year==2024&Date<today)%>%
+  mutate(period=ifelse(year==2024,"now","then"))%>%
+  group_by(year)%>%
+  mutate(cum_sum=cumsum(replace_na(sockeye,0)))
+
+ggplot(babine.sx.2,aes(x=Date,y=cum_sum,color=factor(year),linewidth=period,alpha=period))+
+  geom_line()+
+  scale_linewidth_manual(values=c(2,1))+
+  scale_alpha_manual(values=c(1,.5))+
+  theme_bw()+
+  guides(alpha="none",linewidth="none")+
+  labs(color="",y="Cumulative Large Sockeye")+
+  theme(legend.position = "bottom")
+
+```
+
+
+```{r babine sockeye prep2,include=TRUE,echo=FALSE,warning=FALSE,message=FALSE}
+
+babine.jacks.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Jack Sockeye')
+
+babine.jacks.2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,`2024`=dailytotaljacks)%>%mutate(Date = as.Date(Date))
+
+babine.jacks<-left_join(babine.jacks.daily,babine.jacks.2024,by="Date")%>%
+  rowwise()%>%
+  mutate("Average All Years"=mean(c_across(c(`1946`:`2023`)),na.rm=TRUE),
+         "2000-23 Average"=mean(c_across(c(`2000`:`2023`)),na.rm=TRUE),
+         "2020-23 Average"=mean(c_across(c(`2020`:`2023`)),na.rm=TRUE))%>%
+  select(Date,"Average All Years","2000-23 Average","2020-23 Average",`2024`)%>%
+  pivot_longer("Average All Years":`2024`,names_to="period",values_to="sockeye")%>%
+  mutate(type=ifelse(period=="2024","now","then"))
+
+#names(babine.jacks)
+
+bj1<-ggplot(babine.jacks%>%filter(period!="2024"),aes(x=Date,y=sockeye,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average"))))+
+  geom_line(linetype="longdash",alpha=.5)+
+  geom_line(data=babine.jacks%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
+  geom_point(data=babine.jacks%>%filter(period=="2024"),aes(x=Date,color="2024"),
+             size=1,pch=21,fill="purple",alpha=.75)+
+  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
+    theme_bw()+
+  labs(color="",y="Daily Jack Sockeye")+
+  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
+  theme(legend.position="bottom")
+
+babine.jacks.cum<-babine.jacks%>%
+  group_by(period)%>%
+  mutate(cum_sum=cumsum(replace_na(sockeye,0)))
+
+bj2<-ggplot(babine.jacks.cum%>%filter(period!="2024"),aes(x=Date,y=cum_sum,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
+  geom_line(linetype="longdash",alpha=.5)+
+  geom_line(data=babine.jacks.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),alpha=.75)+
+  geom_point(data=babine.jacks.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),
+             size=1,pch=21,fill="purple",alpha=.75)+
+  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
+    theme_bw()+
+  labs(color="",y="Cumulative Jack Sockeye")+
+  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
+  theme(legend.position="bottom")
 
 ```
 
 ```{r}
+#| label: fig-babine-jacks-sockeye-vs-historical
 #| echo: false
 #| warning: false
-#| include: false
+#| fig-cap: "Top panel: Total run of jack sockeye (including harvest at the fence) to the Babine fence for 2024 (purple line) compared to historical and recent averages. Bottom panel: Cumulative estimated run of jack sockeye to the Babine fence (including harvest at the fence) for 2024 (purple line) compared to historical and recent averages." 
+#| include: true
+#| fig-height: 7
+
+ggarrange(bj1,bj2,ncol=1,align="v",common.legend = TRUE)
+
+```
+
+```{r babine jacks prep,include=FALSE,echo=FALSE,message=FALSE,warning=FALSE}
 
 fencejacks<-fence%>%select(Date,jacks=dailytotaljacks,`jack90-21`)%>%
   pivot_longer(2:3,values_to="Number of Sockeye",names_to="Type")%>%
@@ -1391,8 +1492,7 @@ ggarrange(p3,p4,ncol=1,align="v")
 
 First Nations CSAF demonstration fisheries opened on July 16 in 2024. The catch associated with each demonstration fishery is determined using the weekly TAC. In 2024, the CTAC approach is being implemented, which means that the catch allocation of the demonstration fishery is no longer directly linked to what the commercial marine fishery catches each week. Catch by Nation/Nation group and gear type are shown below.
 
-```{r}
-#| label: fig-demo
+```{r FNs demo fishery catches prep}
 #| echo: false
 #| warning: false
 #| fig-cap: "Catches of sockeye in First Nations Area 4 demo fisheries."
@@ -1409,10 +1509,21 @@ total.demo.catch=sum(demo.totals$`Total Demo Sockeye Catch`)
 total.row<-tibble(Nation="Total","Total Demo Sockeye Catch"=total.demo.catch)
 
 demo.table<-rbind(demo.totals,total.row)
+```
 
+
+```{r FNs demo fishery catch table}
+#| echo: false
+#| warning: false
+#| fig-cap: "Catches of sockeye in First Nations Area 4 demo fisheries."
+#| include: true
+#| fig-height: 4
 kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%>%
   row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
+```
 
+
+```{r FNs demo fishery catch figure}
 ggplot(demo.data,aes(x=date,y=pieces,fill=nation))+
   geom_col()+
   labs(y="Number of Sockeye",x="Date",fill="Nation")+

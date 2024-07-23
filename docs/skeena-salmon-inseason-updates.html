@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -386,7 +420,9 @@ Figure&nbsp;6: Forecasted final TRTC of Skeena sockeye based on the simple scala
 <section id="babine-sockeye" class="level3">
 <h3 class="anchored" data-anchor-id="babine-sockeye">Babine Sockeye</h3>
 <p>The Babine fence started operations on July 9. This section shows information on the 2024 return of large and jack sockeye to the Babine fence.</p>
-<table class="table caption-top" data-quarto-postprocess="true">
+<div class="cell">
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <caption>Cumulative large sockeye and jacks to Babine River fence to July 21.</caption>
 <thead>
 <tr class="header">
@@ -407,6 +443,8 @@ Figure&nbsp;6: Forecasted final TRTC of Skeena sockeye based on the simple scala
 </table>
 
 
+</div>
+</div>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-babine-large-sockeye" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -415,7 +453,50 @@ Figure&nbsp;6: Forecasted final TRTC of Skeena sockeye based on the simple scala
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-babine-large-sockeye-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-babine-large-sockeye-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Top panel: Total run of large sockeye (including harvest at the fence) to the Babine fence for 2024 (purple line) compared to historical and recent averages.
+Figure&nbsp;7: Top panel: Total run of large sockeye (including harvest at the fence) to the Babine fence for 2024 (purple line) compared to historical and recent averages. Bottom panel: Cumulative estimated run to the Babine fence (including harvest at the fence) for 2024 (purple line) compared to historical and recent averages.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The following figures show the daily and cumulative run of sockeye estimated to the Babine fence for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Babine sockeye.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-babine-recent-daily" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-babine-recent-daily-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="skeena-salmon-inseason-updates_files/figure-html/fig-babine-recent-daily-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-babine-recent-daily-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Daily run of sockeye to the Babine fence since 2020. 2024 run is shown in purple.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-babine-recent-cum" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-babine-recent-cum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="skeena-salmon-inseason-updates_files/figure-html/fig-babine-recent-cum-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-babine-recent-cum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Daily cumulative run through Tyee (uncorrected) since 2020. 2024 run is shown in purple.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-babine-jacks-sockeye-vs-historical" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-babine-jacks-sockeye-vs-historical-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="skeena-salmon-inseason-updates_files/figure-html/fig-babine-jacks-sockeye-vs-historical-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-babine-jacks-sockeye-vs-historical-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Top panel: Total run of jack sockeye (including harvest at the fence) to the Babine fence for 2024 (purple line) compared to historical and recent averages. Bottom panel: Cumulative estimated run of jack sockeye to the Babine fence (including harvest at the fence) for 2024 (purple line) compared to historical and recent averages.
 </figcaption>
 </figure>
 </div>
@@ -439,7 +520,7 @@ Figure&nbsp;7: Top panel: Total run of large sockeye (including harvest at the f
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-boxplot-cn-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-boxplot-cn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Daily run for Chinook salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple.
+Figure&nbsp;11: Daily run for Chinook salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple.
 </figcaption>
 </figure>
 </div>
@@ -453,7 +534,7 @@ Figure&nbsp;8: Daily run for Chinook salmon through Tyee (uncorrected) from 1956
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-cumulative-boxplot-cn-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-cumulative-boxplot-cn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: Daily cumulative proportion of the Chinook salmon run through Tyee (uncorrected) from 1956-2023. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines.
+Figure&nbsp;12: Daily cumulative proportion of the Chinook salmon run through Tyee (uncorrected) from 1956-2023. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines.
 </figcaption>
 </figure>
 </div>
@@ -470,7 +551,7 @@ Figure&nbsp;9: Daily cumulative proportion of the Chinook salmon run through Tye
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-boxplot-cm-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-boxplot-cm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: Daily run for Chum salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple.
+Figure&nbsp;13: Daily run for Chum salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple.
 </figcaption>
 </figure>
 </div>
@@ -484,7 +565,7 @@ Figure&nbsp;10: Daily run for Chum salmon through Tyee (uncorrected) from 1956-2
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-cumulative-boxplot-cm-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-cumulative-boxplot-cm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: Daily cumulative proportion of the Chum salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date.
+Figure&nbsp;14: Daily cumulative proportion of the Chum salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date.
 </figcaption>
 </figure>
 </div>
@@ -503,7 +584,7 @@ Figure&nbsp;11: Daily cumulative proportion of the Chum salmon run through Tyee 
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-boxplot-pe-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-boxplot-pe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12: Daily run for Pink salmon on even-numbered years through Tyee (uncorrected) from 1956-2022. 2022 run is shown in purple.
+Figure&nbsp;15: Daily run for Pink salmon on even-numbered years through Tyee (uncorrected) from 1956-2022. 2022 run is shown in purple.
 </figcaption>
 </figure>
 </div>
@@ -517,7 +598,7 @@ Figure&nbsp;12: Daily run for Pink salmon on even-numbered years through Tyee (u
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-cumulative-boxplot-pe-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-cumulative-boxplot-pe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13: Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date.
+Figure&nbsp;16: Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date.
 </figcaption>
 </figure>
 </div>
@@ -538,7 +619,7 @@ Figure&nbsp;13: Daily cumulative proportion of the Pink salmon run through Tyee 
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-boxplot-co-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-boxplot-co-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14: Daily run for Coho salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple.
+Figure&nbsp;17: Daily run for Coho salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple.
 </figcaption>
 </figure>
 </div>
@@ -552,7 +633,7 @@ Figure&nbsp;14: Daily run for Coho salmon through Tyee (uncorrected) from 1956-2
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-cumulative-boxplot-co-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-cumulative-boxplot-co-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15: Daily cumulative proportion of the Coho run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date.
+Figure&nbsp;18: Daily cumulative proportion of the Coho run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date.
 </figcaption>
 </figure>
 </div>
@@ -569,7 +650,7 @@ Figure&nbsp;15: Daily cumulative proportion of the Coho run through Tyee (uncorr
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-boxplot-st-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-boxplot-st-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;16: Daily run for steelhead through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple.
+Figure&nbsp;19: Daily run for steelhead through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple.
 </figcaption>
 </figure>
 </div>
@@ -583,7 +664,7 @@ Figure&nbsp;16: Daily run for steelhead through Tyee (uncorrected) from 1956-202
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-daily-cumulative-boxplot-st-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daily-cumulative-boxplot-st-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17: Daily cumulative proportion of the steelhead run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date.
+Figure&nbsp;20: Daily cumulative proportion of the steelhead run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date.
 </figcaption>
 </figure>
 </div>
@@ -619,7 +700,7 @@ Figure&nbsp;17: Daily cumulative proportion of the steelhead run through Tyee (u
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-skeena-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-skeena-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18: Top panel: The Skeena sockeye harvest control rule based on TRTC. Bottom panel: Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model.
+Figure&nbsp;21: Top panel: The Skeena sockeye harvest control rule based on TRTC. Bottom panel: Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model.
 </figcaption>
 </figure>
 </div>
@@ -633,7 +714,7 @@ Figure&nbsp;18: Top panel: The Skeena sockeye harvest control rule based on TRTC
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-gill-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gill-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19: Top panel: Area 4 gillnet and seine sockeye catch. Bottom panel: CPUE of gillnet and seine based on daily catch/daily effort. Note that some values are preliminary.
+Figure&nbsp;22: Top panel: Area 4 gillnet and seine sockeye catch. Bottom panel: CPUE of gillnet and seine based on daily catch/daily effort. Note that some values are preliminary.
 </figcaption>
 </figure>
 </div>
@@ -644,9 +725,7 @@ Figure&nbsp;19: Top panel: Area 4 gillnet and seine sockeye catch. Bottom panel:
 <h2 class="anchored" data-anchor-id="first-nations-demo-catch">First Nations Demo Catch</h2>
 <p>First Nations CSAF demonstration fisheries opened on July 16 in 2024. The catch associated with each demonstration fishery is determined using the weekly TAC. In 2024, the CTAC approach is being implemented, which means that the catch allocation of the demonstration fishery is no longer directly linked to what the commercial marine fishery catches each week. Catch by Nation/Nation group and gear type are shown below.</p>
 <div class="cell">
-<div id="fig-demo-1" class="cell-output-display quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-demo-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 Total Area 4 First Nations demo catches of sockeye.
@@ -680,21 +759,19 @@ Total
 </tr>
 </tbody>
 </table>
+<p>Catches of sockeye in First Nations Area 4 demo fisheries.</p>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-demo-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20: Catches of sockeye in First Nations Area 4 demo fisheries.
-</figcaption>
-</figure>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(demo.data,<span class="fu">aes</span>(<span class="at">x=</span>date,<span class="at">y=</span>pieces,<span class="at">fill=</span>nation))<span class="sc">+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()<span class="sc">+</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Number of Sockeye"</span>,<span class="at">x=</span><span class="st">"Date"</span>,<span class="at">fill=</span><span class="st">"Nation"</span>)<span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2024-07-01"</span>),<span class="fu">as.Date</span>(<span class="st">"2024-09-01"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-demo-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-demo-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="skeena-salmon-inseason-updates_files/figure-html/fig-demo-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-demo-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21: Catches of sockeye in First Nations Area 4 demo fisheries.
-</figcaption>
+<div>
+<figure class="figure">
+<p><img src="skeena-salmon-inseason-updates_files/figure-html/FNs demo fishery catch figure-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -723,7 +800,7 @@ Figure&nbsp;21: Catches of sockeye in First Nations Area 4 demo fisheries.
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-boxp-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boxp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;22: Boxplots of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work. The filled area of the box represents 50% of the run.
+Figure&nbsp;23: Boxplots of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work. The filled area of the box represents 50% of the run.
 </figcaption>
 </figure>
 </div>
@@ -737,7 +814,7 @@ Figure&nbsp;22: Boxplots of stock specific run-timing through Tyee. Based on 200
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-hist-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;23: Histograms of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work.
+Figure&nbsp;24: Histograms of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work.
 </figcaption>
 </figure>
 </div>
@@ -751,7 +828,7 @@ Figure&nbsp;23: Histograms of stock specific run-timing through Tyee. Based on 2
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-dens-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24: Density plot of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work.
+Figure&nbsp;25: Density plot of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work.
 </figcaption>
 </figure>
 </div>
