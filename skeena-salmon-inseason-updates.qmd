@@ -27,8 +27,8 @@ data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",she
 ```{r set days, echo=FALSE}
 tyee.day<-as.Date("2024-07-24")
 tyee.date<-"July 24"
-fence.day<-as.Date("2024-07-23")
-fence.date<-"July 23"
+fence.day<-as.Date("2024-07-24")
+fence.date<-"July 24"
 today<-as.Date("2024-07-24")
 ```
 
@@ -50,7 +50,7 @@ today<-as.Date("2024-07-24")
 
 -   Babine Sockeye
 
-    -   The Babine River fence started operations on July 9th. To July 22 the total run is 21,800 large sockeye, with 366 jack sockeye to date. More details will be added here shortly along with 2 forecast methods.
+    -   The Babine River fence started operations on July 9th. To date the total run is 60,275 large sockeye, with 1,964 jack sockeye to date. More details will be added here shortly along with 2 forecast methods.
 
     -   The Babine comparison with Tyee will be updated as more sockeye arrive at the Babine fence.
 
@@ -1044,6 +1044,8 @@ ggarrange(dailyplot_p_e,cumplot_p_e,align="v",ncol=1,common.legend = TRUE)
 
 ### Odd years
 
+-   Will be updated next year!
+
 ```{r daily boxplot pink odd}
 #| label: fig-daily-boxplot-po
 #| echo: false
@@ -1151,6 +1153,7 @@ cumplot_p_o <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 ```{r}
 #| label: fig-plots-pink_o
 #| echo: false
+#| include: false
 #| results: asis
 #| message: false
 #| warning: false
@@ -1427,11 +1430,25 @@ ggarrange(dailyplot_st,cumplot_st,align="v",ncol=1,common.legend = TRUE)
 #| include: false
 ```
 
-# Catch
+# Catch and Fisheries
+
+## Fishery Openings
+
+```{r table of skeena fisheries openings, echo=FALSE, warning=FALSE, include=TRUE}
+
+openings<-read_excel("data/fisheries openings 2024.xlsx", sheet = "Skeena")
+
+kable(openings,caption="Fisheries openings in the Skeena area for 2024")%>%
+kable_styling(latex_options = "HOLD_position")
+
+
+```
 
 ## Area 4 Commercial Marine Catch
 
-The following section presents available information on catches in the Area 4 commercial marine gillnet and seine fisheries targeting sockeye at the mouth of the Skeena River (generally sub-areas 4-12 and 4-15). Information will be preliminary until catch is reviewed by DFO staff. First Nations demonstration fisheries catch is shown in the next section.
+The following section shows the harvest control rule for commercial sockeye fisheries in the Skeena, the estimated TAC for various run-timings, and the available information on catches in the Area 4 commercial marine gillnet and seine fisheries targeting sockeye at the mouth of the Skeena River (generally sub-areas 4-12 and 4-15). Information will be preliminary until catch is reviewed by DFO staff.
+
+First Nations demonstration fisheries catch is shown in the following section.
 
 ```{r catch prep and figures}
 #| echo: false
@@ -1526,6 +1543,7 @@ ggarrange(p1,p2,ncol=1,align="v")
 
 ggarrange(p3,p4,ncol=1,align="v")
 ```
+
 
 ## First Nations Demo Catch
 
