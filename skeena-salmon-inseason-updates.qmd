@@ -676,7 +676,6 @@ ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count))+
 #| echo: false
 #| message: false
 #| warning: false
-#| fig-cap: "Daily run for Chinook salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-MONTH,-DAY)
@@ -710,7 +709,7 @@ gg.daily.quants<-gg.daily %>%
 years_out<-c("2008","2009","2010")
 gg.daily<-gg.daily%>%filter(!Year%in%years_out)
 
-ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
+dailyplot_cn <- ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
   geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Chinook, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Chinook,group=Year),
@@ -721,30 +720,6 @@ ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
   theme(legend.position = "bottom")+
   ylim(0,10)
 
-#gg.daily.quants<-gg.daily %>%
- # group_by(Date) %>%
-#  summarise(quantile10 = scales::percent(.1), 
- #           quantile25 = scales::percent(.25), 
- #           quantile50 = scales::percent(.50),
- #           quantile75 = scales::percent(.75),
- #           quantile90 = scales::percent(.9),
- #           per10 = quantile(Coho,.1, na.rm = TRUE), 
- #           per25 = quantile(Coho,.25, na.rm = TRUE), 
- #           per50 = quantile(Coho,.50, na.rm = TRUE),
- #           per75 = quantile(Coho,.75, na.rm = TRUE),
- #           per90 = quantile(Coho,.9, na.rm = TRUE))
-
-
-#ggplot(gg.daily, aes(x = Date, y = Coho, group = Date)) +
-#  geom_boxplot(color = "grey90") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per10, group = quantile10, #color = "10th Percentile"), linewidth = 0.4, linetype = "dashed") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per25, group = quantile25, #color = "25th Percentile"), linewidth = 0.6, linetype = "dashed") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per50, group = quantile50, #color = "50th Percentile"), linewidth = 1, linetype = "dashed") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per75, group = quantile75, #color = "75th Percentile"), linewidth = 0.6, linetype = "dashed") +
-#  geom_line(data = gg.daily.quants, aes(x = Date, y = per90, group = quantile90, #color = "90th Percentile"), linewidth = 0.4, linetype = "dashed") +
-#  geom_line(data = gg.daily %>% filter(Year == 2024), aes(x = Date, y = Coho, #group = 1, color = "2024 Data"), linewidth = 1) +
-#  scale_color_manual(name = "", values = c("10th Percentile" = "#1F968BFF", "25th Percentile" = "#95D840FF", "50th Percentile" = "#39568CFF", "75th Percentile" = "#95D840FF", "90th Percentile" = "#1F968BFF", "2024 Data" = "purple"), breaks = c("10th Percentile", "25th Percentile", "50th Percentile", "75th Percentile", "90th Percentile", "2024 Data")) + 
-#  theme_bw()
 
 ```
 
@@ -754,7 +729,6 @@ ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
 #| echo: false
 #| message: false
 #| warning: false
-#| fig-cap: "Daily cumulative proportion of the Chinook salmon run through Tyee (uncorrected) from 1956-2023. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines."
 #| fig-height: 5
 ####
 # Read the CSV file
@@ -789,7 +763,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
 years_out<-c("2008","2009","2010")
 gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
   
-ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+cumplot_cn <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
@@ -812,6 +786,19 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 
 ```
 
+```{r}
+#| label: fig-plots-chinook
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for Chinook salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Chinook salmon run through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_cn,cumplot_cn,align="v",ncol=1,common.legend = TRUE)
+
+```
+
 ## Chum Salmon
 
 ```{r daily boxplot chum}
@@ -820,7 +807,6 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 #| include: true
 #| message: false
 #| warning: false
-#| fig-cap: "Daily run for Chum salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")%>%select(-MONTH,-DAY)
@@ -854,7 +840,7 @@ gg.daily.quants<-gg.daily %>%
   years_out<-c("2008","2009","2010")
   gg.daily<-gg.daily%>%filter(!Year%in%years_out)
   
-ggplot(gg.daily,aes(x=Date, y=Chum,group=Date))+
+dailyplot_ch <- ggplot(gg.daily,aes(x=Date, y=Chum,group=Date))+
   geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Chum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Chum,group=Year),
@@ -873,7 +859,6 @@ ggplot(gg.daily,aes(x=Date, y=Chum,group=Date))+
 #| include: true
 #| message: false
 #| warning: false
-#| fig-cap: "Daily cumulative proportion of the Chum salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
 # Read the CSV file
@@ -910,7 +895,7 @@ years_out<-c("2008","2009","2010")
 gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
   
   
-ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+cumplot_ch <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
@@ -921,6 +906,18 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   theme(legend.position = "bottom")+
   ylim(0,2000)
 
+```
+
+```{r}
+#| label: fig-plots-chum
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for Chum salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Chum salmon run through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_ch,cumplot_ch,align="v",ncol=1,common.legend = TRUE)
 
 ```
 
@@ -934,14 +931,13 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 #| include: true
 #| message: false
 #| warning: false
-#| fig-cap: "Daily run for Pink salmon on even-numbered years through Tyee (uncorrected) from 1956-2022. 2022 run is shown in purple."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")%>%select(-MONTH,-DAY)
 cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=pink)
 
-daily.index<-left_join(daily,cn2024,by="Date")%>%
+daily.index<-left_join(daily,cn2024,by="Date") %>%
   mutate(Date=as.Date(Date))
 
 gg.daily<-daily.index%>%
@@ -969,7 +965,7 @@ gg.daily.quants<-gg.daily %>%
  years_out<-c("2008","2009","2010")
   gg.daily<-gg.daily%>%filter(!Year%in%years_out)
   
-ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
+dailyplot_p_e<- ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
   geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Pink Salmon`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily %>% filter(Year <2023), aes(x = Date, y = `Pink Salmon`,group=Year),
@@ -988,7 +984,6 @@ ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
 #| include: true
 #| message: false
 #| warning: false
-#| fig-cap: "Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")%>%select(-MONTH,-DAY)
@@ -1021,7 +1016,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
  years_out<-c("2008","2009","2010")
   gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
   
-ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+cumplot_p_e <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
@@ -1034,6 +1029,19 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 
 ```
 
+```{r}
+#| label: fig-plots-pink_e
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for even-year Pink salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Pink salmon run on even-numbered years through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_p_e,cumplot_p_e,align="v",ncol=1,common.legend = TRUE)
+
+```
+
 ### Odd years
 
 ```{r daily boxplot pink odd}
@@ -1042,7 +1050,6 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 #| include: false
 #| message: false
 #| warning: false
-#| fig-cap: "Daily run for Pink salmon on odd-numbered years through Tyee (uncorrected) from 1957-2023. 2023 run is shown in purple."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Odd")%>%select(-MONTH,-DAY)
@@ -1077,7 +1084,7 @@ gg.daily.quants<-gg.daily %>%
 years_out<-c("2008","2009","2010")
   gg.daily<-gg.daily%>%filter(!Year%in%years_out)
 
-ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
+dailyplot_p_o <- ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
   geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily %>% filter(Year == 2023&Date<=today), aes(x = Date, y = `Pink Salmon`, group = 1, color = "2023 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily %>% filter(Year <2023), aes(x = Date, y = `Pink Salmon`,group=Year),
@@ -1095,7 +1102,6 @@ ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
 #| include: false
 #| message: false
 #| warning: false
-#| fig-cap: "Daily cumulative proportion of the Pink salmon run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Odd")%>%select(-MONTH,-DAY)
@@ -1129,7 +1135,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   years_out<-c("2008","2009","2010")
   gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
   
-ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+cumplot_p_o <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   #geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
@@ -1142,6 +1148,19 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 
 ```
 
+```{r}
+#| label: fig-plots-pink_o
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for odd-year Pink salmon through Tyee (uncorrected) from 1957-2023. 2023 run is shown in purple. Bottom panel: Cumulative daily index of the Pink salmon run on odd-numbered years through Tyee (uncorrected) from 1957-2023. The 2023 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_p_o,cumplot_p_o,align="v",ncol=1,common.legend = TRUE)
+
+```
+
 ## Coho Salmon
 
 ```{r daily boxplot coho}
@@ -1150,7 +1169,6 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 #| include: true
 #| message: false
 #| warning: false
-#| fig-cap: "Daily run for Coho salmon through Tyee (uncorrected) from 1956-2023. 2023 run is shown in purple."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
@@ -1185,7 +1203,7 @@ gg.daily.quants<-gg.daily %>%
   years_out<-c("2008","2009","2010")
   gg.daily<-gg.daily%>%filter(!Year%in%years_out)
   
-ggplot(gg.daily,aes(x=Date, y=Coho,group=Date))+
+dailyplot_co <- ggplot(gg.daily,aes(x=Date, y=Coho,group=Date))+
   geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Coho, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Coho,group=Year),
@@ -1204,7 +1222,6 @@ ggplot(gg.daily,aes(x=Date, y=Coho,group=Date))+
 #| include: true
 #| message: false
 #| warning: false
-#| fig-cap: "Daily cumulative proportion of the Coho run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
@@ -1238,7 +1255,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   years_out<-c("2008","2009","2010")
   gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
   
-ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+cumplot_co <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
@@ -1248,7 +1265,18 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   theme_bw()+
   theme(legend.position = "bottom")
 
+```
 
+```{r}
+#| label: fig-plots-coho
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for Coho salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Coho salmon run through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_co,cumplot_co,align="v",ncol=1,common.legend = TRUE)
 
 ```
 
@@ -1260,7 +1288,6 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 #| include: true
 #| message: false
 #| warning: false
-#| fig-cap: "Daily run for steelhead through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Steelhead")%>%select(-MONTH,-DAY)
@@ -1295,7 +1322,7 @@ gg.daily.quants<-gg.daily %>%
   years_out<-c("2008","2009","2010")
   gg.daily<-gg.daily%>%filter(!Year%in%years_out)
   
-ggplot(gg.daily,aes(x=Date, y=Steelhead,group=Date))+
+dailyplot_st <- ggplot(gg.daily,aes(x=Date, y=Steelhead,group=Date))+
   geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Steelhead, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Steelhead,group=Year),
@@ -1314,7 +1341,6 @@ ggplot(gg.daily,aes(x=Date, y=Steelhead,group=Date))+
 #| include: true
 #| message: false
 #| warning: false
-#| fig-cap: "Daily cumulative proportion of the steelhead run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Steelhead")%>%select(-MONTH,-DAY)
@@ -1348,7 +1374,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   years_out<-c("2008","2009","2010")
   gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
   
-ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+cumplot_st <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
@@ -1357,6 +1383,19 @@ ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Daily Index",color="")+
   theme_bw()+
   theme(legend.position = "bottom")
+
+```
+
+```{r}
+#| label: fig-plots-steelhead
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for Steelhead salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Steelhead salmon run through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_st,cumplot_st,align="v",ncol=1,common.legend = TRUE)
 
 ```
 
