@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update for SFNTC"
-subtitle: "July 25, 2024"
+subtitle: "July 26, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -25,11 +25,11 @@ data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",she
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-24")
-tyee.date<-"July 24"
+tyee.day<-as.Date("2024-07-25")
+tyee.date<-"July 25"
 fence.day<-as.Date("2024-07-24")
 fence.date<-"July 24"
-today<-as.Date("2024-07-24")
+today<-as.Date("2024-07-25")
 ```
 
 # Summary
@@ -42,11 +42,11 @@ today<-as.Date("2024-07-24")
 
     -   Tides influence the migration of salmon into the Skeena River. We are currently at large tides for the next few days and hopefully will see that drive large numbers of fish in. [(Tides section)](#tide-information-at-port-edward)
 
-    -   To date 1,002,258 sockeye are estimated to have passed by Tyee, with about 49.1% of the run through to date on average (29% if 1-week late, 69% if one week early). Sockeye escapement is not picking up for a large run and is continuing to be variable (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate around 1,037,000 (not including marine food fish and catch from the last few days).
+    -   To date 1,106,184 sockeye are estimated to have passed by Tyee, with about 52% of the run through to date on average (32% if 1-week late, 72% if one week early). Sockeye escapement is not picking up for a large run and is continuing to be variable (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate around 1,144,000 (not including marine food fish and catch from the last few days).
 
     -   We are at the midpoint of the run on average timing, and gaining more confidence in predicting the final TRTC. The excel model increased in early July stabilized briefly, decreased significantly, and stabilized again, and is now slightly increasing with the last 3 days of large runs. We are now tracking slightly greater than the 2023 run.
 
-    -   The current run size prediction is 2.1M on average run-timing (3.3M if one week late and 1.6M if 1 week early) (Figure 6). The next week will be important towards the peak of the run on avearge run timing, and will tell if we are tracking a 2022, 2023 or a something in between run. We should be seeing daily runs of aroudn 50-100k to keep pace with the 2023 return.
+    -   The current run size prediction is 2.2M on average run-timing (3.3M if one week late and 1.7M if 1 week early) (Figure 6). The next week will be important towards the peak of the run on avearge run timing, and will tell if we are tracking a 2022, 2023 or a something in between run. We should be seeing daily runs of aroudn 50-100k to keep pace with the 2023 return.
 
 -   Babine Sockeye
 
@@ -76,7 +76,7 @@ today<-as.Date("2024-07-24")
 
 -   Commercial Fisheries
 
-    -   Commercial fishing has started, with an Area C gillnet openings on July 13, 20 and 21, and First Nations demonstration fisheries on July 16. Preliminary sockeye catch in the Area C gillnet openings is ~ 37,000. Preliminary demonstration fishery catches are ~ 2,000 sockeye.
+    -   Commercial fishing has started, with an Area C gillnet openings on July 13, 20 and 21, and First Nations demonstration fisheries on July 16. Preliminary sockeye catch in the Area C gillnet openings is \~ 37,000. Preliminary demonstration fishery catches are \~ 2,000 sockeye.
 
 -   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated shortly.
 
@@ -525,7 +525,6 @@ ggplot(babine.sx.2,aes(x=Date,y=cum_sum,color=factor(year),linewidth=period,alph
   theme(legend.position = "bottom")
 
 ```
-
 
 ```{r babine sockeye prep2,include=TRUE,echo=FALSE,warning=FALSE,message=FALSE}
 
@@ -1544,7 +1543,6 @@ ggarrange(p1,p2,ncol=1,align="v")
 ggarrange(p3,p4,ncol=1,align="v")
 ```
 
-
 ## First Nations Demo Catch
 
 First Nations CSAF demonstration fisheries opened on July 16 in 2024. The catch associated with each demonstration fishery is determined using the weekly TAC. In 2024, the CTAC approach is being implemented, which means that the catch allocation of the demonstration fishery is no longer directly linked to what the commercial marine fishery catches each week. Catch by Nation/Nation group and gear type are shown below.
@@ -1567,7 +1565,6 @@ total.row<-tibble(Nation="Total","Total Demo Sockeye Catch"=total.demo.catch)
 demo.table<-rbind(demo.totals,total.row)
 ```
 
-
 ```{r FNs demo fishery catch table}
 #| echo: false
 #| warning: false
@@ -1577,7 +1574,6 @@ demo.table<-rbind(demo.totals,total.row)
 kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%>%
   row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
 ```
-
 
 ```{r FNs demo fishery catch figure,echo=FALSE,message=FALSE,warning=FALSE,include=TRUE}
 
