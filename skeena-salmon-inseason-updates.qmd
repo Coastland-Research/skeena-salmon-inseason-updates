@@ -526,6 +526,126 @@ ggplot(babine.sx.2,aes(x=Date,y=cum_sum,color=factor(year),linewidth=period,alph
 
 ```
 
+```{r daily boxplot babine sockeye}
+#| label: fig-daily-boxplot-bab
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Sockeye') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=totalrun) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Large Sockeye") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Large Sockeye`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Large Sockeye`,.1, na.rm = TRUE), 
+            per25 = quantile(`Large Sockeye`,.25, na.rm = TRUE), 
+            per50 = quantile(`Large Sockeye`,.50, na.rm = TRUE),
+            per75 = quantile(`Large Sockeye`,.75, na.rm = TRUE),
+            per90 = quantile(`Large Sockeye`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Large Sockeye` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Large Sockeye`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Large Sockeye`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Large Sockeye`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,5)
+
+```
+
+```{r daily cumulative boxplot babine sockeye}
+#| label: fig-daily-cumulative-boxplot-bab
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Large Sockeye') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`cumrun`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Large Sockeye") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=(replace_na(`Large Sockeye`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Large Sockeye`,.1, na.rm = TRUE), 
+            per25 = quantile(`Large Sockeye`,.25, na.rm = TRUE), 
+            per50 = quantile(`Large Sockeye`,.50, na.rm = TRUE),
+            per75 = quantile(`Large Sockeye`,.75, na.rm = TRUE),
+            per90 = quantile(`Large Sockeye`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,2000)
+
+```
+
+```{r}
+#| label: fig-plots-babsock
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for large sockeye through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the large sockeye salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
+
 ```{r babine sockeye prep2,include=TRUE,echo=FALSE,warning=FALSE,message=FALSE}
 
 babine.jacks.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Jack Sockeye')
@@ -624,6 +744,127 @@ j2<-ggplot(jackscum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
 ggarrange(j1,j2,align="v",ncol=1)
 
 ```
+
+```{r daily boxplot babine sockeye jacks}
+#| label: fig-daily-boxplot-bab-jacks
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Jack Sockeye') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=dailytotaljacks) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Jack Sockeye") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Jack Sockeye`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Jack Sockeye`,.1, na.rm = TRUE), 
+            per25 = quantile(`Jack Sockeye`,.25, na.rm = TRUE), 
+            per50 = quantile(`Jack Sockeye`,.50, na.rm = TRUE),
+            per75 = quantile(`Jack Sockeye`,.75, na.rm = TRUE),
+            per90 = quantile(`Jack Sockeye`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Jack Sockeye` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_jack <- ggplot(gg.daily,aes(x=Date, y=`Jack Sockeye`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Jack Sockeye`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Jack Sockeye`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,5)
+
+```
+
+```{r daily cumulative boxplot babine sockeye jacks}
+#| label: fig-daily-cumulative-boxplot-bab-jacks
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Jack Sockeye') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`dailytotaljacks`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Jack Sockeye") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Jack Sockeye`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Jack Sockeye`,.1, na.rm = TRUE), 
+            per25 = quantile(`Jack Sockeye`,.25, na.rm = TRUE), 
+            per50 = quantile(`Jack Sockeye`,.50, na.rm = TRUE),
+            per75 = quantile(`Jack Sockeye`,.75, na.rm = TRUE),
+            per90 = quantile(`Jack Sockeye`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_jack <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,2000)
+
+```
+
+```{r}
+#| label: fig-plots-babsockjacks
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for sockeye jacks through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of sockeye jacks through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_jack,cumplot_jack,align="v",ncol=1,common.legend = TRUE)
+
+```
+
 
 ### Babine comparison with Tyee
 
