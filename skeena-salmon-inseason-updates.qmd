@@ -639,6 +639,7 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 #| results: asis
 #| message: false
 #| warning: false
+#| include: true
 #| fig-cap: "Top panel: Daily run for large sockeye through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the large sockeye salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
 #| fig-height: 8
 
@@ -858,6 +859,7 @@ cumplot_jack <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 #| results: asis
 #| message: false
 #| warning: false
+#| include: true
 #| fig-cap: "Top panel: Daily run for sockeye jacks through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of sockeye jacks through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
 #| fig-height: 8
 
