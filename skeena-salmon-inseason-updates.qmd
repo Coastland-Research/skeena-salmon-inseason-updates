@@ -1,5 +1,5 @@
 ---
-title: "Skeena Salmon In-Season Update for SFNTC"
+title: "Skeena Salmon In-Season Update"
 subtitle: "July 29, 2024"
 format: html
 editor: visual
@@ -27,8 +27,8 @@ data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",she
 ```{r set days, echo=FALSE}
 tyee.day<-as.Date("2024-07-28")
 tyee.date<-"July 28"
-fence.day<-as.Date("2024-07-28")
-fence.date<-"July 28"
+fence.day<-as.Date("2024-07-29")
+fence.date<-"July 29"
 today<-as.Date("2024-07-28")
 ```
 
@@ -50,7 +50,7 @@ today<-as.Date("2024-07-28")
 
 -   Babine Sockeye
 
-    -   The Babine River fence started operations on July 9th. To July 25 the total run is 125,878 large sockeye, with 6,175 jack sockeye to date. More details will be added here shortly along with 2 forecast methods.
+    -   The Babine River fence started operations on July 9th. To July 29 the total run is 140,075 large sockeye, with 7,180 jack sockeye to date. More details will be added here shortly along with 2 forecast methods.
 
     -   The Babine comparison with Tyee will be updated as more sockeye arrive at the Babine fence.
 
@@ -475,7 +475,6 @@ The following figures show the daily and cumulative run of sockeye estimated to 
 #| echo: false
 #| warning: false
 #| message: false
-#| fig-cap: "Daily run of sockeye to the Babine fence since 2020. 2024 run is shown in purple."
 
 babine.sx.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Sockeye')
 
@@ -488,7 +487,7 @@ babine.sx.2<-left_join(babine.sx.daily,babine.sx.2024,by="Date")%>%
   filter(year>=2020)%>%
   mutate(period=ifelse(year==2024,"now","then"))
 
-ggplot(babine.sx.2,aes(x=Date,y=sockeye,color=factor(year),linewidth=period,alpha=period))+
+baba1<-ggplot(babine.sx.2,aes(x=Date,y=sockeye,color=factor(year),linewidth=period,alpha=period))+
   geom_line()+
   scale_linewidth_manual(values=c(2,1))+
   scale_alpha_manual(values=c(1,.5))+
@@ -504,8 +503,6 @@ ggplot(babine.sx.2,aes(x=Date,y=sockeye,color=factor(year),linewidth=period,alph
 #| echo: false
 #| warning: false
 #| message: false
-#| fig-cap: "Daily cumulative run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."
-#| fig-height: 5
 
 babine.sx.2<-left_join(babine.sx.daily,babine.sx.2024,by="Date")%>%
   select(Date,"1946":"2023","2024")%>%
@@ -515,7 +512,7 @@ babine.sx.2<-left_join(babine.sx.daily,babine.sx.2024,by="Date")%>%
   group_by(year)%>%
   mutate(cum_sum=cumsum(replace_na(sockeye,0)))
 
-ggplot(babine.sx.2,aes(x=Date,y=cum_sum,color=factor(year),linewidth=period,alpha=period))+
+baba2<-ggplot(babine.sx.2,aes(x=Date,y=cum_sum,color=factor(year),linewidth=period,alpha=period))+
   geom_line()+
   scale_linewidth_manual(values=c(2,1))+
   scale_alpha_manual(values=c(1,.5))+
@@ -523,6 +520,18 @@ ggplot(babine.sx.2,aes(x=Date,y=cum_sum,color=factor(year),linewidth=period,alph
   guides(alpha="none",linewidth="none")+
   labs(color="",y="Cumulative Large Sockeye")+
   theme(legend.position = "bottom")
+```
+
+
+```{r babine recent daily and cumulative estimates figure}
+#| label: fig-babine-recent-dailyandcum
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Daily and cumulative run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."
+#| fig-height: 7
+
+ggarrange(baba1,baba2,ncol=1,align="v",common.legend = TRUE)
 
 ```
 
@@ -1745,7 +1754,8 @@ p3<-ggplot(catch,aes(x=Date,y=Catch,fill=Gear))+
   geom_col()+
   scale_fill_brewer(palette="Set1")+
   theme_bw()+
-  theme(legend.position="top")
+  theme(legend.position="top")+
+expand_limits(x=c(as.Date("2024-07-01"),as.Date("2024-08-15")))
 
 cpue<-data%>%select(Date,gncatch,sncatch,gneffort,sneffort)%>%
   mutate(Gillnet=gncatch/gneffort,Seine=sncatch/sneffort)%>%
@@ -1759,7 +1769,9 @@ p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
   theme_bw()+
   theme(legend.position = "top")+
   labs(y="Sockeye CPUE")+
-  expand_limits(y=0)
+  expand_limits(y=0)+
+expand_limits(x=c(as.Date("2024-07-01"),as.Date("2024-08-15")))
+
 
 ```
 
