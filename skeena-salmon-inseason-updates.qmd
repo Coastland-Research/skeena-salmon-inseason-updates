@@ -1846,7 +1846,51 @@ kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%
 
 ```
 
-# Appendix A-Catch of pink, chum, coho, chinook and steelhead
+# Appendix A - Tyee daily and cumulative escapement vs 2024 for each year since 2000
+
+```{r daily escapement by year vs 2024}
+#| echo: false
+#| fig-cap: "Tyee test fishery daily escapement and cumulative escapement by year since 2000 vs 2024 data"
+#| warning: false
+#| include: true
+#| fig-height: 4
+
+# 2024 tyee data
+data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee") %>%
+  mutate(Date = as.Date(Date))
+
+# all years tyee data:
+daily <- read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee daily") %>%
+  pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Date = as.Date(Date)) %>%
+  mutate(cum_sum=cumsum(replace_na(Sockeye,0)))
+
+
+# 2024 daily
+daily %>%
+filter(Year >= 2000) %>%
+ggplot(aes(x = Date, y = Sockeye, color = "year's sockeye escapement")) + geom_line() + 
+geom_line(data = data, aes(x = Date, y = esctyee, color = "2024 sockeye escapement")) + # line for 2024 data
+facet_wrap(~Year) +
+theme_minimal()+
+theme(legend.position = "top") +
+scale_color_brewer(palette = "Dark2", name = "")
+
+
+# 2024 cumulative
+daily %>%
+filter(Year >= 2000) %>%
+ggplot(aes(x = Date, y = cum_sum, color = "year's cumulative sockeye escapement")) + geom_line() +
+geom_line(data = data, aes(x = Date, y = cumtyee, color = "2024 cumulative sockeye escapement")) +
+facet_wrap(~Year) +
+theme_minimal()+
+theme(legend.position = "top") +
+scale_color_brewer(palette = "Dark2", name = "")
+
+
+```
+# Appendix B - Catch of pink, chum, coho, chinook and steelhead
 
 -   Will be added shortly
 
@@ -1982,7 +2026,7 @@ ggplot(oc.total,aes(x=Species,y=total,fill=gear))+
 
 ```
 
-# Appendix B-Population specific run-timing through Tyee
+# Appendix C - Population specific run-timing through Tyee
 
 Notes:
 
