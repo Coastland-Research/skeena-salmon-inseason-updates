@@ -582,7 +582,7 @@ dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Large Sockeye`,group=Date))+
   labs(y="Daily Index",color="")+
   theme_bw()+
   theme(legend.position = "bottom") +
-  ylim(0,5)
+  ylim(0,50000)
 
 ```
 
@@ -638,7 +638,7 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Daily Index",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,2000)
+  ylim(0,200000)
 
 ```
 
