@@ -1849,10 +1849,11 @@ kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%
 
 # Appendix A - Tyee daily and cumulative escapement vs 2024 for each year since 2000
 
-```{r daily escapement by year vs 2024}
+```{r tyee escapement by year prep}
 #| echo: false
 #| include: false
-#| fig-height: 4
+#| warning: false
+#| message: false
 
 # 2024 tyee data
 data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee") %>%
@@ -1865,6 +1866,15 @@ daily <- read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",
   mutate(Date = as.Date(Date)) %>%
   group_by(Year)%>%
   mutate(cum_sum=cumsum(replace_na(Sockeye,0)))
+```
+
+```{r daily escapement by year since 2000 vs 2024}
+#| label: fig-tyee-esc-years
+#| include: true
+#| echo: false
+#| warning: false
+#| fig-cap: "Tyee 2024 daily sockeye escapement vs daily escapement each year between 2000-2023"
+#| fig-height: 8
 
 # 2024 daily
 daily_tyee_years <- daily %>%
@@ -1877,6 +1887,16 @@ theme(legend.position = "top") +
 scale_color_brewer(palette = "Dark2", name = "") +
 ylab("Sockeye Escapement")
 
+daily_tyee_years
+```
+
+```{r cumulative escapement by year vs 2024}
+#| label: fig-tyee-cum-years
+#| include: true
+#| echo: false
+#| warning: false
+#| fig-cap: "Tyee 2024 cumulative sockeye escapement vs cumulative escapement each year between 2000-2023"
+#| fig-height: 8
 
 # 2024 cumulative
 cum_tyee_years <- daily %>%
@@ -1888,22 +1908,11 @@ theme_minimal()+
 theme(legend.position = "top") +
 scale_color_brewer(palette = "Dark2", name = "")+
 ylab("Cumulative Sockeye Escapement")
+
+cum_tyee_years
 ```
 
 
-```{r tyee daily and cumulative escapement 2000 to 2023 vs 2024}
-#| label: fig-tyee-since2000
-#| echo: false
-#| message: false
-#| warning: false
-#| include: true
-#| fig-height: 12
-#| fig-cap: "Tyee 2024 daily and cumulative daily escapement versus 2000-2023."
-
-ggarrange(daily_tyee_years,cum_tyee_years,align="v",ncol=1,common.legend = TRUE)
-
-
-```
 
 # Appendix B - Catch of pink, chum, coho, chinook and steelhead
 
