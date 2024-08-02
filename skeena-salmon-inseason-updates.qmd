@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 30, 2024"
+subtitle: "August 2, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -25,11 +25,11 @@ data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",she
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-07-29")
-tyee.date<-"July 29"
-fence.day<-as.Date("2024-07-29")
-fence.date<-"July 29"
-today<-as.Date("2024-07-29")
+tyee.day<-as.Date("2024-08-01")
+tyee.date<-"August 1"
+fence.day<-as.Date("2024-08-01")
+fence.date<-"August 1"
+today<-as.Date("2024-08-01")
 ```
 
 # Summary
@@ -40,14 +40,14 @@ today<-as.Date("2024-07-29")
 
 -   Tyee Test Fishery
 
-    -   Tides influence the migration of salmon into the Skeena River. We are currently moving towards smaller tides. [(Tides section)](#tide-information-at-port-edward)
+    -   Tides influence the migration of salmon into the Skeena River. We are currently moving towards larger tides. [(Tides section)](#tide-information-at-port-edward)
 
-    -   To date 1,293,658 sockeye are estimated to have passed by Tyee, with about 64% of the run through to date on average (43% if 1-week late, 80% if one week early). While sockeye escapement over the last week picked up considerably, we are now past the peak of the run on average run-timing, Sockeye migration has dropped off over the last couple of days (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate around 1.4M (not including marine food fish and catch from the last few days).
+    -   To date 1,391,470 sockeye are estimated to have passed by Tyee, with about 72% of the run through to date on average (52% if 1-week late, 85% if one week early). Daily sockeye counts are around 30,000 and we are now past the peak of the run (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate around 1.4M (not including marine food fish and catch from the last few days).
 
-    -   We are likely just past the midpoint of the run now, and gaining more confidence in predicting the final TRTC. The excel model increased in early July stabilized briefly, decreased significantly, and stabilized again, and slightly increased with the last 3-4 days of large runs, and is now decreasing again. We are now tracking slightly greater than the 2023 run.
+    -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, and slightly increased with the last 3-4 days of large runs, and is now decreasing again. We are now tracking slightly greater than the 2023 run.
 
     -   The current run size prediction is 2.2M on average run-timing (3M if one week late and 1.8M if 1 week early) (Figure 6). The peak in sockeye migration last week would seem to indicate that the rin is fairly average timing to date.
-    
+
 -   Babine Sockeye
 
     -   The Babine River fence started operations on July 9th. To July 29 the total run is 140,075 large sockeye, with 7,180 jack sockeye to date. More details will be added here shortly along with 2 forecast methods.
@@ -76,11 +76,13 @@ today<-as.Date("2024-07-29")
 
 -   Commercial Fisheries
 
-    -   Commercial fishing has started, with an Area C gillnet openings on July 13, 20 and 21, and First Nations demonstration fisheries on July 16. Preliminary sockeye catch in the Area C gillnet openings is \~ 103,000. Preliminary demonstration fishery catches are \~ 10,000 sockeye. More catch information will be added as it becomes available.
+    -   Commercial fishing has started, with an Area C gillnet openings on July 13, 20-21, 25-26, and 29-30. The Area A seine fishery was open July 25-28. Coastal Demonstration Fisheries opened on July 16, 21, 24, 27-28, 31-Aug 2.In-river demonstration fisheries started July 30. Preliminary sockeye catch in the Area C gillnet openings is \~ 98,230. Preliminary sockeye catch in the Area A seine fisheries is \~ 30,000. Preliminary demonstration fishery catches are likely near 20,000 sockeye. More catch information will be added as it becomes available.
+    
+-   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
--   Appendix A will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated shortly.
+-   Appendix B will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated shortly.
 
--   Appendix B includes information on run-timing of specific Skeena Conservation Units/stocks.
+-   Appendix C includes information on run-timing of specific Skeena Conservation Units/stocks.
 
 # Tyee Test Fishery
 
@@ -522,7 +524,6 @@ baba2<-ggplot(babine.sx.2,aes(x=Date,y=cum_sum,color=factor(year),linewidth=peri
   theme(legend.position = "bottom")
 ```
 
-
 ```{r babine recent daily and cumulative estimates figure}
 #| label: fig-babine-recent-dailyandcum
 #| echo: false
@@ -875,7 +876,6 @@ cumplot_jack <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 ggarrange(dailyplot_jack,cumplot_jack,align="v",ncol=1,common.legend = TRUE)
 
 ```
-
 
 ### Babine comparison with Tyee
 
@@ -1890,6 +1890,7 @@ scale_color_brewer(palette = "Dark2", name = "")
 
 
 ```
+
 # Appendix B - Catch of pink, chum, coho, chinook and steelhead
 
 -   Will be added shortly
