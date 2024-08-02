@@ -1852,8 +1852,6 @@ kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%
 ```{r daily escapement by year vs 2024}
 #| label: fig-tyee-years-since2000
 #| echo: false
-#| fig-cap: "Tyee test fishery daily escapement and cumulative escapement by year since 2000 vs 2024 data"
-#| warning: false
 #| include: true
 #| fig-height: 4
 
@@ -1868,7 +1866,6 @@ daily <- read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",
   mutate(Date = as.Date(Date)) %>%
   group_by(Year)%>%
   mutate(cum_sum=cumsum(replace_na(Sockeye,0)))
-
 
 # 2024 daily
 daily_tyee_years <- daily %>%
@@ -1890,6 +1887,16 @@ facet_wrap(~Year) +
 theme_minimal()+
 theme(legend.position = "top") +
 scale_color_brewer(palette = "Dark2", name = "")
+```
+
+
+```{r tyee daily and cumulative escapement 2000 to 2023 vs 2024}
+#| echo: false
+#| message: false
+#| warning: false
+#| include: true
+#| fig-height: 8
+#| fig-cap: "Tyee 2024 daily and cumulative daily escapement versus 2000-2023."
 
 ggarrange(daily_tyee_years,cum_tyee_years,align="v",ncol=1,common.legend = TRUE)
 
