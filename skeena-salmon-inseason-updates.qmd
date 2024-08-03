@@ -1847,7 +1847,7 @@ kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%
 ```
 
 
-# Appendix A - Tyee daily and cumulative escapement vs 2024 for each year since 2000
+# Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2024 data
 
 ```{r tyee escapement by year prep}
 #| echo: false
@@ -1873,7 +1873,7 @@ daily <- read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",
 #| include: true
 #| echo: false
 #| warning: false
-#| fig-cap: "Tyee 2024 daily sockeye escapement vs daily escapement each year between 2000-2023"
+#| fig-cap: "Tyee 2024 daily sockeye escapement vs daily escapement each year between 2000-2023."
 #| fig-height: 8
 
 # 2024 daily
@@ -1895,7 +1895,7 @@ daily_tyee_years
 #| include: true
 #| echo: false
 #| warning: false
-#| fig-cap: "Tyee 2024 cumulative sockeye escapement vs cumulative escapement each year between 2000-2023"
+#| fig-cap: "Tyee 2024 cumulative sockeye escapement vs cumulative escapement each year between 2000-2023."
 #| fig-height: 8
 
 # 2024 cumulative
