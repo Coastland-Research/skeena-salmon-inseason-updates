@@ -1,3 +1,4 @@
+
 ---
 title: "Skeena Salmon In-Season Update"
 subtitle: "August 2, 2024"
@@ -1879,12 +1880,12 @@ daily <- read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",
 # 2024 daily
 daily_tyee_years <- daily %>%
 filter(Year >= 2000) %>%
-ggplot(aes(x = Date, y = Sockeye, color = "year's sockeye escapement")) + geom_line() + 
-geom_line(data = data, aes(x = Date, y = esctyee, color = "2024 sockeye escapement")) + # line for 2024 data
+ggplot(aes(x = Date, y = Sockeye, color = "daily sockeye escapement")) + geom_line() + 
+geom_line(data = data, aes(x = Date, y = esctyee, color = "2024 daily sockeye escapement")) + # line for 2024 data
 facet_wrap(~Year) +
 theme_minimal()+
 theme(legend.position = "top") +
-scale_color_brewer(palette = "Dark2", name = "") +
+scale_color_brewer(palette = "Set1", name = "") +
 ylab("Sockeye Escapement")
 
 daily_tyee_years
@@ -1901,17 +1902,16 @@ daily_tyee_years
 # 2024 cumulative
 cum_tyee_years <- daily %>%
 filter(Year >= 2000) %>%
-ggplot(aes(x = Date, y = cum_sum, color = "year's cumulative sockeye escapement")) + geom_line() +
+ggplot(aes(x = Date, y = cum_sum, color = "cumulative sockeye escapement")) + geom_line() +
 geom_line(data = data, aes(x = Date, y = cumtyee, color = "2024 cumulative sockeye escapement")) +
 facet_wrap(~Year) +
 theme_minimal()+
 theme(legend.position = "top") +
-scale_color_brewer(palette = "Dark2", name = "")+
+scale_color_brewer(palette = "Set1", name = "")+
 ylab("Cumulative Sockeye Escapement")
 
 cum_tyee_years
 ```
-
 
 
 # Appendix B - Catch of pink, chum, coho, chinook and steelhead
