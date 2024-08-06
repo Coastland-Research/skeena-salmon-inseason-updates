@@ -879,13 +879,11 @@ ggarrange(dailyplot_jack,cumplot_jack,align="v",ncol=1,common.legend = TRUE)
 
 ### Babine comparison with Tyee
 
--   Will be added shortly
-
 ```{r}
 #| label: fig-diff
 #| echo: false
 #| fig-cap: "Estimated difference in sockeye between escapement past Tyee and the Babine Fence based on 3 week migration timing, 10% non-Babine stocks, and in-river FSC and demo catch to date. The solid blue line is the escapement past Tyee, the dotted green line is the expected run at the Babine fence, the solid black line is the actual total run at the fence, and the red line is the difference between the black line and green line (fence run - expected run)."
-#| include: false
+#| include: true
 #| fig-height: 6
 
 #Explanation for figure
@@ -896,10 +894,10 @@ pernonbabine<-.1
 ty<-data%>%select(Date, Observed.Tyee=cumtyee)
 fe<-fence%>%select(Date,Actual.Fence=cumrun)
 
-inrivercatch<-read_excel("data/tyee and catch and fence in-season updates 2023.xlsx",sheet="inriver catch")
+inrivercatch<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="inriver catch") # update this to 2024
 inrivercatch$Date<-as.Date(inrivercatch$Date)
 
-ca<-inrivercatch%>%select(Date,inriver.harvest)
+ca<-inrivercatch%>%select(Date,inriver.harvest) # all 0 or NA...
 
 comp<-merge(ty,fe,all=TRUE)%>%merge(ca,all=TRUE)%>%
   mutate(Expected.Babine=lag((1-pernonbabine)*Observed.Tyee,21),
@@ -907,14 +905,14 @@ comp<-merge(ty,fe,all=TRUE)%>%merge(ca,all=TRUE)%>%
   select(-inriver.harvest)%>%
   pivot_longer(2:5,names_to="Count",values_to="Fish")
 
-ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count))+
-  geom_line()+
-  theme_classic()+grids()+
-  scale_colour_manual(values=c("black","red","seagreen4","blue"))+
-  scale_linetype_manual(values=c("solid","solid","dashed","solid"))+
-  scale_size_manual(values=c(2,1,1,1.5))+
-  theme(legend.position="top")+
-  labs(y="Number of Large Sockeye")+
+ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
+  geom_line() +
+  theme_classic()+grids() +
+  scale_colour_manual(values=c("black","red","seagreen4","blue")) +
+  scale_linetype_manual(values=c("solid","solid","dashed","solid")) +
+  scale_size_manual(values=c(2,1,1,1.5)) +
+  theme(legend.position="top") +
+  labs(y="Number of Large Sockeye") +
   ylim(-250000,1500000)
 
 ```
