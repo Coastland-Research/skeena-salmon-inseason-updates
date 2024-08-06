@@ -580,7 +580,7 @@ dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Large Sockeye`,group=Date))+
   geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Large Sockeye`,group=Year),
             linewidth = .5,alpha=.1)+
   scale_color_manual(values=c("grey50","purple","grey75","black"))+
-  labs(y="Daily Index",color="")+
+  labs(y="Daily Sockeye",color="")+
   theme_bw()+
   theme(legend.position = "bottom") +
   ylim(0,50000)
@@ -636,7 +636,7 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
             linewidth = .5,alpha=.1)+
   scale_color_manual(values=c("grey50","purple","grey75","black"))+
-  labs(y="Cumulative Daily Index",color="")+
+  labs(y="Cumulative Sockeye",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
   ylim(0,200000)
@@ -800,10 +800,10 @@ dailyplot_jack <- ggplot(gg.daily,aes(x=Date, y=`Jack Sockeye`,group=Date))+
   geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Jack Sockeye`,group=Year),
             linewidth = .5,alpha=.1)+
   scale_color_manual(values=c("grey50","purple","grey75","black"))+
-  labs(y="Daily Index",color="")+
+  labs(y="Daily Sockeye Jacks",color="")+
   theme_bw()+
   theme(legend.position = "bottom") +
-  ylim(0,5)
+  ylim(0,30000)
 
 ```
 
@@ -856,10 +856,10 @@ cumplot_jack <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
             linewidth = .5,alpha=.1)+
   scale_color_manual(values=c("grey50","purple","grey75","black"))+
-  labs(y="Cumulative Daily Index",color="")+
+  labs(y="Cumulative Sockeye Jacks",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,2000)
+  ylim(0,200000)
 
 ```
 
