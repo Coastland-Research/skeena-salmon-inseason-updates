@@ -1875,23 +1875,18 @@ daily <- read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",
 #| fig-height: 8
 
 # 2024 daily
-daily_tyee_years<- daily %>%
+daily_tyee_years <- daily %>%
 filter(Year >= 2000) %>%
-<<<<<<< HEAD
-ggplot(aes(x = Date, y = Sockeye, color = "year's sockeye escapement")) + geom_line() + 
-geom_line(data = data, aes(x = Date, y = esctyee, color = "2024 sockeye escapement")) + # line for 2024 data
-facet_wrap(~Year,scales="free_y") +
-=======
 ggplot(aes(x = Date, y = Sockeye, color = "daily sockeye escapement")) + geom_line() + 
 geom_line(data = data, aes(x = Date, y = esctyee, color = "2024 daily sockeye escapement")) + # line for 2024 data
-facet_wrap(~Year) +
->>>>>>> e9d6c441a2e2b0bf4100111ca4607470607e8870
+facet_wrap(~Year, scales = "free_y") +
 theme_minimal()+
 theme(legend.position = "top") +
 scale_color_brewer(palette = "Set1", name = "") +
 ylab("Sockeye Escapement")
 
 daily_tyee_years
+
 ```
 
 ```{r cumulative escapement by year vs 2024}
