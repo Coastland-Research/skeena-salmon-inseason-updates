@@ -1,3 +1,4 @@
+
 ---
 title: "Skeena Salmon In-Season Update"
 subtitle: "August 6, 2024"
@@ -53,7 +54,6 @@ today<-as.Date("2024-08-05")
     -   The Babine River fence started operations on July 9th. The total large sockeye run to date is 267,942, tracking the 2000-23 and 2020-23 averages failry closely, and tracking 2023 (Figures 7-9).
     -   The total run of jack sockeye to date is 16,544, above the longer term and recent averages (Figures 10-11).
 
-
 -   Tyee Other Species
 
     -   The Chinook index remains very low and available evidence suggests a very low run and is tracking near the 10th percentile.
@@ -76,7 +76,7 @@ today<-as.Date("2024-08-05")
 
 -   Commercial Fisheries
 
-    -   Commercial fishing has started, with an Area C gillnet openings on July 13, 20-21, 25-26, and 29-30. The Area A seine fishery was open July 25-28. Coastal Demonstration Fisheries opened on July 16, 21, 24, 27-28, 31-Aug 2.In-river demonstration fisheries started July 30. Preliminary sockeye catch in the Area C gillnet openings is \~ 98,230. Preliminary sockeye catch in the Area A seine fisheries is \~ 30,000. Preliminary demonstration fishery catches are likely near 20,000 sockeye. More catch information will be added as it becomes available.
+    -   Commercial fishing has started, with Area C gillnet openings on July 13, 20-21, 25-26, and 29-30. The Area A seine fishery was open July 25-28. Coastal Demonstration Fisheries opened on July 16, 21, 24, 27-28, 31-Aug 2. In-river demonstration fisheries started July 30. Preliminary sockeye catch in the Area C gillnet openings is \~ 98,230. Preliminary sockeye catch in the Area A seine fisheries is \~ 30,000. Preliminary demonstration fishery catches are likely near 20,000 sockeye. More catch information will be added as it becomes available.
     
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
@@ -1847,7 +1847,7 @@ kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%
 ```
 
 
-# Appendix A - Tyee daily and cumulative escapement vs 2024 for each year since 2000
+# Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2024 data
 
 ```{r tyee escapement by year prep}
 #| echo: false
@@ -1873,18 +1873,24 @@ daily <- read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",
 #| include: true
 #| echo: false
 #| warning: false
-#| fig-cap: "Tyee 2024 daily sockeye escapement vs daily escapement each year between 2000-2023"
+#| fig-cap: "Tyee 2024 daily sockeye escapement vs daily escapement each year between 2000-2023."
 #| fig-height: 8
 
 # 2024 daily
 daily_tyee_years<- daily %>%
 filter(Year >= 2000) %>%
+<<<<<<< HEAD
 ggplot(aes(x = Date, y = Sockeye, color = "year's sockeye escapement")) + geom_line() + 
 geom_line(data = data, aes(x = Date, y = esctyee, color = "2024 sockeye escapement")) + # line for 2024 data
 facet_wrap(~Year,scales="free_y") +
+=======
+ggplot(aes(x = Date, y = Sockeye, color = "daily sockeye escapement")) + geom_line() + 
+geom_line(data = data, aes(x = Date, y = esctyee, color = "2024 daily sockeye escapement")) + # line for 2024 data
+facet_wrap(~Year) +
+>>>>>>> e9d6c441a2e2b0bf4100111ca4607470607e8870
 theme_minimal()+
 theme(legend.position = "top") +
-scale_color_brewer(palette = "Dark2", name = "") +
+scale_color_brewer(palette = "Set1", name = "") +
 ylab("Sockeye Escapement")
 
 daily_tyee_years
@@ -1895,23 +1901,22 @@ daily_tyee_years
 #| include: true
 #| echo: false
 #| warning: false
-#| fig-cap: "Tyee 2024 cumulative sockeye escapement vs cumulative escapement each year between 2000-2023"
+#| fig-cap: "Tyee 2024 cumulative sockeye escapement vs cumulative escapement each year between 2000-2023."
 #| fig-height: 8
 
 # 2024 cumulative
 cum_tyee_years <- daily %>%
 filter(Year >= 2000) %>%
-ggplot(aes(x = Date, y = cum_sum, color = "year's cumulative sockeye escapement")) + geom_line() +
+ggplot(aes(x = Date, y = cum_sum, color = "cumulative sockeye escapement")) + geom_line() +
 geom_line(data = data, aes(x = Date, y = cumtyee, color = "2024 cumulative sockeye escapement")) +
 facet_wrap(~Year,scales="free_y") +
 theme_minimal()+
 theme(legend.position = "top") +
-scale_color_brewer(palette = "Dark2", name = "")+
+scale_color_brewer(palette = "Set1", name = "")+
 ylab("Cumulative Sockeye Escapement")
 
 cum_tyee_years
 ```
-
 
 
 # Appendix B - Catch of pink, chum, coho, chinook and steelhead
