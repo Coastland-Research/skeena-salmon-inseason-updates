@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 2, 2024"
+subtitle: "August 6, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -25,11 +25,11 @@ data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",she
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-08-01")
-tyee.date<-"August 1"
-fence.day<-as.Date("2024-08-01")
-fence.date<-"August 1"
-today<-as.Date("2024-08-01")
+tyee.day<-as.Date("2024-08-05")
+tyee.date<-"August 5"
+fence.day<-as.Date("2024-08-05")
+fence.date<-"August 5"
+today<-as.Date("2024-08-05")
 ```
 
 # Summary
@@ -42,29 +42,29 @@ today<-as.Date("2024-08-01")
 
     -   Tides influence the migration of salmon into the Skeena River. We are currently moving towards larger tides. [(Tides section)](#tide-information-at-port-edward)
 
-    -   To date 1,391,470 sockeye are estimated to have passed by Tyee, with about 72% of the run through to date on average (52% if 1-week late, 85% if one week early). Daily sockeye counts are around 30,000 and we are now past the peak of the run (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate around 1.4M (not including marine food fish and catch from the last few days).
+    -   To date 1,519,685 sockeye are estimated to have passed by Tyee, with about 80% of the run through to date on average (64% if 1-week late, 90% if one week early). Daily sockeye counts are around 30,000 but declining and we are now well past the peak of the run (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate around 1.7M (not including marine food fish and catch from the last few days).
 
-    -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, and slightly increased with the last 3-4 days of large runs, and is now decreasing again. We are now tracking slightly greater than the 2023 run.
+    -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again and has since been declining slowly. The 3 lines are coverging as is normal this time of year and this also supports average timing of the run. A late push of fish could change that however.
 
-    -   The current run size prediction is 2.2M on average run-timing (3M if one week late and 1.8M if 1 week early) (Figure 6). The peak in sockeye migration last week would seem to indicate that the rin is fairly average timing to date.
+    -   The current run size prediction is 2.05M on average run-timing (2.5M if one week late and 1.8M if 1 week early) (Figure 6).
 
 -   Babine Sockeye
 
-    -   The Babine River fence started operations on July 9th. To July 29 the total run is 140,075 large sockeye, with 7,180 jack sockeye to date. More details will be added here shortly along with 2 forecast methods.
+    -   The Babine River fence started operations on July 9th. The total large sockeye run to date is 267,942, tracking the 2000-23 and 2020-23 averages failry closely, and tracking 2023 (Figures 7-9).
+    -   The total run of jack sockeye to date is 16,544, above the longer term and recent averages (Figures 10-11).
 
-    -   The Babine comparison with Tyee will be updated as more sockeye arrive at the Babine fence.
 
 -   Tyee Other Species
 
     -   The Chinook index remains very low and available evidence suggests a very low run and is tracking near the 10th percentile.
 
-    -   Only a few chum salmon have started coming through Tyee.
+    -   Chum salmon are starting to pass through Tyee and are currently showing a low index value near the 25th percentile.
 
-    -   Pink salmon are starting to come through with a stong start relative to even-year pink abundance.
+    -   Pink salmon are looking strong this year relative to even-year abundance with a high cumulative index.
 
-    -   Coho salmon are just starting to come through Tyee.
+    -   Coho salmon are passing through Tyee and tracking very close to the long term average.
 
-    -   The Steelhead index suggests a strong run to start, around the 90th percentile.
+    -   The Steelhead index suggests a strong run is continuing, around the 90th percentile.
 
 -   Babine Fence
 
@@ -92,7 +92,7 @@ Tides influence the movement of sockeye and other salmon migrating into the Skee
 
 <figure>
 
-<img src="/images/tides3.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+<img src="/images/tides4.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
 
 <figcaption>Tides at Port Edward</figcaption>
 
@@ -1155,7 +1155,7 @@ cumplot_ch <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Daily Index",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,2000)
+  ylim(0,1000)
 
 ```
 
@@ -1225,7 +1225,7 @@ dailyplot_p_e<- ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
   labs(y="Daily Index",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,5)
+  ylim(0,60)
 
 ```
 
@@ -1585,7 +1585,7 @@ dailyplot_st <- ggplot(gg.daily,aes(x=Date, y=Steelhead,group=Date))+
   labs(y="Daily Index",color="")+
   theme_bw()+
   theme(legend.position = "bottom") +
-  ylim(0,5)
+  ylim(0,7)
 
 ```
 
@@ -1877,11 +1877,11 @@ daily <- read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",
 #| fig-height: 8
 
 # 2024 daily
-daily_tyee_years <- daily %>%
+daily_tyee_years<- daily %>%
 filter(Year >= 2000) %>%
 ggplot(aes(x = Date, y = Sockeye, color = "year's sockeye escapement")) + geom_line() + 
 geom_line(data = data, aes(x = Date, y = esctyee, color = "2024 sockeye escapement")) + # line for 2024 data
-facet_wrap(~Year) +
+facet_wrap(~Year,scales="free_y") +
 theme_minimal()+
 theme(legend.position = "top") +
 scale_color_brewer(palette = "Dark2", name = "") +
@@ -1903,7 +1903,7 @@ cum_tyee_years <- daily %>%
 filter(Year >= 2000) %>%
 ggplot(aes(x = Date, y = cum_sum, color = "year's cumulative sockeye escapement")) + geom_line() +
 geom_line(data = data, aes(x = Date, y = cumtyee, color = "2024 cumulative sockeye escapement")) +
-facet_wrap(~Year) +
+facet_wrap(~Year,scales="free_y") +
 theme_minimal()+
 theme(legend.position = "top") +
 scale_color_brewer(palette = "Dark2", name = "")+
