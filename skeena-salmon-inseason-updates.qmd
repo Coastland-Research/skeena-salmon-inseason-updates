@@ -1669,41 +1669,41 @@ ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
 
 ```{r babine chinook prep1,include=TRUE,echo=FALSE,warning=FALSE,message=FALSE}
 
-babine.cn.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Chinook')
+#babine.cn.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Chinook')
 
-babine.cn.2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
-  select(Date,`2024`=`large chinook`)%>%mutate(Date = as.Date(Date))
+#babine.cn.2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+#  select(Date,`2024`=`large chinook`)%>%mutate(Date = as.Date(Date))
 
-babine.cn<-left_join(babine.cn.daily,babine.cn.2024,by="Date")%>%
-  select(Date,"Average All Years"="avgall","2000-23 Average"=avg2000.2023,"2020-23 Average"=avg2020.2023,`2024`)%>%
-  pivot_longer("Average All Years":`2024`,names_to="period",values_to="chinook")%>%
-  mutate(type=ifelse(period=="2024","now","then"))
+#babine.cn<-left_join(babine.cn.daily,babine.cn.2024,by="Date")%>%
+#  select(Date,"Average All Years"="avgall","2000-23 Average"=avg2000.2023,"2020-23 Average"=avg2020.2023,`2024`)%>%
+#  pivot_longer("Average All Years":`2024`,names_to="period",values_to="chinook")%>%
+#  mutate(type=ifelse(period=="2024","now","then"))
 
-b1<-ggplot(babine.cn%>%filter(period!="2024"),aes(x=Date,y=chinook,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
-  geom_line(linetype="longdash",alpha=.5)+
-  geom_line(data=babine.cn%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
-  geom_point(data=babine.cn%>%filter(period=="2024"),aes(x=Date,color="2024"),
-             size=1,pch=21,fill="purple",alpha=.75)+
-  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
-    theme_bw()+
-  labs(color="",y="Daily Large Chinook")+
+#b1<-ggplot(babine.cn%>%filter(period!="2024"),aes(x=Date,y=chinook,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
+#  geom_line(linetype="longdash",alpha=.5)+
+#  geom_line(data=babine.cn%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
+#  geom_point(data=babine.cn%>%filter(period=="2024"),aes(x=Date,color="2024"),
+#             size=1,pch=21,fill="purple",alpha=.75)+
+#  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
+#    theme_bw()+
+#  labs(color="",y="Daily Large Chinook")+
+#  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
+#  theme(legend.position="bottom")
+
+#babine.cn.cum<-babine.cn%>%
+#  group_by(period)%>%
+#  mutate(cum_sum=cumsum(replace_na(chinook,0)))
+
+#b2<-ggplot(babine.cn.cum%>%filter(period!="2024"),aes(x=Date,y=cum_sum,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
+#  geom_line(linetype="longdash",alpha=.5)+
+#  geom_line(data=babine.cn.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),alpha=.75)+
+#  geom_point(data=babine.cn.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),
+#             size=1,pch=21,fill="purple",alpha=.75)+
+#  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
+#    theme_bw()+
+#  labs(color="",y="Cumulative Large Chinook")+
   #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
-  theme(legend.position="bottom")
-
-babine.cn.cum<-babine.cn%>%
-  group_by(period)%>%
-  mutate(cum_sum=cumsum(replace_na(chinook,0)))
-
-b2<-ggplot(babine.cn.cum%>%filter(period!="2024"),aes(x=Date,y=cum_sum,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
-  geom_line(linetype="longdash",alpha=.5)+
-  geom_line(data=babine.cn.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),alpha=.75)+
-  geom_point(data=babine.cn.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),
-             size=1,pch=21,fill="purple",alpha=.75)+
-  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
-    theme_bw()+
-  labs(color="",y="Cumulative Large Chinook")+
-  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
-  theme(legend.position="bottom")
+#  theme(legend.position="bottom")
 
 
 ```
