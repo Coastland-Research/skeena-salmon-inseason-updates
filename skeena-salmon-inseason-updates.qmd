@@ -1667,58 +1667,495 @@ ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
 
 ### Babine Chinook
 
-```{r babine chinook prep1,include=TRUE,echo=FALSE,warning=FALSE,message=FALSE}
+```{r daily boxplot babine chinook}
+#| label: fig-daily-boxplot-babcn
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
 
-#babine.cn.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Chinook')
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Chinook') %>% select(-Month,-Day)
 
-#babine.cn.2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
-#  select(Date,`2024`=`large chinook`)%>%mutate(Date = as.Date(Date))
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`large chinook`) %>% mutate(Date = as.Date(Date))
 
-#babine.cn<-left_join(babine.cn.daily,babine.cn.2024,by="Date")%>%
-#  select(Date,"Average All Years"="avgall","2000-23 Average"=avg2000.2023,"2020-23 Average"=avg2020.2023,`2024`)%>%
-#  pivot_longer("Average All Years":`2024`,names_to="period",values_to="chinook")%>%
-#  mutate(type=ifelse(period=="2024","now","then"))
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
 
-#b1<-ggplot(babine.cn%>%filter(period!="2024"),aes(x=Date,y=chinook,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
-#  geom_line(linetype="longdash",alpha=.5)+
-#  geom_line(data=babine.cn%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
-#  geom_point(data=babine.cn%>%filter(period=="2024"),aes(x=Date,color="2024"),
-#             size=1,pch=21,fill="purple",alpha=.75)+
-#  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
-#    theme_bw()+
-#  labs(color="",y="Daily Large Chinook")+
-#  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
-#  theme(legend.position="bottom")
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Large Chinook") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Large Chinook`,0))
 
-#babine.cn.cum<-babine.cn%>%
-#  group_by(period)%>%
-#  mutate(cum_sum=cumsum(replace_na(chinook,0)))
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Large Chinook`,.1, na.rm = TRUE), 
+            per25 = quantile(`Large Chinook`,.25, na.rm = TRUE), 
+            per50 = quantile(`Large Chinook`,.50, na.rm = TRUE),
+            per75 = quantile(`Large Chinook`,.75, na.rm = TRUE),
+            per90 = quantile(`Large Chinook`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Large Chinook` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
 
-#b2<-ggplot(babine.cn.cum%>%filter(period!="2024"),aes(x=Date,y=cum_sum,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
-#  geom_line(linetype="longdash",alpha=.5)+
-#  geom_line(data=babine.cn.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),alpha=.75)+
-#  geom_point(data=babine.cn.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),
-#             size=1,pch=21,fill="purple",alpha=.75)+
-#  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
-#    theme_bw()+
-#  labs(color="",y="Cumulative Large Chinook")+
-  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
-#  theme(legend.position="bottom")
-
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Large Chinook`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Large Chinook`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Large Chinook`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Chinook",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,500)
 
 ```
-### Babine Chum 
+
+```{r daily cumulative boxplot babine chinook}
+#| label: fig-daily-cumulative-boxplot-babcn
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Large Chinook') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`large chinook`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Large Chinook") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Large Chinook`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Large Chinook`,.1, na.rm = TRUE), 
+            per25 = quantile(`Large Chinook`,.25, na.rm = TRUE), 
+            per50 = quantile(`Large Chinook`,.50, na.rm = TRUE),
+            per75 = quantile(`Large Chinook`,.75, na.rm = TRUE),
+            per90 = quantile(`Large Chinook`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Chinook",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,2000)
+
+```
+
+```{r}
+#| label: fig-plots-babcn
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for large Chinook through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Chinook salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
 
 
 ### Babine Pink
 
+```{r daily boxplot babine pink}
+#| label: fig-daily-boxplot-babpk
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Pink') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`pink`) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Pink") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Pink`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Pink`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Pink` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Pink`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Pink, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Pink,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Pink",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,10000)
+
+```
+
+```{r daily cumulative boxplot babine pink}
+#| label: fig-daily-cumulative-boxplot-babpk
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Pink') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`pink`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Pink") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Pink`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Pink`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Pink",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,15000)
+
+```
+
+```{r}
+#| label: fig-plots-babpk
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for pink salmon through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the pink salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
 
 ### Babine Coho
 
+```{r daily boxplot babine coho}
+#| label: fig-daily-boxplot-babco
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
 
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Coho') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`coho`) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Coho") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Coho`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Coho`,.1, na.rm = TRUE), 
+            per25 = quantile(`Coho`,.25, na.rm = TRUE), 
+            per50 = quantile(`Coho`,.50, na.rm = TRUE),
+            per75 = quantile(`Coho`,.75, na.rm = TRUE),
+            per90 = quantile(`Coho`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Coho` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Coho`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Coho, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Coho,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Coho",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,1000)
+
+```
+
+```{r daily cumulative boxplot babine coho}
+#| label: fig-daily-cumulative-boxplot-babco
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Coho') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`coho`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Coho") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Coho`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Coho`,.1, na.rm = TRUE), 
+            per25 = quantile(`Coho`,.25, na.rm = TRUE), 
+            per50 = quantile(`Coho`,.50, na.rm = TRUE),
+            per75 = quantile(`Coho`,.75, na.rm = TRUE),
+            per90 = quantile(`Coho`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Coho",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,10000)
+
+```
+
+```{r}
+#| label: fig-plots-babco
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for coho salmon through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the coho salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
 ### Babine Steelhead
 
+```{r daily boxplot babine steelhead}
+#| label: fig-daily-boxplot-babst
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
 
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Steelhead') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`steelhead`) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Steelhead") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Steelhead`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Steelhead`,.1, na.rm = TRUE), 
+            per25 = quantile(`Steelhead`,.25, na.rm = TRUE), 
+            per50 = quantile(`Steelhead`,.50, na.rm = TRUE),
+            per75 = quantile(`Steelhead`,.75, na.rm = TRUE),
+            per90 = quantile(`Steelhead`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Steelhead` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Steelhead`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Steelhead, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Steelhead,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Steelhead",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,50)
+
+```
+
+```{r daily cumulative boxplot babine steelhead}
+#| label: fig-daily-cumulative-boxplot-babst
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Steelhead') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`steelhead`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Steelhead") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Steelhead`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Steelhead`,.1, na.rm = TRUE), 
+            per25 = quantile(`Steelhead`,.25, na.rm = TRUE), 
+            per50 = quantile(`Steelhead`,.50, na.rm = TRUE),
+            per75 = quantile(`Steelhead`,.75, na.rm = TRUE),
+            per90 = quantile(`Steelhead`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Steelhead",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,500)
+
+```
+
+```{r}
+#| label: fig-plots-babst
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for steelhead through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the steelhead run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
 # Kitwanga Fence
 
 -   The Kitwanga fence was installed and will be fish tight and counting for July 10.
