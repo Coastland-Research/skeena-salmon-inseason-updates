@@ -18,7 +18,7 @@ library(kableExtra)
 options(scipen=10000)
 ```
 
-```{r loda data and format, include=FALSE}
+```{r load data and format, include=FALSE}
 data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee") %>%
   mutate(Date = as.Date(Date))
 #data$Date<-as.Date(data$Date)
@@ -1351,7 +1351,7 @@ dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Large Sockeye`,group=Date))+
 daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Large Sockeye') %>% select(-Month,-Day)
 
 cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
-  select(Date,"2024"=`cumrun`)
+  select(Date,"2024"=`totalrun`)
 
 daily.index<-left_join(daily,cn2024,by="Date") %>%
   mutate(Date=as.Date(Date))
@@ -1360,7 +1360,7 @@ gg.daily.cum <- daily.index %>%
   mutate_if(is.character, as.numeric) %>%
   pivot_longer("1956":"2024",names_to="Year",values_to="Large Sockeye") %>%
   group_by(Year)%>%
-  mutate(cum_sum=(replace_na(`Large Sockeye`,0)))
+  mutate(cum_sum=cumsum(replace_na(`Large Sockeye`,0)))
   
 gg.daily.cum.quants<-gg.daily.cum %>%
   group_by(Date) %>%
@@ -1377,6 +1377,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
+
 years_out<-c("2008","2009","2010")
 gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
   
@@ -1390,7 +1391,7 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Sockeye",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,200000)
+  ylim(0,2000000)
 
 ```
 
@@ -1642,21 +1643,16 @@ ggarrange(dailyplot_jack,cumplot_jack,align="v",ncol=1,common.legend = TRUE)
 #This comparison aims to provide a coarse idea on the catchability at Tyee. #The red line in the figure below shows the difference between the escapement #past Tyee and the total run being counted at the Babine Fence, based on some #assumptions. These assumptions include 3 week migration timing, 10% #non-Babine stock composition and a rough estimate of in-river FSC and demo #harvest to date between Tyee and Babine. In 2023 some sockeye were missed #due to the delay from wildfire evacuations, however DFO and LBN staff #indicate that no sockeye were visible below the fence when it was evacuated, #and therefore the number of sockeye missed was probably fairly low. #Additional analysis will be required to provide an estimate of the number of #missed sockeye.
 
 pernonbabine<-.1
-
 ty<-data%>%select(Date, Observed.Tyee=cumtyee)
 fe<-fence%>%select(Date,Actual.Fence=cumrun)
-
 inrivercatch<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="inriver catch") # update this to 2024
 inrivercatch$Date<-as.Date(inrivercatch$Date)
-
 ca<-inrivercatch%>%select(Date,inriver.harvest) # all 0 or NA...
-
 comp<-merge(ty,fe,all=TRUE)%>%merge(ca,all=TRUE)%>%
   mutate(Expected.Babine=lag((1-pernonbabine)*Observed.Tyee,21),
-         `Difference @ 3 Weeks`=Actual.Fence-Expected.Babine-inriver.harvest)%>%
+         `Difference @ 3 Weeks`=Actual.Fence-(Expected.Babine-inriver.harvest))%>%
   select(-inriver.harvest)%>%
   pivot_longer(2:5,names_to="Count",values_to="Fish")
-
 ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
   geom_line() +
   theme_classic()+grids() +
@@ -2348,7 +2344,7 @@ kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%
 
 ```
 
-### Recreational Fisheries
+## Recreational Fisheries
 
 Recreational fisheries notices for the Skeena are shown in the Fisheries Openings Table above. Current regulations for Region 6 (Skeena) can be found on [DFO's website here](https://www.pac.dfo-mpo.gc.ca/fm-gp/rec/fresh-douce/region6-eng.html).
 
