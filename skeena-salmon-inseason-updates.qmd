@@ -1021,7 +1021,10 @@ ggarrange(dailyplot_st,cumplot_st,align="v",ncol=1,common.legend = TRUE)
 
 The following updates were provided by the Province of BC via email. For any questions please contact Kenji Miyazaki at BC. 
 
+![DailySteelhead](images/daily-st-index.png)
+![CumuSteelhead](images/cum-st-index.png)
 
+![EscSteelhead](images/esc-st-tyee.png)
 # Babine Fence
 
 The Babine fence was installed and fish tight on July 9. Data from the Babine fence is provided nightly via email from the LBN Fisheries program.
