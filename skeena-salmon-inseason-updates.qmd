@@ -1019,12 +1019,10 @@ ggarrange(dailyplot_st,cumplot_st,align="v",ncol=1,common.legend = TRUE)
 
 ```
 
-The following updates were provided by the Province of BC via email. For any questions please contact Kenji Miyazaki at BC. 
+The following updates were provided by the Province of BC via email. For any questions please contact Kenji Miyazaki at BC. {{< pdf Skeena Summer Steelhead Update to Aug _8_24.pdf width=25% height=200 >}}
 
-![DailySteelhead](images/daily-st-index.png)
-![CumuSteelhead](images/cum-st-index.png)
+![DailySteelhead](images/daily-st-index.png){width=60%}
 
-![EscSteelhead](images/esc-st-tyee.png)
 # Babine Fence
 
 The Babine fence was installed and fish tight on July 9. Data from the Babine fence is provided nightly via email from the LBN Fisheries program.
