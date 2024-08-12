@@ -1019,7 +1019,7 @@ ggarrange(dailyplot_st,cumplot_st,align="v",ncol=1,common.legend = TRUE)
 
 ```
 
-The following updates were provided by the Province of BC via email. For any questions please contact Kenji Miyazaki at BC. 
+The following updates were provided by the Province of BC via email. Click on the link below to download a PDF of Tyee steelhead updates. For any questions please contact Kenji Miyazaki at BC.
 
 ![](Skeena Summer Steelhead Update to Aug _8_24.pdf){width=70% height=400}
 
