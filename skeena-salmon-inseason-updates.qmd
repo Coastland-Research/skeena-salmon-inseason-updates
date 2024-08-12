@@ -1019,7 +1019,8 @@ ggarrange(dailyplot_st,cumplot_st,align="v",ncol=1,common.legend = TRUE)
 
 ```
 
-The following updates were provided by the Province of BC via email. For any questions please contact Kenji Miyazaki at BC. {{< pdf Skeena Summer Steelhead Update to Aug _8_24.pdf width=25% height=200 >}}
+The following updates were provided by the Province of BC via email. For any questions please contact Kenji Miyazaki at BC. 
+{{< pdf Skeena Summer Steelhead Update to Aug _8_24.pdf >}}
 
 ![DailySteelhead](images/daily-st-index.png){width=60%}
 
