@@ -1560,7 +1560,7 @@ ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
 #| include: false
 ```
 
-### Babine Chinook
+### Babine Adult Chinook
 
 ```{r daily boxplot babine chinook}
 #| label: fig-daily-boxplot-babcn
@@ -1678,6 +1678,126 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 #| warning: false
 #| include: true
 #| fig-cap: "Top panel: Daily run for large Chinook through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Chinook salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+### Babine Jack Chinook
+
+```{r daily boxplot babine jack chinook}
+#| label: fig-daily-boxplot-babjc
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Jack Chinook') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`jack chinook`) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1946":"2024",names_to="Year", values_to="Jack Chinook") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Jack Chinook`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Jack Chinook`,.1, na.rm = TRUE), 
+            per25 = quantile(`Jack Chinook`,.25, na.rm = TRUE), 
+            per50 = quantile(`Jack Chinook`,.50, na.rm = TRUE),
+            per75 = quantile(`Jack Chinook`,.75, na.rm = TRUE),
+            per90 = quantile(`Jack Chinook`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Jack Chinook` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Jack Chinook`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Jack Chinook`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Jack Chinook`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Jack Chinook",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,100)
+
+```
+
+```{r daily cumulative boxplot babine jack chinook}
+#| label: fig-daily-cumulative-boxplot-babjc
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Jack Chinook') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`jack chinook`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1946":"2024",names_to="Year",values_to="Jack Chinook") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Jack Chinook`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Jack Chinook`,.1, na.rm = TRUE), 
+            per25 = quantile(`Jack Chinook`,.25, na.rm = TRUE), 
+            per50 = quantile(`Jack Chinook`,.50, na.rm = TRUE),
+            per75 = quantile(`Jack Chinook`,.75, na.rm = TRUE),
+            per90 = quantile(`Jack Chinook`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Jack Chinook",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,2500)
+
+```
+
+```{r}
+#| label: fig-plots-babjc
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for jack Chinook through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the jack Chinook run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
 #| fig-height: 8
 
 ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
@@ -2421,21 +2541,21 @@ ggplot(sncpue,aes(x=Date,y=cpue))+
 #| include: false
 #| fig-height: 6
 
-#oc.total<-oc2%>%group_by(gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
+oc.total<-oc2%>%group_by(gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
 
-#oc.table<-oc.total%>%pivot_wider(names_from=c("gear","dis"),values_from="total")%>%replace(is.na(.),0)
+oc.table<-oc.total%>%pivot_wider(names_from=c("gear","dis"),values_from="total")%>%replace(is.na(.),0)
 
-#kable(oc.table,caption=paste0("Total catch of coho, chum, chinook, pink and steelhead in the commercial gillent and seine fisheries to ",tyee.date,"."))
+kable(oc.table,caption=paste0("Total catch of coho, chum, chinook, pink and steelhead in the commercial gillent and seine fisheries to ",tyee.date,"."))
 
-#ggplot(oc.total,aes(x=Species,y=total,fill=gear))+
-#  geom_col()+
-#  scale_color_brewer(palette="Set1")+
-  #geom_text(aes(label=total),vjust=-.3,color="black")+
-#  facet_wrap(~dis,ncol=1,scales="free_y")+
-#  theme_bw()+
-#  labs(y="Total Catch",x="Species")+
-#  scale_y_continuous(expand=c(.1,0))+
-#  theme(strip.background = element_blank())
+ggplot(oc.total,aes(x=Species,y=total,fill=gear))+
+  geom_col()+
+  scale_color_brewer(palette="Set1")+
+  geom_text(aes(label=total),vjust=-.3,color="black")+
+  facet_wrap(~dis,ncol=1,scales="free_y")+
+  theme_bw()+
+  labs(y="Total Catch",x="Species")+
+  scale_y_continuous(expand=c(.1,0))+
+  theme(strip.background = element_blank())
 
 ```
 
