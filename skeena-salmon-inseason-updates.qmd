@@ -1256,7 +1256,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   select(Date,per10,per25,per50,per75,per90)%>%
   pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
   group_by(Q)%>%
-  mutate(cum_sum=cumsum(Index))%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
   mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
@@ -1477,7 +1477,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   select(Date,per10,per25,per50,per75,per90)%>%
   pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
   group_by(Q)%>%
-  mutate(cum_sum=cumsum(Index))%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
   mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
@@ -1495,7 +1495,7 @@ cumplot_jack <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Sockeye Jacks",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,200000)
+  ylim(0,400000)
 
 ```
 
@@ -1643,7 +1643,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   select(Date,per10,per25,per50,per75,per90)%>%
   pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
   group_by(Q)%>%
-  mutate(cum_sum=cumsum(Index))%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
   mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
@@ -1658,7 +1658,11 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Chinook",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,3000)
+  ylim(0,10000)
+
+
+
+
 
 ```
 
@@ -1763,7 +1767,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   select(Date,per10,per25,per50,per75,per90)%>%
   pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
   group_by(Q)%>%
-  mutate(cum_sum=cumsum(Index))%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
   mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
@@ -1781,7 +1785,7 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Pink",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,200000)
+  ylim(0,400000)
 
 ```
 
@@ -1886,7 +1890,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   select(Date,per10,per25,per50,per75,per90)%>%
   pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
   group_by(Q)%>%
-  mutate(cum_sum=cumsum(Index))%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
   mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
@@ -1902,7 +1906,7 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Coho",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,20000)
+  ylim(0,40000)
 
 ```
 
@@ -2007,7 +2011,7 @@ gg.daily.cum.quants<-gg.daily.cum %>%
   select(Date,per10,per25,per50,per75,per90)%>%
   pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
   group_by(Q)%>%
-  mutate(cum_sum=cumsum(Index))%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
   mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
@@ -2025,7 +2029,7 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Steelhead",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  ylim(0,200)
+  ylim(0,500)
 
 ```
 
