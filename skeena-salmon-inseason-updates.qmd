@@ -510,16 +510,6 @@ cumplot_cn <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
   theme_bw()+
   theme(legend.position = "bottom")
 
-#  ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
-#  geom_line(data = gg.daily.cum %>% filter(Year <2000), aes(x = Date, y = cum_sum,group=Year,color="1956-2000"),
-#            linewidth = .5,alpha=.5)+
-#  geom_line(data = gg.daily.cum %>% filter(Year >=2000&Year<2024), aes(x = Date, y = cum_sum,group=Year,color="2000-2020"),
-#            linewidth = .5,alpha=.5)+
-#  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024"), linewidth = 2,alpha=.7)+
-#  scale_color_manual(values=c("grey50","red","black"))+
-#  labs(y="Cumulative Daily Index",color="Year Range")+
-#  theme_bw()+
-#  theme(legend.position = "bottom")
 
 ```
 
@@ -2320,7 +2310,7 @@ First Nations CSAF demonstration fisheries opened on July 16 in 2024. The catch 
 #| include: true
 #| fig-height: 4
 
-demo.data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="demo catches")
+demo.data<-read_excel("data/tyee FN catch 2024.xlsx",sheet="demo catches")
 demo.data$date<-as.Date(demo.data$date)
 
 demo.totals<-demo.data%>%group_by(Nation=nation)%>%summarise("Total Demo Sockeye Catch"=sum(pieces))
@@ -2443,7 +2433,7 @@ cum_tyee_years
 #| include: true
 #| fig-height: 7
 
-othercatch<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="gncatch")
+othercatch<-read_excel("data/tyee commercial catch 2024.xlsx",sheet="catch")
 
 oc2<-othercatch%>%pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
   mutate(cpue=Catch/effort)%>%
