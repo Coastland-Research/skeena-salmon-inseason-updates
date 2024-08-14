@@ -14,6 +14,7 @@ library(readxl)
 library(knitr)
 library(ggpubr)
 library(kableExtra)
+library(downloadthis)
 
 options(scipen=10000)
 ```
@@ -1017,11 +1018,10 @@ The following updates were provided by the Province of BC via email. Click on th
 
 Previous Tyee steelhead updates can be downloaded here:
 
-[Skeena Summer Steelhead Update to August 1](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%201_24.xlsx)
+{{< pdf steelhead_aug1_24.pdf >}}
+{{< pdf steelhead_july25_24.pdf >}}
+{{< pdf steelhead_july17_24.pdf >}}
 
-[Skeena Summer Steelhead Update to July 25](Skeena%20Summer%20Steelhead%20Update%20to%20July%2025_24%20(1).xlsx)
-
-[Skeena Summer Steelhead Update to July 17](Skeena%20Summer%20Steelhead%20Update%20to%20July%2017_24.xlsx)
 
 # Babine Fence
 
@@ -1530,7 +1530,7 @@ ggarrange(dailyplot_jack,cumplot_jack,align="v",ncol=1,common.legend = TRUE)
 pernonbabine<-.1
 ty<-data%>%select(Date, Observed.Tyee=cumtyee)
 fe<-fence%>%select(Date,Actual.Fence=cumrun)
-inrivercatch<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="inriver catch") # update this to 2024
+inrivercatch<-read_excel("data/tyee FN catch 2024.xlsx",sheet="inriver catch") # update this to 2024
 inrivercatch$Date<-as.Date(inrivercatch$Date)
 ca<-inrivercatch%>%select(Date,inriver.harvest) # all 0 or NA...
 comp<-merge(ty,fe,all=TRUE)%>%merge(ca,all=TRUE)%>%
