@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 13, 2024"
+subtitle: "August 14, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -25,11 +25,11 @@ data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",she
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-08-12")
-tyee.date<-"August 12"
-fence.day<-as.Date("2024-08-12")
-fence.date<-"August 12"
-today<-as.Date("2024-08-12")
+tyee.day<-as.Date("2024-08-13")
+tyee.date<-"August 13"
+fence.day<-as.Date("2024-08-13")
+fence.date<-"August 13"
+today<-as.Date("2024-08-13")
 ```
 
 # Summary
@@ -42,11 +42,11 @@ today<-as.Date("2024-08-12")
 
     -   Tides influence the migration of salmon into the Skeena River. We are currently at small tides moving towards larger tides. [(Tides section)](#tide-information-at-port-edward)
 
-    -   To date \~1.68M sockeye are estimated to have passed by Tyee, with about 90% of the run through to date on average (80% if 1-week late, 95% if one week early). Daily sockeye counts have dropped and are now under 10,000 (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.86M with about 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
+    -   To date \~1.68M sockeye are estimated to have passed by Tyee, with about 91% of the run through to date on average (82% if 1-week late, 96% if one week early). Daily sockeye counts have dropped and are now under 10,000 (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.86M with about 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
 
-    -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, declined slowly, and since has stabilized again. The 3 lines are converging as is normal this time of year and this also supports average timing of the run.
+    -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, declined slowly, and since has stabilized again although slowly declining. The 3 lines are converging as is normal this time of year and this also supports average timing of the run.
 
-    -   The current run size prediction is 2.1M on average run-timing (2.3M if one week late and 2M if 1 week early) (Figure 6). These should not change much anymore through the remainder of the run.
+    -   The current run size prediction is 2.0M on average run-timing (2.2M if one week late and 1.9M if 1 week early) (Figure 6). These should not change much anymore through the remainder of the run.
 
     -   The Chinook index remains very low and available evidence suggests a very low run and is tracking near the 10th percentile (Figure 7).
 
@@ -60,9 +60,9 @@ today<-as.Date("2024-08-12")
 
 -   Babine Fence
 
-    -   The Babine River fence started operations on July 9th. The total large sockeye run to date is \~ 537k with recent large return days bumping the run over the recent and historical averages, and exceeding 2023 (Figures 12-14).
+    -   The Babine River fence started operations on July 9th. The total large sockeye run to date is \~ 789k with recent large return days bumping the run over the recent and historical averages, and exceeding 2023 (Figures 12-14).
 
-    -   The total run of jack sockeye to date is now over 33,000, well above the longer term and recent averages (Figures 15-16).
+    -   The total run of jack sockeye to date is now over 48k, well above the longer term and recent averages (Figures 15-16).
 
 -   Babine versus Tyee comparison
 
@@ -80,9 +80,9 @@ today<-as.Date("2024-08-12")
 -   Commercial Fisheries
 
     -   Commercial fishing has started, with Area C gillnet openings on July 13, 20-21, 25-26, 29-30, August 2-3 and 8-9. The Area A seine fishery was open July 25-28 and August 2-5. Coastal Demonstration Fisheries opened on July 16, 21, 24, 27-28, July 31-August 2, August 4-7 and 11. In-river demonstration fisheries started July 30.
-    
+
     -   Preliminary sockeye catch in the Area C gillnet openings is \~ 132,000. Preliminary sockeye catch in the Area A seine fisheries is \~ 46,000. Preliminary demonstration fishery catches are likely near 20,000 sockeye. Late timed commercial openings had low effort and low catch rates.
-    
+
     -   More details on catch can be found in the catch section below and in Appendix B.
 
 -   Recreational Fisheries
@@ -1025,14 +1025,13 @@ The following updates were provided by the Province of BC via email. Click on th
 
 ![](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_8_24.pdf){width="80%" height="500"}
 
-Previous Tyee steelhead updates can be downloaded here: 
+Previous Tyee steelhead updates can be downloaded here:
 
-[Skeena Summer Steelhead Update to August 1](Skeena Summer Steelhead Update to Aug 1_24.xlsx)
+[Skeena Summer Steelhead Update to August 1](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%201_24.xlsx)
 
-[Skeena Summer Steelhead Update to July 25](Skeena Summer Steelhead Update to July 25_24 (1).xlsx)
+[Skeena Summer Steelhead Update to July 25](Skeena%20Summer%20Steelhead%20Update%20to%20July%2025_24%20(1).xlsx)
 
-[Skeena Summer Steelhead Update to July 17](Skeena Summer Steelhead Update to July 17_24.xlsx)
-
+[Skeena Summer Steelhead Update to July 17](Skeena%20Summer%20Steelhead%20Update%20to%20July%2017_24.xlsx)
 
 # Babine Fence
 
@@ -1231,7 +1230,7 @@ dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Large Sockeye`,group=Date))+
   labs(y="Daily Sockeye",color="")+
   theme_bw()+
   theme(legend.position = "bottom") +
-  ylim(0,50000)
+  ylim(0,160000)
 
 ```
 
@@ -1442,7 +1441,6 @@ gg.daily.quants<-gg.daily %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
-  
 dailyplot_jack <- ggplot(gg.daily,aes(x=Date, y=`Jack Sockeye`,group=Date))+
   geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Jack Sockeye`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
@@ -1452,7 +1450,7 @@ dailyplot_jack <- ggplot(gg.daily,aes(x=Date, y=`Jack Sockeye`,group=Date))+
   labs(y="Daily Sockeye Jacks",color="")+
   theme_bw()+
   theme(legend.position = "bottom") +
-  ylim(0,25000)
+  ylim(0,20000)
 
 ```
 
