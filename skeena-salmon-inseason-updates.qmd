@@ -2372,8 +2372,15 @@ Recreational fisheries notices for the Skeena are shown in the Fisheries Opening
 
 The following table shows the updated management guidelines for recreational fisheries targeting sockeye in the Skeena watershed as per the 2024-25 North Coast Salmon IFMP.
 
--   insert table here.
+```{r table of skeena sockeye rec fishery guidelines, echo=FALSE, warning=FALSE, include=TRUE}
+options(knitr.kable.NA = '')
+guidelines<-read_excel("data/guidelines_rec_sockeye.xlsx", sheet = "Sheet1")
 
+kable(guidelines,booktabs=TRUE, caption="Guidelines for management actions for recreational sockeye fisheries in the Skeena Watershed")%>%
+add_header_above(c("Estimated Abundance"=1, "Daily Limits"=3)) %>%
+kable_styling(latex_options = "HOLD_position")
+
+```
 # Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2024 data
 
 ```{r tyee escapement by year prep}
