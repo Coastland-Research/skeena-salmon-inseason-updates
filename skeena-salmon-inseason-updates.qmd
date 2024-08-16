@@ -68,7 +68,7 @@ today<-as.Date("2024-08-14")
 
     -   Figure 17 shows the expected difference between the escapement past Tyee and the number of sockeye showing up at the Babine fence. This includes the in-river catch (to be updated shortly) and an adjustment assuming that 10% of the sockeye passing Tyee are non-Babine.
 
-    -   Although the comparison showed some delay in migration at the start of the run, there is nothing concerning at this point with the Babine fence tracking the expected run at 3 weeks migration timing quite closely.
+    -   Although the comparison shows some delay in migration at the start of the run, there is nothing concerning at this point with the Babine fence tracking the expected run at 3 weeks migration timing quite closely.
 
     -   Figures (18-21) show the returns of species other than sockeye to the Babine fence versus historical averages.
 
