@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 15, 2024"
+subtitle: "August 17, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -25,11 +25,11 @@ data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",she
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-08-14")
-tyee.date<-"August 14"
-fence.day<-as.Date("2024-08-14")
-fence.date<-"August 14"
-today<-as.Date("2024-08-14")
+tyee.day<-as.Date("2024-08-16")
+tyee.date<-"August 16"
+fence.day<-as.Date("2024-08-16")
+fence.date<-"August 16"
+today<-as.Date("2024-08-16")
 ```
 
 # Summary
@@ -40,13 +40,13 @@ today<-as.Date("2024-08-14")
 
 -   Tyee Test Fishery
 
-    -   Tides influence the migration of salmon into the Skeena River. We are currently at small tides moving towards larger tides. [(Tides section)](#tide-information-at-port-edward)
+    -   Tides influence the migration of salmon into the Skeena River.
 
-    -   To date \~1.69M sockeye are estimated to have passed by Tyee, with about 91% of the run through to date on average (84% if 1-week late, 96% if one week early). Daily sockeye counts have dropped and are now under 10,000 (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.9M with about 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
+    -   To date \~1.69M sockeye are estimated to have passed by Tyee, with about 93% of the run through to date on average (87% if 1-week late, 97% if one week early). Daily sockeye counts have dropped and are now between 2-5,000 (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.9M with about 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
 
     -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, declined slowly, and since has stabilized again although slowly declining. The 3 lines are converging as is normal this time of year and this also supports average timing of the run.
 
-    -   The current run size prediction is 2.0M on average run-timing (2.2M if one week late and 1.9M if 1 week early) (Figure 6). These should not change much anymore through the remainder of the run.
+    -   The current run size prediction is 2.0M on average run-timing (2.1M if one week late and 1.9M if 1 week early) (Figure 6). These should not change much anymore through the remainder of the run.
 
     -   The Chinook index remains very low and available evidence suggests a very low run and is tracking near the 10th percentile (Figure 7).
 
@@ -54,21 +54,21 @@ today<-as.Date("2024-08-14")
 
     -   Pink salmon are looking strong this year relative to even-year abundance with the index tracking around the 90th percentile (Figure 9).
 
-    -   Coho salmon are passing through Tyee and tracking very close to the long term average (Figure 10).
+    -   Coho salmon are passing through Tyee and tracking just under the long term average (Figure 10).
 
-    -   The Steelhead index suggests a strong run is continuing, around the 90th percentile. The latest Province of BC update estimates around 25,000 Steelhead through Tyee to date (as of August 8th) (Figure 11).
+    -   The Steelhead index suggests a strong run is continuing, around the 90th percentile. The latest Province of BC update estimates around 29,000 Steelhead through Tyee to date (as of August 8th) (Figure 11).
 
 -   Babine Fence
 
-    -   The Babine River fence started operations on July 9th. The total large sockeye run to date is \~ 918k with recent large return days bumping the run over the recent and historical averages, and exceeding 2023 (Figures 12-14).
+    -   The Babine River fence started operations on July 9th. The total large sockeye run to date is \~ 1.1M with recent large return days bumping the run over the recent and historical averages, and exceeding 2023 (Figures 12-14).
 
-    -   The total run of jack sockeye to date is now over 54k, well above the longer term and recent averages (Figures 15-16).
+    -   The total run of jack sockeye to date is now over 62k, well above the longer term and recent averages (Figures 15-16).
 
 -   Babine versus Tyee comparison
 
-    -   Figure 17 shows the expected difference between the escapement past Tyee and the number of sockeye showing up at the Babine fence. This includes the in-river catch (to be updated shortly) and an adjustment assuming that 10% of the sockeye passing Tyee are non-Babine.
+    -   Figure 17 shows the expected difference between the escapement past Tyee and the number of sockeye showing up at the Babine fence. This includes the in-river catch and an adjustment assuming that 10% of the sockeye passing Tyee are non-Babine.
 
-    -   Although the comparison shows some delay in migration at the start of the run, there is nothing concerning at this point with the Babine fence tracking the expected run at 3 weeks migration timing quite closely.
+    -   Although the comparison shows some delay in migration at the start of the run, there is nothing concerning at this point with the Babine fence tracking the expected run at 3 weeks migration timing quite closely. If large daily coutns continue, then we could see more large sockeye showing up at Babine than expected.
 
     -   Figures (18-21) show the returns of species other than sockeye to the Babine fence versus historical averages.
 
@@ -1117,7 +1117,7 @@ ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
 
 ```
 
-The following figures show the daily and cumulative run of sockeye estimated to the Babine fence for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Babine sockeye.
+The following figures show the daily and cumulative run of large sockeye estimated to the Babine fence for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Babine sockeye.
 
 ```{r babine recent daily estimates}
 #| label: fig-babine-recent-daily
@@ -1304,6 +1304,52 @@ cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
 
 ```
+
+#### Babine comparison with Tyee
+
+```{r}
+#| label: fig-diff
+#| echo: false
+#| warning: false
+#| fig-cap: "Estimated difference in large sockeye between escapement past Tyee and the Babine Fence based on 3 week migration timing, 10% non-Babine stocks, and in-river FSC and demo catch to date. The solid blue line is the escapement past Tyee, the dotted green line is the expected run at the Babine fence, the solid black line is the actual total run at the fence, and the red line is the difference between the black line and green line (fence run - expected run)."
+#| include: true
+#| fig-height: 6
+
+#Explanation for figure
+#This comparison aims to provide a coarse idea on the catchability at Tyee. #The red line in the figure below shows the difference between the escapement #past Tyee and the total run being counted at the Babine Fence, based on some #assumptions. These assumptions include 3 week migration timing, 10% #non-Babine stock composition and a rough estimate of in-river FSC and demo #harvest to date between Tyee and Babine. In 2023 some sockeye were missed #due to the delay from wildfire evacuations, however DFO and LBN staff #indicate that no sockeye were visible below the fence when it was evacuated, #and therefore the number of sockeye missed was probably fairly low. #Additional analysis will be required to provide an estimate of the number of #missed sockeye.
+
+pernonbabine<-.1
+
+ty<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee") %>%
+  mutate(Date = as.Date(Date))%>%
+  select(Date, Observed.Tyee=cumtyee)
+
+fe<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  mutate(Date = as.Date(Date))%>%
+  select(Date,Actual.Fence=cumrun)
+
+inrivercatch<-read_excel("data/tyee FN catch 2024.xlsx",sheet="inriver catch") # update this to 2024
+inrivercatch$Date<-as.Date(inrivercatch$Date)
+ca<-inrivercatch%>%select(Date,inriver.harvest) # all 0 or NA...
+comp<-merge(ty,fe,all=TRUE)%>%merge(ca,all=TRUE)%>%
+  mutate(Expected.Babine=lag((1-pernonbabine)*Observed.Tyee-inriver.harvest,21),
+         `Difference @ 3 Weeks`=Actual.Fence-Expected.Babine)%>%
+  select(-inriver.harvest)%>%
+  pivot_longer(2:5,names_to="Count",values_to="Fish")
+
+ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
+  geom_line() +
+  theme_classic()+grids() +
+  scale_colour_manual(values=c("black","red","seagreen4","blue")) +
+  scale_linetype_manual(values=c("solid","solid","dashed","solid")) +
+  scale_size_manual(values=c(2,1,1,1.5)) +
+  theme(legend.position="top") +
+  labs(y="Number of Large Sockeye") +
+  ylim(-250000,2500000)
+
+```
+
+#### Jack sockeye
 
 ```{r babine sockeye prep2,include=TRUE,echo=FALSE,warning=FALSE,message=FALSE}
 
@@ -1524,49 +1570,6 @@ ggarrange(dailyplot_jack,cumplot_jack,align="v",ncol=1,common.legend = TRUE)
 
 ```
 
-### Babine comparison with Tyee
-
-```{r}
-#| label: fig-diff
-#| echo: false
-#| warning: false
-#| fig-cap: "Estimated difference in sockeye between escapement past Tyee and the Babine Fence based on 3 week migration timing, 10% non-Babine stocks, and in-river FSC and demo catch to date. The solid blue line is the escapement past Tyee, the dotted green line is the expected run at the Babine fence, the solid black line is the actual total run at the fence, and the red line is the difference between the black line and green line (fence run - expected run)."
-#| include: true
-#| fig-height: 6
-
-#Explanation for figure
-#This comparison aims to provide a coarse idea on the catchability at Tyee. #The red line in the figure below shows the difference between the escapement #past Tyee and the total run being counted at the Babine Fence, based on some #assumptions. These assumptions include 3 week migration timing, 10% #non-Babine stock composition and a rough estimate of in-river FSC and demo #harvest to date between Tyee and Babine. In 2023 some sockeye were missed #due to the delay from wildfire evacuations, however DFO and LBN staff #indicate that no sockeye were visible below the fence when it was evacuated, #and therefore the number of sockeye missed was probably fairly low. #Additional analysis will be required to provide an estimate of the number of #missed sockeye.
-
-pernonbabine<-.1
-
-ty<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee") %>%
-  mutate(Date = as.Date(Date))%>%
-  select(Date, Observed.Tyee=cumtyee)
-
-fe<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
-  mutate(Date = as.Date(Date))%>%
-  select(Date,Actual.Fence=cumrun)
-
-inrivercatch<-read_excel("data/tyee FN catch 2024.xlsx",sheet="inriver catch") # update this to 2024
-inrivercatch$Date<-as.Date(inrivercatch$Date)
-ca<-inrivercatch%>%select(Date,inriver.harvest) # all 0 or NA...
-comp<-merge(ty,fe,all=TRUE)%>%merge(ca,all=TRUE)%>%
-  mutate(Expected.Babine=lag((1-pernonbabine)*Observed.Tyee-inriver.harvest,21),
-         `Difference @ 3 Weeks`=Actual.Fence-Expected.Babine)%>%
-  select(-inriver.harvest)%>%
-  pivot_longer(2:5,names_to="Count",values_to="Fish")
-
-ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
-  geom_line() +
-  theme_classic()+grids() +
-  scale_colour_manual(values=c("black","red","seagreen4","blue")) +
-  scale_linetype_manual(values=c("solid","solid","dashed","solid")) +
-  scale_size_manual(values=c(2,1,1,1.5)) +
-  theme(legend.position="top") +
-  labs(y="Number of Large Sockeye") +
-  ylim(-250000,2500000)
-
-```
 
 ```{r}
 #| label: babine-fence
