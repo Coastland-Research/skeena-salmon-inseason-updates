@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 17, 2024"
+subtitle: "August 18, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -19,17 +19,16 @@ options(scipen=10000)
 ```
 
 ```{r load data and format, include=FALSE}
-data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee") %>%
+data<-read_excel("data/Tyee data 2024.xlsx",sheet="Tyee") %>%
   mutate(Date = as.Date(Date))
-#data$Date<-as.Date(data$Date)
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-08-16")
-tyee.date<-"August 16"
-fence.day<-as.Date("2024-08-16")
-fence.date<-"August 16"
-today<-as.Date("2024-08-16")
+tyee.day<-as.Date("2024-08-17")
+tyee.date<-"August 17"
+fence.day<-as.Date("2024-08-17")
+fence.date<-"August 17"
+today<-as.Date("2024-08-17")
 ```
 
 # Summary
@@ -200,7 +199,7 @@ ggarrange(t1,t2,align="v",ncol=1,common.legend = TRUE)
 #| fig-cap: "Daily run through Tyee (uncorrected) from 1970-2023. 2024 run is shown in purple."
 #| fig-height: 5
 
-daily<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee daily")
+daily<-read_excel("data/Tyee data 2024.xlsx",sheet="tyee daily")
 
 gg.daily<-daily%>%
   pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye")%>%
@@ -221,7 +220,7 @@ ggplot(gg.daily,aes(x=Date,y=Sockeye,group=Date))+
 #| fig-cap: "Daily cumulative proportion of the sockeye run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
 #| fig-height: 5
 
-dailycum<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee pcum")
+dailycum<-read_excel("data/Tyee data 2024.xlsx",sheet="tyee pcum")
 
 gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
   pivot_longer("1970":"2023",names_to="Year",values_to="Sockeye")%>%
@@ -287,7 +286,7 @@ Currently, the 2024 run is tracking close to 2023, and considerably higher than 
 #| fig-cap: "Daily cumulative run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."
 #| fig-height: 5
 
-daily.cum<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee cum")
+daily.cum<-read_excel("data/Tyee data 2024.xlsx",sheet="tyee cum")
 
 gg.daily.cum<-daily.cum%>%
   pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye")%>%
@@ -416,7 +415,7 @@ ggplot(tyeemodel,aes(x=Date,y=`Number of Sockeye`/10^6,color=Timing))+
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=`large chinook`)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -471,7 +470,7 @@ dailyplot_cn <- ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
 # Read the CSV file
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=`large chinook`)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -547,7 +546,7 @@ ggarrange(dailyplot_cn,cumplot_cn,align="v",ncol=1,common.legend = TRUE)
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=chum)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -601,7 +600,7 @@ dailyplot_ch <- ggplot(gg.daily,aes(x=Date, y=Chum,group=Date))+
 # Read the CSV file
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=`chum`)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -671,7 +670,7 @@ ggarrange(dailyplot_ch,cumplot_ch,align="v",ncol=1,common.legend = TRUE)
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=pink)
 
 daily.index<-left_join(daily,cn2024,by="Date") %>%
@@ -724,7 +723,7 @@ dailyplot_p_e<- ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=pink)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -794,7 +793,7 @@ ggarrange(dailyplot_p_e,cumplot_p_e,align="v",ncol=1,common.legend = TRUE)
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=coho)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -847,7 +846,7 @@ dailyplot_co <- ggplot(gg.daily,aes(x=Date, y=Coho,group=Date))+
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=coho)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -913,7 +912,7 @@ ggarrange(dailyplot_co,cumplot_co,align="v",ncol=1,common.legend = TRUE)
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Steelhead")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=steelhead)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -966,7 +965,7 @@ dailyplot_st <- ggplot(gg.daily,aes(x=Date, y=Steelhead,group=Date))+
 #| fig-height: 5
 
 daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Steelhead")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="index")%>%
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=steelhead)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -1320,7 +1319,7 @@ ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
 
 pernonbabine<-.1
 
-ty<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee") %>%
+ty<-read_excel("data/Tyee data 2024.xlsx",sheet="Tyee") %>%
   mutate(Date = as.Date(Date))%>%
   select(Date, Observed.Tyee=cumtyee)
 
@@ -1328,7 +1327,7 @@ fe<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
   mutate(Date = as.Date(Date))%>%
   select(Date,Actual.Fence=cumrun)
 
-inrivercatch<-read_excel("data/tyee FN catch 2024.xlsx",sheet="inriver catch") # update this to 2024
+inrivercatch<-read_excel("data/FNs catch 2024.xlsx",sheet="inriver catch") # update this to 2024
 inrivercatch$Date<-as.Date(inrivercatch$Date)
 ca<-inrivercatch%>%select(Date,inriver.harvest) # all 0 or NA...
 comp<-merge(ty,fe,all=TRUE)%>%merge(ca,all=TRUE)%>%
@@ -2331,7 +2330,7 @@ First Nations CSAF demonstration fisheries opened on July 16 in 2024. The catch 
 #| include: true
 #| fig-height: 4
 
-demo.data<-read_excel("data/tyee FN catch 2024.xlsx",sheet="demo catches")
+demo.data<-read_excel("data/FNs catch 2024.xlsx",sheet="demo catches")
 demo.data$date<-as.Date(demo.data$date)
 
 demo.totals<-demo.data%>%group_by(Nation=nation)%>%summarise("Total Demo Sockeye Catch"=sum(pieces))
@@ -2393,11 +2392,11 @@ kable_styling(latex_options = "HOLD_position")
 #| message: false
 
 # 2024 tyee data
-data<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="Tyee") %>%
+data<-read_excel("data/Tyee data 2024.xlsx",sheet="Tyee") %>%
   mutate(Date = as.Date(Date))
 
 # all years tyee data:
-daily <- read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="tyee daily") %>%
+daily <- read_excel("data/Tyee data 2024.xlsx",sheet="tyee daily") %>%
   pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye") %>%
   mutate(Year=as.numeric(Year)) %>%
   mutate(Date = as.Date(Date)) %>%
@@ -2461,7 +2460,7 @@ cum_tyee_years
 #| include: true
 #| fig-height: 7
 
-othercatch<-read_excel("data/tyee and catch and fence in-season updates 2024.xlsx",sheet="gncatch")
+othercatch<-read_excel("data/commercial catch 2024.xlsx",sheet="catch")
 
 oc2<-othercatch%>%pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
   mutate(cpue=Catch/effort)%>%
