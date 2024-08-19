@@ -41,7 +41,7 @@ today<-as.Date("2024-08-18")
 
     -   Tides influence the migration of salmon into the Skeena River.
 
-    -   To date \~1.69M sockeye are estimated to have passed by Tyee, with about 93% of the run through to date on average (88% if 1-week late, 97.5% if one week early). Daily sockeye counts have dropped and are now between 2-5,000 (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.9M with about 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
+    -   To date \~1.69M sockeye are estimated to have passed by Tyee, with about 93% of the run through to date on average (89% if 1-week late, 98% if one week early). Daily sockeye counts have dropped and are now between 2-5,000 (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.9M with about 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
 
     -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, declined slowly, and since has stabilized again although slowly declining. The 3 lines are converging as is normal this time of year and this also supports average timing of the run.
 
@@ -55,7 +55,7 @@ today<-as.Date("2024-08-18")
 
     -   Coho salmon are passing through Tyee and tracking just under the long term average (Figure 10).
 
-    -   The Steelhead index suggests a strong run is continuing, around the 90th percentile. The latest Province of BC update estimates around 29,000 Steelhead through Tyee to date (as of August 8th) (Figure 11).
+    -   The Steelhead index suggests a strong run is continuing, around the 90th percentile. The latest Province of BC update estimates around 29,000 Steelhead through Tyee to date (as of August 15th) (Figure 11).
 
 -   Babine Fence
 
