@@ -2560,6 +2560,7 @@ ggplot(sncpue,aes(x=Date,y=cpue))+
 \FloatBarrier
 \newpage
 ```
+
 ```{r}
 #| label: fig-area4
 #| echo: false
@@ -2569,21 +2570,21 @@ ggplot(sncpue,aes(x=Date,y=cpue))+
 #| include: false
 #| fig-height: 6
 
-#oc.total<-oc2%>%group_by(gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
+oc.total<-oc2%>%group_by(gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
 
-#oc.table<-oc.total%>%pivot_wider(names_from=c("gear","dis"),values_from="total")%>%replace(is.na(.),0)
+oc.table<-oc.total%>%pivot_wider(names_from=c("gear","dis"),values_from="total")
 
-#kable(oc.table,caption=paste0("Total catch of coho, chum, chinook, pink and steelhead in the commercial gillent and seine fisheries to ",tyee.date,"."))
+kable(oc.table,caption=paste0("Total catch of coho, chum, chinook, pink and steelhead in the commercial gillent and seine fisheries to ",tyee.date,"."))
 
-#ggplot(oc.total,aes(x=Species,y=total,fill=gear))+
-#  geom_col()+
-#  scale_color_brewer(palette="Set1")+
-#  geom_text(aes(label=total),vjust=-.3,color="black")+
-#  facet_wrap(~dis,ncol=1,scales="free_y")+
-#  theme_bw()+
-#  labs(y="Total Catch",x="Species")+
-#  scale_y_continuous(expand=c(.1,0))+
-#  theme(strip.background = element_blank())
+ggplot(oc.total,aes(x=Species,y=total,fill=gear))+
+  geom_col()+
+  scale_color_brewer(palette="Set1")+
+  geom_text(aes(label=total),vjust=-.3,color="black")+
+  facet_wrap(~dis,ncol=1,scales="free_y")+
+  theme_bw()+
+  labs(y="Total Catch",x="Species")+
+  scale_y_continuous(expand=c(.1,0))+
+  theme(strip.background = element_blank())
 
 ```
 
