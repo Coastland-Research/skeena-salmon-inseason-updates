@@ -134,7 +134,7 @@ lateper<-round(data$Runtiming[i-7],3)*100
 #stat2<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee","TRTC (Escapement+Catch)","Catch (preliminary"),`Number of Sockeye`=c(e,t,c))
 #kable(stat2,caption=paste0("Cumulative escapement, TRTC, and catch to ",todate,"."))
 
-stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee","TRTC (Escapement+Catch)","Catch (preliminary)"),`Number of Sockeye`=c(e,t,c),
+stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee","Area A Seine Catch", "Area C Gillnet Catch", "First Nations Demo Catch (Marine)", "First Nations Demo Catch (In-River)", "Total First Nations FSC Catch", "TRTC (Escapement+Catch)"),`Number of Sockeye`=c(e,t,c),
                   `Run Timing`=c("Average","One week early","One week late"),`Percent Through`=c(avgper,earlyper,lateper))
 
 kable(stat3,caption=paste0("Cumulative escapement, TRTC, and catch to ",tyee.date,"."))
