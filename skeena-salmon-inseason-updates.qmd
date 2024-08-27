@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 26, 2024"
+subtitle: "August 27, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -24,11 +24,11 @@ data<-read_excel("data/Tyee data 2024.xlsx",sheet="Tyee") %>%
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-08-25")
-tyee.date<-"August 25"
-fence.day<-as.Date("2024-08-25")
-fence.date<-"August 25"
-today<-as.Date("2024-08-25")
+tyee.day<-as.Date("2024-08-26")
+tyee.date<-"August 26"
+fence.day<-as.Date("2024-08-26")
+fence.date<-"August 26"
+today<-as.Date("2024-08-26")
 ```
 
 # Summary
@@ -134,7 +134,7 @@ lateper<-round(data$Runtiming[i-7],3)*100
 #stat2<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee","TRTC (Escapement+Catch)","Catch (preliminary"),`Number of Sockeye`=c(e,t,c))
 #kable(stat2,caption=paste0("Cumulative escapement, TRTC, and catch to ",todate,"."))
 
-stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee","TRTC (Escapement+Catch)","Catch (preliminary)"),`Number of Sockeye`=c(e,t,c),
+stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee", "TRTC (Escapement+Catch)", "Catch (preliminary)"),`Number of Sockeye`=c(e,t,c),
                   `Run Timing`=c("Average","One week early","One week late"),`Percent Through`=c(avgper,earlyper,lateper))
 
 kable(stat3,caption=paste0("Cumulative escapement, TRTC, and catch to ",tyee.date,"."))
