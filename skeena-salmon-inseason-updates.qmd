@@ -104,7 +104,7 @@ Tides influence the movement of sockeye and other salmon migrating into the Skee
 
 <figure>
 
-<img src="/images/tides5.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+<img src="/images/tides6.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
 
 <figcaption>Tides at Port Edward</figcaption>
 
