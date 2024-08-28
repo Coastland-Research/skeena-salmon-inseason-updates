@@ -173,6 +173,7 @@ fsc <- 75000
 t<-data$cumtyee[i] + s + gn + dm + 30000
 
 stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee", "Area A Seine Catch", "Area C Gillnet Catch", "First Nations Demo Catch (Marine)", "First Nations Demo Catch (In-River)", "Total First Nations FSC Catch", "TRTC (Escapement+Catch)"),`Number of Sockeye`=c(e, s, gn, dm, di, fsc, t))
+names(stat3) <- gsub('[.]', ' ', names(stat3))
 
 kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.date,"."))
 ```
@@ -185,6 +186,7 @@ earlyper<-round(data$Runtiming[i+7],3)*100
 lateper<-round(data$Runtiming[i-7],3)*100
 
 stat4 <- data.frame(`Cumulative to Date`=c("Escapement past Tyee", "TRTC (Escapement + Catch)", "Catch (preliminary)"), `Run Timing`=c("Average","One week early","One week late"),`Number of Sockeye`=c(e, t, c), `Percent Through`=c(avgper,earlyper,lateper))
+names(stat4) <- gsub('[.]', ' ', names(stat4))
 
 kable(stat4, caption=paste0("Run timing to ",tyee.date,"."))
 ```
