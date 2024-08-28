@@ -21,6 +21,28 @@ options(scipen=10000)
 ```{r load data and format, include=FALSE}
 data<-read_excel("data/Tyee data 2024.xlsx",sheet="Tyee") %>%
   mutate(Date = as.Date(Date))
+
+com_catch <- read_excel("data/commercial catch 2024.xlsx", sheet = "catch") %>%
+  pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
+  mutate(cpue=Catch/effort)%>%
+  filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%
+  mutate(type=ifelse(Species%in%c("Chinook (Released)","Chum (Released)","Steelhead (Released)","Coho (Released)"),"Released","Kept"))%>%
+  mutate(sp=case_when(Species=="Chinook (Released)"~"Chinook",
+                      Species=="Coho (Released)"~"Coho",
+                      Species=="Pink (Kept)"~"Pink",
+                      Species=="Pink (Released)"~"Pink",
+                      Species=="Chum (Released)"~"Chum",
+                      Species=="Steelhead (Released)"~"Steelhead",
+                      Species=="Sockeye (Kept)"~"Sockeye"),
+         dis=case_when(Species=="Chinook (Released)"~"Released",
+                      Species=="Coho (Released)"~"Released",
+                      Species=="Pink (Kept)"~"Kept",
+                      Species=="Pink (Released)"~"Released",
+                      Species=="Chum (Released)"~"Released",
+                      Species=="Steelhead (Released)"~"Released",
+                      Species=="Sockeye (Kept)"~"Kept"))
+
+fn_catch <- read_excel("data/FNs catch 2024.xlsx", sheet = "demo catches")
 ```
 
 ```{r set days, echo=FALSE}
@@ -128,22 +150,45 @@ i<-match(tyee.day,data$Date)
 average<-data$average[i]
 
 e<-data$cumtyee[i]
-t<-data$cumtrtc[i]
-c<-data$cumcatch[i]
+c <- data$cumcatch[i]
+
+seine <- com_catch %>%
+  filter(gear == "seine" & sp == "Sockeye")
+s <- sum(seine$Catch, na.rm = TRUE)
+
+gnet <- com_catch %>%
+  filter(gear == "gillnet")
+gn <- sum(gnet$Catch, na.rm=TRUE)
+
+demo_marine <- fn_catch %>%
+  filter(nation %in% c("Lax Kw'alaams", "NCS"))
+dm <- sum(demo_marine$pieces, na.rm=TRUE)
+
+demo_inriver <- fn_catch %>%
+  filter(nation %in% c("Gitksan", "Lake Babine Nation"))
+di <- sum(demo_inriver$pieces, na.rm=TRUE)
+
+fsc <- 75000
+
+t<-data$cumtyee[i] + s + gn + dm + 30000
+
+stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee", "Area A Seine Catch", "Area C Gillnet Catch", "First Nations Demo Catch (Marine)", "First Nations Demo Catch (In-River)", "Total First Nations FSC Catch", "TRTC (Escapement+Catch)"),`Number of Sockeye`=c(e, s, gn, dm, di, fsc, t))
+
+kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.date,"."))
+```
+
+
+```{r run timing table , echo = FALSE, results = 'asis'}
 
 avgper<-round(data$Runtiming[i],3)*100
 earlyper<-round(data$Runtiming[i+7],3)*100
 lateper<-round(data$Runtiming[i-7],3)*100
 
-#stat2<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee","TRTC (Escapement+Catch)","Catch (preliminary"),`Number of Sockeye`=c(e,t,c))
-#kable(stat2,caption=paste0("Cumulative escapement, TRTC, and catch to ",todate,"."))
+stat4 <- data.frame(`Cumulative to Date`=c("Escapement past Tyee", "TRTC (Escapement + Catch)", "Catch (preliminary)"), `Run Timing`=c("Average","One week early","One week late"),`Number of Sockeye`=c(e, t, c), `Percent Through`=c(avgper,earlyper,lateper))
 
-stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee", "TRTC (Escapement+Catch)", "Catch (preliminary)"),`Number of Sockeye`=c(e,t,c),
-                  `Run Timing`=c("Average","One week early","One week late"),`Percent Through`=c(avgper,earlyper,lateper))
-
-kable(stat3,caption=paste0("Cumulative escapement, TRTC, and catch to ",tyee.date,"."))
-
+kable(stat4, caption=paste0("Run timing to ",tyee.date,"."))
 ```
+
 
 ```{r tyee plot setup, echo=FALSE,warning=FALSE,message=FALSE}
 escandtrtcdaily<-data%>%select(Date,Escapement=esctyee,TRTC=`dailytrtc`,`Avg. Daily`=`average70-23`,"2023"=esc23)%>%
