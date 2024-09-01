@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 31, 2024"
+subtitle: "September 1, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -46,11 +46,11 @@ fn_catch <- read_excel("data/FNs catch 2024.xlsx", sheet = "demo catches")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-08-30")
-tyee.date<-"August 30"
-fence.day<-as.Date("2024-08-30")
-fence.date<-"August 30"
-today<-as.Date("2024-08-30")
+tyee.day<-as.Date("2024-08-31")
+tyee.date<-"August 31"
+fence.day<-as.Date("2024-08-31")
+fence.date<-"August 31"
+today<-as.Date("2024-08-31")
 ```
 
 # Summary
@@ -1073,9 +1073,11 @@ ggarrange(dailyplot_st,cumplot_st,align="v",ncol=1,common.legend = TRUE)
 
 The following updates were provided by the Province of BC via email. Click on the link below to download a PDF of Tyee steelhead updates to August 15. For any questions please contact Kenji Miyazaki at BC.
 
-![](steelhead_aug15.pdf){width="80%" height="500"}
+![](steelhead_aug29.pdf){width="80%" height="500"}
 
 Previous Tyee steelhead updates can be downloaded here:
+
+[Skeena Summer Steelhead Update to August 15]("Skeena Summer Steelhead Update to Aug _15_24.xlsx")
 
 [Skeena Summer Steelhead Update to August 8]("Skeena Summer Steelhead Update to Aug _8_24.xlsx")
 
