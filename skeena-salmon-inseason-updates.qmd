@@ -63,11 +63,11 @@ today<-as.Date("2024-08-31")
 
     -   Tides influence the migration of salmon into the Skeena River.
 
-    -   To date > 1.7M sockeye are estimated to have passed by Tyee, with about 98% of the run through to date on average (95% if 1-week late, 99% if one week early). Daily sockeye counts have dropped and are now very low (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.95M with about 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
-
+    -   To date > 1.7M sockeye are estimated to have passed by Tyee, with very few additional sockeye expected. Daily sockeye counts have dropped and are now very low (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.95M with just under  200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
+    
     -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, declined slowly, and since has stabilized again although slowly declining. The 3 lines are converging as is normal this time of year and this also supports average timing of the run.
-
-    -   The current run size prediction is 1.93M on average run-timing (2M if one week late and 1.9M if 1 week early) (Figure 6). These should not change much anymore through the remainder of the run.
+    
+    -   The current run size prediction is about 1.9M for all three run-timings(Figure 6).
 
     -   The Chinook index remains very low and available evidence suggests a very low run and is tracking near the 10th percentile (Figure 7).
 
@@ -77,11 +77,11 @@ today<-as.Date("2024-08-31")
 
     -   Coho salmon are passing through Tyee and tracking just under the long term average (Figure 10).
 
-    -   The Steelhead index suggests a strong run is continuing, although declining slightly to near the 75th percentile of returns. The latest Province of BC update estimates around 32,088 Steelhead through Tyee to date (as of August 22) (Figure 11).
+    -   The Steelhead index suggests a strong run at the beginning of the season, with daily counts diminishing now. The current run is tracking around the 75th percentile of returns. The latest Province of BC update estimates around 33,313 Steelhead through Tyee to date (as of August 29) (Figure 11).
 
 -   Babine Fence
 
-    -   The Babine River fence started operations on July 9th. The total large sockeye run to date has just officially passed 2 million, with recent large return days bumping the run over the recent and historical averages, and exceeding 2023, with relatively strong days continuing (Figures 12-14).
+    -   The Babine River fence started operations on July 9th. The total large sockeye run to date is nearing 2 million, well over the recent and historical averages, and exceeding 2023, with relatively strong days continuing (Figures 12-14).
     
 -   Babine versus Tyee comparison
 
@@ -91,7 +91,7 @@ today<-as.Date("2024-08-31")
 
 -   Babine Jack sockeye
 
-    -   The total run of jack sockeye to date is now over 101k, well above the longer term and recent averages (Figures 16-17).
+    -   The total run of jack sockeye to date is now over 112k, well above the longer term and recent averages (Figures 16-17).
 
 -   Babine other salmon
 
@@ -104,7 +104,7 @@ today<-as.Date("2024-08-31")
 
 -   Commercial Fisheries
 
-    -   Commercial fishing has started, with Area C gillnet openings on July 13, 20-21, 25-26, 29-30, August 2-3 and 8-9. The Area A seine fishery was open July 25-28 and August 2-5. Coastal Demonstration Fisheries opened on July 16, 21, 24, 27-28, July 31-August 2, August 4-7 and 11. In-river demonstration fisheries started July 30 for the Gitksan and August 15 for LBN. An ESSR fishery at Fulton River targeting sockeye on August 23 for the Lake Babine Nation. There was also an ESSR fishery targeting pink salmon at Witset.
+    -   Commercial fishing has started, with Area C gillnet openings on July 13, 20-21, 25-26, 29-30, August 2-3 and 8-9. The Area A seine fishery was open July 25-28 and August 2-5. Coastal Demonstration Fisheries opened on July 16, 21, 24, 27-28, July 31-August 2, August 4-7 and 11. In-river demonstration fisheries started July 30 for the Gitksan and August 15 for LBN. An ESSR fishery at Fulton River targeting sockeye opened on August 23 and August 30 for the Lake Babine Nation. There was also an ESSR fishery targeting pink salmon at Witset.
 
     -   Preliminary sockeye catch in the Area C gillnet openings is \~ 132,000. Preliminary sockeye catch in the Area A seine fisheries is \~ 46,000. Preliminary demonstration fishery catches are over likely near 50,000 sockeye and split between the coast and in-river. Late timed commercial marine openings had low effort and low catch rates.
 
@@ -161,21 +161,24 @@ gnet <- com_catch %>%
 gn <- sum(gnet$Catch, na.rm=TRUE)
 
 demo_marine <- fn_catch %>%
-  filter(nation %in% c("Lax Kw'alaams", "NCS"))
+  filter(nation %in% c("Lax Kw'alaams", "NCS", "Metlakatla"))
 dm <- sum(demo_marine$pieces, na.rm=TRUE)
 
 demo_inriver <- fn_catch %>%
   filter(nation %in% c("Gitksan", "Lake Babine Nation"))
 di <- sum(demo_inriver$pieces, na.rm=TRUE)
 
-fsc <- 75000
 
-t<-data$cumtyee[i] + s + gn + dm + 30000
+marine.fsc <- 35000
+inriver.fsc <- 50000
+total.fsc <- marine.fsc+inriver.fsc
 
-stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee", "Area A Seine Catch", "Area C Gillnet Catch", "First Nations Demo Catch (Marine)", "First Nations Demo Catch (In-River)", "Total First Nations FSC Catch", "TRTC (Escapement+Catch)"),`Number of Sockeye`=c(e, s, gn, dm, di, fsc, t))
+t<- e + s + gn + dm + marine.fsc
+
+stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee", "Area A Seine Catch", "Area C Gillnet Catch", "First Nations Demo Catch (Marine)", "First Nations Demo Catch (In-River)", "Total First Nations FSC Catch", "TRTC (Escapement to Tyee+Catch before Tyee)"),`Number of Sockeye`=c(e, s, gn, dm, di, total.fsc, t))
 names(stat3) <- gsub('[.]', ' ', names(stat3))
 
-kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.date,"."))
+kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.date,"."," All numbers are preliminary, and the Tyee escapement estimate has not been corrected to resolve any discrepancy with Babine fence counts and proportion Babine in the total Skeena aggregate."))
 ```
 
 
@@ -185,10 +188,10 @@ avgper<-round(data$Runtiming[i],3)*100
 earlyper<-round(data$Runtiming[i+7],3)*100
 lateper<-round(data$Runtiming[i-7],3)*100
 
-stat4 <- data.frame(`Cumulative to Date`=c("Escapement past Tyee", "TRTC (Escapement + Catch)", "Catch (preliminary)"), `Run Timing`=c("Average","One week early","One week late"),`Number of Sockeye`=c(e, t, c), `Percent Through`=c(avgper,earlyper,lateper))
+stat4 <- data.frame(`Run Timing`=c("Average","One week early","One week late"),`Percent Through`=c(avgper,earlyper,lateper))
 names(stat4) <- gsub('[.]', ' ', names(stat4))
 
-kable(stat4, caption=paste0("Run timing to ",tyee.date,"."))
+kable(stat4, caption=paste0("Precent of the sockeye run through Tyee to ",tyee.date,"."))
 ```
 
 
