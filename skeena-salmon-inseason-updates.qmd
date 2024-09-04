@@ -63,11 +63,11 @@ today<-as.Date("2024-09-02")
 
     -   Tides influence the migration of salmon into the Skeena River.
 
-    -   To date > 1.7M sockeye are estimated to have passed by Tyee, with very few additional sockeye expected. Daily sockeye counts have dropped and are now very low (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.95M with just under  200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
-    
+    -   To date \> 1.7M sockeye are estimated to have passed by Tyee, with very few additional sockeye expected. Daily sockeye counts have dropped and are now very low (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.95M with just under 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
+
     -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, declined slowly, and since has stabilized again although slowly declining. The 3 lines are converging as is normal this time of year and this also supports average timing of the run.
-    
-    -   The current run size prediction is about 1.9M for all three run-timings(Figure 6).
+
+    -   The current run size prediction is about 1.9M for all three run-timings (Figure 6).
 
     -   The Chinook index remains very low and available evidence suggests a very low run and is tracking near the 10th percentile (Figure 7).
 
@@ -82,7 +82,7 @@ today<-as.Date("2024-09-02")
 -   Babine Fence
 
     -   The Babine River fence started operations on July 9th. The total large sockeye run to date is nearing 2 million, well over the recent and historical averages, and exceeding 2023, with relatively strong days continuing (Figures 12-14).
-    
+
 -   Babine versus Tyee comparison
 
     -   Figure 15 shows the expected difference between the escapement past Tyee and the number of sockeye showing up at the Babine fence. This includes the in-river catch and an adjustment assuming that 10% of the sockeye passing Tyee are non-Babine.
@@ -181,7 +181,6 @@ names(stat3) <- gsub('[.]', ' ', names(stat3))
 kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.date,"."," All numbers are preliminary, and the Tyee escapement estimate has not been corrected to resolve any discrepancy with Babine fence counts and proportion Babine in the total Skeena aggregate."))
 ```
 
-
 ```{r run timing table , echo = FALSE, results = 'asis'}
 
 avgper<-round(data$Runtiming[i],3)*100
@@ -193,7 +192,6 @@ names(stat4) <- gsub('[.]', ' ', names(stat4))
 
 kable(stat4, caption=paste0("Precent of the sockeye run through Tyee to ",tyee.date,"."))
 ```
-
 
 ```{r tyee plot setup, echo=FALSE,warning=FALSE,message=FALSE}
 escandtrtcdaily<-data%>%select(Date,Escapement=esctyee,TRTC=`dailytrtc`,`Avg. Daily`=`average70-23`,"2023"=esc23)%>%
@@ -1080,9 +1078,9 @@ The following updates were provided by the Province of BC via email. Click on th
 
 Previous Tyee steelhead updates can be downloaded here:
 
-[Skeena Summer Steelhead Update to August 15]("Skeena Summer Steelhead Update to Aug _15_24.xlsx")
+[Skeena Summer Steelhead Update to August 15](%22Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_15_24.xlsx%22)
 
-[Skeena Summer Steelhead Update to August 8]("Skeena Summer Steelhead Update to Aug _8_24.xlsx")
+[Skeena Summer Steelhead Update to August 8](%22Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_8_24.xlsx%22)
 
 [Skeena Summer Steelhead Update to August 1](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%201_24.xlsx)
 
@@ -1626,7 +1624,6 @@ cumplot_jack <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
 ggarrange(dailyplot_jack,cumplot_jack,align="v",ncol=1,common.legend = TRUE)
 
 ```
-
 
 ```{r}
 #| label: babine-fence
@@ -2441,6 +2438,7 @@ add_header_above(c("Estimated Abundance"=1, "Daily Limits"=3)) %>%
 kable_styling(latex_options = "HOLD_position")
 
 ```
+
 # Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2024 data
 
 ```{r tyee escapement by year prep}
@@ -2614,7 +2612,6 @@ ggplot(sncpue,aes(x=Date,y=cpue))+
 \FloatBarrier
 \newpage
 ```
-
 ```{r}
 #| label: fig-area4
 #| echo: false
