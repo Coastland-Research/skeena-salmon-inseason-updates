@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "September 3, 2024"
+subtitle: "September 4, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -46,11 +46,11 @@ fn_catch <- read_excel("data/FNs catch 2024.xlsx", sheet = "demo catches")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-09-02")
-tyee.date<-"September 2"
-fence.day<-as.Date("2024-09-02")
-fence.date<-"September 2"
-today<-as.Date("2024-09-02")
+tyee.day<-as.Date("2024-09-03")
+tyee.date<-"September 3"
+fence.day<-as.Date("2024-09-03")
+fence.date<-"September 3"
+today<-as.Date("2024-09-03")
 ```
 
 # Summary
@@ -181,16 +181,40 @@ names(stat3) <- gsub('[.]', ' ', names(stat3))
 kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.date,"."," All numbers are preliminary, and the Tyee escapement estimate has not been corrected to resolve any discrepancy with Babine fence counts and proportion Babine in the total Skeena aggregate."))
 ```
 
+```{r load babine data, include=FALSE}
+babine_fence <- read_excel("data/babine data 2024.xlsx", sheet = "Babine")
+```
+
+```{r catch trtc table, echo= FALSE, results='asis'}
+# 1. headers = Estimate / Number of sockeye 
+
+# 2. Babine fence = total large sockeye from babine fence
+i<-match(fence.day,babine_fence$Date)
+bab_sockeye <- babine_fence$cumesc[i]
+
+# 3. Total catch below Babine
+tc_below <- s + gn + di + dm + 75000
+
+# 4. TRTC Estimate based on Babine and 10% non-Babine
+trtc_est <- bab_sockeye/0.9
+
+stat4 <- data.frame(`Estimate`=c("Babine Fence", "Total Catch Below Babine", "TRTC Estimate (based on Babine and 10% non-Babine)"),`Number of Sockeye`=c(bab_sockeye, tc_below, trtc_est))
+names(stat4) <- gsub('[.]', ' ', names(stat4))
+
+kable(stat4,caption=paste0("Total number of sockeye through the Babine fence, total sockeye catch below the Babine fence, and TRTC estimate to  ",tyee.date,".","All numbers are preliminary and based on 90% of sockeye returning to the Babine with 10% non-Babine"))
+```
+
+
 ```{r run timing table , echo = FALSE, results = 'asis'}
 
 avgper<-round(data$Runtiming[i],3)*100
 earlyper<-round(data$Runtiming[i+7],3)*100
 lateper<-round(data$Runtiming[i-7],3)*100
 
-stat4 <- data.frame(`Run Timing`=c("Average","One week early","One week late"),`Percent Through`=c(avgper,earlyper,lateper))
+stat5 <- data.frame(`Run Timing`=c("Average","One week early","One week late"),`Percent Through`=c(avgper,earlyper,lateper))
 names(stat4) <- gsub('[.]', ' ', names(stat4))
 
-kable(stat4, caption=paste0("Precent of the sockeye run through Tyee to ",tyee.date,"."))
+kable(stat5, caption=paste0("Precent of the sockeye run through Tyee to ",tyee.date,"."))
 ```
 
 ```{r tyee plot setup, echo=FALSE,warning=FALSE,message=FALSE}
