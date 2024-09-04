@@ -61,7 +61,7 @@ today<-as.Date("2024-09-02")
 
 -   Tyee Test Fishery
 
-    -   Tides influence the migration of salmon into the Skeena River.
+    -   Tides can influence the migration of salmon into the Skeena River.
 
     -   To date \> 1.7M sockeye are estimated to have passed by Tyee, with very few additional sockeye expected. Daily sockeye counts have dropped and are now very low (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.95M with just under 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
 
