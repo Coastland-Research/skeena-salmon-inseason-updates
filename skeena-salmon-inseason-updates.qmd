@@ -63,7 +63,7 @@ today<-as.Date("2024-09-12")
 
     -   Tides can influence the migration of salmon into the Skeena River.
 
-    -   To date \> 1.7M sockeye are estimated to have passed by Tyee, with very few additional sockeye expected. Daily sockeye counts have dropped and are now very low (Figures 1-5). Including commercial catch and First Nations marine catches, the TRTC estimate is around 1.95M with just under 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
+    -   To date \> 1.7M sockeye are estimated to have passed by Tyee, with very few additional sockeye expected. Daily sockeye counts have dropped and are now very low (Figures 1-5). Including commercial marine catch and First Nations marine FSC catch estimates, the TRTC estimate is around 1.97M with just under 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
 
     -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, declined slowly, and since has stabilized again although slowly declining. The 3 lines are converging as is normal this time of year and this also supports average timing of the run.
 
@@ -77,12 +77,12 @@ today<-as.Date("2024-09-12")
 
     -   Coho salmon are passing through Tyee and tracking just under the long term average (Figure 10).
 
-    -   The Steelhead index suggests a strong run at the beginning of the season, with daily counts diminishing now. The current run is tracking around the 75th percentile of returns. The latest Province of BC update estimates around 33,313 Steelhead through Tyee to date (as of August 29) (Figure 11).
+    -   The Steelhead index suggested a very strong run at the beginning of the season, however daily counts fell off slightly and the run is currently tracking near the 75th percentile. The latest Province of BC update estimates around 34,976  Steelhead through Tyee to date (as of September 10) (Figure 11).
 
--   Babine Fence
+-   Babine Fence and large sockeye
 
     -   The Babine River fence started operations on July 9th. The total large sockeye run to date is nearing 2 million, well over the recent and historical averages, and exceeding 2023, with relatively strong days continuing (Figures 12-14).
-
+    
 -   Babine versus Tyee comparison
 
     -   Figure 15 shows the expected difference between the escapement past Tyee and the number of sockeye showing up at the Babine fence. This includes the in-river catch and an adjustment assuming that 10% of the sockeye passing Tyee are non-Babine.
@@ -91,7 +91,7 @@ today<-as.Date("2024-09-12")
 
 -   Babine Jack sockeye
 
-    -   The total run of jack sockeye to date is now over 112k, well above the longer term and recent averages (Figures 16-17).
+    -   The total run of jack sockeye to date is now over 125k, well above the longer term and recent averages (Figures 16-17).
 
 -   Babine other salmon
 
@@ -126,11 +126,11 @@ today<-as.Date("2024-09-12")
 
 ## Tide information at Port Edward {#tide-information-at-port-edward}
 
-Tides influence the movement of sockeye and other salmon migrating into the Skeena. The following image shows the tides at Port Edward for a period of \~ 1 week.
+Tides influence the movement of sockeye and other salmon migrating into the Skeena. The following image shows the tides at Port Edward for a period of \~ 2 weeks.
 
 <figure>
 
-<img src="/images/tides7.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+<img src="/images/tides8.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
 
 <figcaption>Tides at Port Edward</figcaption>
 
@@ -182,7 +182,7 @@ kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.dat
 ```
 
 ```{r load babine data, include=FALSE}
-babine_fence <- read_excel("data/babine data 2024.xlsx", sheet = "Babine")
+babine_fence <- read_excel("data/babine data 2024.xlsx", sheet = "Babine") %>% mutate(Date=as.Date(Date))
 ```
 
 ```{r catch trtc table, echo= FALSE, results='asis'}
@@ -199,11 +199,11 @@ tc_below <- s + gn + di + dm + 75000
 trtc_est <- bab_sockeye/0.9
 
 stat4 <- data.frame(`Estimate`=c("Babine Fence", "Total Catch Below Babine", "TRTC Estimate (based on Babine and 10% non-Babine)"),`Number of Sockeye`=c(bab_sockeye, tc_below, trtc_est))
+
 names(stat4) <- gsub('[.]', ' ', names(stat4))
 
 kable(stat4,caption=paste0("Total number of sockeye through the Babine fence, total sockeye catch below the Babine fence, and TRTC estimate to  ",tyee.date,".","All numbers are preliminary and based on 90% of sockeye returning to the Babine with 10% non-Babine"))
 ```
-
 
 ```{r run timing table , echo = FALSE, results = 'asis'}
 
@@ -212,6 +212,7 @@ earlyper<-round(data$Runtiming[i+7],3)*100
 lateper<-round(data$Runtiming[i-7],3)*100
 
 stat5 <- data.frame(`Run Timing`=c("Average","One week early","One week late"),`Percent Through`=c(avgper,earlyper,lateper))
+
 names(stat4) <- gsub('[.]', ' ', names(stat4))
 
 kable(stat5, caption=paste0("Precent of the sockeye run through Tyee to ",tyee.date,"."))
@@ -1096,15 +1097,21 @@ ggarrange(dailyplot_st,cumplot_st,align="v",ncol=1,common.legend = TRUE)
 
 ```
 
-The following updates were provided by the Province of BC via email. Click on the link below to download a PDF of Tyee steelhead updates to August 15. For any questions please contact Kenji Miyazaki at BC.
+The following updates were provided by the Province of BC via email. Click on the link below to download a PDF of Tyee steelhead updates to Sept 10. For any questions please contact Kenji Miyazaki at BC.
 
-![](steelhead_aug29.pdf){width="80%" height="500"}
+![](steelhead_sept10_24.pdf){width="80%" height="500"}
 
-Previous Tyee steelhead updates can be downloaded here:
+Tyee steelhead updates can be downloaded here:
 
-[Skeena Summer Steelhead Update to August 15](%22Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_15_24.xlsx%22)
+[Skeena Summer Steelhead Update to Sept 10](Skeena_Summer_Steelhead_Update_to_Sept_10_24.xlsx)
 
-[Skeena Summer Steelhead Update to August 8](%22Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_8_24.xlsx%22)
+[Skeena Summer Steelhead Update to August 29](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_29_24.xlsx)
+
+[Skeena Summer Steelhead Update to August 22](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_22_24.xlsx)
+
+[Skeena Summer Steelhead Update to August 15](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_15_24.xlsx)
+
+[Skeena Summer Steelhead Update to August 8](Skeena_Summer_Steelhead_Update_to_Aug_8_24.xlsx)
 
 [Skeena Summer Steelhead Update to August 1](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%201_24.xlsx)
 
@@ -1116,7 +1123,8 @@ Previous Tyee steelhead updates can be downloaded here:
 
 The Babine fence was installed and fish tight on July 9. Data from the Babine fence is provided nightly via email from the LBN Fisheries program.
 
-There are concerns at the Babine River about high temperatures and low water levels holding up passage of sockeye and other salmon through the fence. In 2024, LBN has implemented the Babine River Collaborative Management Plan and has choosen to voluntarily move their harvest from the Babine fence to Babine Lake.
+Throughout 2024, there were concerns at the Babine River fence about high temperatures and low water levels holding up passage of sockeye and other salmon through the fence. In 2024, LBN implemented the Babine River Collaborative Management Plan and has choosen to voluntarily move their harvest from the Babine fence to Babine Lake. For more details please contact Cassie Siebert (LBN Fisheries Director).
+
 
 ### Babine Sockeye
 
@@ -2427,14 +2435,14 @@ demo.table<-rbind(demo.totals,total.row)
 #| include: true
 #| fig-height: 4
 #| 
-kable(demo.table,caption="Total Area 4 First Nations demo catches of sockeye.")%>%
+kable(demo.table,caption="Preliminary Area 4 First Nations demo catches of sockeye (not complete numbers).")%>%
   row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
 ```
 
 ```{r FNs demo fishery catch figure,echo=FALSE,message=FALSE,warning=FALSE,include=TRUE}
 
 #| echo: false
-#| fig-cap: "Demonstration fishery catch of sockeye in Area 4 by Nation."
+#| fig-cap: "Demonstration fishery catch of sockeye in Area 4 by Nation (preliminary estimates and not complete)."
 #| warning: false
 #| include: true
 #| fig-height: 4
@@ -2542,44 +2550,40 @@ cum_tyee_years
 
 othercatch<-read_excel("data/commercial catch 2024.xlsx",sheet="catch")
 
-oc2<-othercatch%>%pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
-  mutate(cpue=Catch/effort)%>%
-  filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%
-  mutate(type=ifelse(Species%in%c("Chinook (Released)","Chum (Released)","Steelhead (Released)","Coho (Released)"),"Released","Kept"))%>%
-  mutate(sp=case_when(Species=="Chinook (Released)"~"Chinook",
-                      Species=="Coho (Released)"~"Coho",
-                      Species=="Pink (Kept)"~"Pink Kept",
-                      Species=="Pink (Released)"~"Pink Rel",
-                      Species=="Chum (Released)"~"Chum",
-                      Species=="Steelhead (Released)"~"Steelhead",
-                      Species=="Sockeye (Kept)"~"Sockeye"))
+#oc2<-othercatch%>%pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
+#  mutate(cpue=Catch/effort)%>%
+#  filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%
+#  mutate(type=ifelse(Species%in%c("Chinook (Released)","Chum #(Released)","Steelhead (Released)","Coho #(Released)"),"Released","Kept"))%>%
+#  mutate(sp=case_when(Species=="Chinook (Released)"~"Chinook",
+#                      Species=="Coho (Released)"~"Coho",
+#                      Species=="Pink (Kept)"~"Pink Kept",
+#                      Species=="Pink (Released)"~"Pink Rel",
+#                      Species=="Chum (Released)"~"Chum",
+#                      Species=="Steelhead #(Released)"~"Steelhead",
+#                      Species=="Sockeye (Kept)"~"Sockeye"))
 
-oc2<-othercatch%>%pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
+oc2<-othercatch%>%pivot_longer(4:14,names_to="Species",values_to="Catch")%>%
   mutate(cpue=Catch/effort)%>%
-  filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%
-  mutate(type=ifelse(Species%in%c("Chinook (Released)","Chum (Released)","Steelhead (Released)","Coho (Released)"),"Released","Kept"))%>%
+  filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%mutate(dis=ifelse(Species%in%c("Chinook (Released)","Chum (Released)","Steelhead (Released)","Coho (Released)","Sockeye (Released)","Pink (Released)"),"Released","Kept"))%>%
   mutate(sp=case_when(Species=="Chinook (Released)"~"Chinook",
+Species=="Chinook (Kept)"~"Chinook",
                       Species=="Coho (Released)"~"Coho",
+                      Species=="Coho (Kept)"~"Coho",
                       Species=="Pink (Kept)"~"Pink",
                       Species=="Pink (Released)"~"Pink",
+Species=="Chum (Kept)"~"Chum",
                       Species=="Chum (Released)"~"Chum",
                       Species=="Steelhead (Released)"~"Steelhead",
-                      Species=="Sockeye (Kept)"~"Sockeye"),
-         dis=case_when(Species=="Chinook (Released)"~"Released",
-                      Species=="Coho (Released)"~"Released",
-                      Species=="Pink (Kept)"~"Kept",
-                      Species=="Pink (Released)"~"Released",
-                      Species=="Chum (Released)"~"Released",
-                      Species=="Steelhead (Released)"~"Released",
-                      Species=="Sockeye (Kept)"~"Kept"))
+                      Species=="Sockeye (Kept)"~"Sockeye",
+Species=="Sockeye (Released)"~"Sockeye"))
 
-ggplot(oc2,aes(x=Date,y=Catch,color=gear))+
-  geom_line()+geom_point()+
-  theme_classic()+
-  grids()+
-  facet_wrap(~Species,ncol=2,scales="free_y")+
-  theme(legend.position="top")+
-  expand_limits(y=0)
+#ggplot(oc2,aes(x=Date,y=Catch,color=gear))+
+#  geom_line()+geom_point()+
+#  theme_classic()+
+#   grids()+
+#facet_wrap(~Species,ncol=2,scales="free_y")+
+#  theme(legend.position="top")+
+#  expand_limits(y=0)
 
 ggplot(oc2,aes(x=Date,y=Catch,color=gear))+
   geom_line()+geom_point()+
@@ -2641,25 +2645,24 @@ ggplot(sncpue,aes(x=Date,y=cpue))+
 #| echo: false
 #| message: false
 #| warning: false
-#| fig-cap: "Total catch of other species caught and kept or released (coho, pinks, chinook, chum and steelhead) by gillnets and seines in the marine Area 4 commercial fishery."
-#| include: false
+#| include: true
 #| fig-height: 6
 
 oc.total<-oc2%>%group_by(gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
 
 oc.table<-oc.total%>%pivot_wider(names_from=c("gear","dis"),values_from="total")
 
-kable(oc.table,caption=paste0("Total catch of coho, chum, chinook, pink and steelhead in the commercial gillent and seine fisheries to ",tyee.date,"."))
+kable(oc.table,caption=paste0("Total catch (kept/released) of coho, chum, chinook, sockeye and pink salmon, and steelhead in the commercial marine Area C and A gillent and seine fisheries to ",tyee.date,"."))
 
-ggplot(oc.total,aes(x=Species,y=total,fill=gear))+
-  geom_col()+
-  scale_color_brewer(palette="Set1")+
-  geom_text(aes(label=total),vjust=-.3,color="black")+
-  facet_wrap(~dis,ncol=1,scales="free_y")+
-  theme_bw()+
-  labs(y="Total Catch",x="Species")+
-  scale_y_continuous(expand=c(.1,0))+
-  theme(strip.background = element_blank())
+#ggplot(oc.total,aes(x=Species,y=total,fill=gear))+
+ # geom_col()+
+#  scale_color_brewer(palette="Set1")+
+#  geom_text(aes(label=total),vjust=-.3,color="black")+
+#  facet_wrap(~dis,ncol=1,scales="free_y")+
+#  theme_bw()+
+ # labs(y="Total Catch",x="Species")+
+#  scale_y_continuous(expand=c(.1,0))+
+#  theme(strip.background = element_blank())
 
 ```
 
