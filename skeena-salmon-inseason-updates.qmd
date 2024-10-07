@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "October 1, 2024"
+subtitle: "October 7, 2024"
 format: html
 editor: visual
 editor_options: 
@@ -46,11 +46,11 @@ fn_catch <- read_excel("data/FNs catch 2024.xlsx", sheet = "demo catches")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2024-09-30")
-tyee.date<-"September 30"
-fence.day<-as.Date("2024-09-30")
-fence.date<-"September 30"
-today<-as.Date("2024-09-30")
+tyee.day<-as.Date("2024-10-06")
+tyee.date<-"October 6"
+fence.day<-as.Date("2024-10-06")
+fence.date<-"October 6"
+today<-as.Date("2024-10-06")
 ```
 
 # Summary
