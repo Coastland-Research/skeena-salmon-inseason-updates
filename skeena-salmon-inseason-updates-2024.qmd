@@ -77,12 +77,12 @@ today<-as.Date("2024-09-22")
 
     -   Coho salmon are passing through Tyee and tracking just under the long term average (Figure 10).
 
-    -   The Steelhead index suggested a very strong run at the beginning of the season, however daily counts fell off slightly and the run is currently tracking near the 75th percentile. The latest Province of BC update estimates around 34,976  Steelhead through Tyee to date (as of September 10) (Figure 11).
+    -   The Steelhead index suggested a very strong run at the beginning of the season, however daily counts fell off slightly and the run is currently tracking near the 75th percentile. The latest Province of BC update estimates around 34,976 Steelhead through Tyee to date (as of September 10) (Figure 11).
 
 -   Babine Fence and large sockeye
 
     -   The Babine River fence started operations on July 9th. The total large sockeye run to date is nearing 2 million, well over the recent and historical averages, and exceeding 2023, with relatively strong days continuing (Figures 12-14).
-    
+
 -   Babine versus Tyee comparison
 
     -   Figure 15 shows the expected difference between the escapement past Tyee and the number of sockeye showing up at the Babine fence. This includes the in-river catch and an adjustment assuming that 10% of the sockeye passing Tyee are non-Babine.
@@ -1124,7 +1124,6 @@ Tyee steelhead updates can be downloaded here:
 The Babine fence was installed and fish tight on July 9. Data from the Babine fence is provided nightly via email from the LBN Fisheries program.
 
 Throughout 2024, there were concerns at the Babine River fence about high temperatures and low water levels holding up passage of sockeye and other salmon through the fence. In 2024, LBN implemented the Babine River Collaborative Management Plan and has choosen to voluntarily move their harvest from the Babine fence to Babine Lake. For more details please contact Cassie Siebert (LBN Fisheries Director).
-
 
 ### Babine Sockeye
 
@@ -2636,10 +2635,9 @@ ggplot(sncpue,aes(x=Date,y=cpue))+
   theme(legend.position="top")
 ```
 
-```{=tex}
 \FloatBarrier
 \newpage
-```
+
 ```{r}
 #| label: fig-area4
 #| echo: false
