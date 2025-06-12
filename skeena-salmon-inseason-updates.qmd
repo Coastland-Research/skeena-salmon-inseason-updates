@@ -52,3 +52,96 @@ options(scipen=10000)
 # fence.date<-"September 22"
 # today<-as.Date("2024-09-22")
 ```
+
+# Summary
+
+-   Pre-season forecast
+
+    -   The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges from ____ to ____ (90% confidence range) with a point estimate (p50) of ____. The forecast for 2025 includes a LOW/HIGH/AVG? return of age-4 sockeye, and an LOW/HIGH/AVG? return of age-5 sockeye.
+    
+
+-   Tyee Test Fishery
+
+-   Babine fence and large sockeye
+
+-   Babine vs Tyee comparison
+
+-   Babine jack sockeye
+
+-   Babine other salmon
+
+-   Kitwanga Fence
+
+-   Commercial Fisheries
+
+-   Recreational Fisheries
+
+-   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
+
+-   Appendix B will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated shortly.
+
+-   Appendix C includes information on run-timing of specific Skeena Conservation Units/stocks.
+
+# Tyee Test Fishery
+
+## Tide information at Port Edward
+
+## Sockeye
+
+The section below shows various summaries of the sockeye run through Tyee to date, often in comparison with historical data. Data is uploaded from the DFO Tyee test fishery website (index and expanded estimates) almost daily.
+
+The DFO Tyee test fishery website can be found here: [Tyee test fishery website](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/skeenatyee-eng.html)
+
+### In-Season TRTC Estimates
+
+## Chum Salmon
+
+## Pink Salmon
+
+### Odd years
+
+### Even years
+
+-   Will be updated next year!
+
+## Coho Salmon
+
+## Steelhead
+
+# Babine Fence
+
+### Babine Sockeye
+
+#### Babine comparison with Tyee
+
+#### Jack sockeye
+
+### Babine Adult Chinook
+
+### Babine Jack Chinook
+
+### Babine Pink
+
+### Babine Coho
+
+### Babine Steelhead
+
+# Kitwanga Fence
+
+# Fisheries
+
+## Area 4 Fishery Openings
+
+## Commercial Fisheries
+
+### Area C Gillnet and Area A Seine
+
+### First Nations Demonstration and Economic Opportunity
+
+## Recreational Fisheries
+
+# Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2024 data
+
+# Appendix B - Catch of pink, chum, coho, chinook and steelhead
+
+# Appendix C - Population specific run-timing through Tyee
