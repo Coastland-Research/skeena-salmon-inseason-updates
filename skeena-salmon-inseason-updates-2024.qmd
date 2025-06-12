@@ -1,0 +1,2819 @@
+---
+title: "Skeena Salmon In-Season Updates 2024"
+subtitle: "October 7, 2024"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r load libraries, include=FALSE}
+library(tidyverse)
+library(data.table)
+library(readxl)
+library(knitr)
+library(ggpubr)
+library(kableExtra)
+
+options(scipen=10000)
+```
+
+```{r load data and format, include=FALSE}
+data<-read_excel("data/Tyee data 2024.xlsx",sheet="Tyee") %>%
+  mutate(Date = as.Date(Date))
+
+com_catch <- read_excel("data/commercial catch 2024.xlsx", sheet = "catch") %>%
+  pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
+  mutate(cpue=Catch/effort)%>%
+  filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%
+  mutate(type=ifelse(Species%in%c("Chinook (Released)","Chum (Released)","Steelhead (Released)","Coho (Released)"),"Released","Kept"))%>%
+  mutate(sp=case_when(Species=="Chinook (Released)"~"Chinook",
+                      Species=="Coho (Released)"~"Coho",
+                      Species=="Pink (Kept)"~"Pink",
+                      Species=="Pink (Released)"~"Pink",
+                      Species=="Chum (Released)"~"Chum",
+                      Species=="Steelhead (Released)"~"Steelhead",
+                      Species=="Sockeye (Kept)"~"Sockeye"),
+         dis=case_when(Species=="Chinook (Released)"~"Released",
+                      Species=="Coho (Released)"~"Released",
+                      Species=="Pink (Kept)"~"Kept",
+                      Species=="Pink (Released)"~"Released",
+                      Species=="Chum (Released)"~"Released",
+                      Species=="Steelhead (Released)"~"Released",
+                      Species=="Sockeye (Kept)"~"Kept"))
+
+fn_catch <- read_excel("data/FNs catch 2024.xlsx", sheet = "demo catches")
+```
+
+```{r set days, echo=FALSE}
+tyee.day<-as.Date("2024-09-22")
+tyee.date<-"September 22"
+fence.day<-as.Date("2024-09-22")
+fence.date<-"September 22"
+today<-as.Date("2024-09-22")
+```
+
+# Summary
+
+-   Pre-season forecast
+
+    -   The pre-season forecast for the Total Return of Skeena sockeye in 2024 ranges from 0.58 to 4.0 million (90% confidence range) with a point estimate (p50) of 1.54 million. The forecast for 2024 includes a low return of age-4 sockeye, and an average return of age-5 sockeye.
+
+-   Tyee Test Fishery
+
+    -   Tides can influence the migration of salmon into the Skeena River.
+
+    -   To date \> 1.7M sockeye are estimated to have passed by Tyee, with very few additional sockeye expected. Daily sockeye counts have dropped and are now very low (Figures 1-5). Including commercial marine catch and First Nations marine FSC catch estimates, the TRTC estimate is around 1.97M with just under 200,000 marine commercial catch between Area C, Area A and First Nations Demo/EO fisheries.
+
+    -   The excel model increased in early July, stabilized briefly, decreased significantly, and stabilized again, declined slowly, and since has stabilized again although slowly declining. The 3 lines are converging as is normal this time of year and this also supports average timing of the run.
+
+    -   The current run size prediction is about 1.9M for all three run-timings (Figure 6).
+
+    -   The Chinook index remains very low and available evidence suggests a very low run and is tracking near the 10th percentile (Figure 7).
+
+    -   The chum salmon index is currently lower than average around the 25th percentile (Figure 8).
+
+    -   Pink salmon are looking strong this year relative to even-year abundance with the index tracking between the 75th and 90th percentiles (Figure 9).
+
+    -   Coho salmon are passing through Tyee and tracking just under the long term average (Figure 10).
+
+    -   The Steelhead index suggested a very strong run at the beginning of the season, however daily counts fell off slightly and the run is currently tracking near the 75th percentile. The latest Province of BC update estimates around 34,976  Steelhead through Tyee to date (as of September 10) (Figure 11).
+
+-   Babine Fence and large sockeye
+
+    -   The Babine River fence started operations on July 9th. The total large sockeye run to date is nearing 2 million, well over the recent and historical averages, and exceeding 2023, with relatively strong days continuing (Figures 12-14).
+    
+-   Babine versus Tyee comparison
+
+    -   Figure 15 shows the expected difference between the escapement past Tyee and the number of sockeye showing up at the Babine fence. This includes the in-river catch and an adjustment assuming that 10% of the sockeye passing Tyee are non-Babine.
+
+    -   The comparison showed some delay in migration at the start of the run, followed by the Babine fence tracking the expected run at 3 weeks migration timing quite closely, however the comparison now shows that there are many more fish arriving at Babine than expected. This indicates an underestimate in the number of sockeye passing through Tyee 3 weeks prior and/or possibly a smaller proportion of non-Babine sockeye.
+
+-   Babine Jack sockeye
+
+    -   The total run of jack sockeye to date is now over 125k, well above the longer term and recent averages (Figures 16-17).
+
+-   Babine other salmon
+
+    -   Figures (18-21) show the returns of species other than sockeye to the Babine fence versus historical averages.
+
+-   Kitwanga Fence
+
+    -   The Kitwanga fence started operations July 10.
+    -   Details on the Kitwanga fence counts can be found at the [Gitanyow Fisheries Authority website](http://www.gitanyowfisheries.com/).
+
+-   Commercial Fisheries
+
+    -   Commercial fishing has started, with Area C gillnet openings on July 13, 20-21, 25-26, 29-30, August 2-3 and 8-9. The Area A seine fishery was open July 25-28 and August 2-5. Coastal Demonstration Fisheries opened on July 16, 21, 24, 27-28, July 31-August 2, August 4-7 and 11. In-river demonstration fisheries started July 30 for the Gitksan and August 15 for LBN. An ESSR fishery at Fulton River targeting sockeye opened on August 23 and August 30 for the Lake Babine Nation. There was also an ESSR fishery targeting pink salmon at Witset.
+
+    -   Preliminary sockeye catch in the Area C gillnet openings is \~ 132,000. Preliminary sockeye catch in the Area A seine fisheries is \~ 46,000. Preliminary demonstration fishery catches are over likely near 50,000 sockeye and split between the coast and in-river. Late timed commercial marine openings had low effort and low catch rates.
+
+    -   More details on catch can be found in the catch section below and in Appendix B.
+
+-   Recreational Fisheries
+
+    -   Recreational fisheries openings and fisheries notices for the Skeena are shown in the Table of Fisheries openings.
+
+    -   Current regulations for Region 6 (Skeena) can be found on [DFO's website here](https://www.pac.dfo-mpo.gc.ca/fm-gp/rec/fresh-douce/region6-eng.html).
+
+-   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
+
+-   Appendix B will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated shortly.
+
+-   Appendix C includes information on run-timing of specific Skeena Conservation Units/stocks.
+
+# Tyee Test Fishery
+
+## Tide information at Port Edward {#tide-information-at-port-edward}
+
+Tides influence the movement of sockeye and other salmon migrating into the Skeena. The following image shows the tides at Port Edward for a period of \~ 2 weeks.
+
+<figure>
+
+<img src="/images/tides8.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+
+<figcaption>Tides at Port Edward</figcaption>
+
+</figure>
+
+Tide data from: <a href="https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest" target="_blank">https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest</a>
+
+## Sockeye
+
+The section below shows various summaries of the sockeye run through Tyee to date, often in comparison with historical data. Data is uploaded from the DFO Tyee test fishery website (index and expanded estimates) almost daily.
+
+The DFO Tyee test fishery website can be found here: [Tyee test fishery website](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/skeenatyee-eng.html)
+
+```{r tyee table,echo=FALSE,results='asis'}
+i<-match(tyee.day,data$Date)
+
+average<-data$average[i]
+
+e<-data$cumtyee[i]
+c<-data$cumcatch[i]
+
+seine <- com_catch %>%
+  filter(gear == "seine" & sp == "Sockeye")
+s <- sum(seine$Catch, na.rm = TRUE)
+
+gnet <- com_catch %>%
+  filter(gear == "gillnet" & sp == "Sockeye")
+gn <- sum(gnet$Catch, na.rm=TRUE)
+
+demo_marine <- fn_catch %>%
+  filter(nation %in% c("Lax Kw'alaams", "NCS", "Metlakatla"))
+dm <- sum(demo_marine$pieces, na.rm=TRUE)
+
+demo_inriver <- fn_catch %>%
+  filter(nation %in% c("Gitksan", "Lake Babine Nation"))
+di <- sum(demo_inriver$pieces, na.rm=TRUE)
+
+
+marine.fsc <- 35000
+inriver.fsc <- 50000
+total.fsc <- marine.fsc+inriver.fsc
+
+t<- e + s + gn + dm + marine.fsc
+
+stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee", "Area A Seine Catch", "Area C Gillnet Catch", "First Nations Demo Catch (Marine)", "First Nations Demo Catch (In-River)", "Total First Nations FSC Catch", "TRTC (Escapement to Tyee+Catch before Tyee)"),`Number of Sockeye`=c(e, s, gn, dm, di, total.fsc, t))
+names(stat3) <- gsub('[.]', ' ', names(stat3))
+
+kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.date,"."," All numbers are preliminary, and the Tyee escapement estimate has not been corrected to resolve any discrepancy with Babine fence counts and proportion Babine in the total Skeena aggregate."))
+```
+
+```{r load babine data, include=FALSE}
+babine_fence <- read_excel("data/babine data 2024.xlsx", sheet = "Babine") %>% mutate(Date=as.Date(Date))
+```
+
+```{r catch trtc table, echo= FALSE, results='asis'}
+# 1. headers = Estimate / Number of sockeye 
+
+# 2. Babine fence = total large sockeye from babine fence
+i<-match(fence.day,babine_fence$Date)
+bab_sockeye <- babine_fence$cumesc[i]
+
+# 3. Total catch below Babine
+tc_below <- s + gn + di + dm + 75000
+
+# 4. TRTC Estimate based on Babine and 10% non-Babine
+trtc_est <- bab_sockeye/0.9
+
+stat4 <- data.frame(`Estimate`=c("Babine Fence", "Total Catch Below Babine", "TRTC Estimate (based on Babine and 10% non-Babine)"),`Number of Sockeye`=c(bab_sockeye, tc_below, trtc_est))
+
+names(stat4) <- gsub('[.]', ' ', names(stat4))
+
+kable(stat4,caption=paste0("Total number of sockeye through the Babine fence, total sockeye catch below the Babine fence, and TRTC estimate to  ",tyee.date,".","All numbers are preliminary and based on 90% of sockeye returning to the Babine with 10% non-Babine"))
+```
+
+```{r run timing table , echo = FALSE, results = 'asis'}
+
+avgper<-round(data$Runtiming[i],3)*100
+earlyper<-round(data$Runtiming[i+7],3)*100
+lateper<-round(data$Runtiming[i-7],3)*100
+
+stat5 <- data.frame(`Run Timing`=c("Average","One week early","One week late"),`Percent Through`=c(avgper,earlyper,lateper))
+
+names(stat4) <- gsub('[.]', ' ', names(stat4))
+
+kable(stat5, caption=paste0("Percent of the sockeye run through Tyee to ",tyee.date,"."))
+```
+
+```{r tyee plot setup, echo=FALSE,warning=FALSE,message=FALSE}
+escandtrtcdaily<-data%>%select(Date,Escapement=esctyee,TRTC=`dailytrtc`,`Avg. Daily`=`average70-23`,"2023"=esc23)%>%
+  pivot_longer(2:5,values_to="Number of Sockeye",names_to="Type")%>%
+  mutate(lt=case_when(Type=="Escapement"|Type=="TRTC"~"2024",
+                      Type=="Avg. Daily"~"Average",
+                      Type=="2023"~"2023"))
+
+t1<-ggplot(escandtrtcdaily,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt,size=Type,alpha=Type))+
+  geom_line()+
+  scale_size_manual(values=c(1,1,1,1.1))+
+  scale_alpha_manual(values=c(.5,1,1,1))+
+  scale_color_manual(values=c("grey50","black","deepskyblue1","purple"))+
+  scale_linetype_manual(values=c("solid","solid","dashed"))+
+  theme_classic()+
+  grids(linetype = "dashed")+
+  theme(legend.title = element_blank(),legend.position = "top")+
+  guides(linetype="none")
+
+
+escandtrtccum<-data%>%select(Date,Escapement=cumtyee,TRTC=cumtrtc,`Avg. Cumulative`=`cum70-23`,"2023"=cum23)%>%
+  pivot_longer(2:5,values_to="Number of Sockeye",names_to="Type")%>%
+  mutate(lt=case_when(Type=="Escapement"|Type=="TRTC"~"2024",
+                      Type=="Avg. Cumulative"~"Average",
+                      Type=="2023"~"2023"))
+
+t2<-ggplot(escandtrtccum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt,alpha=Type))+
+  geom_line(linewidth=1.1)+
+  scale_linetype_manual(values=c("solid","solid","dashed"))+
+  scale_size_manual(values=c(1,1,1,1.1))+
+  scale_alpha_manual(values=c(.5,1,1,1))+
+  scale_color_manual(values=c("grey50","black","deepskyblue1","purple"))+
+  theme_classic()+
+  grids(linetype = "dashed")+
+  theme(legend.title = element_blank(),legend.position = "top")+
+  guides(linetype="none")
+```
+
+```{r}
+#| label: fig-plot
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Daily (top) and cumulative (bottom) estimated escapement and TRTC (escapement + adjusted catch) at the Tyee test fishery versus the 1985-2023 average."
+#| fig-height: 8
+
+ggarrange(t1,t2,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+```{r daily boxplot}
+#| label: fig-daily-boxplot-sx
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily run through Tyee (uncorrected) from 1970-2023. 2024 run is shown in purple."
+#| fig-height: 5
+
+daily<-read_excel("data/Tyee data 2024.xlsx",sheet="tyee daily")
+
+gg.daily<-daily%>%
+  pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye")%>%
+  mutate(Year=as.numeric(Year))
+
+ggplot(gg.daily,aes(x=Date,y=Sockeye,group=Date))+
+  geom_boxplot(fill="white",alpha=.5)+
+      geom_line(data=gg.daily%>%filter(Year==2024),aes(x=Date,y=Sockeye,group=1),color="purple",linewidth=1)+
+  ylim(0,150000)+
+  theme_bw()
+```
+
+```{r daily cumulative boxplot}
+#| label: fig-daily-cumulative-boxplot-sx
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Daily cumulative proportion of the sockeye run through Tyee (uncorrected) from 1970-2023. The 2024 run estimates are shown by the coloured lines. Each line represents the proportion through based on a final season estimate shown in the legend. For example, the red line is based on a final TRTC of 1.5M, with the line showing the cumulative number of sockeye through on each date / 1.5M. Until we have the true final TRTC, we will not be able to calculate the true cumulative proportion. This is done to give an idea of run-timing and whether the pre-season forecast is likely to be close to the in-season estimate. The blue dashed line indicates the long-term average 50% through date."
+#| fig-height: 5
+
+dailycum<-read_excel("data/Tyee data 2024.xlsx",sheet="tyee pcum")
+
+gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
+  pivot_longer("1970":"2023",names_to="Year",values_to="Sockeye")%>%
+  mutate(Year=as.numeric(Year))
+
+data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%
+  mutate(`1M`=cumtrtc/1000000,
+         `1.5M`=cumtrtc/1500000,
+         `2M`=cumtrtc/2000000,
+         `2.5M`=cumtrtc/2500000)%>%
+  pivot_longer(`1M`:`2.5M`,names_to="estimate",values_to="p")%>%
+  select(-cumtrtc)
+
+ggplot(gg.daily.pcum,aes(x=Date,y=Sockeye,group=Date))+
+  geom_boxplot(fill="white",color="grey70",alpha=.5)+
+    geom_line(data=data2,aes(x=as.POSIXct(date),y=p,color=estimate,group=estimate),linewidth=1,linewidth=1)+
+    geom_segment(aes(x=as.POSIXct("2024-06-01"),y=.5,xend=as.POSIXct("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
+  geom_segment(aes(x=as.POSIXct("2024-07-24"),y=.5,xend=as.POSIXct("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
+  #ylim(0,150000)+
+    theme_bw()+
+  ylim(0,1)+
+  labs(color="Estimate",y="Cumulative Proportion of TRTC")+
+  theme(legend.position = "bottom")
+
+```
+
+The following figure shows the daily run estimated at the Tyee test fishery for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Tyee daily estimates (note this does not include catch estimates in the marine commercial or Section 35(1) fisheries). These estimates are raw data from Tyee and therefore not corrected for catchability.
+
+Currently, daily run estimates are tracking close to 2023, and considerably higher than 2020 and 2021. See the next figure that shows the cumulative run through and the full season totals (unadjusted).
+
+```{r tyee recent daily estimates}
+#| label: fig-tyee-recent-daily
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Daily run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."
+#| fig-height: 5
+
+gg.daily2<-gg.daily%>%filter(Year>=2020)%>%
+  mutate(per=ifelse(Year==2024,"current","past"))
+
+ggplot(gg.daily2,aes(x=Date,y=Sockeye,color=factor(Year),linewidth=per,alpha=per))+
+  geom_line()+
+  scale_linewidth_manual(values=c(2,1))+
+  scale_alpha_manual(values=c(1,.5))+
+  theme_bw()+
+  guides(alpha="none",linewidth="none")+
+  labs(color="")+
+  theme(legend.position = "bottom")
+
+
+```
+
+The following figure shows the cumulative daily run estimated at the Tyee test fishery for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Tyee total estimate to date (note this does not include catch estimates in the marine commercial or Section 35(1) fisheries). These estimates are raw data from Tyee and therefore not corrected for catchability.
+
+Currently, the 2024 run is tracking close to 2023, and considerably higher than 2020 and 2021.
+
+```{r tyee recent cumulative daily estimates}
+#| label: fig-tyee-recent-cum
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Daily cumulative run through Tyee (uncorrected) since 2020. 2024 run is shown in purple."
+#| fig-height: 5
+
+daily.cum<-read_excel("data/Tyee data 2024.xlsx",sheet="tyee cum")
+
+gg.daily.cum<-daily.cum%>%
+  pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye")%>%
+  mutate(Year=as.numeric(Year))%>%
+  filter(Year>=2020)%>%
+  mutate(per=ifelse(Year==2024,"current","past"))
+
+ggplot(gg.daily.cum,aes(x=Date,y=Sockeye,color=factor(Year),linewidth=per,alpha=per))+
+  geom_line()+
+  scale_linewidth_manual(values=c(2,1))+
+  scale_alpha_manual(values=c(1,.5))+
+  theme_bw()+
+  #scale_color_brewer(palette="Set1")+
+  guides(alpha="none",linewidth="none")+
+  labs(y="Cumulative Sockeye",color="")+
+  theme(legend.position = "bottom")
+
+```
+
+```{r}
+#| label: fig-cumu
+#| include: false
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Cumulative estimated daily proportion of TRTC based on 1985-2021 average."
+#| fig-height: 8
+
+i<-match(tyee.day,data$Date)
+
+early<-data$early[i]
+average<-data$average[i]
+late<-data$late[i]
+
+names(data)
+
+pcum<-data%>%select(Date,cumtrtc,"Average (70-23)"=`pcum70-23`)%>%
+  mutate(`1.5M`=cumtrtc/1500000,
+         `1.75M`=cumtrtc/1750000,
+         `2M`=cumtrtc/2000000,
+         `2.5M`=cumtrtc/2500000,
+         `3M`=cumtrtc/3000000,
+         "Early (70-23)"=lead(`Average (70-23)`,7),
+         "Late (70-23)"=lag(`Average (70-23)`,7))%>%
+  select(-cumtrtc)%>%
+  pivot_longer(2:9,names_to="Type",values_to="cp")%>%
+  mutate(Type=factor(Type,levels=c("Early (85-21)","Average (70-23)", "Late (85-21)"
+                                   ,"1.5M","1.75M","2M","2.5M","3M")))
+
+cols<-RColorBrewer::brewer.pal(5, "Set1")
+
+g1<-ggplot(pcum,aes(x=Date,y=cp,color=Type,linetype=Type))+
+  geom_line(size=1)+
+  scale_colour_manual(values=c("grey25","grey50","grey70",cols))+
+  scale_linetype_manual(values=c("dashed","dashed","dashed","solid","solid","solid","solid","solid"))+
+  theme_bw()+
+  labs(y="Cumulative Proportion")+
+  theme(legend.title=element_blank(),legend.background = element_blank())
+
+g2<-ggplot(pcum,aes(x=Date,y=cp,color=Type,linetype=Type))+
+  geom_line(size=1)+
+  scale_colour_manual(values=c("grey25","grey50","grey70",cols))+
+  scale_linetype_manual(values=c("dashed","dashed","dashed","solid","solid","solid","solid","solid"))+
+  theme_bw()+
+  labs(y="Cumulative Proportion")+
+  theme(legend.title=element_blank(),legend.position=c(.17,.65),legend.background = element_blank())+
+  ylim(0,1)+
+  xlim(as.Date("2023-06-10"),as.Date("2023-08-05"))
+
+ggarrange(g1,g2,align="v",ncol=1)
+
+```
+
+### In-Season TRTC Estimates
+
+This section shows the estimated final TRTC as predicted by the simple run-timing proportion Excel based spreadsheet tool. Accuracy of this model increases as the season progresses since run-timing uncertainty is large at the start of the year, and small at the end of the year. Catchability (how many sockeye each sockeye caught in the Tyee test fishery represents), the other component of the uncertainty in this model, is unknown until after the final TRTC accounting has been completed in the post-season. Tyee estimates typically have a range of +/- 20% from the true TRTC, with some years being greater than 20% error, and many years being less than 20% error. The 2024 catchability is based on an average of the last 3 years.
+
+```{r}
+#| label: fig-table
+#| echo: false
+#| results: asis
+
+i<-match(tyee.day,data$Date)
+
+early<-round(data$early[i],0)
+average<-round(data$average[i],0)
+late<-round(data$late[i],0)
+
+stat1<-data.frame(`Run-Timing`=c("Early","Average","Late"),`Forecasted Final Run Size`=c(early,average,late))
+
+kable(stat1,caption="Forecasted sockeye final TRTC based on 1 week early, average and 1 week late run-timing.")
+
+```
+
+```{r}
+#| label: fig-fore
+#| echo: false
+#| warning: false
+#| fig-cap: "Forecasted final TRTC of Skeena sockeye based on the simple scalar run-timing model. The dashed horizontal lines show the median p50 value of the pre-season forecast (black), and the 90% confidence intervals (grey)."
+#| fig-height: 4
+
+tyeemodel<-data%>%select(Date,Early=early,Average=average,Late=late)%>%
+  pivot_longer(2:4,values_to="Number of Sockeye",names_to="Timing")
+
+ggplot(tyeemodel,aes(x=Date,y=`Number of Sockeye`/10^6,color=Timing))+
+  geom_line(size=1.5)+
+  labs(y="Nunber of Sockeye (millions)")+
+  scale_color_brewer(palette="Set1")+
+  theme_classic()+
+  ylim(0,10)+
+  geom_hline(yintercept=.580,linetype="dashed",alpha=.5,color="grey50")+
+  geom_hline(yintercept=1.5,linetype="dashed",alpha=.5,color="black")+
+  geom_hline(yintercept=4,linetype="dashed",alpha=.5,color="grey50")+
+  grids(linetype = "dashed")+
+  theme(legend.position = "top")
+```
+
+## Chinook Salmon
+
+```{r daily boxplot chinook}
+#| label: fig-daily-boxplot-cn
+#| include: true
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=`large chinook`)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Chinook") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(Chinook,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Chinook,.1, na.rm = TRUE), 
+            per25 = quantile(Chinook,.25, na.rm = TRUE), 
+            per50 = quantile(Chinook,.50, na.rm = TRUE),
+            per75 = quantile(Chinook,.75, na.rm = TRUE),
+            per90 = quantile(Chinook,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(Chinook=(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily<-gg.daily%>%filter(!Year%in%years_out)
+
+dailyplot_cn <- ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Chinook, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Chinook,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey75","purple","grey50","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,10)
+
+
+```
+
+```{r daily cumulative boxplot chinook}
+#| label: fig-daily-cumulative-boxplot-cn
+#| include: true
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-height: 5
+####
+# Read the CSV file
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=`large chinook`)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum<-daily.index%>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Chinook") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(Chinook,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Chinook,.1, na.rm = TRUE), 
+            per25 = quantile(Chinook,.25, na.rm = TRUE), 
+            per50 = quantile(Chinook,.50, na.rm = TRUE),
+            per75 = quantile(Chinook,.75, na.rm = TRUE),
+            per90 = quantile(Chinook,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+cumplot_cn <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey75","purple","grey50","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")
+
+#  ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+#  geom_line(data = gg.daily.cum %>% filter(Year <2000), aes(x = Date, y = cum_sum,group=Year,color="1956-2000"),
+#            linewidth = .5,alpha=.5)+
+#  geom_line(data = gg.daily.cum %>% filter(Year >=2000&Year<2024), aes(x = Date, y = cum_sum,group=Year,color="2000-2020"),
+#            linewidth = .5,alpha=.5)+
+#  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024"), linewidth = 2,alpha=.7)+
+#  scale_color_manual(values=c("grey50","red","black"))+
+#  labs(y="Cumulative Daily Index",color="Year Range")+
+#  theme_bw()+
+#  theme(legend.position = "bottom")
+
+```
+
+```{r}
+#| label: fig-plots-chinook
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for Chinook salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Chinook salmon run through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_cn,cumplot_cn,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+## Chum Salmon
+
+```{r daily boxplot chum}
+#| label: fig-daily-boxplot-cm
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=chum)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Chum") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(Chum,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Chum,.1, na.rm = TRUE), 
+            per25 = quantile(Chum,.25, na.rm = TRUE), 
+            per50 = quantile(Chum,.50, na.rm = TRUE),
+            per75 = quantile(Chum,.75, na.rm = TRUE),
+            per90 = quantile(Chum,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(Chum=(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  years_out<-c("2008","2009","2010")
+  gg.daily<-gg.daily%>%filter(!Year%in%years_out)
+  
+dailyplot_ch <- ggplot(gg.daily,aes(x=Date, y=Chum,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Chum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Chum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,5)
+
+```
+
+```{r daily cumulative boxplot chum}
+#| label: fig-daily-cumulative-boxplot-cm
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Chum")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=`chum`)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Chum") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(Chum,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Chum,.1, na.rm = TRUE), 
+            per25 = quantile(Chum,.25, na.rm = TRUE), 
+            per50 = quantile(Chum,.50, na.rm = TRUE),
+            per75 = quantile(Chum,.75, na.rm = TRUE),
+            per90 = quantile(Chum,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_ch <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,250)
+
+```
+
+```{r}
+#| label: fig-plots-chum
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for Chum salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Chum salmon run through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_ch,cumplot_ch,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+## Pink Salmon
+
+### Even years
+
+```{r daily boxplot pink even}
+#| label: fig-daily-boxplot-pe
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=pink)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Pink Salmon") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Pink Salmon`,0))
+
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink Salmon`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink Salmon`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink Salmon`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Pink Salmon`=(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+ years_out<-c("2008","2009","2010")
+  gg.daily<-gg.daily%>%filter(!Year%in%years_out)
+  
+dailyplot_p_e<- ggplot(gg.daily,aes(x=Date, y=`Pink Salmon`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Pink Salmon`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2023), aes(x = Date, y = `Pink Salmon`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,60)
+
+```
+
+```{r daily cumulative boxplot pink even}
+#| label: fig-daily-cumulative-boxplot-pe
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Pink.Even")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=pink)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Pink Salmon") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Pink Salmon`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Pink Salmon`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink Salmon`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink Salmon`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink Salmon`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink Salmon`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+ years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+cumplot_p_e <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,1500)
+
+```
+
+```{r}
+#| label: fig-plots-pink_e
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for even-year Pink salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Pink salmon run on even-numbered years through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_p_e,cumplot_p_e,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+### Odd years
+
+-   Will be updated next year!
+
+## Coho Salmon
+
+```{r daily boxplot coho}
+#| label: fig-daily-boxplot-co
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=coho)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Coho") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(Coho,0))
+
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Coho,.1, na.rm = TRUE), 
+            per25 = quantile(Coho,.25, na.rm = TRUE), 
+            per50 = quantile(Coho,.50, na.rm = TRUE),
+            per75 = quantile(Coho,.75, na.rm = TRUE),
+            per90 = quantile(Coho,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(Coho=(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  years_out<-c("2008","2009","2010")
+  gg.daily<-gg.daily%>%filter(!Year%in%years_out)
+  
+dailyplot_co <- ggplot(gg.daily,aes(x=Date, y=Coho,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Coho, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Coho,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,5)
+
+```
+
+```{r daily cumulative boxplot coho}
+#| label: fig-daily-cumulative-boxplot-co
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=coho)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Coho") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(Coho,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Coho,.1, na.rm = TRUE), 
+            per25 = quantile(Coho,.25, na.rm = TRUE), 
+            per50 = quantile(Coho,.50, na.rm = TRUE),
+            per75 = quantile(Coho,.75, na.rm = TRUE),
+            per90 = quantile(Coho,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+cumplot_co <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")
+
+```
+
+```{r}
+#| label: fig-plots-coho
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for Coho salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Coho salmon run through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_co,cumplot_co,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+## Steelhead
+
+```{r daily boxplot steelhead}
+#| label: fig-daily-boxplot-st
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Steelhead")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=steelhead)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Steelhead") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(Steelhead,0))
+
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Steelhead,.1, na.rm = TRUE), 
+            per25 = quantile(Steelhead,.25, na.rm = TRUE), 
+            per50 = quantile(Steelhead,.50, na.rm = TRUE),
+            per75 = quantile(Steelhead,.75, na.rm = TRUE),
+            per90 = quantile(Steelhead,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(Steelhead=(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  years_out<-c("2008","2009","2010")
+  gg.daily<-gg.daily%>%filter(!Year%in%years_out)
+  
+dailyplot_st <- ggplot(gg.daily,aes(x=Date, y=Steelhead,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Steelhead, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Steelhead,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,10)
+
+```
+
+```{r daily cumulative boxplot steelhead}
+#| label: fig-daily-cumulative-boxplot-st
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Steelhead")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"=steelhead)
+
+daily.index<-left_join(daily,cn2024,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Steelhead") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(Steelhead,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Steelhead,.1, na.rm = TRUE), 
+            per25 = quantile(Steelhead,.25, na.rm = TRUE), 
+            per50 = quantile(Steelhead,.50, na.rm = TRUE),
+            per75 = quantile(Steelhead,.75, na.rm = TRUE),
+            per90 = quantile(Steelhead,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(Index))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  years_out<-c("2008","2009","2010")
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+cumplot_st <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Daily Index",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")
+
+```
+
+```{r}
+#| label: fig-plots-steelhead
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| fig-cap: "Top panel: Daily run for Steelhead salmon through Tyee (uncorrected) from 1956-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Steelhead salmon run through Tyee (uncorrected) from 1956-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_st,cumplot_st,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+The following updates were provided by the Province of BC via email. Click on the link below to download a PDF of Tyee steelhead updates to Sept 10. For any questions please contact Kenji Miyazaki at BC.
+
+![](steelhead_sept10_24.pdf){width="80%" height="500"}
+
+Tyee steelhead updates can be downloaded here:
+
+[Skeena Summer Steelhead Update to Sept 10](Skeena_Summer_Steelhead_Update_to_Sept_10_24.xlsx)
+
+[Skeena Summer Steelhead Update to August 29](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_29_24.xlsx)
+
+[Skeena Summer Steelhead Update to August 22](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_22_24.xlsx)
+
+[Skeena Summer Steelhead Update to August 15](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%20_15_24.xlsx)
+
+[Skeena Summer Steelhead Update to August 8](Skeena_Summer_Steelhead_Update_to_Aug_8_24.xlsx)
+
+[Skeena Summer Steelhead Update to August 1](Skeena%20Summer%20Steelhead%20Update%20to%20Aug%201_24.xlsx)
+
+[Skeena Summer Steelhead Update to July 25](Skeena%20Summer%20Steelhead%20Update%20to%20July%2025_24%20(1).xlsx)
+
+[Skeena Summer Steelhead Update to July 17](Skeena%20Summer%20Steelhead%20Update%20to%20July%2017_24.xlsx)
+
+# Babine Fence
+
+The Babine fence was installed and fish tight on July 9. Data from the Babine fence is provided nightly via email from the LBN Fisheries program.
+
+Throughout 2024, there were concerns at the Babine River fence about high temperatures and low water levels holding up passage of sockeye and other salmon through the fence. In 2024, LBN implemented the Babine River Collaborative Management Plan and has choosen to voluntarily move their harvest from the Babine fence to Babine Lake. For more details please contact Cassie Siebert (LBN Fisheries Director).
+
+
+### Babine Sockeye
+
+This section shows information on the 2024 return of large and jack sockeye to the Babine fence.
+
+```{r}
+#| echo: false
+#| results: asis
+#| include: true
+
+fence<-read_excel("data/babine data 2024.xlsx",sheet="Babine")
+fence$Date<-as.Date(fence$Date)
+```
+
+```{r babine-sockeye-table,include=TRUE,echo=FALSE}
+
+i<-match(fence.day,fence$Date)
+
+totalrun<-fence$cumrun[i]
+cumjacks<-fence$cumjacks[i]
+
+stat2<-tibble(`Babine Fence`=c("Large Sockeye","Jack Sockeye"),`Total Run`=c(totalrun,cumjacks))
+
+kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River fence to ",fence.date,".")) %>% kable_styling(latex_options = "HOLD_position")
+
+```
+
+```{r babine sockeye prep1,include=TRUE,echo=FALSE,warning=FALSE,message=FALSE}
+
+babine.sx.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Sockeye')
+
+babine.sx.2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,`2024`=totalrun)%>%mutate(Date = as.Date(Date))
+
+babine.sx<-left_join(babine.sx.daily,babine.sx.2024,by="Date")%>%
+  select(Date,"Average All Years"="avgall","2000-23 Average"=avg2000.2023,"2020-23 Average"=avg2020.2023,`2024`)%>%
+  pivot_longer("Average All Years":`2024`,names_to="period",values_to="sockeye")%>%
+  mutate(type=ifelse(period=="2024","now","then"))
+
+b1<-ggplot(babine.sx%>%filter(period!="2024"),aes(x=Date,y=sockeye,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
+  geom_line(linetype="longdash",alpha=.5)+
+  geom_line(data=babine.sx%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
+  geom_point(data=babine.sx%>%filter(period=="2024"),aes(x=Date,color="2024"),
+             size=1,pch=21,fill="purple",alpha=.75)+
+  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
+    theme_bw()+
+  labs(color="",y="Daily Large Sockeye")+
+  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
+  theme(legend.position="bottom")
+
+babine.sx.cum<-babine.sx%>%
+  group_by(period)%>%
+  mutate(cum_sum=cumsum(replace_na(sockeye,0)))
+
+b2<-ggplot(babine.sx.cum%>%filter(period!="2024"),aes(x=Date,y=cum_sum,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
+  geom_line(linetype="longdash",alpha=.5)+
+  geom_line(data=babine.sx.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),alpha=.75)+
+  geom_point(data=babine.sx.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),
+             size=1,pch=21,fill="purple",alpha=.75)+
+  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
+    theme_bw()+
+  labs(color="",y="Cumulative Large Sockeye")+
+  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
+  theme(legend.position="bottom")
+
+```
+
+```{r babine large sockeye daily and cum}
+#| label: fig-babine-large-sockeye
+#| echo: false
+#| warning: false
+#| fig-cap: "Top panel: Total run of large sockeye (including harvest at the fence) to the Babine fence for 2024 (purple line) compared to historical and recent averages. Bottom panel: Cumulative estimated run to the Babine fence (including harvest at the fence) for 2024 (purple line) compared to historical and recent averages." 
+#| include: true
+#| fig-height: 7
+
+ggarrange(b1,b2,ncol=1,align="v",common.legend = TRUE)
+
+```
+
+The following figures show the daily and cumulative run of large sockeye estimated to the Babine fence for the last 5 years. This figure shows how the run in 2024 compares with recent years in terms of the Babine sockeye.
+
+```{r babine recent daily estimates}
+#| label: fig-babine-recent-daily
+#| echo: false
+#| warning: false
+#| message: false
+
+babine.sx.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Sockeye')
+
+babine.sx.2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,`2024`=totalrun)%>%mutate(Date = as.Date(Date))
+
+babine.sx.2<-left_join(babine.sx.daily,babine.sx.2024,by="Date")%>%
+  select(Date,"1946":"2023","2024")%>%
+  pivot_longer("1946":"2024",names_to="year",values_to="sockeye")%>%
+  filter(year>=2020)%>%
+  mutate(period=ifelse(year==2024,"now","then"))
+
+baba1<-ggplot(babine.sx.2,aes(x=Date,y=sockeye,color=factor(year),linewidth=period,alpha=period))+
+  geom_line()+
+  scale_linewidth_manual(values=c(2,1))+
+  scale_alpha_manual(values=c(1,.5))+
+  theme_bw()+
+  guides(alpha="none",linewidth="none")+
+  labs(color="",y="Daily Large Sockeye")+
+  theme(legend.position = "bottom")
+
+```
+
+```{r babine recent cumulative daily estimates}
+#| label: fig-babine-recent-cum
+#| echo: false
+#| warning: false
+#| message: false
+
+babine.sx.2<-left_join(babine.sx.daily,babine.sx.2024,by="Date")%>%
+  select(Date,"1946":"2023","2024")%>%
+  pivot_longer("1946":"2024",names_to="year",values_to="sockeye")%>%
+  filter(year>=2020&year<2024|year==2024&Date<today)%>%
+  mutate(period=ifelse(year==2024,"now","then"))%>%
+  group_by(year)%>%
+  mutate(cum_sum=cumsum(replace_na(sockeye,0)))
+
+baba2<-ggplot(babine.sx.2,aes(x=Date,y=cum_sum,color=factor(year),linewidth=period,alpha=period))+
+  geom_line()+
+  scale_linewidth_manual(values=c(2,1))+
+  scale_alpha_manual(values=c(1,.5))+
+  theme_bw()+
+  guides(alpha="none",linewidth="none")+
+  labs(color="",y="Cumulative Large Sockeye")+
+  theme(legend.position = "bottom")
+```
+
+```{r babine recent daily and cumulative estimates figure}
+#| label: fig-babine-recent-dailyandcum
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "Daily and cumulative run through the Babine fence (uncorrected) since 2020. 2024 run is shown in purple."
+#| fig-height: 7
+
+ggarrange(baba1,baba2,ncol=1,align="v",common.legend = TRUE)
+
+```
+
+```{r daily boxplot babine sockeye}
+#| label: fig-daily-boxplot-bab
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Sockeye') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=totalrun) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Large Sockeye") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Large Sockeye`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Large Sockeye`,.1, na.rm = TRUE), 
+            per25 = quantile(`Large Sockeye`,.25, na.rm = TRUE), 
+            per50 = quantile(`Large Sockeye`,.50, na.rm = TRUE),
+            per75 = quantile(`Large Sockeye`,.75, na.rm = TRUE),
+            per90 = quantile(`Large Sockeye`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Large Sockeye` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Large Sockeye`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Large Sockeye`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Large Sockeye`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Sockeye",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,160000)
+
+```
+
+```{r daily cumulative boxplot babine sockeye}
+#| label: fig-daily-cumulative-boxplot-bab
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Large Sockeye') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`totalrun`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Large Sockeye") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Large Sockeye`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Large Sockeye`,.1, na.rm = TRUE), 
+            per25 = quantile(`Large Sockeye`,.25, na.rm = TRUE), 
+            per50 = quantile(`Large Sockeye`,.50, na.rm = TRUE),
+            per75 = quantile(`Large Sockeye`,.75, na.rm = TRUE),
+            per90 = quantile(`Large Sockeye`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Sockeye",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,2000000)
+
+```
+
+```{r}
+#| label: fig-plots-babsock
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for large sockeye through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the large sockeye salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+#### Babine comparison with Tyee
+
+```{r}
+#| label: fig-diff
+#| echo: false
+#| warning: false
+#| fig-cap: "Estimated difference in large sockeye between escapement past Tyee and the Babine Fence based on 3 week migration timing, 10% non-Babine stocks, and in-river FSC and demo catch to date. The solid blue line is the escapement past Tyee, the dotted green line is the expected run at the Babine fence, the solid black line is the actual total run at the fence, and the red line is the difference between the black line and green line (fence run - expected run)."
+#| include: true
+#| fig-height: 6
+
+#Explanation for figure
+#This comparison aims to provide a coarse idea on the catchability at Tyee. #The red line in the figure below shows the difference between the escapement #past Tyee and the total run being counted at the Babine Fence, based on some #assumptions. These assumptions include 3 week migration timing, 10% #non-Babine stock composition and a rough estimate of in-river FSC and demo #harvest to date between Tyee and Babine. In 2023 some sockeye were missed #due to the delay from wildfire evacuations, however DFO and LBN staff #indicate that no sockeye were visible below the fence when it was evacuated, #and therefore the number of sockeye missed was probably fairly low. #Additional analysis will be required to provide an estimate of the number of #missed sockeye.
+
+pernonbabine<-.1
+
+ty<-read_excel("data/Tyee data 2024.xlsx",sheet="Tyee") %>%
+  mutate(Date = as.Date(Date))%>%
+  select(Date, Observed.Tyee=cumtyee)
+
+fe<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  mutate(Date = as.Date(Date))%>%
+  select(Date,Actual.Fence=cumrun)
+
+inrivercatch<-read_excel("data/FNs catch 2024.xlsx",sheet="inriver catch") # update this to 2024
+inrivercatch$Date<-as.Date(inrivercatch$Date)
+ca<-inrivercatch%>%select(Date,inriver.harvest) # all 0 or NA...
+comp<-merge(ty,fe,all=TRUE)%>%merge(ca,all=TRUE)%>%
+  mutate(Expected.Babine=lag((1-pernonbabine)*Observed.Tyee-inriver.harvest,21),
+         `Difference @ 3 Weeks`=Actual.Fence-Expected.Babine)%>%
+  select(-inriver.harvest)%>%
+  pivot_longer(2:5,names_to="Count",values_to="Fish")
+
+ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
+  geom_line() +
+  theme_classic()+grids() +
+  scale_colour_manual(values=c("black","red","seagreen4","blue")) +
+  scale_linetype_manual(values=c("solid","solid","dashed","solid")) +
+  scale_size_manual(values=c(2,1,1,1.5)) +
+  theme(legend.position="top") +
+  labs(y="Number of Large Sockeye") +
+  ylim(-250000,2500000)
+
+```
+
+#### Jack sockeye
+
+```{r babine sockeye prep2,include=TRUE,echo=FALSE,warning=FALSE,message=FALSE}
+
+babine.jacks.daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Jack Sockeye')
+
+babine.jacks.2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,`2024`=dailytotaljacks)%>%mutate(Date = as.Date(Date))
+
+babine.jacks<-left_join(babine.jacks.daily,babine.jacks.2024,by="Date")%>%
+  rowwise()%>%
+  mutate("Average All Years"=mean(c_across(c(`1946`:`2023`)),na.rm=TRUE),
+         "2000-23 Average"=mean(c_across(c(`2000`:`2023`)),na.rm=TRUE),
+         "2020-23 Average"=mean(c_across(c(`2020`:`2023`)),na.rm=TRUE))%>%
+  select(Date,"Average All Years","2000-23 Average","2020-23 Average",`2024`)%>%
+  pivot_longer("Average All Years":`2024`,names_to="period",values_to="sockeye")%>%
+  mutate(type=ifelse(period=="2024","now","then"))
+
+#names(babine.jacks)
+
+bj1<-ggplot(babine.jacks%>%filter(period!="2024"),aes(x=Date,y=sockeye,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average"))))+
+  geom_line(linetype="longdash",alpha=.5)+
+  geom_line(data=babine.jacks%>%filter(period=="2024"),aes(x=Date,color="2024"),alpha=.75)+
+  geom_point(data=babine.jacks%>%filter(period=="2024"),aes(x=Date,color="2024"),
+             size=1,pch=21,fill="purple",alpha=.75)+
+  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
+    theme_bw()+
+  labs(color="",y="Daily Jack Sockeye")+
+  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
+  theme(legend.position="bottom")
+
+babine.jacks.cum<-babine.jacks%>%
+  group_by(period)%>%
+  mutate(cum_sum=cumsum(replace_na(sockeye,0)))
+
+bj2<-ggplot(babine.jacks.cum%>%filter(period!="2024"),aes(x=Date,y=cum_sum,color=factor(period,levels=c("Average All Years","2000-23 Average","2020-23 Average","2024"))))+
+  geom_line(linetype="longdash",alpha=.5)+
+  geom_line(data=babine.jacks.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),alpha=.75)+
+  geom_point(data=babine.jacks.cum%>%filter(period=="2024"&Date<=today),aes(x=Date,color="2024"),
+             size=1,pch=21,fill="purple",alpha=.75)+
+  scale_color_manual(values=c("darkgreen","blue","firebrick","purple"))+
+    theme_bw()+
+  labs(color="",y="Cumulative Jack Sockeye")+
+  #scale_linetype_manual(values=c("longdash","longdash","longdash","solid"))+
+  theme(legend.position="bottom")
+
+```
+
+```{r}
+#| label: fig-babine-jacks-sockeye-vs-historical
+#| echo: false
+#| warning: false
+#| fig-cap: "Top panel: Total run of jack sockeye (including harvest at the fence) to the Babine fence for 2024 (purple line) compared to historical and recent averages. Bottom panel: Cumulative estimated run of jack sockeye to the Babine fence (including harvest at the fence) for 2024 (purple line) compared to historical and recent averages." 
+#| include: true
+#| fig-height: 7
+
+ggarrange(bj1,bj2,ncol=1,align="v",common.legend = TRUE)
+
+```
+
+```{r babine jacks prep,include=FALSE,echo=FALSE,message=FALSE,warning=FALSE}
+
+fencejacks<-fence%>%select(Date,jacks=dailytotaljacks,`jack90-21`)%>%
+  pivot_longer(2:3,values_to="Number of Sockeye",names_to="Type")%>%
+  mutate(lt=case_when(Type=="jacks"~"Annual",
+                      Type=="jack90-21"~"Average"))
+
+j1<-ggplot(fencejacks,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
+  geom_line(size=1.1)+
+  scale_color_manual(values=c("grey50","deepskyblue3","black"))+
+  theme_classic()+grids()+
+  theme(legend.title = element_blank(),legend.position = "top")+
+  guides(linetype="none")+
+  labs(y="# of Large Sockeye")
+
+jackscum<-fence%>%select(Date,cumjacks,`cumjack90-21`)%>%
+  pivot_longer(2:3,values_to="Number of Sockeye",names_to="Type")%>%
+  mutate(lt=case_when(Type=="cumjacks"~"Annual",
+                      Type=="cumjack90-21"~"Average"))
+
+j2<-ggplot(jackscum,aes(x=Date,y=`Number of Sockeye`,color=Type,linetype=lt))+
+  geom_line(size=1.1)+
+  scale_color_manual(values=c("grey50","deepskyblue3","black"))+
+  theme_classic()+grids()+
+  theme(legend.title = element_blank(),legend.position = "top")+
+  guides(linetype="none")
+
+```
+
+```{r}
+#| label: fig-babine-jack-sockeye
+#| echo: false
+#| warning: false
+#| fig-cap: "Daily (top) and cumulative (bottom) estimated total run of sockeye jacks in 2023 at the Babine Fence versus the 1990-2021 average."
+#| include: false
+#| fig-height: 6
+
+ggarrange(j1,j2,align="v",ncol=1)
+
+```
+
+```{r daily boxplot babine sockeye jacks}
+#| label: fig-daily-boxplot-bab-jacks
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Jack Sockeye') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=dailytotaljacks) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Jack Sockeye") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Jack Sockeye`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Jack Sockeye`,.1, na.rm = TRUE), 
+            per25 = quantile(`Jack Sockeye`,.25, na.rm = TRUE), 
+            per50 = quantile(`Jack Sockeye`,.50, na.rm = TRUE),
+            per75 = quantile(`Jack Sockeye`,.75, na.rm = TRUE),
+            per90 = quantile(`Jack Sockeye`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Jack Sockeye` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+dailyplot_jack <- ggplot(gg.daily,aes(x=Date, y=`Jack Sockeye`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Jack Sockeye`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Jack Sockeye`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Sockeye Jacks",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,20000)
+
+```
+
+```{r daily cumulative boxplot babine sockeye jacks}
+#| label: fig-daily-cumulative-boxplot-bab-jacks
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Jack Sockeye') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`dailytotaljacks`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Jack Sockeye") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Jack Sockeye`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Jack Sockeye`,.1, na.rm = TRUE), 
+            per25 = quantile(`Jack Sockeye`,.25, na.rm = TRUE), 
+            per50 = quantile(`Jack Sockeye`,.50, na.rm = TRUE),
+            per75 = quantile(`Jack Sockeye`,.75, na.rm = TRUE),
+            per90 = quantile(`Jack Sockeye`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_jack <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Sockeye Jacks",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,400000)
+
+```
+
+```{r}
+#| label: fig-plots-babsockjacks
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for sockeye jacks through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of sockeye jacks through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_jack,cumplot_jack,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+```{r}
+#| label: babine-fence
+#| echo: false
+#| warning: false
+#| include: false
+```
+
+### Babine Adult Chinook
+
+```{r daily boxplot babine chinook}
+#| label: fig-daily-boxplot-babcn
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Large Chinook') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`large chinook`) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1946":"2024",names_to="Year",values_to="Large Chinook") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Large Chinook`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Large Chinook`,.1, na.rm = TRUE), 
+            per25 = quantile(`Large Chinook`,.25, na.rm = TRUE), 
+            per50 = quantile(`Large Chinook`,.50, na.rm = TRUE),
+            per75 = quantile(`Large Chinook`,.75, na.rm = TRUE),
+            per90 = quantile(`Large Chinook`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Large Chinook` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Large Chinook`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Large Chinook`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Large Chinook`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Chinook",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,350)
+
+```
+
+```{r daily cumulative boxplot babine chinook}
+#| label: fig-daily-cumulative-boxplot-babcn
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Large Chinook') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`large chinook`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1946":"2024",names_to="Year",values_to="Large Chinook") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Large Chinook`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Large Chinook`,.1, na.rm = TRUE), 
+            per25 = quantile(`Large Chinook`,.25, na.rm = TRUE), 
+            per50 = quantile(`Large Chinook`,.50, na.rm = TRUE),
+            per75 = quantile(`Large Chinook`,.75, na.rm = TRUE),
+            per90 = quantile(`Large Chinook`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Chinook",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,10000)
+
+
+
+
+
+```
+
+```{r}
+#| label: fig-plots-babcn
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for large Chinook through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the Chinook salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+### Babine Jack Chinook
+
+```{r daily boxplot babine jack chinook}
+#| label: fig-daily-boxplot-babjc
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Jack Chinook') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`jack chinook`) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1946":"2024",names_to="Year", values_to="Jack Chinook") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Jack Chinook`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Jack Chinook`,.1, na.rm = TRUE), 
+            per25 = quantile(`Jack Chinook`,.25, na.rm = TRUE), 
+            per50 = quantile(`Jack Chinook`,.50, na.rm = TRUE),
+            per75 = quantile(`Jack Chinook`,.75, na.rm = TRUE),
+            per90 = quantile(`Jack Chinook`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Jack Chinook` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Jack Chinook`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = `Jack Chinook`, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = `Jack Chinook`,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Jack Chinook",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,100)
+
+```
+
+```{r daily cumulative boxplot babine jack chinook}
+#| label: fig-daily-cumulative-boxplot-babjc
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Jack Chinook') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`jack chinook`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1946":"2024",names_to="Year",values_to="Jack Chinook") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Jack Chinook`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Jack Chinook`,.1, na.rm = TRUE), 
+            per25 = quantile(`Jack Chinook`,.25, na.rm = TRUE), 
+            per50 = quantile(`Jack Chinook`,.50, na.rm = TRUE),
+            per75 = quantile(`Jack Chinook`,.75, na.rm = TRUE),
+            per90 = quantile(`Jack Chinook`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Jack Chinook",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,2500)
+
+```
+
+```{r}
+#| label: fig-plots-babjc
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for jack Chinook through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the jack Chinook run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+### Babine Pink
+
+```{r daily boxplot babine pink}
+#| label: fig-daily-boxplot-babpk
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Pink') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`pink`) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Pink") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Pink`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Pink`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Pink` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Pink`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Pink, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Pink,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Pink",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,20000)
+
+```
+
+```{r daily cumulative boxplot babine pink}
+#| label: fig-daily-cumulative-boxplot-babpk
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Pink') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`pink`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Pink") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Pink`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Pink`,.1, na.rm = TRUE), 
+            per25 = quantile(`Pink`,.25, na.rm = TRUE), 
+            per50 = quantile(`Pink`,.50, na.rm = TRUE),
+            per75 = quantile(`Pink`,.75, na.rm = TRUE),
+            per90 = quantile(`Pink`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Pink",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,400000)
+
+```
+
+```{r}
+#| label: fig-plots-babpk
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for pink salmon through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the pink salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+### Babine Coho
+
+```{r daily boxplot babine coho}
+#| label: fig-daily-boxplot-babco
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Coho') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`coho`) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Coho") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Coho`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Coho`,.1, na.rm = TRUE), 
+            per25 = quantile(`Coho`,.25, na.rm = TRUE), 
+            per50 = quantile(`Coho`,.50, na.rm = TRUE),
+            per75 = quantile(`Coho`,.75, na.rm = TRUE),
+            per90 = quantile(`Coho`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Coho` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Coho`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Coho, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Coho,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Coho",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,1000)
+
+```
+
+```{r daily cumulative boxplot babine coho}
+#| label: fig-daily-cumulative-boxplot-babco
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Coho') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`coho`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Coho") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(Coho,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(Coho,.1, na.rm = TRUE), 
+            per25 = quantile(Coho,.25, na.rm = TRUE), 
+            per50 = quantile(Coho,.50, na.rm = TRUE),
+            per75 = quantile(Coho,.75, na.rm = TRUE),
+            per90 = quantile(Coho,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Coho",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,40000)
+
+```
+
+```{r}
+#| label: fig-plots-babco
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for coho salmon through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the coho salmon run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+### Babine Steelhead
+
+```{r daily boxplot babine steelhead}
+#| label: fig-daily-boxplot-babst
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet='Steelhead') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine") %>%
+  select(Date,"2024"=`steelhead`) %>% mutate(Date = as.Date(Date))
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily<-daily.index%>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Steelhead") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Index=replace_na(`Steelhead`,0))
+
+gg.daily.quants<-gg.daily %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Steelhead`,.1, na.rm = TRUE), 
+            per25 = quantile(`Steelhead`,.25, na.rm = TRUE), 
+            per50 = quantile(`Steelhead`,.50, na.rm = TRUE),
+            per75 = quantile(`Steelhead`,.75, na.rm = TRUE),
+            per90 = quantile(`Steelhead`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(`Steelhead` = (Index)) %>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+  
+dailyplot_bab <- ggplot(gg.daily,aes(x=Date, y=`Steelhead`,group=Date))+
+  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Steelhead, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Steelhead,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Daily Steelhead",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom") +
+  ylim(0,40)
+
+```
+
+```{r daily cumulative boxplot babine steelhead}
+#| label: fig-daily-cumulative-boxplot-babst
+#| echo: false
+#| include: true
+#| message: false
+#| warning: false
+#| fig-height: 5
+
+# Read the CSV file
+
+daily<-read_excel("data/babine fence counts 1946-2024 compiled 20240717.xlsx", sheet='Steelhead') %>% select(-Month,-Day)
+
+cn2024<-read_excel("data/babine data 2024.xlsx",sheet="Babine")%>%
+  select(Date,"2024"=`steelhead`)
+
+daily.index<-left_join(daily,cn2024,by="Date") %>%
+  mutate(Date=as.Date(Date))
+
+gg.daily.cum <- daily.index %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer("1956":"2024",names_to="Year",values_to="Steelhead") %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(`Steelhead`,0)))
+  
+gg.daily.cum.quants<-gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(per10 = quantile(`Steelhead`,.1, na.rm = TRUE), 
+            per25 = quantile(`Steelhead`,.25, na.rm = TRUE), 
+            per50 = quantile(`Steelhead`,.50, na.rm = TRUE),
+            per75 = quantile(`Steelhead`,.75, na.rm = TRUE),
+            per90 = quantile(`Steelhead`,.9, na.rm = TRUE))%>%
+  select(Date,per10,per25,per50,per75,per90)%>%
+  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  group_by(Q)%>%
+  mutate(cum_sum=cumsum(replace_na(Index,0)))%>%
+  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+                          Q=="per25"|Q=="per75"~"25/75th",
+                          Q=="per50"~"Median"))
+
+years_out<-c("2008","2009","2010")
+gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  
+  
+cumplot_bab <- ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
+  geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+  geom_line(data = gg.daily.cum %>% filter(Year == 2024&Date<=today), aes(x = Date, y = cum_sum, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily.cum %>% filter(Year <2024), aes(x = Date, y = cum_sum,group=Year),
+            linewidth = .5,alpha=.1)+
+  scale_color_manual(values=c("grey50","purple","grey75","black"))+
+  labs(y="Cumulative Steelhead",color="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  ylim(0,500)
+
+```
+
+```{r}
+#| label: fig-plots-babst
+#| echo: false
+#| results: asis
+#| message: false
+#| warning: false
+#| include: true
+#| fig-cap: "Top panel: Daily run for steelhead through the Babine fence (uncorrected) from 1946-2024. 2024 run is shown in purple. Bottom panel: Cumulative daily index of the steelhead run through the Babine fence (uncorrected) from 1946-2024. The 2024 run estimate is shown by the purple line. Individual years are shown in light grey in the background. The p50 line is shown as a dark black dashed line, The p25 and p75 lines are lighter grey dashed lines. The p10 and p90 lines are shown in the light grey dashed lines. "
+#| fig-height: 8
+
+ggarrange(dailyplot_bab,cumplot_bab,align="v",ncol=1,common.legend = TRUE)
+
+```
+
+# Kitwanga Fence
+
+-   The Kitwanga fence was operational and counting as of July 10.
+
+-   Details on the Kitwanga fence counts can be found at the [Gitanyow Fisheries Authority website](http://www.gitanyowfisheries.com/).
+
+```{r}
+#| label: kitwanga
+#| echo: false
+#| warning: false
+#| include: false
+```
+
+# Fisheries
+
+## Area 4 Fishery Openings
+
+Fisheries notices for Skeena salmon are shown below. These are a list of the relevant fisheries notices for Skeena salmon but are not an exhaustive list of current regulations. All fisheries notices can be found on the [DFO Fisheries Notice website](https://notices.dfo-mpo.gc.ca/fns-sap/index-eng.cfm).
+
+```{r table of skeena fisheries openings, echo=FALSE, warning=FALSE, include=TRUE}
+
+openings<-read_excel("data/fisheries openings 2024.xlsx", sheet = "Skeena")
+
+kable(openings,caption="Fisheries openings in the Skeena area for 2024")%>%
+kable_styling(latex_options = "HOLD_position")
+
+
+```
+
+## Commercial Fisheries
+
+### Area C Gillnet and Area A Seine
+
+The following section shows the harvest control rule for commercial sockeye fisheries in the Skeena, the estimated TAC for various run-timings, and the available information on catches in the Area 4 commercial marine gillnet and seine fisheries targeting sockeye at the mouth of the Skeena River (generally sub-areas 4-12 and 4-15). Information should be considered preliminary untile reviewed by DFO staff in the post-season.
+
+```{r catch prep and figures}
+#| echo: false
+#| warning: false
+#| include: true
+
+hcr<-data.frame(TRTC=c(0,1050000,2000000,4000000,5000000),
+                HR=c(0,0,.2,.4,.4))
+
+p1<-ggplot(hcr,aes(x=TRTC/10^6,y=HR))+
+  geom_line(size=1.1)+
+  geom_vline(xintercept=average/10^6,linetype="dashed",col="#E41A1C")+
+  geom_vline(xintercept=late/10^6,linetype="dashed",col="#4DAF4A")+
+  geom_vline(xintercept=early/10^6,linetype="dashed",col="#377EB8")+
+  theme_bw()+
+  ylim(0,1)+
+  labs(y="Canadian Harvest Rate",x="Skeena sockeye return to Canada (millions)")
+
+data<-data%>%rowwise()%>%mutate("TAC-average"=case_when(average<1050000~0,
+                          average>=1050000&average<2000000~((average-1050000)/(2000000-1050000)*(.2-.0)+0)*average,
+                          average>=2000000&average<4000000~((average-2000000)/(4000000-2000000)*(.4-.2)+.2)*average,
+                          average>=4000000~.4*average),
+                          "TAC-late"=case_when(late<1050000~0,
+                          late>=1050000&late<2000000~((late-1050000)/(2000000-1050000)*(.2-.0)+0)*late,
+                          late>=2000000&late<4000000~((late-2000000)/(4000000-2000000)*(.4-.2)+.2)*late,
+                          late>=4000000~.4*late),
+                          "TAC-early"=case_when(early<1050000~0,
+                          early>=1050000&early<2000000~((early-1050000)/(2000000-1050000)*(.2-.0)+0)*early,
+                          early>=2000000&early<4000000~((early-2000000)/(4000000-2000000)*(.4-.2)+.2)*early,
+                          early>=4000000~.4*early))
+
+ggcatch<-data%>%select(Date,`Cumulative Catch 2023`=cumcatch,
+                       `TAC-average`,`TAC-early`,`TAC-late`)%>%
+  pivot_longer(2:5,names_to="Catch Type",values_to="Catch")%>%
+  filter(Date>"2024-07-01"&Date<"2024-09-01")
+
+
+p2<-ggplot(ggcatch,aes(x=Date,y=Catch,color=`Catch Type`,size=`Catch Type`,linetype=`Catch Type`))+
+  geom_line(size=1.1)+
+  scale_color_manual(values=c("black","#E41A1C","#377EB8","#4DAF4A"))+
+  scale_size_manual(values=c(2,1,1,1))+
+  scale_linetype_manual(values=c("solid","dashed","dashed","dashed"))+
+  theme_bw()+
+  labs(y="Number of Sockeye")+
+  theme(legend.position="top")
+
+catch<-data%>%select(Date,Gillnet=gncatch,Seine=sncatch)%>%
+  pivot_longer(2:3,names_to="Gear",values_to="Catch")%>%
+    filter(Date>"2024-07-01"&Date<"2024-09-01")
+
+p3<-ggplot(catch,aes(x=Date,y=Catch,fill=Gear))+
+  geom_col()+
+  scale_fill_brewer(palette="Set1")+
+  theme_bw()+
+  theme(legend.position="top")+
+expand_limits(x=c(as.Date("2024-07-01"),as.Date("2024-09-01")))
+
+cpue<-data%>%select(Date,gncatch,sncatch,gneffort,sneffort)%>%
+  mutate(Gillnet=gncatch/gneffort,Seine=sncatch/sneffort)%>%
+  select(Date,Gillnet,Seine)%>%
+  pivot_longer(2:3,names_to="Gear",values_to="CPUE")%>%
+  filter(Date>"2024-07-01"&Date<"2024-09-01")
+
+p4<-ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
+  geom_line()+geom_point()+
+  scale_color_brewer(palette="Set1")+
+  theme_bw()+
+  theme(legend.position = "top")+
+  labs(y="Sockeye CPUE")+
+  expand_limits(y=0)+
+expand_limits(x=c(as.Date("2024-07-01"),as.Date("2024-09-01")))
+
+
+```
+
+```{r}
+#| label: fig-skeena
+#| echo: false
+#| warning: false
+#| fig-cap: "Top panel: The Skeena sockeye harvest control rule based on TRTC. Bottom panel: Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."
+#| include: true
+#| fig-height: 6
+
+ggarrange(p1,p2,ncol=1,align="v")
+
+```
+
+```{r}
+#| label: fig-gill
+#| echo: false
+#| warning: false
+#| fig-cap: "Top panel: Area 4 gillnet and seine sockeye catch. Bottom panel: CPUE of gillnet and seine based on daily catch/daily effort. Note that some values are preliminary."
+#| include: true
+#| fig-height: 6
+
+ggarrange(p3,p4,ncol=1,align="v")
+```
+
+### First Nations Demonstration and Economic Opportunity
+
+First Nations CSAF demonstration fisheries opened on July 16 in 2024. The catch associated with each demonstration fishery is determined using the weekly TAC. In 2024, the CTAC approach is being implemented, which means that the catch allocation of the demonstration fishery is no longer directly linked to what the commercial marine fishery catches each week. Catch by Nation/Nation group and gear type are shown below.
+
+```{r FNs demo fishery catches prep}
+#| echo: false
+#| warning: false
+#| include: true
+#| fig-height: 4
+
+demo.data<-read_excel("data/FNs catch 2024.xlsx",sheet="demo catches")
+demo.data$date<-as.Date(demo.data$date)
+
+demo.totals<-demo.data%>%group_by(Nation=nation)%>%summarise("Total Demo Sockeye Catch"=sum(pieces))
+
+total.demo.catch=sum(demo.totals$`Total Demo Sockeye Catch`)
+
+total.row<-tibble(Nation="Total","Total Demo Sockeye Catch"=total.demo.catch)
+
+demo.table<-rbind(demo.totals,total.row)
+```
+
+```{r FNs demo fishery catch table}
+#| echo: false
+#| warning: false
+#| include: true
+#| fig-height: 4
+#| 
+kable(demo.table,caption="Preliminary Area 4 First Nations demo catches of sockeye (not complete numbers).")%>%
+  row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
+```
+
+```{r FNs demo fishery catch figure,echo=FALSE,message=FALSE,warning=FALSE,include=TRUE}
+
+#| echo: false
+#| fig-cap: "Demonstration fishery catch of sockeye in Area 4 by Nation (preliminary estimates and not complete)."
+#| warning: false
+#| include: true
+#| fig-height: 4
+
+  ggplot(demo.data,aes(x=date,y=pieces,fill=nation))+
+  geom_col()+
+  labs(y="Number of Sockeye",x="Date",fill="Nation")+
+  theme_bw()+
+  xlim(c(as.Date("2024-07-01"),as.Date("2024-09-01")))
+
+```
+
+## Recreational Fisheries
+
+Recreational fisheries notices for the Skeena are shown in the Fisheries Openings Table above. Current regulations for Region 6 (Skeena) can be found on [DFO's website here](https://www.pac.dfo-mpo.gc.ca/fm-gp/rec/fresh-douce/region6-eng.html).
+
+The following table shows the updated management guidelines for recreational fisheries targeting sockeye in the Skeena watershed as per the 2024-25 North Coast Salmon IFMP.
+
+```{r table of skeena sockeye rec fishery guidelines, echo=FALSE, warning=FALSE, include=TRUE}
+options(knitr.kable.NA = '')
+guidelines<-read_excel("data/guidelines_rec_sockeye.xlsx", sheet = "Sheet1")
+
+kable(guidelines,booktabs=TRUE, caption="Guidelines for management actions for recreational sockeye fisheries in the Skeena Watershed")%>%
+add_header_above(c("Estimated Abundance"=1, "Daily Limits"=3)) %>%
+kable_styling(latex_options = "HOLD_position")
+
+```
+
+# Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2024 data
+
+```{r tyee escapement by year prep}
+#| echo: false
+#| include: false
+#| warning: false
+#| message: false
+
+# 2024 tyee data
+data<-read_excel("data/Tyee data 2024.xlsx",sheet="Tyee") %>%
+  mutate(Date = as.Date(Date))
+
+# all years tyee data:
+daily <- read_excel("data/Tyee data 2024.xlsx",sheet="tyee daily") %>%
+  pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Date = as.Date(Date)) %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(Sockeye,0)))
+```
+
+```{r daily escapement by year since 2000 vs 2024}
+#| label: fig-tyee-esc-years
+#| include: true
+#| echo: false
+#| warning: false
+#| fig-cap: "Tyee 2024 daily sockeye escapement vs daily escapement each year between 2000-2023."
+#| fig-height: 8
+
+# 2024 daily
+daily_tyee_years <- daily %>%
+filter(Year >= 2000) %>%
+ggplot(aes(x = Date, y = Sockeye, color = "daily sockeye escapement")) + geom_line() + 
+geom_line(data = data, aes(x = Date, y = esctyee, color = "2024 daily sockeye escapement")) + # line for 2024 data
+facet_wrap(~Year, scales = "free_y") +
+theme_minimal()+
+theme(legend.position = "top") +
+scale_color_brewer(palette = "Set1", name = "") +
+ylab("Sockeye Escapement")
+
+daily_tyee_years
+
+```
+
+```{r cumulative escapement by year vs 2024}
+#| label: fig-tyee-cum-years
+#| include: true
+#| echo: false
+#| warning: false
+#| fig-cap: "Tyee 2024 cumulative sockeye escapement vs cumulative escapement each year between 2000-2023."
+#| fig-height: 8
+
+# 2024 cumulative
+cum_tyee_years <- daily %>%
+filter(Year >= 2000) %>%
+ggplot(aes(x = Date, y = cum_sum, color = "cumulative sockeye escapement")) + geom_line() +
+geom_line(data = data, aes(x = Date, y = cumtyee, color = "2024 cumulative sockeye escapement")) +
+facet_wrap(~Year,scales="free_y") +
+theme_minimal()+
+theme(legend.position = "top") +
+scale_color_brewer(palette = "Set1", name = "")+
+ylab("Cumulative Sockeye Escapement")
+
+cum_tyee_years
+```
+
+# Appendix B - Catch of pink, chum, coho, chinook and steelhead
+
+```{r}
+#| label: fig-other
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Number of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks)."
+#| include: true
+#| fig-height: 7
+
+othercatch<-read_excel("data/commercial catch 2024.xlsx",sheet="catch")
+
+#oc2<-othercatch%>%pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
+#  mutate(cpue=Catch/effort)%>%
+#  filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%
+#  mutate(type=ifelse(Species%in%c("Chinook (Released)","Chum #(Released)","Steelhead (Released)","Coho #(Released)"),"Released","Kept"))%>%
+#  mutate(sp=case_when(Species=="Chinook (Released)"~"Chinook",
+#                      Species=="Coho (Released)"~"Coho",
+#                      Species=="Pink (Kept)"~"Pink Kept",
+#                      Species=="Pink (Released)"~"Pink Rel",
+#                      Species=="Chum (Released)"~"Chum",
+#                      Species=="Steelhead #(Released)"~"Steelhead",
+#                      Species=="Sockeye (Kept)"~"Sockeye"))
+
+oc2<-othercatch%>%pivot_longer(4:14,names_to="Species",values_to="Catch")%>%
+  mutate(cpue=Catch/effort)%>%
+  filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%mutate(dis=ifelse(Species%in%c("Chinook (Released)","Chum (Released)","Steelhead (Released)","Coho (Released)","Sockeye (Released)","Pink (Released)"),"Released","Kept"))%>%
+  mutate(sp=case_when(Species=="Chinook (Released)"~"Chinook",
+Species=="Chinook (Kept)"~"Chinook",
+                      Species=="Coho (Released)"~"Coho",
+                      Species=="Coho (Kept)"~"Coho",
+                      Species=="Pink (Kept)"~"Pink",
+                      Species=="Pink (Released)"~"Pink",
+Species=="Chum (Kept)"~"Chum",
+                      Species=="Chum (Released)"~"Chum",
+                      Species=="Steelhead (Released)"~"Steelhead",
+                      Species=="Sockeye (Kept)"~"Sockeye",
+Species=="Sockeye (Released)"~"Sockeye"))
+
+#ggplot(oc2,aes(x=Date,y=Catch,color=gear))+
+#  geom_line()+geom_point()+
+#  theme_classic()+
+#   grids()+
+#facet_wrap(~Species,ncol=2,scales="free_y")+
+#  theme(legend.position="top")+
+#  expand_limits(y=0)
+
+ggplot(oc2,aes(x=Date,y=Catch,color=gear))+
+  geom_line()+geom_point()+
+  theme_bw()+
+  grids()+
+  #facet_wrap(~Species,ncol=2,scales="free_y")+
+  facet_grid(sp~dis,scales="free_y")+
+  theme(legend.position="top")+
+  expand_limits(y=0)
+
+```
+
+```{r}
+#| label: fig-other_cpue
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "CPUE of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks) by gillnets."
+#| include: true
+#| fig-height: 7
+
+gncpue<-oc2%>%filter(gear=="gillnet")
+
+ggplot(gncpue,aes(x=Date,y=cpue))+
+  geom_line()+geom_point()+
+  theme_bw()+
+  grids()+
+  #facet_wrap(~Species,ncol=2,scales="free_y")+
+  facet_grid(sp~dis,scales="free_y")+
+  theme(legend.position="top")
+```
+
+```{r}
+#| label: fig-seine
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "CPUE of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks) by seines."
+#| include: true
+#| fig-height: 7
+
+sncpue<-oc2%>%filter(gear=="seine")
+
+ggplot(sncpue,aes(x=Date,y=cpue))+
+  geom_line()+geom_point()+
+  theme_bw()+
+  grids()+
+  #facet_wrap(~Species,ncol=2,scales="free_y")+
+  facet_grid(sp~dis,scales="free_y")+
+  theme(legend.position="top")
+```
+
+```{=tex}
+\FloatBarrier
+\newpage
+```
+```{r}
+#| label: fig-area4
+#| echo: false
+#| message: false
+#| warning: false
+#| include: true
+#| fig-height: 6
+
+oc.total<-oc2%>%group_by(gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
+
+oc.table<-oc.total%>%pivot_wider(names_from=c("gear","dis"),values_from="total")
+
+kable(oc.table,caption=paste0("Total catch (kept/released) of coho, chum, chinook, sockeye and pink salmon, and steelhead in the commercial marine Area C and A gillent and seine fisheries to ",tyee.date,"."))
+
+#ggplot(oc.total,aes(x=Species,y=total,fill=gear))+
+ # geom_col()+
+#  scale_color_brewer(palette="Set1")+
+#  geom_text(aes(label=total),vjust=-.3,color="black")+
+#  facet_wrap(~dis,ncol=1,scales="free_y")+
+#  theme_bw()+
+ # labs(y="Total Catch",x="Species")+
+#  scale_y_continuous(expand=c(.1,0))+
+#  theme(strip.background = element_blank())
+
+```
+
+# Appendix C - Population specific run-timing through Tyee
+
+Notes:
+
+-   Based on NBRR update data (2000-2014) provided by Karl English July 2022. Will add in the newer data and some comparisons.
+
+-   These are average run-timings.
+
+-   Explorations on the differences between the average and ANNUAL run-timing standard deviations are underway for stocks with appropriate sample size.
+
+```{r}
+#| echo: false
+#| include: false
+#| warning: false
+#| message: false
+
+rt<-read_excel("data/rt karl.xlsx",sheet="Sheet1")
+
+n=10000
+
+rtm<-data.frame()
+
+for (i in 1:nrow(rt)){
+  u<-rt$MeanJulian[i]
+  sd<-rt$SD[i]
+  
+  g<-data.frame(stock=rt$Stock[i],dev=rnorm(n,rt$MeanJulian[i],rt$SD[i]))
+  rtm<-rbind(rtm,g)
+  
+}
+
+#as.numeric(format(as.Date("2022-08-07"), "%j"))
+
+days<-format(seq(as.Date("2022-06-01"),as.Date("2022-09-15"),10),"%b-%d")
+
+rtm2<-rtm%>%filter(dev>=152&dev<=258)%>%group_by(stock)%>%mutate(u=mean(dev))
+
+```
+
+```{r}
+#| label: fig-boxp
+#| echo: false
+#| fig-cap: "Boxplots of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work. The filled area of the box represents 50% of the run."
+#| warning: false
+#| message: false
+#| fig-height: 8
+
+ggplot(rtm2,aes(x=dev,y=reorder(stock,dev,FUN=median),fill=stock))+
+  geom_boxplot()+
+  theme_classic()+grids()+
+  scale_y_discrete(limits=rev)+
+  guides(fill="none")+
+  labs(y="Stock",x="Date",title="Stock run-timing at Tyee based on 2000-2014 GSI",subtitle="NBRR data provided by Karl English July 2022")+
+ scale_x_continuous(breaks=seq(152,258,10),labels=days)+
+  theme(axis.text.x = element_text(angle=90))
+
+```
+
+```{r}
+#| label: fig-hist
+#| echo: false
+#| fig-cap: "Histograms of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work."
+#| warning: false
+#| message: false
+#| fig-height: 8
+
+ggplot(rtm2,aes(x=dev))+
+  geom_histogram(aes(fill=stock),binwidth = 5,alpha=.3)+
+  facet_grid(reorder(stock,dev,FUN=median)~.,scales="free_y",switch="y")+
+  theme_classic()+grids()+
+  theme(strip.text.y.left = element_text(angle=0,size=8),
+        strip.placement="outside",
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        strip.background = element_blank(),
+        axis.text.x = element_text(angle=90))+
+  labs(y="Stock",x="Date",title="Stock run-timing at Tyee based on 2000-2014 GSI",subtitle="NBRR data provided by Karl English July 2022")+
+  geom_vline(aes(xintercept=u,color=stock), size=1,alpha=.5)+
+  scale_x_continuous(breaks=seq(152,258,10),labels=days)+
+  guides(fill="none",color="none")+
+  annotate("rect", xmin = 196, xmax = 219, ymin = 0, ymax = Inf,alpha = .2)
+  
+```
+
+```{r}
+#| label: fig-dens
+#| echo: false
+#| fig-cap: "Density plot of stock specific run-timing through Tyee. Based on 2000-2014 data provided by Karl English from updated NBRR work."
+#| warning: false
+#| message: false
+#| fig-height: 8
+
+ggplot(rtm2,aes(x=dev),color=stock)+
+  geom_density(aes(fill=stock),alpha=.3)+
+  #scale_fill_brewer(palette="Set1")+
+  facet_wrap(~reorder(stock,dev,FUN=median),scales="free_y",ncol=1,strip.position="left")+
+  theme_classic()+grids()+
+   theme(strip.text.y.left = element_text(angle=0,size=8),
+        strip.placement="outside",
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.ticks.x=element_blank(),
+        strip.background = element_blank(),
+        axis.text.x = element_text(angle=90),
+        plot.caption.position="plot",
+        plot.caption=element_text(hjust=.5))+
+  geom_vline(aes(xintercept=u,color=stock), size=1,alpha=.5)+
+  labs(y="Stock",x="Date",caption="Stock run-timing at Tyee based on average run-timing (2000-2014) plus 3 weeks.\nVertical lines show the mean for each stock, with the 2022 harvest window\nshown by the grey shaded box.\nData from Karl English from NBRR update provided July 2022.")+
+  scale_x_continuous(breaks=seq(152,258,10),labels=days)+
+  guides(fill="none",color="none")+
+   annotate("rect", xmin = 196, xmax = 219, ymin = 0, ymax = Inf,alpha = .2)
+
+#ggsave("Tyee stock run timing.png",dpi=600,height=8,width=7)
+```
+
+```{r}
+#| include: false
+
+babrt<-rtm%>%filter(stock%in%c("Babine W Early","Babine W Middle","Babine W Late","Babine Pinkut","Babine Fulton"))%>%
+  mutate(fencert=dev+21)
+
+days<-format(seq(as.Date("2022-07-01"),as.Date("2022-10-07"),7),"%b-%d")
+as.numeric(format(as.Date("2022-10-07"), "%j"))
+
+babrt2<-babrt%>%filter(fencert>=182&fencert<=280)%>%group_by(stock)%>%mutate(med=mean(fencert))
+
+babmed<-babrt%>%group_by(stock)%>%summarise(u=mean(fencert))
+
+ggplot(babrt2,aes(x=fencert))+
+  geom_density(aes(fill=stock),alpha=.3)+
+  scale_fill_brewer(palette="Set1")+
+  facet_wrap(~reorder(stock,dev,FUN=median),scales="free_y",ncol=1,strip.position="left")+
+  theme_classic()+grids()+
+  theme(strip.text.y.left = element_text(angle=0,size=8),
+        strip.placement="outside",
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.ticks.x=element_blank(),
+        strip.background = element_blank(),
+        axis.text.x = element_text(angle=90),
+        plot.caption.position="plot",
+        plot.caption=element_text(hjust=0))+
+  geom_vline(aes(xintercept =med,color=stock), size=1,alpha=.5)+
+  scale_color_brewer(palette="Set1")+
+  labs(y="Stock",x="Date",
+  caption="Stock run-timing at Babine fence based on average Tyee run-timing (2000-2014) plus 3 weeks.\nData from Karl English from NBRR update provied July 2022.")+
+  scale_x_continuous(breaks=seq(182,280,7),labels=days)+
+  guides(fill="none",color="none")
+
+#ggsave("Babine run timing for Donna.png",dpi=600,height=8,width=7)
+```
