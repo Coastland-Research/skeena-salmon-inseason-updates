@@ -57,8 +57,8 @@ options(scipen=10000)
 
 ## Pre-season forecast {#pre-season-forecast}
 
-The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges from 1.3 to 5.8 million (90% confidence range) with a point estimate (p50) of 2.7 million. The forecast for 2025 includes a LOW/HIGH/AVG? return of age-4 sockeye, and an LOW/HIGH/AVG? return of age-5 sockeye.
-    
+The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges from 1.3 to 5.8 million (90% confidence range) with a point estimate (p50) of 2.7 million. 
+
 <figure>
 
 <img src="/images/2025_sk_forecast.png" title="2025 Sockeye Total Return Forecast" alt="2025 Sockeye Total Return Forecast" width="700"/>
