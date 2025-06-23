@@ -5,83 +5,81 @@ format: html
 editor: visual
 editor_options: 
   chunk_output_type: console
+execute: 
+  echo: FALSE
+  warning: FALSE
+  messages: FALSE
+  
 ---
 
-```{r load libraries, include=FALSE}
+```{r load libraries}
 library(tidyverse)
 library(data.table)
 library(readxl)
 library(knitr)
 library(ggpubr)
 library(kableExtra)
+library(ggpubr)
 
 options(scipen=10000)
 ```
 
-```{r load 2025 data and format, include=FALSE}
-# data<-read_excel("data/Tyee data 2025.xlsx",sheet="Tyee") %>%
-#   mutate(Date = as.Date(Date))
-# 
-# com_catch <- read_excel("data/commercial catch 2025", sheet = "catch") %>%
-#   pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
-#   mutate(cpue=Catch/effort)%>%
-#   #filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%
-#   mutate(type=ifelse(Species%in%c("Chinook (Released)","Chum (Released)","Steelhead (Released)","Coho (Released)"),"Released","Kept"))%>%
-#   mutate(sp=case_when(Species=="Chinook (Released)"~"Chinook",
-#                       Species=="Coho (Released)"~"Coho",
-#                       Species=="Pink (Kept)"~"Pink",
-#                       Species=="Pink (Released)"~"Pink",
-#                       Species=="Chum (Released)"~"Chum",
-#                       Species=="Steelhead (Released)"~"Steelhead",
-#                       Species=="Sockeye (Kept)"~"Sockeye"),
-#          dis=case_when(Species=="Chinook (Released)"~"Released",
-#                       Species=="Coho (Released)"~"Released",
-#                       Species=="Pink (Kept)"~"Kept",
-#                       Species=="Pink (Released)"~"Released",
-#                       Species=="Chum (Released)"~"Released",
-#                       Species=="Steelhead (Released)"~"Released",
-#                       Species=="Sockeye (Kept)"~"Kept"))
-# 
-# fn_catch <- read_excel("data/FNs catch 2025.xlsx", sheet = "demo catches")
+```{r source files}
+#load functions
+source("scripts/plot_index_figures.R")
+
+#load wrappers
+source("scripts/index_figures.R")
+
+
+
 ```
 
 ```{r set days, echo=FALSE}
-# tyee.day<-as.Date("2024-09-22")
-# tyee.date<-"September 22"
+tyee.day<-as.Date("2025-06-22")
+tyee.date<-"June 22"
+month.day<-"6-22"
 # fence.day<-as.Date("2024-09-22")
 # fence.date<-"September 22"
-# today<-as.Date("2024-09-22")
+today<-as.Date("2025-06-23")
 ```
 
 # Summary
 
-## Pre-season forecast {#pre-season-forecast}
+-   Pre-season forecast
 
-The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges from 1.3 to 5.8 million (90% confidence range) with a point estimate (p50) of 2.7 million.
-
-<figure>
-
-<img src="/images/2025_sk_forecast.png" title="2025 Sockeye Total Return Forecast" alt="2025 Sockeye Total Return Forecast" width="700"/>
-
-<figcaption>2025 Sockeye Total Return Forecast</figcaption>
-
-</figure>
+    -   The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges from 1.3 to 5.8 million (90% confidence range) with a point estimate (p50) of 2.7 million
 
 -   Tyee Test Fishery
 
--   Babine fence and large sockeye
+    -   The Tyee test fishery started operations on Jun 10.
 
--   Babine vs Tyee comparison
+-   Babine 
 
--   Babine jack sockeye
+    -   The Babine fence typically starts operations in mid-July. This section will be updated once Babine counts start.
 
--   Babine other salmon
+    -   Babine vs Tyee comparison
+
+    -   Babine jack sockeye
+
+    -   Babine other salmon
 
 -   Kitwanga Fence
 
+    -   The Kitwanga fence typically starts operations by July 10.
+    
+-   First Nations Food Fisheries
+
+    -   First Nations food fisheries have started on the coast and in the approach waters.
+
 -   Commercial Fisheries
 
+    -   Commercial fisheries targetting sockeye have not started yet, but are anticipated given the pre-season sockeye forecast.
+
 -   Recreational Fisheries
+
+    -   Recreational fisheries for sockeye have not started
+    -   Early recreational fisheries for Chinook occured in Areas 3/4 however effort was lower in 2025 than in previous years, bag limits were reduced, and as of June 22 there is non-retention of Chinook in the Area 3/4 fishery.
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
@@ -89,80 +87,72 @@ The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges fr
 
 -   Appendix C includes information on run-timing of specific Skeena Conservation Units/stocks.
 
-# Tyee Test Fishery
-
-## Tide information at Port Edward
+# Pre-Season Forecasts
 
 ## Sockeye
 
-The section below shows various summaries of the sockeye run through Tyee to date, often in comparison with historical data. Data is uploaded from the DFO Tyee test fishery website (index and expanded estimates) almost daily.
+The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges from 1.3 to 5.8 million (90% confidence range) with a point estimate (p50) of 2.7 million.
+
+<figure>
+
+<img src="/images/2025_sk_forecast.png" title="2025 Sockeye Total Return Forecast" alt="2025 Sockeye Total Return Forecast" width="700"/>
+
+<figcaption>2025 Sockeye Total Return Forecast. Source: DFO 2024 Post Season Review Sockeye Presentation.</figcaption>
+
+</figure>
+
+## Chinook
+
+-   The pre-season forecast for Chinook is ~ 26,000 large Chinook.
+
+# Tide information at Port Edward
+
+# Tyee Test Fishery-Index and Escapement Estimates
+
+The section below shows index data (and escapement data for sockeye) from 2025 compared to historical index values through Tyee. Data is uploaded from the DFO Tyee test fishery website (index and expanded estimates) almost daily.
 
 The DFO Tyee test fishery website can be found here: [Tyee test fishery website](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/skeenatyee-eng.html)
 
-### In-Season TRTC Estimates
+## Sockeye Salmon
 
-## Chinook Salmon
+The 2025 sockeye index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-sockeye) in the text.
 
-```{r daily boxplot chinook}
-#| label: fig-daily-boxplot-cn
-#| include: true
-#| echo: false
-#| message: false
-#| warning: false
-#| fig-height: 5
-
-source(index_figures)
+```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for sockeye salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
+#| label: fig-index-sockeye
 
 
+daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
 
+current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+  select(Date,"2025"=`large sockeye`)
 
-daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
-  select(Date,"2024"=`large chinook`)
-
-daily.index<-left_join(daily,cn2024,by="Date")%>%
-  mutate(Date=as.Date(Date))
-
-gg.daily<-daily.index%>%
-  mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1956":"2024",names_to="Year",values_to="Chinook") %>%
-  mutate(Year=as.numeric(Year)) %>%
-  mutate(Index=replace_na(Chinook,0))
-
-gg.daily.quants<-gg.daily %>%
-  group_by(Date) %>%
-  summarise(per10 = quantile(Chinook,.1, na.rm = TRUE), 
-            per25 = quantile(Chinook,.25, na.rm = TRUE), 
-            per50 = quantile(Chinook,.50, na.rm = TRUE),
-            per75 = quantile(Chinook,.75, na.rm = TRUE),
-            per90 = quantile(Chinook,.9, na.rm = TRUE))%>%
-  select(Date,per10,per25,per50,per75,per90)%>%
-  pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
-  group_by(Q)%>%
-  mutate(Chinook=(Index))%>%
-  mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
-                          Q=="per25"|Q=="per75"~"25/75th",
-                          Q=="per50"~"Median"))
-
-years_out<-c("2008","2009","2010")
-gg.daily<-gg.daily%>%filter(!Year%in%years_out)
-
-dailyplot_cn <- ggplot(gg.daily,aes(x=Date, y=Chinook,group=Date))+
-  geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
-  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Chinook, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
-  geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Chinook,group=Year),
-            linewidth = .5,alpha=.1)+
-  scale_color_manual(values=c("grey75","purple","grey50","black"))+
-  labs(y="Daily Index",color="")+
-  theme_bw()+
-  theme(legend.position = "bottom")+
-  ylim(0,10)
-
+make.index.figures(daily,current)
 
 ```
 
 
+## Chinook Salmon
+
+The 2025 Chinook index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-chinook) in the text.
+
+```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for Chinook salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
+#| label: fig-index-chinook
+
+daily<-fread("data/common/tyee_daily_indices_chinook_1956-2024.csv")
+
+current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+  select(Date,"2025"=`large chinook`)
+
+make.index.figures(daily,current)
+
+```
+
 ## Chum Salmon
+
+```{r}
+
+```
+
 
 ## Pink Salmon
 
