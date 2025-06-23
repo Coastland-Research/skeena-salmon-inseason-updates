@@ -19,10 +19,10 @@ options(scipen=10000)
 ```
 
 ```{r load data and format, include=FALSE}
-data<-read_excel("data/Tyee data 2024.xlsx",sheet="Tyee") %>%
+data<-read_excel("data/2024_archive/Tyee data 2024.xlsx",sheet="Tyee") %>%
   mutate(Date = as.Date(Date))
 
-com_catch <- read_excel("data/commercial catch 2024.xlsx", sheet = "catch") %>%
+com_catch <- read_excel("data/2024_archive/commercial catch 2024.xlsx", sheet = "catch") %>%
   pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
   mutate(cpue=Catch/effort)%>%
   filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%
@@ -42,7 +42,7 @@ com_catch <- read_excel("data/commercial catch 2024.xlsx", sheet = "catch") %>%
                       Species=="Steelhead (Released)"~"Released",
                       Species=="Sockeye (Kept)"~"Kept"))
 
-fn_catch <- read_excel("data/FNs catch 2024.xlsx", sheet = "demo catches")
+fn_catch <- read_excel("data/2024_archive/FNs catch 2024.xlsx", sheet = "demo catches")
 ```
 
 ```{r set days, echo=FALSE}
@@ -491,8 +491,8 @@ ggplot(tyeemodel,aes(x=Date,y=`Number of Sockeye`/10^6,color=Timing))+
 #| warning: false
 #| fig-height: 5
 
-daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
+daily<-read_excel("data/2024_archive/tyee_indices_56_2023_allspecies.xlsx", sheet = "Large Chinook")%>%select(-`month-day`)
+cn2024<-read_excel("data/2024_archive/Tyee data 2024.xlsx",sheet="index")%>%
   select(Date,"2024"=`large chinook`)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
@@ -869,9 +869,9 @@ ggarrange(dailyplot_p_e,cumplot_p_e,align="v",ncol=1,common.legend = TRUE)
 #| warning: false
 #| fig-height: 5
 
-daily<-read_excel("data/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
-cn2024<-read_excel("data/Tyee data 2024.xlsx",sheet="index")%>%
-  select(Date,"2024"=coho)
+daily<-read_excel("data/2024_archive/tyee_indices_56_2023_allspecies.xlsx", sheet = "Coho")%>%select(-MONTH,-DAY)
+cn2024<-read_excel("data/2024_archive/Tyee data 2024.xlsx",sheet="index")%>%
+  select(Date,"2024"= coho)
 
 daily.index<-left_join(daily,cn2024,by="Date")%>%
   mutate(Date=as.Date(Date))
@@ -903,7 +903,7 @@ gg.daily.quants<-gg.daily %>%
   
 dailyplot_co <- ggplot(gg.daily,aes(x=Date, y=Coho,group=Date))+
   geom_line(data=gg.daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
-  geom_line(data = gg.daily %>% filter(Year == 2024&Date<=today), aes(x = Date, y = Coho, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
+  geom_line(data = gg.daily %>% filter(Year == 2024&Date<="2024-09-01"), aes(x = Date, y = Coho, group = 1, color = "2024 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = gg.daily %>% filter(Year <2024), aes(x = Date, y = Coho,group=Year),
             linewidth = .5,alpha=.1)+
   scale_color_manual(values=c("grey50","purple","grey75","black"))+
