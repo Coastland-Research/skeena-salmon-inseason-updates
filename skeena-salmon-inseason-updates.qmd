@@ -123,7 +123,7 @@ The 2025 sockeye index is shown below and compared to historical index data from
 
 daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
 
-current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+current<-fread("data/current_year/tyee 2025 index data.csv") %>%
   select(Date,"2025"=`large sockeye`)
 
 make.index.figures(daily,current)
@@ -152,11 +152,10 @@ The 2025 Chinook index is shown below and compared to historical index data from
 
 daily<-fread("data/common/tyee_daily_indices_chinook_1956-2024.csv")
 
-current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+current<-fread("data/current_year/tyee 2025 index data.csv") %>%
   select(Date,"2025"=`large chinook`)
 
 make.index.figures(daily,current)
-
 ```
 
 ## Chum Salmon
@@ -166,11 +165,10 @@ make.index.figures(daily,current)
 
 daily<-fread("data/common/tyee_daily_indices_chum_1956-2024.csv")
 
-current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+current<-fread("data/current_year/tyee 2025 index data.csv") %>%
   select(Date,"2025"=`chum`)
 
 make.index.figures(daily,current)
-
 ```
 
 ## Pink Salmon
@@ -179,13 +177,14 @@ make.index.figures(daily,current)
 ```{r}
 #| label: fig-index-pink-odd
 
-#daily<-fread("data/common/tyee_daily_indices_pink-odd_1956-2023.csv", header = TRUE)
+daily<-fread("data/common/tyee_daily_indices_pink-odd_1956-2023.csv", header = TRUE) %>%
+  mutate(Date=as.character(Date))
 
-#current<-fread("data/current_year/tyee 2025 index data.csv")%>%
-#  mutate(Date=as.character(Date)) %>%
-#  select(Date,"2025"=`pink`)
+current<-fread("data/current_year/tyee 2025 index data.csv") %>%
+  mutate(Date=as.character(Date)) %>%
+  select(Date,"2025"=`pink`)
 
-#make.index.figures(daily,current)
+make.index.figures(daily,current)
 ```
 
 ### Even years
@@ -196,25 +195,26 @@ make.index.figures(daily,current)
 ```{r}
 #| label: fig-index-coho
 
-#daily<-fread("data/common/tyee_daily_indices_coho_1956-2024.csv")
+daily<-fread("data/common/tyee_daily_indices_coho_1956-2024.csv")
 
-#current<-fread("data/current_year/tyee 2025 index data.csv")%>%
-  #select(Date,"2025"=`coho`)
+current<-fread("data/current_year/tyee 2025 index data.csv") %>%
+  select(Date,"2025"=`coho`)
 
-#make.index.figures(daily,current)
+make.index.figures(daily,current)
 ```
 
 ## Steelhead
 ```{r}
 #| label: fig-index-steelhead
 
-#daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = T)
+daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = T) %>%
+  mutate(Date=as.character(Date))
 
-#current<-fread("data/current_year/tyee 2025 index data.csv")%>%
-#    mutate(Date=as.character(Date)) %>%
-#  select(Date,"2025"=`steelhead`)
+current<-fread("data/current_year/tyee 2025 index data.csv") %>%
+  mutate(Date=as.character(Date)) %>%
+  select(Date,"2025"=`steelhead`)
 
-#make.index.figures(daily,current)
+make.index.figures(daily,current)
 ```
 
 # Babine Fence

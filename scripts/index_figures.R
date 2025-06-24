@@ -6,8 +6,8 @@ daily.index<-left_join(daily,current,by="Date")%>%
   mutate(Date=as.Date(Date))
 
 gg.daily<-daily.index%>%
-  #mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1956":"2025",names_to="Year",values_to="Fish") %>%
+  mutate_if(is.character, as.numeric) %>%
+  pivot_longer(`1956`:`2025`,names_to="Year",values_to="Fish") %>%
   mutate(Year=as.numeric(Year)) %>%
   mutate(Index=replace_na(Fish,0))
 
@@ -31,7 +31,7 @@ years_out<-c("2008","2009","2010")
 gg.daily<-gg.daily%>%filter(!Year%in%years_out)
 
 gg.daily.cum<-daily.index%>%
-  pivot_longer("1956":"2025",names_to="Year",values_to="Fish") %>%
+  pivot_longer(`1956`:`2025`,names_to="Year",values_to="Fish") %>%
   group_by(Year)%>%
   mutate(cum_sum=cumsum(replace_na(Fish,0)))
 
