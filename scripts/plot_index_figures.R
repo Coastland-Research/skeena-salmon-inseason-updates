@@ -18,7 +18,7 @@ ggplot(daily.data,aes(x=Date, y=Fish,group=Date))+
 make.cum.index.plot<-function(cum.data,cum.quants){
   
 ggplot(cum.data,aes(x=Date, y=cum_sum,group=Date))+
-  geom_line(data=cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)
+  geom_line(data=cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
   geom_line(data = cum.data %>% filter(Year == 2025&Date<=tyee.day),
             aes(x = Date, y = cum_sum, group = 1,color = "2025 Data"), linewidth = 1.5,alpha=.7)+
   geom_line(data = cum.data %>% filter(Year <2025), aes(x = Date, y = cum_sum,group=Year),

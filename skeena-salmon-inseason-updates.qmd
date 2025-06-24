@@ -27,10 +27,11 @@ options(scipen=10000)
 ```{r source files}
 #load functions
 source("scripts/plot_index_figures.R")
+source("scripts/plot_sockeye_escapement_figures.R")
 
 #load wrappers
 source("scripts/index_figures.R")
-
+source("scripts/tyee_sockeye_plots.R")
 
 ```
 
@@ -114,7 +115,7 @@ The DFO Tyee test fishery website can be found here: [Tyee test fishery website]
 
 ## Sockeye Salmon
 
-The 2025 sockeye index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-sockeye) in the text.
+The 2025 sockeye index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-sockeye).
 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for sockeye salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-sockeye
@@ -126,6 +127,18 @@ current<-fread("data/current_year/tyee 2025 index data.csv")%>%
   select(Date,"2025"=`large sockeye`)
 
 make.index.figures(daily,current)
+
+```
+
+
+Escapement estimates for sockeye are generated using the Tyee index and a catchability coefficient based on the average of the last 3 years catchability. 
+
+The 2025 sockeye escapement estimate at Tyee is shown below and compared to historical escapement data (not including catch as we do not have the historical daily escapement estimate plus catch) (@fig-escapement-sockeye)
+
+```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
+#| label: fig-escapement-sockeye
+
+make.tyee.sockeye.escapement.plots()
 
 ```
 
