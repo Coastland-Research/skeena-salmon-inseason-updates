@@ -150,6 +150,14 @@ make.index.figures(daily,current)
 ## Chum Salmon
 
 ```{r}
+#| label: fig-index-chum
+
+daily<-fread("data/common/tyee_daily_indices_chum_1956-2024.csv")
+
+current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+  select(Date,"2025"=`chum`)
+
+make.index.figures(daily,current)
 
 ```
 
@@ -157,14 +165,44 @@ make.index.figures(daily,current)
 ## Pink Salmon
 
 ### Odd years
+```{r}
+#| label: fig-index-pink-even
+
+daily<-fread("data/common/tyee_daily_indices_pink-odd_1956-2023.csv")
+
+current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+  select(Date,"2025"=`pink`)
+
+make.index.figures(daily,current)
+```
 
 ### Even years
 
 -   Will be updated next year!
 
 ## Coho Salmon
+```{r}
+#| label: fig-index-coho
+
+daily<-fread("data/common/tyee_daily_indices_coho_1956-2024.csv")
+
+current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+  select(Date,"2025"=`coho`)
+
+make.index.figures(daily,current)
+```
 
 ## Steelhead
+```{r}
+#| label: fig-index-steelhead
+
+daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv")
+
+current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+  select(Date,"2025"=`steelhead`)
+
+make.index.figures(daily,current)
+```
 
 # Babine Fence
 
