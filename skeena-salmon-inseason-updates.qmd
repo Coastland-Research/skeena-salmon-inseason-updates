@@ -32,7 +32,6 @@ source("scripts/plot_index_figures.R")
 source("scripts/index_figures.R")
 
 
-
 ```
 
 ```{r set days, echo=FALSE}
@@ -166,11 +165,12 @@ make.index.figures(daily,current)
 
 ### Odd years
 ```{r}
-#| label: fig-index-pink-even
+#| label: fig-index-pink-odd
 
-daily<-fread("data/common/tyee_daily_indices_pink-odd_1956-2023.csv")
+daily<-fread("data/common/tyee_daily_indices_pink-odd_1956-2023.csv", header = TRUE)
 
 current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+  mutate(Date=as.character(Date)) %>%
   select(Date,"2025"=`pink`)
 
 make.index.figures(daily,current)
@@ -196,9 +196,10 @@ make.index.figures(daily,current)
 ```{r}
 #| label: fig-index-steelhead
 
-daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv")
+daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = T)
 
 current<-fread("data/current_year/tyee 2025 index data.csv")%>%
+    mutate(Date=as.character(Date)) %>%
   select(Date,"2025"=`steelhead`)
 
 make.index.figures(daily,current)
