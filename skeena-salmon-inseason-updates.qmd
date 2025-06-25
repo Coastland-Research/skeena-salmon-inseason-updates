@@ -105,7 +105,19 @@ The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges fr
 
 -   The pre-season forecast for Chinook is ~ 26,000 large Chinook.
 
-# Tide information at Port Edward
+# Tide information at Port Edward {#tide-information-at-port-edward}
+
+Tides influence the movement of sockeye and other salmon migrating into the Skeena. The following image shows the tides at Port Edward for a period of \~ 2 weeks.
+
+<figure>
+
+<img src="/images/tides9.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+
+<figcaption>Tides at Port Edward</figcaption>
+
+</figure>
+
+Tide data from: <a href="https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest" target="_blank">https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest</a>
 
 # Tyee Test Fishery-Index and Escapement Estimates
 
