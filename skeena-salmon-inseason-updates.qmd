@@ -204,7 +204,7 @@ make.index.figures(daily,current)
 
 ## Chum Salmon
 
-The 2025 chum salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-chinook) in the text.
+The 2025 chum salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-chum).
 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for chum salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-chum
@@ -219,7 +219,7 @@ make.index.figures(daily,current)
 
 ## Pink Salmon
 
-The 2025 pink salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-chinook) in the text.
+The 2025 pink salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-pink-odd).
 
 ### Odd years
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for pink salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
@@ -241,7 +241,7 @@ make.index.figures(daily,current)
 
 ## Coho Salmon
 
-The 2025 coho salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-chinook) in the text.
+The 2025 coho salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-coho).
 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for coho salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-coho
@@ -256,7 +256,7 @@ make.index.figures(daily,current)
 
 ## Steelhead
 
-The 2025 steelhead index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-chinook) in the text.
+The 2025 steelhead index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-steelhead).
 
 ```{r, fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for steelhead from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-steelhead
