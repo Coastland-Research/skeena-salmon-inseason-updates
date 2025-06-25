@@ -291,6 +291,70 @@ make.index.figures(daily,current)
 
 # Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2024 data
 
+```{r tyee escapement by year prep}
+#| echo: false
+#| include: false
+#| warning: false
+#| message: false
+
+# 2025 tyee data
+data<-read_csv("data/current_year/Tyee data 2025.csv") %>%
+  mutate(Date = as.Date(Date)) %>%
+  mutate(cumtyee = cumsum(replace_na(esctyee,0)))
+
+# all years tyee data (to 2024):
+daily <- read_excel("data/2024_archive/Tyee data 2024.xlsx",sheet="tyee daily") %>%
+  pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye") %>%
+  mutate(Year=as.numeric(Year)) %>%
+  mutate(Date = as.Date(Date)) %>%
+  group_by(Year)%>%
+  mutate(cum_sum=cumsum(replace_na(Sockeye,0)))
+```
+
+```{r daily escapement by year since 2000 vs 2025}
+#| label: fig-tyee-esc-years
+#| include: true
+#| echo: false
+#| warning: false
+#| fig-cap: "Tyee 2025 daily sockeye escapement vs daily escapement each year between 2000-2024."
+#| fig-height: 8
+
+# 2025 daily
+daily_tyee_years <- daily %>%
+filter(Year >= 2000) %>%
+ggplot(aes(x = Date, y = Sockeye, color = "daily sockeye escapement")) + geom_line() + 
+geom_line(data = data, aes(x = Date, y = esctyee, color = "2025 daily sockeye escapement")) + # line for 2025 data
+facet_wrap(~Year, scales = "free_y") +
+theme_minimal()+
+theme(legend.position = "top") +
+scale_color_brewer(palette = "Set1", name = "") +
+ylab("Sockeye Escapement")
+
+daily_tyee_years
+
+```
+
+```{r cumulative escapement by year vs 2025}
+#| label: fig-tyee-cum-years
+#| include: true
+#| echo: false
+#| warning: false
+#| fig-cap: "Tyee 2025 cumulative sockeye escapement vs cumulative escapement each year between 2000-2024."
+#| fig-height: 8
+
+# 2025 cumulative
+cum_tyee_years <- daily %>%
+filter(Year >= 2000) %>%
+ggplot(aes(x = Date, y = cum_sum, color = "cumulative sockeye escapement")) + geom_line() +
+geom_line(data = data, aes(x = Date, y = cumtyee, color = "2025 cumulative sockeye escapement")) +
+facet_wrap(~Year,scales="free_y") +
+theme_minimal()+
+theme(legend.position = "top") +
+scale_color_brewer(palette = "Set1", name = "")+
+ylab("Cumulative Sockeye Escapement")
+
+cum_tyee_years
+```
 # Appendix B - Catch of pink, chum, coho, chinook and steelhead
 
 # Appendix C - Population specific run-timing through Tyee
