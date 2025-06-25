@@ -38,4 +38,3 @@ trtc.table<-tibble("Run-timing"=c("Early","Average","Late"),
   "% of Run Through"=c(rtearly,rtaverage,rtlate),
   "TRTC Estimate"=c(early,average,late))
 
-kable(trtc.table)
