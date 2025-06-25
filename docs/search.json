@@ -34,7 +34,7 @@
     "href": "skeena-salmon-inseason-updates.html#sockeye-salmon",
     "title": "Skeena Salmon In-Season Update",
     "section": "Sockeye Salmon",
-    "text": "Sockeye Salmon\nThe 2025 sockeye index is shown below and compared to historical index data from the Tyee test fishery (Figure 1).\n\n\n\n\n\n\n\n\nFigure 1: Daily (top) and cumulative (bottom) index values for sockeye salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines.\n\n\n\n\n\nEscapement estimates for sockeye are generated using the Tyee index and a catchability coefficient based on the average of the last 3 years catchability.\nThe 2025 sockeye escapement estimate at Tyee is shown below and compared to historical escapement data (not including catch as we do not have the historical daily escapement estimate plus catch) (Figure 2)\n\n\n\n\n\n\n\n\nFigure 2: Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines.",
+    "text": "Sockeye Salmon\n\nSockeye index\nThe 2025 sockeye index is shown below and compared to historical index data from the Tyee test fishery (Figure 1).\n\n\n\n\n\n\n\n\nFigure 1: Daily (top) and cumulative (bottom) index values for sockeye salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines.\n\n\n\n\n\n\n\nEscapement estimates at Tyee\nEscapement estimates for sockeye are generated using the Tyee index and a catchability coefficient based on the average of the last 3 years catchability.\nThe 2025 sockeye escapement estimate at Tyee is shown below and compared to historical escapement data (not including catch as we do not have the historical daily escapement estimate plus catch) (Figure 2)\n\n\n\n\n\n\n\n\nFigure 2: Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines.\n\n\n\n\n\n\n\nIn-season abundance estimate\nSockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table and figure (Figure 3) shows estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season).\n\n\n\n% of run past Tyee and the associated TRTC estimate for average, one-week early, and one-week late run-timing.\n\n\nRun-timing\n% of Run Through\nTRTC Estimate\n\n\n\n\nEarly\n4.6%\n438853\n\n\nAverage\n1.7%\n1145278\n\n\nLate\n0.5%\n4082918\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 3: Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing.",
     "crumbs": [
       "Skeena Salmon In-Season Update for SFNTC"
     ]
@@ -44,7 +44,7 @@
     "href": "skeena-salmon-inseason-updates.html#chinook-salmon",
     "title": "Skeena Salmon In-Season Update",
     "section": "Chinook Salmon",
-    "text": "Chinook Salmon\nThe 2025 Chinook index is shown below and compared to historical index data from the Tyee test fishery (Figure 3) in the text.\n\n\n\n\n\n\n\n\nFigure 3: Daily (top) and cumulative (bottom) index values for Chinook salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines.",
+    "text": "Chinook Salmon\nThe 2025 Chinook index is shown below and compared to historical index data from the Tyee test fishery (Figure 4) in the text.\n\n\n\n\n\n\n\n\nFigure 4: Daily (top) and cumulative (bottom) index values for Chinook salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines.",
     "crumbs": [
       "Skeena Salmon In-Season Update for SFNTC"
     ]
@@ -54,7 +54,7 @@
     "href": "skeena-salmon-inseason-updates.html#chum-salmon",
     "title": "Skeena Salmon In-Season Update",
     "section": "Chum Salmon",
-    "text": "Chum Salmon\n\n\n\n\n\n\n\n\nFigure 4",
+    "text": "Chum Salmon\n\n\n\n\n\n\n\n\nFigure 5",
     "crumbs": [
       "Skeena Salmon In-Season Update for SFNTC"
     ]
@@ -64,7 +64,7 @@
     "href": "skeena-salmon-inseason-updates.html#pink-salmon",
     "title": "Skeena Salmon In-Season Update",
     "section": "Pink Salmon",
-    "text": "Pink Salmon\n\nOdd years\n\n\n\n\n\n\n\n\nFigure 5\n\n\n\n\n\n\n\nEven years\n\nWill be updated next year!",
+    "text": "Pink Salmon\n\nOdd years\n\n\n\n\n\n\n\n\nFigure 6\n\n\n\n\n\n\n\nEven years\n\nWill be updated next year!",
     "crumbs": [
       "Skeena Salmon In-Season Update for SFNTC"
     ]
@@ -74,7 +74,7 @@
     "href": "skeena-salmon-inseason-updates.html#coho-salmon",
     "title": "Skeena Salmon In-Season Update",
     "section": "Coho Salmon",
-    "text": "Coho Salmon\n\n\n\n\n\n\n\n\nFigure 6",
+    "text": "Coho Salmon\n\n\n\n\n\n\n\n\nFigure 7",
     "crumbs": [
       "Skeena Salmon In-Season Update for SFNTC"
     ]
@@ -84,7 +84,7 @@
     "href": "skeena-salmon-inseason-updates.html#steelhead",
     "title": "Skeena Salmon In-Season Update",
     "section": "Steelhead",
-    "text": "Steelhead\n\n\n\n\n\n\n\n\nFigure 7",
+    "text": "Steelhead\n\n\n\n\n\n\n\n\nFigure 8",
     "crumbs": [
       "Skeena Salmon In-Season Update for SFNTC"
     ]

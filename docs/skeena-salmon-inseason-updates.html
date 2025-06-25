@@ -121,7 +121,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#tide-information-at-port-edward" id="toc-tide-information-at-port-edward" class="nav-link" data-scroll-target="#tide-information-at-port-edward">Tide information at Port Edward</a></li>
   <li><a href="#tyee-test-fishery-index-and-escapement-estimates" id="toc-tyee-test-fishery-index-and-escapement-estimates" class="nav-link" data-scroll-target="#tyee-test-fishery-index-and-escapement-estimates">Tyee Test Fishery-Index and Escapement Estimates</a>
   <ul class="collapse">
-  <li><a href="#sockeye-salmon" id="toc-sockeye-salmon" class="nav-link" data-scroll-target="#sockeye-salmon">Sockeye Salmon</a></li>
+  <li><a href="#sockeye-salmon" id="toc-sockeye-salmon" class="nav-link" data-scroll-target="#sockeye-salmon">Sockeye Salmon</a>
+  <ul class="collapse">
+  <li><a href="#sockeye-index" id="toc-sockeye-index" class="nav-link" data-scroll-target="#sockeye-index">Sockeye index</a></li>
+  <li><a href="#escapement-estimates-at-tyee" id="toc-escapement-estimates-at-tyee" class="nav-link" data-scroll-target="#escapement-estimates-at-tyee">Escapement estimates at Tyee</a></li>
+  <li><a href="#in-season-abundance-estimate" id="toc-in-season-abundance-estimate" class="nav-link" data-scroll-target="#in-season-abundance-estimate">In-season abundance estimate</a></li>
+  </ul></li>
   <li><a href="#chinook-salmon" id="toc-chinook-salmon" class="nav-link" data-scroll-target="#chinook-salmon">Chinook Salmon</a></li>
   <li><a href="#chum-salmon" id="toc-chum-salmon" class="nav-link" data-scroll-target="#chum-salmon">Chum Salmon</a></li>
   <li><a href="#pink-salmon" id="toc-pink-salmon" class="nav-link" data-scroll-target="#pink-salmon">Pink Salmon</a>
@@ -261,6 +266,8 @@ Tides at Port Edward
 <p>The DFO Tyee test fishery website can be found here: <a href="https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/skeenatyee-eng.html">Tyee test fishery website</a></p>
 <section id="sockeye-salmon" class="level2">
 <h2 class="anchored" data-anchor-id="sockeye-salmon">Sockeye Salmon</h2>
+<section id="sockeye-index" class="level3">
+<h3 class="anchored" data-anchor-id="sockeye-index">Sockeye index</h3>
 <p>The 2025 sockeye index is shown below and compared to historical index data from the Tyee test fishery (<a href="#fig-index-sockeye" class="quarto-xref">Figure&nbsp;1</a>).</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -276,6 +283,9 @@ Figure&nbsp;1: Daily (top) and cumulative (bottom) index values for sockeye salm
 </div>
 </div>
 </div>
+</section>
+<section id="escapement-estimates-at-tyee" class="level3">
+<h3 class="anchored" data-anchor-id="escapement-estimates-at-tyee">Escapement estimates at Tyee</h3>
 <p>Escapement estimates for sockeye are generated using the Tyee index and a catchability coefficient based on the average of the last 3 years catchability.</p>
 <p>The 2025 sockeye escapement estimate at Tyee is shown below and compared to historical escapement data (not including catch as we do not have the historical daily escapement estimate plus catch) (<a href="#fig-escapement-sockeye" class="quarto-xref">Figure&nbsp;2</a>)</p>
 <div class="cell">
@@ -293,9 +303,59 @@ Figure&nbsp;2: Daily (top) and cumulative (bottom) escapement estimates at Tyee 
 </div>
 </div>
 </section>
+<section id="in-season-abundance-estimate" class="level3">
+<h3 class="anchored" data-anchor-id="in-season-abundance-estimate">In-season abundance estimate</h3>
+<p>Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table and figure (<a href="#fig-sx-trtc-model" class="quarto-xref">Figure&nbsp;3</a>) shows estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season).</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>% of run past Tyee and the associated TRTC estimate for average, one-week early, and one-week late run-timing.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Run-timing</th>
+<th style="text-align: left;">% of Run Through</th>
+<th style="text-align: right;">TRTC Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Early</td>
+<td style="text-align: left;">4.6%</td>
+<td style="text-align: right;">438853</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Average</td>
+<td style="text-align: left;">1.7%</td>
+<td style="text-align: right;">1145278</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Late</td>
+<td style="text-align: left;">0.5%</td>
+<td style="text-align: right;">4082918</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-sx-trtc-model" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sx-trtc-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="skeena-salmon-inseason-updates_files/figure-html/fig-sx-trtc-model-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sx-trtc-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
 <section id="chinook-salmon" class="level2">
 <h2 class="anchored" data-anchor-id="chinook-salmon">Chinook Salmon</h2>
-<p>The 2025 Chinook index is shown below and compared to historical index data from the Tyee test fishery (<a href="#fig-index-chinook" class="quarto-xref">Figure&nbsp;3</a>) in the text.</p>
+<p>The 2025 Chinook index is shown below and compared to historical index data from the Tyee test fishery (<a href="#fig-index-chinook" class="quarto-xref">Figure&nbsp;4</a>) in the text.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-index-chinook" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -304,7 +364,7 @@ Figure&nbsp;2: Daily (top) and cumulative (bottom) escapement estimates at Tyee 
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-index-chinook-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-index-chinook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Daily (top) and cumulative (bottom) index values for Chinook salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines.
+Figure&nbsp;4: Daily (top) and cumulative (bottom) index values for Chinook salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines.
 </figcaption>
 </figure>
 </div>
@@ -321,7 +381,7 @@ Figure&nbsp;3: Daily (top) and cumulative (bottom) index values for Chinook salm
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-index-chum-1.png" id="fig-index-chum" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-index-chum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4
+Figure&nbsp;5
 </figcaption>
 </figure>
 </div>
@@ -340,7 +400,7 @@ Figure&nbsp;4
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-index-pink-odd-1.png" id="fig-index-pink-odd" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-index-pink-odd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5
+Figure&nbsp;6
 </figcaption>
 </figure>
 </div>
@@ -364,7 +424,7 @@ Figure&nbsp;5
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-index-coho-1.png" id="fig-index-coho" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-index-coho-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6
+Figure&nbsp;7
 </figcaption>
 </figure>
 </div>
@@ -381,7 +441,7 @@ Figure&nbsp;6
 <img src="skeena-salmon-inseason-updates_files/figure-html/fig-index-steelhead-1.png" id="fig-index-steelhead" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-index-steelhead-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7
+Figure&nbsp;8
 </figcaption>
 </figure>
 </div>

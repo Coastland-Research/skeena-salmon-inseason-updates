@@ -33,15 +33,16 @@ source("scripts/plot_sockeye_escapement_figures.R")
 source("scripts/index_figures.R")
 source("scripts/tyee_sockeye_plots.R")
 
+
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-06-22")
-tyee.date<-"June 22"
-month.day<-"6-22"
+tyee.day<-as.Date("2025-06-24")
+tyee.date<-"June 24"
+month.day<-"6-24"
 # fence.day<-as.Date("2024-09-22")
 # fence.date<-"September 22"
-today<-as.Date("2025-06-23")
+today<-as.Date("2025-06-25")
 ```
 
 # Summary
@@ -127,11 +128,12 @@ The DFO Tyee test fishery website can be found here: [Tyee test fishery website]
 
 ## Sockeye Salmon
 
+### Sockeye index
+
 The 2025 sockeye index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-sockeye).
 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for sockeye salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-sockeye
-
 
 daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
 
@@ -142,6 +144,7 @@ make.index.figures(daily,current)
 
 ```
 
+### Escapement estimates at Tyee
 
 Escapement estimates for sockeye are generated using the Tyee index and a catchability coefficient based on the average of the last 3 years catchability. 
 
@@ -151,6 +154,31 @@ The 2025 sockeye escapement estimate at Tyee is shown below and compared to hist
 #| label: fig-escapement-sockeye
 
 make.tyee.sockeye.escapement.plots()
+
+```
+
+### In-season abundance estimate
+
+Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table and figure (@fig-sx-trtc-model) shows estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season). 
+
+```{r}
+
+source("scripts/plot_sx_trtc_model.R")
+source("scripts/tyee_sockeye_trtc_model.R")
+```
+
+
+```{r}
+
+kable(trtc.table,caption="% of run past Tyee and the associated TRTC estimate for average, one-week early, and one-week late run-timing.")
+```
+
+
+```{r, fig.height=5,fig.cap="Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing."}
+#| label: fig-sx-trtc-model
+
+make.trtc.sx.plot(sx.trtc.model)
+
 
 ```
 
