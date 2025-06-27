@@ -1,6 +1,6 @@
 #create index figures with a filter for species
 
-make.index.figures<-function(daily,current) {
+make.index.figures<-function(daily,current,yhigh,y.cum.high,xhigh) {
   
 daily.index<-left_join(daily,current,by="Date")%>%
   mutate(Date=as.Date(Date))
@@ -54,8 +54,8 @@ years_out<-c("2008","2009","2010")
 
 gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
 
-daily.index<-make.daily.index.plot(gg.daily,gg.daily.quants,0,20)
-cum.index<-make.cum.index.plot(gg.daily.cum,gg.daily.cum.quants)
+daily.index<-make.daily.index.plot(gg.daily,gg.daily.quants,xhigh,yhigh)
+cum.index<-make.cum.index.plot(gg.daily.cum,gg.daily.cum.quants,xhigh,y.cum.high)
 
 #Daily plot with 2025 and quants
 ggarrange(daily.index,cum.index,align="v",ncol=1,common.legend = TRUE,legend="bottom")
