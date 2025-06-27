@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "June 25, 2025"
+subtitle: "June 26, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -37,12 +37,12 @@ source("scripts/tyee_sockeye_plots.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-06-24")
-tyee.date<-"June 24"
+tyee.day<-as.Date("2025-06-25")
+tyee.date<-"June 25"
 month.day<-"6-24"
 # fence.day<-as.Date("2024-09-22")
 # fence.date<-"September 22"
-today<-as.Date("2025-06-25")
+today<-as.Date("2025-06-26")
 ```
 
 # Summary
@@ -163,7 +163,7 @@ make.tyee.sockeye.escapement.plots()
 
 ### In-season abundance estimate
 
-Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table and figure (@fig-sx-trtc-model) shows estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season). 
+Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table (@tbl-trtc-outputs) and figure (@fig-sx-trtc-model) show estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season). 
 
 ```{r}
 
@@ -171,15 +171,20 @@ source("scripts/plot_sx_trtc_model.R")
 source("scripts/tyee_sockeye_trtc_model.R")
 ```
 
-
 ```{r}
+#| label: tbl-trtc-outputs
+#| tbl-cap: "The % of run past Tyee and the associated TRTC estimate for average, one-week early, and one-week late run-timing."
 
-kable(trtc.table,caption="% of run past Tyee and the associated TRTC estimate for average, one-week early, and one-week late run-timing.")
+print(paste0("Model estimates as of ",tyee.date))
+
+kable(trtc.table)
 ```
 
 
-```{r, fig.height=5,fig.cap="Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing."}
+```{r, fig.height=5,fig.cap="Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing. The dashed line shows the pre-season forecast of a TRTC of ~2.4 million."}
 #| label: fig-sx-trtc-model
+
+
 
 make.trtc.sx.plot(sx.trtc.model)
 
