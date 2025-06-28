@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "June 27, 2025"
+subtitle: "June 28, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -37,12 +37,13 @@ source("scripts/tyee_sockeye_plots.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-06-26")
-tyee.date<-"June 26"
-month.day<-"6-24"
+tyee.day<-as.Date("2025-06-27")
+tyee.date<-"June 27"
+
 # fence.day<-as.Date("2024-09-22")
 # fence.date<-"September 22"
-today<-as.Date("2025-06-26")
+
+today<-as.Date("2025-06-27")
 ```
 
 # Summary
@@ -141,8 +142,8 @@ The 2025 sockeye index is shown below and compared to historical index data from
 
 daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
 
-current<-fread("data/current_year/tyee 2025 index data.csv") %>%
-  select(Date,"2025"=`large sockeye`)
+current<-fread("data/current_year/tyee data 2025.csv") %>%
+  select(Date,"2025"=sockeye)
 
 make.index.figures(daily,current,15,50,as.Date("2025-07-02"))
 
@@ -201,8 +202,8 @@ The 2025 Chinook salmon index is shown below and compared to historical index da
 
 daily<-fread("data/common/tyee_daily_indices_chinook_1956-2024.csv")
 
-current<-fread("data/current_year/tyee 2025 index data.csv") %>%
-  select(Date,"2025"=`large chinook`)
+current<-fread("data/current_year/tyee data 2025.csv") %>%
+  select(Date,"2025"=chinook)
 
 make.index.figures(daily,current,15,200,as.Date("2025-07-02"))
 ```
@@ -216,8 +217,8 @@ The 2025 chum salmon index is shown below and compared to historical index data 
 
 daily<-fread("data/common/tyee_daily_indices_chum_1956-2024.csv")
 
-current<-fread("data/current_year/tyee 2025 index data.csv") %>%
-  select(Date,"2025"=`chum`)
+current<-fread("data/current_year/tyee data 2025.csv") %>%
+  select(Date,"2025"=chum)
 
 make.index.figures(daily,current,10,50,as.Date("2025-07-02"))
 
@@ -231,11 +232,9 @@ The 2025 pink salmon index is shown below and compared to historical index data 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for pink salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-pink-odd
 
-daily<-fread("data/common/tyee_daily_indices_pink-odd_1956-2023.csv", header = TRUE) %>%
-  mutate(Date=as.character(Date))
+daily<-fread("data/common/tyee_daily_indices_pink-odd_1956-2023.csv", header = TRUE)
 
-current<-fread("data/current_year/tyee 2025 index data.csv") %>%
-  mutate(Date=as.character(Date)) %>%
+current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=`pink`)
 
 make.index.figures(daily,current,10,50,as.Date("2025-07-02"))
@@ -253,8 +252,8 @@ The 2025 coho salmon index is shown below and compared to historical index data 
 
 daily<-fread("data/common/tyee_daily_indices_coho_1956-2024.csv")
 
-current<-fread("data/current_year/tyee 2025 index data.csv") %>%
-  select(Date,"2025"=`coho`)
+current<-fread("data/current_year/tyee data 2025.csv") %>%
+  select(Date,"2025"=coho)
 
 make.index.figures(daily,current,5,20,as.Date("2025-07-02"))
 ```
@@ -266,12 +265,10 @@ The 2025 steelhead index is shown below and compared to historical index data fr
 ```{r, fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for steelhead from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-steelhead
 
-daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = T) %>%
-  mutate(Date=as.character(Date))
+daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = T)
 
-current<-fread("data/current_year/tyee 2025 index data.csv") %>%
-  mutate(Date=as.character(Date)) %>%
-  select(Date,"2025"=`steelhead`)
+current<-fread("data/current_year/tyee data 2025.csv") %>%
+  select(Date,"2025"=steelhead)
 
 make.index.figures(daily,current,5,20,as.Date("2025-07-02"))
 ```
@@ -326,18 +323,7 @@ kable_styling(latex_options = "HOLD_position")
 #| warning: false
 #| message: false
 
-# 2025 tyee data
-data<-read_csv("data/current_year/Tyee data 2025.csv") %>%
-  mutate(Date = as.Date(Date)) %>%
-  mutate(cumtyee = cumsum(replace_na(esctyee,0)))
-
-# all years tyee data (to 2024):
-daily <- read_excel("data/2024_archive/Tyee data 2024.xlsx",sheet="tyee daily") %>%
-  pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye") %>%
-  mutate(Year=as.numeric(Year)) %>%
-  mutate(Date = as.Date(Date)) %>%
-  group_by(Year)%>%
-  mutate(cum_sum=cumsum(replace_na(Sockeye,0)))
+source("scripts/tyee current versus previous.R")
 ```
 
 ```{r daily escapement by year since 2000 vs 2025}
@@ -347,17 +333,6 @@ daily <- read_excel("data/2024_archive/Tyee data 2024.xlsx",sheet="tyee daily") 
 #| warning: false
 #| fig-cap: "Tyee 2025 daily sockeye escapement vs daily escapement each year between 2000-2024."
 #| fig-height: 8
-
-# 2025 daily
-daily_tyee_years <- daily %>%
-filter(Year >= 2000) %>%
-ggplot(aes(x = Date, y = Sockeye, color = "daily sockeye escapement")) + geom_line() + 
-geom_line(data = data, aes(x = Date, y = esctyee, color = "2025 daily sockeye escapement")) + # line for 2025 data
-facet_wrap(~Year, scales = "free_y") +
-theme_minimal()+
-theme(legend.position = "top") +
-scale_color_brewer(palette = "Set1", name = "") +
-ylab("Sockeye Escapement")
 
 daily_tyee_years
 
@@ -371,18 +346,8 @@ daily_tyee_years
 #| fig-cap: "Tyee 2025 cumulative sockeye escapement vs cumulative escapement each year between 2000-2024."
 #| fig-height: 8
 
-# 2025 cumulative
-cum_tyee_years <- daily %>%
-filter(Year >= 2000) %>%
-ggplot(aes(x = Date, y = cum_sum, color = "cumulative sockeye escapement")) + geom_line() +
-geom_line(data = data, aes(x = Date, y = cumtyee, color = "2025 cumulative sockeye escapement")) +
-facet_wrap(~Year,scales="free_y") +
-theme_minimal()+
-theme(legend.position = "top") +
-scale_color_brewer(palette = "Set1", name = "")+
-ylab("Cumulative Sockeye Escapement")
-
 cum_tyee_years
+
 ```
 # Appendix B - Catch of pink, chum, coho, chinook and steelhead
 
