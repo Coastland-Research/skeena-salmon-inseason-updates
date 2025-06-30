@@ -310,10 +310,54 @@ kable_styling(latex_options = "HOLD_position")
 ## Commercial Fisheries
 
 ### Area C Gillnet and Area A Seine
+The following section shows the harvest control rule for commercial sockeye fisheries in the Skeena, the estimated TAC for various run-timings, and the available information on catches in the Area 4 commercial marine gillnet and seine fisheries targeting sockeye at the mouth of the Skeena River (generally sub-areas 4-12 and 4-15). Information should be considered preliminary untile reviewed by DFO staff in the post-season.
+```{r catch prep and figures}
+#| echo: false
+#| include: false
+#| warning: false
+#| message: false
+
+source("scripts/harvest_control_rule.R")
+```
+
+```{r}
+#| label: fig-skeena
+#| echo: false
+#| warning: false
+#| fig-cap: "Top panel: The Skeena sockeye harvest control rule based on TRTC. Bottom panel: Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."
+#| include: true
+#| fig-height: 6
+
+ggarrange(p1,p2,ncol=1,align="v")
+
+```
+
+```{r}
+#| label: fig-gill
+#| echo: false
+#| warning: false
+#| fig-cap: "Top panel: Area 4 gillnet and seine sockeye catch. Bottom panel: CPUE of gillnet and seine based on daily catch/daily effort. Note that some values are preliminary."
+#| include: true
+#| fig-height: 6
+
+ggarrange(p3,p4,ncol=1,align="v")
+```
 
 ### First Nations Demonstration and Economic Opportunity
 
 ## Recreational Fisheries
+
+The following table shows the updated management guidelines for recreational fisheries targeting sockeye in the Skeena watershed as per the 2025-26 North Coast Salmon IFMP. For the 2025 season, the recreational fishery for Skeena Sockeye will open when the estimated Total Return to Canada threshold of 1.05 million Sockeye has been achieved and commercial fisheries triggered.
+
+<figure>
+
+<img src="/images/dailylimits.png" title="Guidelines for Management Actions for Recreational Sockeye Fisheries in the Skeena Watershed" alt="Guidelines for Management Actions for Recreational Sockeye Fisheries in the Skeena Watershed" width="700"/>
+
+<figcaption>Guidelines for Management Actions for Recreational Sockeye Fisheries in the Skeena Watershed</figcaption>
+
+</figure>
+
+
 
 # Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2024 data
 
