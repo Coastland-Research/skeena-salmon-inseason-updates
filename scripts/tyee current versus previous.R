@@ -21,7 +21,8 @@ daily_tyee_years <- daily %>%
   theme_minimal()+
   theme(legend.position = "top") +
   scale_color_brewer(palette = "Set1", name = "") +
-  ylab("Sockeye Escapement")
+  ylab("Sockeye Escapement") +
+  theme(axis.text.x = element_text(angle = 45))
 
 # 2025 cumulative escapement versus 2000-2024
 cum_tyee_years <- daily %>%
