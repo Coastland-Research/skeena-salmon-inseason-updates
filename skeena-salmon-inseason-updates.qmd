@@ -51,7 +51,8 @@ today<-as.Date("2025-06-29")
 -   Pre-season forecasts
 
     -   The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges from 1.3 to 5.8 million (90% confidence range) with a point estimate (p50) of 2.7 million.
-    -   The pre-season forecast for the terminal run of Skeena Chinook point estimate is 26,615 and with a 50% confidence interval of 16,683 (p25) to 34,747 (p75).
+    -   On average, Alaskan fisheries take approximately 5-10% of the aggregate sockeye run.
+    -   The pre-season forecast for the terminal run of Skeena Chinook point estimate is 26,615 with a 50% confidence interval of 16,683 (p25) to 34,747 (p75).
 
     Tyee Test Fishery
 
