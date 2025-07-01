@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "June 30, 2025"
+subtitle: "July 1, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -9,7 +9,6 @@ execute:
   echo: FALSE
   warning: FALSE
   messages: FALSE
-  
 ---
 
 ```{r load libraries}
@@ -37,8 +36,9 @@ source("scripts/tyee_sockeye_plots.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-06-29")
-tyee.date<-"June 29"
+tyee.day<-as.Date("2025-06-30")
+tyee.date<-"June 30"
+figures.x.date<-as.Date("2025-07-10")
 
 # fence.day<-as.Date("2024-09-22")
 # fence.date<-"September 22"
@@ -48,48 +48,50 @@ today<-as.Date("2025-06-29")
 
 # Summary
 
--   Pre-season forecast
+-   Pre-season forecasts
 
-    -   The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges from 1.3 to 5.8 million (90% confidence range) with a point estimate (p50) of 2.7 million
+    -   The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges from 1.3 to 5.8 million (90% confidence range) with a point estimate (p50) of 2.7 million.
+    -   The pre-season forecast for the terminal run of Skeena Chinook point estimate is 26,615 and with a 50% confidence interval of 16,683 (p25) to 34,747 (p75).
 
--   Tyee Test Fishery
+    Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   Sockeye have started coming through, however it is too early to make any forecasts for the run size this year. Currently the escapement estimates are tracking just below the median of returns from 1970-2024.
-    -   Chinook are also being caught, and are tracking at a very low index value. Supporting information suggests low catch rates in FSC both in marine and in-river fisheries.
+    -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2024, with the TRTC model estimate increasing over the last few days, but still well below the pre-season forecast for early and average run-timing projections.
+    -   Chinook are also being caught at Tyee, with the cumulative index increasing to greater than the 25th percentile to date. There is supporting information of low catch rates in FSC fisheries both in marine and in-river areas.
     -   No pink, coho, chum, or steelhead have been caught at Tyee yet, however supporting information indicates that some coho have been caught in FSC fisheries.
 
--   Babine 
+-   Babine
 
     -   The Babine fence typically starts operations in mid-July. This section will be updated once Babine counts start.
 
-    -   Babine vs Tyee comparison
+    -   Babine vs Tyee comparison will be added when fence operations start.
 
-    -   Babine jack sockeye
+    -   Babine jack sockeye to be updated soon!
 
-    -   Babine other salmon
+    -   Babine other salmon to be updated soon!
 
 -   Kitwanga Fence
 
-    -   The Kitwanga fence typically starts operations by July 10.
-    
+    -   The Kitwanga fence typically starts operations by July 10. Information from the Kitwanga fence is shared weekly by Gitanyow Fisheries Authority.
+
 -   First Nations Food Fisheries
 
-    -   First Nations food fisheries have started on the coast and in the approach waters.
-    -   Indications suggest that fishing in-river has been slow.
+    -   First Nations food fisheries have started on the coast and marine approach waters, and in-river.
+    -   Indications suggest that fishing in-river has been slow so far.
 
 -   Commercial Fisheries
 
-    -   Commercial fisheries targetting sockeye have not started yet, but are anticipated given the pre-season sockeye forecast.
+    -   Commercial fisheries in Area 4 targeting sockeye have not started yet, but are anticipated given the pre-season sockeye forecast.
+    -   Commercial fisheries targeting sockeye will open in Area 3 on July 2 and 3.
 
 -   Recreational Fisheries
 
-    -   Recreational fisheries for sockeye have not started
-    -   Early recreational fisheries for Chinook occured in Areas 3/4 however effort was lower in 2025 than in previous years, bag limits were reduced, and as of June 22 there is non-retention of Chinook in the Area 3/4 fishery.
+    -   Recreational fisheries for sockeye have not started, but will begin once the in-season forecast exceeds 1.05M and commercial fishery openings are triggered in Area 4.
+    -   Early recreational fisheries for Chinook occurred in Areas 3/4 however effort was lower in 2025 than in previous years, bag limits were reduced, and as of June 22 there is non-retention of Chinook in the Area 3&4 fishery.
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
--   Appendix B will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated shortly.
+-   Appendix B will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated once fisheries begin.
 
 -   Appendix C includes information on run-timing of specific Skeena Conservation Units/stocks.
 
@@ -109,7 +111,7 @@ The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges fr
 
 ## Chinook
 
--   The pre-season forecast for Chinook is ~ 26,000 large Chinook.
+-   The pre-season forecast for Chinook is \~ 26,000 large Chinook.
 
 # Tide information at Port Edward {#tide-information-at-port-edward}
 
@@ -145,29 +147,28 @@ daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=sockeye)
 
-make.index.figures(daily,current,15,50,as.Date("2025-07-02"))
+make.index.figures(daily,current,25,100,figures.x.date)
 
 ```
 
 ### Escapement estimates at Tyee
 
-Escapement estimates for sockeye are generated using the Tyee index and a catchability coefficient based on the average of the last 3 years catchability. 
+Escapement estimates for sockeye are generated using the Tyee index and a catchability coefficient based on the average of the last 3 years catchability.
 
 The 2025 sockeye escapement estimate at Tyee is shown below and compared to historical escapement data (not including catch as we do not have the historical daily escapement estimate plus catch) (@fig-escapement-sockeye)
 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-escapement-sockeye
 
-make.tyee.sockeye.escapement.plots()
+make.tyee.sockeye.escapement.plots(60000,100000,figures.x.date)
 
 ```
 
 ### In-season abundance estimate
 
-Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table (@tbl-trtc-outputs) and figure (@fig-sx-trtc-model) show estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season). 
+Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table (@tbl-trtc-outputs) and figure (@fig-sx-trtc-model) show estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season).
 
 ```{r}
-
 source("scripts/plot_sx_trtc_model.R")
 source("scripts/tyee_sockeye_trtc_model.R")
 ```
@@ -181,17 +182,14 @@ print(paste0("Model estimates as of ",tyee.date))
 kable(trtc.table)
 ```
 
-
 ```{r, fig.height=5,fig.cap="Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing. The dashed line shows the pre-season forecast of a TRTC of ~2.4 million."}
 #| label: fig-sx-trtc-model
 
-
-
 make.trtc.sx.plot(sx.trtc.model)
 
+write.csv(sx.trtc.model,"data/current_year/Tyee model data 2025.csv",row.names=FALSE)
 
 ```
-
 
 ## Chinook Salmon
 
@@ -205,7 +203,7 @@ daily<-fread("data/common/tyee_daily_indices_chinook_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=chinook)
 
-make.index.figures(daily,current,15,200,as.Date("2025-07-02"))
+make.index.figures(daily,current,15,200,figures.x.date)
 ```
 
 ## Chum Salmon
@@ -220,8 +218,7 @@ daily<-fread("data/common/tyee_daily_indices_chum_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=chum)
 
-make.index.figures(daily,current,10,50,as.Date("2025-07-02"))
-
+make.index.figures(daily,current,10,50,figures.x.date)
 ```
 
 ## Pink Salmon
@@ -229,6 +226,7 @@ make.index.figures(daily,current,10,50,as.Date("2025-07-02"))
 The 2025 pink salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-pink-odd).
 
 ### Odd years
+
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for pink salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-pink-odd
 
@@ -237,8 +235,9 @@ daily<-fread("data/common/tyee_daily_indices_pink-odd_1956-2023.csv", header = T
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=`pink`)
 
-make.index.figures(daily,current,10,50,as.Date("2025-07-02"))
+make.index.figures(daily,current,10,50,figures.x.date)
 ```
+
 ### Even years
 
 -   Will be updated next year!
@@ -255,7 +254,7 @@ daily<-fread("data/common/tyee_daily_indices_coho_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=coho)
 
-make.index.figures(daily,current,5,20,as.Date("2025-07-02"))
+make.index.figures(daily,current,5,20,figures.x.date)
 ```
 
 ## Steelhead
@@ -270,10 +269,12 @@ daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = 
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=steelhead)
 
-make.index.figures(daily,current,5,20,as.Date("2025-07-02"))
+make.index.figures(daily,current,5,20,figures.x.date)
 ```
 
 # Babine Fence
+
+Information on the Babine fence counts are updated daily [here](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/babine-eng.html). We extract information from this site and update daily.
 
 ### Babine Sockeye
 
@@ -293,9 +294,12 @@ make.index.figures(daily,current,5,20,as.Date("2025-07-02"))
 
 # Kitwanga Fence
 
+Information on the Kitwanga fence operations can be found here: [Gitanyow Fisheries Authority](http://www.gitanyowfisheries.com/).
+
 # Fisheries
 
 ## Area 4 Fishery Openings
+
 Fisheries notices for Skeena salmon are shown below. These are a list of the relevant fisheries notices for Skeena salmon but are not an exhaustive list of current regulations. All fisheries notices can be found on the [DFO Fisheries Notice website](https://notices.dfo-mpo.gc.ca/fns-sap/index-eng.cfm).
 
 ```{r table of skeena fisheries openings, echo=FALSE, warning=FALSE, include=TRUE}
@@ -310,25 +314,25 @@ kable_styling(latex_options = "HOLD_position")
 ## Commercial Fisheries
 
 ### Area C Gillnet and Area A Seine
-The following section shows the harvest control rule for commercial sockeye fisheries in the Skeena, the estimated TAC for various run-timings, and the available information on catches in the Area 4 commercial marine gillnet and seine fisheries targeting sockeye at the mouth of the Skeena River (generally sub-areas 4-12 and 4-15). Information should be considered preliminary untile reviewed by DFO staff in the post-season.
-```{r catch prep and figures}
-#| echo: false
-#| include: false
-#| warning: false
-#| message: false
 
-source("scripts/harvest_control_rule.R")
+The following section shows the harvest control rule for commercial sockeye fisheries in the Skeena, the estimated TAC for various run-timings, and the available information on catches in the Area 4 commercial marine gillnet and seine fisheries targeting sockeye at the mouth of the Skeena River (generally sub-areas 4-12 and 4-15). Information should be considered preliminary until reviewed by DFO staff in the post-season.
+
+```{r catch prep and figures}
+
+source("scripts/harvest control rule and tac plots.R")
 ```
 
-```{r}
-#| label: fig-skeena
-#| echo: false
-#| warning: false
-#| fig-cap: "Top panel: The Skeena sockeye harvest control rule based on TRTC. Bottom panel: Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."
-#| include: true
-#| fig-height: 6
+```{r, fig.height=4,fig.cap="The Skeena sockeye harvest control rule based on TRTC. The vertical lines show the estimated TRTC for 2025 by run-timing (red=early, green=average, blue=late)."}
+#| label: fig-skeena-sx-hcr
 
-ggarrange(p1,p2,ncol=1,align="v")
+make.sx.hcr.plot(hcr,tac.data)
+```
+
+
+```{r, fig.height=4,fig.cap="Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."}
+#| label: fig.skeena.sx.tacandcatch
+
+make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 
 ```
 
@@ -340,14 +344,14 @@ ggarrange(p1,p2,ncol=1,align="v")
 #| include: true
 #| fig-height: 6
 
-ggarrange(p3,p4,ncol=1,align="v")
+#ggarrange(p3,p4,ncol=1,align="v")
 ```
 
 ### First Nations Demonstration and Economic Opportunity
 
 ## Recreational Fisheries
 
-The following table shows the updated management guidelines for recreational fisheries targeting sockeye in the Skeena watershed as per the 2025-26 North Coast Salmon IFMP. For the 2025 season, the recreational fishery for Skeena Sockeye will open when the estimated Total Return to Canada threshold of 1.05 million Sockeye has been achieved and commercial fisheries triggered.
+The following table shows the updated management guidelines for recreational fisheries targeting sockeye in the Skeena watershed as per the 2025-26 North Coast Salmon IFMP. For the 2025 season, the recreational fishery for Skeena Sockeye will open when the estimated Total Return to Canada threshold of 1.05 million Sockeye has been achieved and commercial fisheries are triggered.
 
 <figure>
 
@@ -356,8 +360,6 @@ The following table shows the updated management guidelines for recreational fis
 <figcaption>Guidelines for Management Actions for Recreational Sockeye Fisheries in the Skeena Watershed</figcaption>
 
 </figure>
-
-
 
 # Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2024 data
 
@@ -393,9 +395,11 @@ daily_tyee_years
 cum_tyee_years
 
 ```
+
 # Appendix B - Catch of pink, chum, coho, chinook and steelhead
 
 # Appendix C - Population specific run-timing through Tyee
+
 Notes:
 
 -   Based on NBRR update data (2000-2014) provided by Karl English July 2022. Will add in the newer data and some comparisons.

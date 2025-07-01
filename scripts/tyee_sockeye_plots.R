@@ -1,6 +1,6 @@
 #load Tyee data, add cum escapement, make escapement plots
 
-make.tyee.sockeye.escapement.plots<-function() {
+make.tyee.sockeye.escapement.plots<-function(daily.y.high,cum.y.high,x.date) {
 
 tyee.sx.data<-fread("data/current_year/tyee data 2025.csv")%>%
   select(Date,"2025"=esctyee)
@@ -51,8 +51,8 @@ sx.cum.quants<-sx.daily.cum %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
-sx.esc.daily<-make.daily.esc.plot(sx.daily,sx.quants,0,75000,"2025-06-10","2025-06-30")
-sx.esc.cum<-make.cum.esc.plot(sx.daily.cum,sx.cum.quants,50000,"2025-06-10","2025-06-30")
+sx.esc.daily<-make.daily.esc.plot(sx.daily,sx.quants,0,daily.y.high,"2025-06-10",x.date)
+sx.esc.cum<-make.cum.esc.plot(sx.daily.cum,sx.cum.quants,cum.y.high,"2025-06-10",x.date)
 
 ggarrange(sx.esc.daily,sx.esc.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 
