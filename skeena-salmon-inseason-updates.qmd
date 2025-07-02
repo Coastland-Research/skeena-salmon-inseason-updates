@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 1, 2025"
+subtitle: "July 2, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -36,8 +36,8 @@ source("scripts/tyee_sockeye_plots.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-06-30")
-tyee.date<-"June 30"
+tyee.day<-as.Date("2025-07-01")
+tyee.date<-"July 1"
 figures.x.date<-as.Date("2025-07-10")
 
 # fence.day<-as.Date("2024-09-22")
@@ -112,7 +112,18 @@ The pre-season forecast for the Total Return of Skeena sockeye in 2025 ranges fr
 
 ## Chinook
 
--   The pre-season forecast for Chinook is \~ 26,000 large Chinook.
+The pre-season forecast for Chinook is \~ 26,600 large Chinook.
+
+The table below shows the total 2025 Skeena Chinook terminal run point forecast (highlighted in yellow) and forecasted returns by age. Age-specific forecasts are obtained using ForecastR, which uses a model selection and ranking approach and retrospective forecast performance.
+
+<figure>
+
+<img src="/images/cn_forecast.png" title="2025 Skeena Chinook forecast" alt="2025 Skeena Chinook forecast" width="700"/>
+
+<figcaption>2025 Skeena Chinook forecast</figcaption>
+
+</figure>
+
 
 # Tide information at Port Edward {#tide-information-at-port-edward}
 
@@ -206,16 +217,6 @@ current<-fread("data/current_year/tyee data 2025.csv") %>%
 
 make.index.figures(daily,current,15,200,figures.x.date)
 ```
-
-The table below shows the total 2025 Skeena Chinook terminal run point forecast (highlighted in yellow) and forecasted returns by age. Age-specific forecasts are obtained using ForecastR, which uses a model selection and ranking approach and retrospective forecast performance.
-
-<figure>
-
-<img src="/images/cn_forecast.png" title="2025 Skeena Chinook forecast" alt="2025 Skeena Chinook forecast" width="700"/>
-
-<figcaption>2025 Skeena Chinook forecast</figcaption>
-
-</figure>
 
 ## Chum Salmon
 
