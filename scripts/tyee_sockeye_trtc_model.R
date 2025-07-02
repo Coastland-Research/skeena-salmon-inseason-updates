@@ -26,6 +26,10 @@ sx.trtc.model<-sx.trtc.model.all%>%
 
 todays.trtc.estimates<-sx.trtc.model.all%>%filter(Date==tyee.day)
 
+cumesctodate<-tyee.sx.data%>%
+  filter(Date==tyee.day)%>%
+  getElement("cumesc")
+  
 early=round(todays.trtc.estimates$Early,0)
 average=round(todays.trtc.estimates$Average,0)
 late=round(todays.trtc.estimates$Late,0)
@@ -35,6 +39,7 @@ rtaverage<-paste0(round(todays.trtc.estimates$Runtiming*100,1),"%")
 rtlate<-paste0(round(todays.trtc.estimates$rtlate*100,1),"%")
 
 trtc.table<-tibble("Run-timing"=c("Early","Average","Late"),
-  "% of Run Through"=c(rtearly,rtaverage,rtlate),
-  "TRTC Estimate"=c(early,average,late))
+                   "Run to Tyee to Date"=cumesctodate,
+                   "% of Run Through"=c(rtearly,rtaverage,rtlate),
+                   "TRTC Estimate"=c(early,average,late))
 
