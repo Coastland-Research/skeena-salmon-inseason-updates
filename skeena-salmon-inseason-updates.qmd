@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 2, 2025"
+subtitle: "July 3, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -36,14 +36,14 @@ source("scripts/tyee_sockeye_plots.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-07-01")
-tyee.date<-"July 1"
-figures.x.date<-as.Date("2025-07-10")
+tyee.day<-as.Date("2025-07-02")
+tyee.date<-"July 2"
+figures.x.date<-as.Date("2025-07-11")
 
 # fence.day<-as.Date("2024-09-22")
 # fence.date<-"September 22"
 
-today<-as.Date("2025-06-29")
+today<-as.Date("2025-07-02")
 ```
 
 # Summary
