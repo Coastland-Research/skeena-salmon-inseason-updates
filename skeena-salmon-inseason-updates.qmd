@@ -27,11 +27,12 @@ options(scipen=10000)
 #load functions
 source("scripts/plot_index_figures.R")
 source("scripts/plot_sockeye_escapement_figures.R")
+source("scripts/plot_recent_sx_esc.R")
 
 #load wrappers
 source("scripts/index_figures.R")
 source("scripts/tyee_sockeye_plots.R")
-
+source("scripts/recent_esc_plots.R")
 
 ```
 
@@ -176,10 +177,7 @@ make.tyee.sockeye.escapement.plots(60000,100000,figures.x.date)
 
 ```
 
-```{r}
-# source code
-
-```
+## Daily and cumulative sockeye escapement for recent (2021-2024) years vs. 2025
 
 ```{r, fig.height=7, fig.cap="Daily and cumulative sockeye escapement for 2021-2025"}
 #| label: fig-esc-recent-yrs

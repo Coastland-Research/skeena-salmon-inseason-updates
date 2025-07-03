@@ -1,13 +1,13 @@
 #load Tyee data, add cum escapement, make escapement plots
 
-make.tyee.sockeye.escapement.plots<-function(daily.y.high,cum.y.high,x.date) {
+make.tyee.sockeye.escapement.plots <- function(daily.y.high,cum.y.high,x.date) {
 
-tyee.sx.data<-fread("data/current_year/tyee data 2025.csv")%>%
+tyee.sx.data<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=esctyee)
 
 hist.sx.data<-fread("data/common/tyee_daily_sockeye_escapement_1970-2024.csv")
 
-all.sx.data<-left_join(hist.sx.data,tyee.sx.data,by="Date")%>%
+all.sx.data<-left_join(hist.sx.data,tyee.sx.data,by="Date") %>%
   mutate(Date=as.Date(Date))
 
 sx.daily<-all.sx.data%>%
