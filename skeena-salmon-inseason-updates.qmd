@@ -176,6 +176,17 @@ make.tyee.sockeye.escapement.plots(60000,100000,figures.x.date)
 
 ```
 
+```{r}
+# source code
+
+```
+
+```{r, fig.height=7, fig.cap="Daily and cumulative sockeye escapement for 2021-2025"}
+#| label: fig-esc-recent-yrs
+
+# call function
+```
+
 ### In-season abundance estimate
 
 Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table (@tbl-trtc-outputs) and figure (@fig-sx-trtc-model) show estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season).
