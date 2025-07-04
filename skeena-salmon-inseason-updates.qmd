@@ -53,7 +53,7 @@ today<-as.Date("2025-07-02")
     -   On average, Alaskan fisheries take approximately 5-10% of the aggregate sockeye run.
     -   The pre-season forecast for the terminal run of Skeena Chinook point estimate is 26,615 with a 50% confidence interval of 16,683 (p25) to 34,747 (p75).
 
-    Tyee Test Fishery
+-   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
     -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2024, with the TRTC model estimate increasing over the last few days, but still well below the pre-season forecast for early and average run-timing projections.
@@ -182,11 +182,12 @@ source("scripts/plot_recent_sx_esc.R")
 
 ```
 
-```{r, fig.height=7, fig.cap="Daily and cumulative sockeye escapement for 2021-2025"}
+```{r, fig.height=7, fig.cap="Daily (top panel) and cumulative (bottom panel) sockeye escapement for 2021-2025."}
 #| label: fig-esc-recent-yrs
 
-make.recent.esc.plot(sx.daily.recent)
-make.recent.cum.plot(sx.cumesc)
+p1<-make.recent.esc.plot(sx.daily.recent)
+p2<-make.recent.cum.plot(sx.cumesc)
+ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
 

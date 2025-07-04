@@ -4,6 +4,7 @@
 
 # 1. Read in data ------------------------------------------------------------
 
+library(RColorBrewer)
 tyee.sx.daily <- fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=esctyee)
 
@@ -38,22 +39,23 @@ make.recent.esc.plot <- function(sx.daily.recent) {
 #   geom_line() +
 #   scale_color_brewer(palette = "Dark2") +
 #   theme_minimal()
-  
+
   ggplot() +
     geom_line(
       data = filter(sx.daily.recent, Year != 2025),
       aes(x = Date, y = Fish, group = Year, colour = factor(Year)),
-      size = 0.5) +
+      linewidth = 0.5) +
     geom_line(
       data = filter(sx.daily.recent, Year == 2025),
-      aes(x = Date, y = Fish, group = Year),
-      color = "black", size = 1.2) +
-    scale_color_brewer(palette = "Dark2") +
-    theme_minimal() +
+      aes(x = Date, y = Fish, group = Year,color="2025"),
+     linewidth = 1.2) +
+    #scale_color_brewer(palette = "Dark2") +
+    scale_color_manual(values=c(brewer.pal(4,"Dark2"),"black"))+
+    theme_bw() +
+    theme(axis.title.x=element_blank())+
     labs(colour = "Year") +
     ylab("Daily Sockeye Escapement")
 }
-
 
 # 2b. daily cumulative 2021-2025 plot
 make.recent.cum.plot <- function(sx.cumesc) {
@@ -62,13 +64,14 @@ make.recent.cum.plot <- function(sx.cumesc) {
     geom_line(
       data = filter(sx.cumesc, Year != 2025),
       aes(x = Date, y=cum_sum,group=Year, colour = factor(Year)),
-      size = 0.5) +
+      linewidth = 0.5) +
     geom_line(
-      data = filter(sx.cumesc, Year == 2025),
-      aes(x = Date, y = cum_sum, group = Year),
-      color = "black", size = 1.2) +
-    scale_color_brewer(palette = "Dark2") +
-    theme_minimal() +
+      data = filter(sx.cumesc, Year == 2025&Date<=tyee.day),
+      aes(x = Date, y = cum_sum, group = Year,color="2025"),
+      linewidth= 1.2) +
+    #scale_color_brewer(palette = "Dark2") +
+    scale_color_manual(values=c(brewer.pal(4,"Dark2"),"black"))+
+    theme_bw() +
     labs(colour = "Year") +
     ylab("Cumulative Sockeye Escapement")
   
