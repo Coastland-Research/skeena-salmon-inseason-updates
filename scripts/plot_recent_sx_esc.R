@@ -33,7 +33,7 @@ sx.cumesc <- all.sx.data %>%
 # 2. Create function for plots --------------------------------------------
 
 # 2a. daily esc 2021-2025 plot
-make.recent.esc.plot <- function(sx.daily.recent) {
+make.recent.esc.plot <- function(sx.daily.recent,xhigh) {
   
 # ggplot(sx.daily.recent, aes(x=Date, y=Fish,group=Year, colour = Year)) +
 #   geom_line() +
@@ -54,11 +54,12 @@ make.recent.esc.plot <- function(sx.daily.recent) {
     theme_bw() +
     theme(axis.title.x=element_blank())+
     labs(colour = "Year") +
-    ylab("Daily Sockeye Escapement")
+    ylab("Daily Sockeye Escapement")+
+    xlim(as.Date("2025-06-10"),xhigh)
 }
 
 # 2b. daily cumulative 2021-2025 plot
-make.recent.cum.plot <- function(sx.cumesc) {
+make.recent.cum.plot <- function(sx.cumesc,yhigh,xhigh) {
   
   ggplot() +
     geom_line(
@@ -73,7 +74,9 @@ make.recent.cum.plot <- function(sx.cumesc) {
     scale_color_manual(values=c(brewer.pal(4,"Dark2"),"black"))+
     theme_bw() +
     labs(colour = "Year") +
-    ylab("Cumulative Sockeye Escapement")
+    ylab("Cumulative Sockeye Escapement")+
+    xlim(as.Date("2025-06-10"),as.Date("2025-07-15"))+
+    ylim(0,500000)
   
   # ggplot(sx.cumesc, aes(x=Date, y=cum_sum,group=Year, colour = Year))+
   #   geom_line() +

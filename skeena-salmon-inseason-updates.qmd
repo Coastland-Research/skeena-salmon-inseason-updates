@@ -185,8 +185,8 @@ source("scripts/plot_recent_sx_esc.R")
 ```{r, fig.height=7, fig.cap="Daily (top panel) and cumulative (bottom panel) sockeye escapement for 2021-2025."}
 #| label: fig-esc-recent-yrs
 
-p1<-make.recent.esc.plot(sx.daily.recent)
-p2<-make.recent.cum.plot(sx.cumesc)
+p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2025-07-15"))
+p2<-make.recent.cum.plot(sx.cumesc,as.Date("2025-07-15"),500000)
 ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
