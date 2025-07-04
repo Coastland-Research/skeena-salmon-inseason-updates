@@ -1,36 +1,34 @@
-
 library(data.table)
 library(tidyverse)
 library(ggplot2)
-library(utilizR)
-
-df<-fread("tyee sockeye index values.csv",header=TRUE)
-
-install.packages("remotes")
-
-
-remotes::install_github("MichaelFolkes/utilizer")
-
+library(utilizer)
 library(remotes)
 library(zoo)
+
+install.packages("remotes") 
+remotes::install_gitlab("MichaelFolkes/utilizer") 
+
+# df<-fread("tyee sockeye index values.csv",header=TRUE)
+df<-fread("data/current_year/tyee data 2025.csv") %>%
+  select(Date,"2025"=sockeye)
 
 # comment -----------------------------------------------------------------
 
 #Author: Michael Folkes (michael.folkes@dfo-mpo.gc.ca)
 #source: https://gitlab.com/MichaelFolkes/inseason
 
-#this will plot time series (x=year, y=date value), each facet is a percentile estimate of a date. eg cpue by day and year. first calc the cumulative cpue by day and year then plots percentiles of the cumulative values.
+#this will plot time series (x=year, y=date value), each facet is a percentile estimate of a date. 
+# eg cpue by day and year. first calc the cumulative cpue by day and year then plots 
+# percentiles of the cumulative values.
 
-#how to run: source the function defs section below then jump to the examples section and run those lines.
-
+#how to run: source the function defs section below then jump to the examples section 
+# and run those lines.
 
 # setup -------------------------------------------------------------------
-
 
 rm(list=ls())
 
 # function defs -----------------------------------------------------------
-
 
 #' Calculate daily proportions
 #'
@@ -45,12 +43,9 @@ rm(list=ls())
 #' 
 #' 
 
-
-
 calcDailyProportions <- function(x, signif.dec=3){
   output <- list()
   data.yearly.daily <- x
-  
   
   # x.cumsum <- by(x$cpue, x$year,FUN = function(x.sub) data.frame(prop=x.sub/sum(x.sub), prop.cumul=cumsum(x.sub)/sum(x.sub)))
   # results$cumulativesum <- cbind(x, do.call(rbind, x.cumsum))
@@ -83,7 +78,7 @@ calcDailyProportions <- function(x, signif.dec=3){
       maxod <- names(counts)[which.max(counts)]
       mode.df <- data.frame(year=unique(x.sub$year), p.f="mode", quantiles=maxod)
       
-      peak.day<-x.sub$od[which.max(rollapplyr(x.sub$cpue,5,mean,fill=NA,align="center"))]
+      peak.day<-x.sub$od[which.max(rollapply(x.sub$cpue,5,mean,fill=NA,align="center"))]
       peak<-data.frame(year=unique(x.sub$year), p.f="peak", quantiles=peak.day)
       
       q.df <- rbind(q.df, mode.df,peak)
@@ -119,6 +114,7 @@ plotPercentileDates <- function(data.percentile.date, filename=NA){
   
 }#END plotPercentileDates
 
+
 logit <- function(x){
   log(x/(1-x))
 }# END logit
@@ -134,7 +130,6 @@ getDecimals <-function(x) {min(which( x*10^(0:20)==floor(x*10^(0:20)) )) - 1}
 #input
 #data.daily must be a data frame with columns: year, od, cpue (if your not plotting cpue data maybe just call your data cpue anyhow, or you'll have to rename all the refs to cpue in the two functions)
 
-
 #how to calc ordinal date from date obj:
 #od=ordinal day
 #fyi get od by:
@@ -144,41 +139,50 @@ x
 as.integer(format(x, "%j"))
 
 
-df<-fread("tyee sockeye index values.csv",header=TRUE)%>%select(-`2021`)
 
-df2<-df%>%pivot_longer(2:66,names_to="year",values_to="index")%>%
-  mutate(od=as.numeric(format(as.Date(Date),"%j")),year=as.numeric(year),cpue=index,cpue = replace_na(cpue, 0))%>%
+daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
+
+current<-fread("data/current_year/tyee data 2025.csv") %>%
+  select(Date,"2025"=sockeye)
+
+df<-left_join(daily,current,by="Date")%>%
+  mutate(Date=as.Date(Date))
+
+df2 <- df %>%
+  pivot_longer(`1956`:`2025`,names_to="Year",values_to="index") %>%
+  # pivot_longer(2:66,names_to="year",values_to="index") %>%
+  mutate(od=as.numeric(format(as.Date(Date),"%j")),
+         year=as.numeric(Year),
+         cpue=index,
+         cpue = replace_na(cpue, 0)) %>%
   select(-Date,-index)
 #write.csv(df2,"tyee sockeye index data long.csv")
 
 
-df3$cpue[is.na(df3$cpue)]<-0
+df2$cpue[is.na(df2$cpue)]<-0
 
-df4<-df3%>%
-
-names(df3)
-
-library(tidyverse)
+# df4<-df3%>%
+# names(df3)
 
 #making a fake data set of year, od, and cpue
 data.daily <- expand.grid(year=2000:2020, od=200:300)
 data.daily$cpue <- runif(n = nrow(data.daily), min=1, max=20)
 
 data.proportions <- calcDailyProportions(x = data.daily)
-
-#
-#
 ########
 
-df<-fread("tyee sockeye index values.csv",header=TRUE)%>%select(-`2021`)
+# df<-fread("tyee sockeye index values.csv",header=TRUE)%>%select(-`2021`)
 
-index.data<-df%>%pivot_longer(2:66,names_to="year",values_to="index")%>%
-  mutate(od=as.numeric(format(as.Date(Date),"%j")),year=as.numeric(year),cpue=index,cpue = replace_na(cpue, 0))%>%
+index.data <- df %>%
+  pivot_longer(`1956`:`2025`,names_to="Year",values_to="index") %>%
+  mutate(od=as.numeric(format(as.Date(Date),"%j")),
+         year=as.numeric(Year),
+         cpue=index,
+         cpue = replace_na(cpue, 0))%>%
   select(-Date,-index)
 
 #index.data<-index.data%>%filter(year>2010)
 data.proportions <- calcDailyProportions(x = index.data)
-library(zoo)
 
 data.proportions$quantiles$od<-as.numeric(data.proportions$quantiles$quantiles)
 data.proportions$quantiles$date.standard<-as.Date(data.proportions$quantiles$od, origin = "2020-01-01")
@@ -247,15 +251,11 @@ store<-data.frame(matrix(nrow=length(y)*length(qs),ncol=3))
 
 for (i in 1:length(y)) {
   
-  
-  
-  
 }
 
 quantile(df[,2],.5,na.rm=TRUE)
 
 apply(df3)
-
 
 mode(x)
 

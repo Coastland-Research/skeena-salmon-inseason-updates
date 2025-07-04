@@ -422,6 +422,14 @@ cum_tyee_years
 
 ```
 
+<figure>
+
+<img src="/images/skeena sockeye tyee index percentiles.png" title="Skeena sockeye run-timing change since 1970" alt="Skeena sockeye run-timing change since 1970" width="700"/>
+
+<figcaption>Skeena sockeye run-timing change since 1970</figcaption>
+
+</figure>
+
 # Appendix B - Catch of pink, chum, coho, chinook and steelhead
 
 # Appendix C - Population specific run-timing through Tyee
