@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 4, 2025"
+subtitle: "July 5, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -35,14 +35,14 @@ source("scripts/tyee_sockeye_plots.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-07-03")
-tyee.date<-"July 3"
+tyee.day<-as.Date("2025-07-04")
+tyee.date<-"July 4"
 figures.x.date<-as.Date("2025-07-12")
 
 # fence.day<-as.Date("2024-09-22")
 # fence.date<-"September 22"
 
-today<-as.Date("2025-07-03")
+today<-as.Date("2025-07-04")
 ```
 
 # Summary
@@ -158,7 +158,7 @@ daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=sockeye)
 
-make.index.figures(daily,current,25,100,figures.x.date)
+make.index.figures(daily,current,25,150,figures.x.date)
 
 ```
 
@@ -171,7 +171,7 @@ The 2025 sockeye escapement estimate at Tyee is shown below and compared to hist
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-escapement-sockeye
 
-make.tyee.sockeye.escapement.plots(60000,100000,figures.x.date)
+make.tyee.sockeye.escapement.plots(60000,200000,figures.x.date)
 
 ```
 
@@ -212,7 +212,7 @@ kable(trtc.table)
 ```{r, fig.height=5,fig.cap="Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing. The dashed line shows the pre-season forecast of a TRTC of ~2.4 million."}
 #| label: fig-sx-trtc-model
 
-make.trtc.sx.plot(sx.trtc.model)
+make.trtc.sx.plot(sx.trtc.model,7500000)
 
 write.csv(sx.trtc.model,"data/current_year/Tyee model data 2025.csv",row.names=FALSE)
 
