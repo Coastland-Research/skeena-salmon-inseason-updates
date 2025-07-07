@@ -35,3 +35,4 @@ ggplot(cum.data,aes(x=Date, y=cum_sum,group=Date))+
 
 }
 
+
