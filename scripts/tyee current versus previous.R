@@ -33,4 +33,5 @@ cum_tyee_years <- daily %>%
   theme_minimal()+
   theme(legend.position = "top") +
   scale_color_brewer(palette = "Set1", name = "")+
-  ylab("Cumulative Sockeye Escapement")
+  ylab("Cumulative Sockeye Escapement") +
+  theme(axis.text.x = element_text(angle = 45))

@@ -95,7 +95,7 @@ calcDailyProportions <- function(x, signif.dec=3){
   
 }#END calcDailyProportions
 
-plotPercentileDates <- function(data.percentile.date, filename=NA){
+plotPercentileDates <- function(data.percentile.date, filename = NA){
   
   p <- ggplot(data=data.percentile.date, aes(year, date.standard))+
     #geom_vline(xintercept = c(1987.5, 2007.5), col='grey')+
@@ -139,18 +139,21 @@ x
 as.integer(format(x, "%j"))
 
 
-
-daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
+# my data:
+daily<-fread("data/common/tyee_indices_sockeye_1956-2024.csv") %>%
+  mutate_if(is.character, as.numeric)
 
 current<-fread("data/current_year/tyee data 2025.csv") %>%
-  select(Date,"2025"=sockeye)
+  select(Date,"2025"=sockeye) %>%
+  mutate("2025" = as.numeric("2025"))
 
 df<-left_join(daily,current,by="Date")%>%
   mutate(Date=as.Date(Date))
 
 df2 <- df %>%
-  pivot_longer(`1956`:`2025`,names_to="Year",values_to="index") %>%
-  # pivot_longer(2:66,names_to="year",values_to="index") %>%
+  pivot_longer(`1956`:`2025`, names_to="Year",values_to="index") %>%
+  mutate(Year = if_else(is.na(Year), 0, Year)) %>%
+  # pivot_longer(2:66,names_to = "year",values_to = "index") %>%
   mutate(od=as.numeric(format(as.Date(Date),"%j")),
          year=as.numeric(Year),
          cpue=index,
@@ -190,16 +193,19 @@ data.proportions$quantiles$date.standard<-as.Date(data.proportions$quantiles$od,
 plotPercentileDates(data.proportions$quantiles)
 
 
-##myplot
-ggplot(data.proportions$quantiles,aes(x=year,y=date.standard))+
+## myplot
+ggplot(data.proportions$quantiles, aes(x = year, y = date.standard)) +
   geom_point()+
   geom_line()+
-  geom_vline(xintercept=2014,color="red",linetype='dashed')+
+  # geom_vline(xintercept=2014,color="red",linetype='dashed')+
   facet_grid(vars(p.f),scales="free_y")+
   labs(title="Skeena sockeye: Tyee index timing quantiles")+
-  ylab("Date")+xlab("Year")+
-  theme_bw()
+  ylab("Date") + xlab("Year") +
+  theme_bw() +
+  scale_x_continuous(breaks = seq(1956, 2025, by = 5)) +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
+# takes index data (for sockeye) as input. plot date by year 
 ggsave("skeena sockeye tyee index percentiles.png",dpi=600,height=10,width=7)  
   
 
