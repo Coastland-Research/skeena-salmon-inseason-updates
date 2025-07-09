@@ -158,7 +158,7 @@ daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=sockeye)
 
-make.index.figures(daily,current,25,150,figures.x.date)
+make.index.figures(daily,current,50,300,figures.x.date)
 
 ```
 
