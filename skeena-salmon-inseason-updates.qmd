@@ -158,7 +158,7 @@ daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=sockeye)
 
-make.index.figures(daily,current,50,300,figures.x.date)
+make.index.figures(daily,current,50,600,figures.x.date)
 
 ```
 
@@ -171,7 +171,7 @@ The 2025 sockeye escapement estimate at Tyee is shown below and compared to hist
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-escapement-sockeye
 
-make.tyee.sockeye.escapement.plots(60000,200000,figures.x.date)
+make.tyee.sockeye.escapement.plots(60000,1500000,figures.x.date)
 
 ```
 
@@ -230,7 +230,7 @@ daily<-fread("data/common/tyee_daily_indices_chinook_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=chinook)
 
-make.index.figures(daily,current,15,200,figures.x.date)
+make.index.figures(daily,current,20,300,figures.x.date)
 ```
 
 For comparison, the following figures show the Chinook index compared to more recent years since Chinook abundance declined to much lower levels. In comparison to the previous figures showing Chinook abundance since 1956, the Chinook index in 2025 is looking realtively optimistic.
@@ -295,7 +295,7 @@ daily<-fread("data/common/tyee_daily_indices_coho_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=coho)
 
-make.index.figures(daily,current,5,20,figures.x.date)
+make.index.figures(daily,current,5,30,figures.x.date)
 ```
 
 ## Steelhead
@@ -310,7 +310,7 @@ daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = 
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=steelhead)
 
-make.index.figures(daily,current,5,20,figures.x.date)
+make.index.figures(daily,current,5,40,figures.x.date)
 ```
 
 # Babine Fence
