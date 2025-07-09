@@ -141,18 +141,16 @@ as.integer(format(x, "%j"))
 
 # my data:
 daily<-fread("data/common/tyee_indices_sockeye_1956-2024.csv") %>%
-  mutate_if(is.character, as.numeric)
+  mutate_at(c("1956", "1972", "1974", "1979", "2022"), as.numeric)
 
 current<-fread("data/current_year/tyee data 2025.csv") %>%
-  select(Date,"2025"=sockeye) %>%
-  mutate("2025" = as.numeric("2025"))
+  select(Date,"2025"=sockeye) 
 
 df<-left_join(daily,current,by="Date")%>%
   mutate(Date=as.Date(Date))
 
 df2 <- df %>%
   pivot_longer(`1956`:`2025`, names_to="Year",values_to="index") %>%
-  mutate(Year = if_else(is.na(Year), 0, Year)) %>%
   # pivot_longer(2:66,names_to = "year",values_to = "index") %>%
   mutate(od=as.numeric(format(as.Date(Date),"%j")),
          year=as.numeric(Year),
@@ -185,7 +183,7 @@ index.data <- df %>%
   select(-Date,-index)
 
 #index.data<-index.data%>%filter(year>2010)
-data.proportions <- calcDailyProportions(x = index.data)
+data.proportions <- calcDailyProportions(x = df2)
 
 data.proportions$quantiles$od<-as.numeric(data.proportions$quantiles$quantiles)
 data.proportions$quantiles$date.standard<-as.Date(data.proportions$quantiles$od, origin = "2020-01-01")
