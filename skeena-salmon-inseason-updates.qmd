@@ -218,6 +218,16 @@ write.csv(sx.trtc.model,"data/current_year/Tyee model data 2025.csv",row.names=F
 
 ```
 
+```{r}
+source("scripts/cumulative_prop_trtc.R")
+```
+
+```{r, fig.height = 5, fig.cap = "Comparison of sockeye cumulative proportions from 1956-2024 to this year using different escapement estimates."}
+#| label: fig-sx-cum-prop
+
+make.prop.figure(gg.daily.pcum, data2)
+```
+
 ## Chinook Salmon
 
 The 2025 Chinook salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-chinook) in the text.
