@@ -27,10 +27,12 @@ options(scipen=10000)
 #load functions
 source("scripts/plot_index_figures.R")
 source("scripts/plot_sockeye_escapement_figures.R")
+source("scripts/plot_index_figures_pink.R")
 
 #load wrappers
 source("scripts/index_figures.R")
 source("scripts/tyee_sockeye_plots.R")
+source("scripts/index_figures_pink.R")
 
 ```
 
@@ -281,12 +283,12 @@ The 2025 pink salmon index is shown below and compared to historical index data 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for pink salmon from 1956-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-pink-odd
 
-daily<-fread("data/common/tyee_daily_indices_pink-odd_1956-2023.csv", header = TRUE)
+daily<-fread("data/common/tyee_daily_indices_pink-odd_1957-2023.csv", header = TRUE) 
 
 current<-fread("data/current_year/tyee data 2025.csv") %>%
-  select(Date,"2025"=`pink`)
+  select(Date,"2025"=`pink`) 
 
-make.index.figures(daily,current,10,50,figures.x.date)
+make.index.figures.pink(daily,current,15,200,figures.x.date)
 ```
 
 ### Even years
