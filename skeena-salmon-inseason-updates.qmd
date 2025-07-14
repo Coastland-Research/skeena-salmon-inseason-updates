@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 12, 2025"
+subtitle: "July 14, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -58,9 +58,11 @@ today<-as.Date("2025-07-14")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   Sockeye escapement estimates are tracking just above the median of returns from 1970-2024, with the TRTC model estimate increasing over the last few days, but still well below the pre-season forecast for early and average run-timing projections.
-    -   Chinook are also being caught at Tyee, with the cumulative index increasing to between the 25th and 50th percentiles to date. Compared to recent years (2011 on), the Chinook index is looking quite good.
-    -   Few pink, coho, chum, or steelhead have been caught at Tyee yet, however supporting information indicates that some coho have been caught in FSC fisheries.
+    -   Sockeye escapement estimates are tracking right around the median of returns from 1970-2024, with the TRTC model estimate decreasing over the last few days to around 1.7M on average timing (3.7M if onbe week late, and 872k if one week early), and still well below the pre-season forecast for early and average run-timing projections.
+    -   Chinook are also being caught at Tyee, with the cumulative index increasing to between the 25th and 50th percentiles to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking near the 75th percentile.
+    -   Pink salmon have started entering the Skeena, and are tracking near the 90th percentile.
+    -   Chum and steelhead have been caught at Tyee, however supporting information indicates that some coho have been caught in FSC fisheries.
+    -   To date no coho have been caught at Tyee.
 
 -   Babine
 
@@ -78,17 +80,16 @@ today<-as.Date("2025-07-14")
 
 -   First Nations Food Fisheries
 
-    -   First Nations food fisheries have started on the coast and marine approach waters, and in-river.
-    -   Indications suggest that fishing in-river has been slow so far.
+    -   First Nations food fisheries are ongoing on the coast and marine approach waters, and in-river.
 
 -   Commercial Fisheries
 
-    -   Commercial fisheries in Area 4 targeting sockeye have not started yet, but are anticipated given the pre-season sockeye forecast.
-    -   Commercial fisheries targeting sockeye will open in Area 3 on July 2 and 3.
+    -   Commercial fisheries targetting sockeye in Area 4 started on July 12. Catch numbers will be updated as they are available.
+    -   First Nations demonstration fisheries targetting sockeye in Area 4 opened on July 9. Catch information will be updated as numbers are available.
 
 -   Recreational Fisheries
 
-    -   Recreational fisheries for sockeye have not started, but will begin once the in-season forecast exceeds 1.05M and commercial fishery openings are triggered in Area 4.
+    -   Recreational fisheries for sockeye will liekly start shortly since commercial fisheries targetting sockeye have now opened.
     -   Early recreational fisheries for Chinook occurred in Areas 3/4 however effort was lower in 2025 than in previous years, bag limits were reduced, and as of June 22 there is non-retention of Chinook in the Area 3&4 fishery.
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
@@ -187,8 +188,8 @@ source("scripts/plot_recent_sx_esc.R")
 ```{r, fig.height=7, fig.cap="Daily (top panel) and cumulative (bottom panel) sockeye escapement for 2021-2025."}
 #| label: fig-esc-recent-yrs
 
-p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2025-07-15"))
-p2<-make.recent.cum.plot(sx.cumesc,as.Date("2025-07-15"),500000)
+p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2025-08-01"))
+p2<-make.recent.cum.plot(sx.cumesc,as.Date("2025-08-01"),500000)
 ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
@@ -245,7 +246,7 @@ current<-fread("data/current_year/tyee data 2025.csv") %>%
 make.index.figures(daily,current,20,300,figures.x.date)
 ```
 
-For comparison, the following figures show the Chinook index compared to more recent years since Chinook abundance declined to much lower levels. In comparison to the previous figures showing Chinook abundance since 1956, the Chinook index in 2025 is looking realtively optimistic.
+For comparison, the following figures show the Chinook index compared to more recent years since Chinook abundance declined to much lower levels. In comparison to the previous figures showing Chinook abundance since 1956, the Chinook index in 2025 is looking relatively optimistic.
 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for Chinook salmon from 2011-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-chinook-recent
@@ -407,6 +408,30 @@ make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 ```
 
 ### First Nations Demonstration and Economic Opportunity
+
+First Nations CSAF demonstration fisheries opened on July 9 in 2025. The catch associated with each demonstration fishery is determined using the weekly TAC. In 2025, the CTAC approach is being implemented, which means that the catch allocation of the demonstration fishery is no longer directly linked to what the commercial marine fishery catches each week. Catch by Nation/Nation group and gear type are shown below.
+
+```{r FNs demo fishery catches prep}
+source("scripts/first nations demo catches.R")
+
+```
+
+```{r FNs demo fishery catch table}
+
+kable(demo.table,caption="Preliminary Area 4 First Nations demo catches of sockeye.")%>%
+  row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
+```
+
+```{r FNs demo fishery catch figure,echo=FALSE,message=FALSE,warning=FALSE,include=TRUE}
+
+#| echo: false
+#| fig-cap: "Demonstration fishery catch of sockeye in Area 4 by Nation (preliminary estimates and not complete)."
+#| warning: false
+#| include: true
+#| fig-height: 4
+
+plot.fns.demo.catch(demo.data)
+```
 
 ## Recreational Fisheries
 
