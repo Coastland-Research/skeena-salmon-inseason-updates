@@ -42,7 +42,7 @@ make.tacandtotalcatch.plot<-function(catch.gn,catch.sn,tac.data) {
 cum.sx.catch<-rbind(catch.gn,catch.sn)%>%
   select(Date,Gear,Catch=`Sockeye (Kept)`)%>%
   group_by(Date)%>%
-  summarise(total.catch=sum(Catch))%>%
+  summarise(total.catch=sum(Catch,na.rm=TRUE))%>%
   replace(is.na(.), 0)%>%
   mutate(cum.catch=cumsum(total.catch))%>%
   filter(Date<tyee.day)
@@ -50,7 +50,7 @@ cum.sx.catch<-rbind(catch.gn,catch.sn)%>%
 tac.estimates<-tac.data%>%select(Date,Timing,TAC)
 
 ggplot(tac.estimates,aes(x=Date,y=TAC,color=Timing))+
-  geom_line(linewidth=1.1,linetype="dashed")+
+  geom_line(linewidth=1)+
   geom_line(data=cum.sx.catch,aes(y=cum.catch,color="2025 Cumulative Catch"),linewidth=1.5,alpha=.5)+
   scale_color_manual(values=c("black","#E41A1C","#377EB8","#4DAF4A"))+
   labs(y="Total Allowable Catch\nCatch to Date")+

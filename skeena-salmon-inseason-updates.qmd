@@ -39,7 +39,7 @@ source("scripts/index_figures_pink.R")
 ```{r set days, echo=FALSE}
 tyee.day<-as.Date("2025-07-15")
 tyee.date<-"July 15"
-figures.x.date<-as.Date("2025-07-30")
+figures.x.date<-as.Date("2025-08-01")
 
 # fence.day<-as.Date("2024-09-22")
 # fence.date<-"September 22"
@@ -58,15 +58,14 @@ today<-as.Date("2025-07-16")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   Sockeye escapement estimates are tracking right around the median of returns from 1970-2024, with the TRTC model estimate decreasing over the last few days to around 1.7M on average timing (3.7M if onbe week late, and 872k if one week early), and still well below the pre-season forecast for early and average run-timing projections.
+    -   Sockeye escapement estimates are tracking right around the median of returns from 1970-2024, with the TRTC model estimate decreasing over the last few days to around 1.7M on average timing (3.7M if one week late, and 872k if one week early), and still well below the pre-season forecast for early and average run-timing projections.
     -   Chinook are also being caught at Tyee, with the cumulative index increasing to between the 25th and 50th percentiles to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking near the 75th percentile.
     -   Pink salmon have started entering the Skeena, and are tracking near the 90th percentile.
-    -   Chum and steelhead have been caught at Tyee, however supporting information indicates that some coho have been caught in FSC fisheries.
-    -   To date no coho have been caught at Tyee.
+    -   Chum, steelhead, and coho have started showing up at Tyee, with the index remaining low to date.
 
 -   Babine
 
-    -   The Babine fence typically starts operations in mid-July. This section will be updated once Babine counts start.
+    -   The Babine fence typically started operations on July 14. This section will be updated shortly.
 
     -   Babine vs Tyee comparison will be added when fence operations start.
 
@@ -126,7 +125,6 @@ The table below shows the total 2025 Skeena Chinook terminal run point forecast 
 
 </figure>
 
-
 # Tide information at Port Edward {#tide-information-at-port-edward}
 
 Tides influence the movement of sockeye and other salmon migrating into the Skeena. The following image shows the tides at Port Edward for a period of \~ 2 weeks.
@@ -174,7 +172,7 @@ The 2025 sockeye escapement estimate at Tyee is shown below and compared to hist
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-escapement-sockeye
 
-make.tyee.sockeye.escapement.plots(60000,1500000,figures.x.date)
+make.tyee.sockeye.escapement.plots(100000,1500000,figures.x.date)
 
 ```
 
@@ -189,7 +187,7 @@ source("scripts/plot_recent_sx_esc.R")
 #| label: fig-esc-recent-yrs
 
 p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2025-08-01"))
-p2<-make.recent.cum.plot(sx.cumesc,as.Date("2025-08-01"),500000)
+p2<-make.recent.cum.plot(sx.cumesc,500000,as.Date("2025-08-01"))
 ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
@@ -356,7 +354,7 @@ Information on the Kitwanga fence operations can be found here: [Gitanyow Fisher
 
 Update #1 (July 8 2025) from DFO
 
-![](North Coast Salmon Update July 8 2025.pdf)
+![](North%20Coast%20Salmon%20Update%20July%208%202025.pdf)
 
 ## Area 4 Fishery Openings
 
@@ -387,7 +385,6 @@ source("scripts/harvest control rule and tac plots.R")
 
 make.sx.hcr.plot(hcr,tac.data)
 ```
-
 
 ```{r, fig.height=4,fig.cap="Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."}
 #| label: fig.skeena.sx.tacandcatch
