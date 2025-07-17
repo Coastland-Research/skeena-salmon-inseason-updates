@@ -159,7 +159,7 @@ daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=sockeye)
 
-make.index.figures(daily,current,50,600,figures.x.date)
+make.index.figures(daily,current,60,1200,figures.x.date)
 
 ```
 
@@ -392,6 +392,19 @@ make.sx.hcr.plot(hcr,tac.data)
 make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 
 ```
+
+```{r, fig.height=4,fig.cap="Skeena Sockeye catch by gear type."}
+#| label: fig-skeena-sx-gear
+
+make_p3(catch.gn, catch.sn)
+```
+
+```{r, fig.height=4,fig.cap="Skeena Sockeye CPUE by gear type."}
+#| label: fig-skeena-sx-cpue
+
+make_p4(catch.gn, catch.sn)
+```
+
 
 ```{r}
 #| label: fig-gill

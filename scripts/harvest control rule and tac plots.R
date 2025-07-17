@@ -29,7 +29,7 @@ ggplot(hcr,aes(x=TRTC/10^6,y=HR))+
   labs(y = "Canadian Harvest Rate", x = "Skeena sockeye return to Canada (millions)")
 }
 
-#make.sx.hcr.plot(hcr,tac.data)
+make.sx.hcr.plot(hcr,tac.data)
 
 #create figure with Ttac.data = #create figure with TAC trend and total cumulative catch for current year
 
@@ -59,6 +59,64 @@ ggplot(tac.estimates,aes(x=Date,y=TAC,color=Timing))+
   theme(legend.position="bottom")
 }
 
-#make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
+make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 
+# plot 2: 
+# 
+# make_p2 <- function(catch.gn, catch.sn) {
+#   
+#   cum.sx.catch<-rbind(catch.gn,catch.sn)%>%
+#     select(Date,Gear,Catch=`Sockeye (Kept)`)%>%
+#     group_by(Date)%>%
+#     summarise(total.catch=sum(Catch,na.rm=TRUE))%>%
+#     replace(is.na(.), 0)%>%
+#     mutate(cum.catch=cumsum(total.catch))%>%
+#     filter(Date<tyee.day)
+#   
+# }
 
+make_p3 <- function(catch.gn, catch.sn) {
+  
+  catch <- rbind(catch.gn, catch.sn) %>%
+    select(Date,Gear,Catch=`Sockeye (Kept)`)%>%
+    group_by(Date)
+  
+    ggplot(catch,aes(x=Date,y=Catch,fill=Gear))+
+    geom_col()+
+    scale_fill_brewer(palette="Set1")+
+    theme_bw()+
+    theme(legend.position="top")+
+    expand_limits(x=c(as.Date("2025-07-01"),as.Date("2025-09-01")))
+  
+}
+
+make_p3(catch.gn, catch.sn)
+
+make_p4 <- function(catch.gn, catch.sn) {
+  cpue <- rbind(catch.gn, catch.sn) %>%
+    select(Date,Gear,Effort,Catch=`Sockeye (Kept)`)%>%
+    mutate(
+      gear_prefix = case_when(
+        Gear == "Gillnet" ~ "gn",
+        Gear == "Seine" ~ "sn")) %>%
+    pivot_wider(
+      names_from = gear_prefix,
+      values_from = c(Effort, Catch),
+      names_glue = "{gear_prefix}{.value}") %>%
+    mutate(Gillnet=gnCatch/gnEffort,Seine=snCatch/snEffort)%>%
+    select(Date,Gillnet,Seine)%>%
+    pivot_longer(2:3,names_to="Gear",values_to="CPUE")%>%
+    filter(Date>"2025-07-01"&Date<"2025-09-01")
+  
+    ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
+    geom_line()+geom_point()+
+    scale_color_brewer(palette="Set1")+
+    theme_bw()+
+    theme(legend.position = "top")+
+    labs(y="Sockeye CPUE")+
+    expand_limits(y=0)+
+    expand_limits(x=c(as.Date("2024-07-01"),as.Date("2024-09-01")))
+    
+}
+
+make_p4(catch.gn, catch.sn)
