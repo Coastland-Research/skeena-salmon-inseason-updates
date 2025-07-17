@@ -1,3 +1,4 @@
+library(zoo)
 
 tyee.sx.data<-fread("data/current_year/tyee data 2025.csv")%>%
   select(Date,Runtiming,esctyee)%>%
@@ -12,13 +13,29 @@ sncatch<-fread("data/current_year/commercial catch 2025-seine.csv")%>%
 
 total.catch<-left_join(gncatch,sncatch)
 
-sx.trtc.model.all<-left_join(tyee.sx.data,total.catch)%>%
-  mutate(catch=gncatch+sncatch,
-         rtlate=lag(Runtiming,7),
-         rtearly=lead(Runtiming,7),
-         Average=cumesc/Runtiming,
-         Early=cumesc/rtearly,
-         Late=cumesc/rtlate)
+# sx.trtc.model.all<-left_join(tyee.sx.data,total.catch)%>%
+#   mutate(catch=gncatch+sncatch,
+#          rtlate=lag(Runtiming,7),
+#          rtearly=lead(Runtiming,7),
+#          Average=cumesc/Runtiming,
+#          Early=cumesc/rtearly,
+#          Late=cumesc/rtlate)
+
+
+###
+sx.trtc.model.all <- left_join(tyee.sx.data, total.catch) %>%
+  mutate(
+    catch = gncatch + sncatch,
+    rtlate = lag(Runtiming, 7),
+    rtearly = lead(Runtiming, 7),
+    Average = cumesc / Runtiming,
+    Early = cumesc / rtearly,
+    Late = cumesc / rtlate,
+    adjusted_catch = rollmean(catch, k = 5, fill = NA, align = "left"),
+    trtc = (adjusted_catch + cumesc)
+  )
+###
+
 
 sx.trtc.model<-sx.trtc.model.all%>%
   select(Date,Early,Average,Late)%>%
