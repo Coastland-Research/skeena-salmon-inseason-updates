@@ -76,7 +76,7 @@ make.recent.cum.plot <- function(sx.cumesc,yhigh,xhigh) {
     labs(colour = "Year") +
     ylab("Cumulative Sockeye Escapement")+
     xlim(as.Date("2025-06-10"),xhigh)+
-    ylim(0,500000)
+    ylim(0,yhigh)
   
   # ggplot(sx.cumesc, aes(x=Date, y=cum_sum,group=Year, colour = Year))+
   #   geom_line() +

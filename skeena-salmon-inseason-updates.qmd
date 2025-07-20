@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 19, 2025"
+subtitle: "July 20, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -37,14 +37,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-07-18")
-tyee.date<-"July 18"
+tyee.day<-as.Date("2025-07-19")
+tyee.date<-"July 19"
 figures.x.date<-as.Date("2025-08-01")
 
 # fence.day<-as.Date("2024-09-22")
 # fence.date<-"September 22"
 
-today<-as.Date("2025-07-19")
+today<-as.Date("2025-07-20")
 ```
 
 # Summary
@@ -58,10 +58,11 @@ today<-as.Date("2025-07-19")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   Sockeye escapement estimates are tracking right around the median of returns from 1970-2024, with the TRTC model estimate decreasing over the last few days to around 1.7M on average timing (3.7M if one week late, and 872k if one week early), and still well below the pre-season forecast for early and average run-timing projections.
-    -   Chinook are also being caught at Tyee, with the cumulative index increasing to between the 25th and 50th percentiles to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking near the 75th percentile.
-    -   Pink salmon have started entering the Skeena, and are tracking near the 90th percentile.
-    -   Chum, steelhead, and coho have started showing up at Tyee, with the index remaining low to date.
+    -   Sockeye escapement estimates are tracking right around the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last week to around 1.7M on average timing (3.3M if one week late, and 1.1M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
+    -   Run-timing is still uncertain, but it looks like it is possible that the run is a bit late.
+    -   The Chinook index index is tracking between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking near the 75th percentile.
+    -   Pink salmon have started entering the Skeena, and are tracking off the charts well above the highest run index ever.
+    -   Chum, steelhead, and coho have started showing up at Tyee, with indices remaining low to date.
 
 -   Babine
 
@@ -88,7 +89,7 @@ today<-as.Date("2025-07-19")
 
 -   Recreational Fisheries
 
-    -   Recreational fisheries for sockeye will liekly start shortly since commercial fisheries targetting sockeye have now opened.
+    -   Recreational fisheries for sockeye have opened following the IFMP and the commercial opening for sockeye.
     -   Early recreational fisheries for Chinook occurred in Areas 3/4 however effort was lower in 2025 than in previous years, bag limits were reduced, and as of June 22 there is non-retention of Chinook in the Area 3&4 fishery.
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
@@ -187,7 +188,7 @@ source("scripts/plot_recent_sx_esc.R")
 #| label: fig-esc-recent-yrs
 
 p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2025-08-01"))
-p2<-make.recent.cum.plot(sx.cumesc,500000,as.Date("2025-08-01"))
+p2<-make.recent.cum.plot(sx.cumesc,1000000,as.Date("2025-08-01"))
 ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
@@ -287,7 +288,7 @@ daily<-fread("data/common/tyee_daily_indices_pink-odd_1957-2023.csv", header = T
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=`pink`) 
 
-make.index.figures.pink(daily,current,15,200,figures.x.date)
+make.index.figures.pink(daily,current,150,1000,figures.x.date)
 ```
 
 ### Even years
@@ -404,7 +405,6 @@ make_p3(catch.gn, catch.sn)
 
 make_p4(catch.gn, catch.sn)
 ```
-
 
 ```{r}
 #| label: fig-gill
