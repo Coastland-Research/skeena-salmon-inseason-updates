@@ -330,9 +330,20 @@ The Babine fence was installed and fish tight on July 14.
 
 Information on the Babine fence counts are updated daily [here](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/babine-eng.html). We extract information from this site and update daily.
 
+```{r}
+source("scripts/babine_fence_counts.R")
+```
+
+
 ### Babine Sockeye
 ```{r}
 
+get.babine.data("Large Sockeye")
+
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),10000)
+babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),100000)
+  
+ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 #### Babine comparison with Tyee
