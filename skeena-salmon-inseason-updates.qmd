@@ -339,8 +339,8 @@ source("scripts/babine_fence_counts.R")
 ```{r}
 get.babine.data("Large Sockeye")
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),10000)
-babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),100000)
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),100)
+babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),300)
   
 ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
