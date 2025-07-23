@@ -58,25 +58,21 @@ today<-as.Date("2025-07-23")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   Sockeye escapement estimates are tracking right around the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last week to around 1.7M on average timing (3.3M if one week late, and 1.1M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
+    -   Sockeye escapement estimates are tracking right around the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last week and then decreasing slightly to around 1.5-1.6M on average timing (2.7M if one week late, and 1.05M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
     -   Run-timing is still uncertain, but it looks like it is possible that the run is a bit late.
     -   The Chinook index index is tracking between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking near the 75th percentile.
-    -   Pink salmon have started entering the Skeena, and are tracking off the charts well above the highest run index ever.
+    -   Pink salmon have started entering the Skeena, and are tracking off the charts well above the highest run index ever. Supporting information from Area 3 and other fisheries indicates a very large pink return this year.
     -   Chum, steelhead, and coho have started showing up at Tyee, with indices remaining low to date.
 
 -   Babine
 
-    -   The Babine fence typically started operations on July 14. This section will be updated shortly.
+    -   The Babine fence typically started operations on July 14. Large sockeye counts have started.
 
-    -   Babine vs Tyee comparison will be added when fence operations start.
-
-    -   Babine jack sockeye to be updated soon!
-
-    -   Babine other salmon to be updated soon!
+    -   Babine vs Tyee comparison will be added shortly
 
 -   Kitwanga Fence
 
-    -   The Kitwanga fence typically starts operations by July 10. Information from the Kitwanga fence is shared weekly by Gitanyow Fisheries Authority.
+    -   The Kitwanga fence typically started operations on July 11. Information from the Kitwanga fence is shared weekly by Gitanyow Fisheries Authority.
 
 -   First Nations Food Fisheries
 
@@ -84,13 +80,16 @@ today<-as.Date("2025-07-23")
 
 -   Commercial Fisheries
 
-    -   Commercial fisheries targetting sockeye in Area 4 started on July 12. Catch numbers will be updated as they are available.
-    -   First Nations demonstration fisheries targetting sockeye in Area 4 opened on July 9. Catch information will be updated as numbers are available.
+    -   Commercial fisheries targetting sockeye in Area 4 started on July 12 with 3 gillnet openings to date, and 1 seine opening ongoing.
+    -   Catch numbers have been updated through July 21.
+    -   Further commercial fisheries may be opened pending run size information in the next while.
+    -   First Nations demonstration fisheries targetting sockeye in Area 4 opened on July 9. Catch information for demo fisheries has been updated and will be updated with preliminary information as it comes in.
 
 -   Recreational Fisheries
 
     -   Recreational fisheries for sockeye have opened following the IFMP and the commercial opening for sockeye.
-    -   Early recreational fisheries for Chinook occurred in Areas 3/4 however effort was lower in 2025 than in previous years, bag limits were reduced, and as of June 22 there is non-retention of Chinook in the Area 3&4 fishery.
+    -   Early recreational fisheries for Chinook occurred in Areas 3/4 however effort was lower in 2025 than in previous years, bag limits were reduced, and as of June 22 there was non-retention of Chinook in the Area 3&4 fishery.
+    -   Retention of Chinook in Areas 3-5 resumes July 24 with a daily limit of 1 per day.
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
@@ -326,21 +325,26 @@ make.index.figures(daily,current,5,40,figures.x.date)
 ```
 
 # Babine Fence
-The Babine fence was installed and fish tight on July 14. 
+
+The Babine fence was installed and fish tight on July 14.
 
 Information on the Babine fence counts are updated daily [here](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/babine-eng.html). We extract information from this site and update daily.
 
 ```{r}
 source("scripts/babine_fence_counts.R")
+
+babine.figures.x.high<-as.Date("2025-08-15")
 ```
 
-
 ### Babine Sockeye
-```{r}
+
+```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
+#| label: fig-babine-large-sockeye
+
 get.babine.data("Large Sockeye")
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),100)
-babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),300)
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,100)
+babine.cum<-make.babine.cum.plot(babine.figures.x.high,300)
   
 ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
@@ -348,61 +352,79 @@ ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="
 ### Babine comparison with Tyee
 
 ### Jack sockeye
-```{r}
+
+```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
+#| label: fig-babine-jack-sockeye
+
 get.babine.data("Jack Sockeye")
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),10000)
-babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),100000)
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,10000)
+babine.cum<-make.babine.cum.plot(babine.figures.x.high,100000)
   
 ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine Adult Chinook
-```{r}
+
+```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large Chinook salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
+#| label: fig-babine-large-chinook
+
 get.babine.data("Large Chinook")
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),10000)
-babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),100000)
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,100)
+babine.cum<-make.babine.cum.plot(babine.figures.x.high,5000)
   
 ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine Jack Chinook
-```{r}
+
+```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack Chinook salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
+#| label: fig-babine-jack-chinook
+
 get.babine.data("Jack Chinook")
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),10000)
-babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),100000)
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,100)
+babine.cum<-make.babine.cum.plot(babine.figures.x.high,5000)
   
 ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine Pink
-```{r}
+
+```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for pink salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
+#| label: fig-babine-pink
+
 get.babine.data("Pink")
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),10000)
-babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),100000)
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,1000)
+babine.cum<-make.babine.cum.plot(babine.figures.x.high,100000)
   
 ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine Coho
-```{r}
+
+```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for coho salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
+#| label: fig-babine-coho
+
 get.babine.data("Coho")
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),10000)
-babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),100000)
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,100)
+babine.cum<-make.babine.cum.plot(babine.figures.x.high,10000)
   
 ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine Steelhead
-```{r}
+
+```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for steelhead at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
+#| label: fig-babine-steelhead
+
 get.babine.data("Steelhead")
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,as.Date("2025-08-01"),10000)
-babine.cum<-make.babine.cum.plot(as.Date("2025-08-01"),100000)
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,50)
+babine.cum<-make.babine.cum.plot(babine.figures.x.high,100)
   
 ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
