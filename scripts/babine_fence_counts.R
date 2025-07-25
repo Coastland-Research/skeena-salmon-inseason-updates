@@ -6,6 +6,7 @@ get.babine.data<-function(species) {
 species<-"Large Sockeye"
 historical<-read_excel("data/common/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet=species)%>%
   mutate(Date=as.Date(Date))%>%
+  mutate_at(vars("1946":"2024"), ~replace(., is.na(.), 0)) %>%
   mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")))
 
 #str(historical)
