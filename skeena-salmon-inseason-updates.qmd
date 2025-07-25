@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 24, 2025"
+subtitle: "July 25, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -9,6 +9,8 @@ execute:
   echo: FALSE
   warning: FALSE
   messages: FALSE
+steelhead:
+  pdf: "steelhead/steelhead_update_july_17_25.pdf"
 ---
 
 ```{r load libraries}
@@ -37,14 +39,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-07-23")
-tyee.date<-"July 23"
+tyee.day<-as.Date("2025-07-24")
+tyee.date<-"July 24"
 figures.x.date<-as.Date("2025-08-01")
 
-fence.day<-as.Date("2025-07-23")
-fence.date<-"July 23"
+fence.day<-as.Date("2025-07-24")
+fence.date<-"July 24"
 
-today<-as.Date("2025-07-24")
+today<-as.Date("2025-07-25")
 ```
 
 # Summary
@@ -324,6 +326,41 @@ current<-fread("data/current_year/tyee data 2025.csv") %>%
 make.index.figures(daily,current,5,40,figures.x.date)
 ```
 
+The following Tyee steelhead updates to July 17 were provided by the Province of BC via email. For any questions please contact Kenji Miyazaki at BC.
+
+
+```{css echo=FALSE}
+.embed-container {
+    position: relative;
+    padding-bottom: 129%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 75%;
+    height: 100%;
+}
+```
+
+```{=html}
+<p class="text-center">
+  <a class="btn btn-primary btn-sm steelhead-download" href="`r rmarkdown::metadata$steelhead$pdf`" target="_blank">
+    <i class="fa-solid fa-file-arrow-down"></i>&ensp;Download steelhead update
+  </a>
+</p>
+
+<div class="embed-container">
+  <iframe src="`r rmarkdown::metadata$steelhead$pdf`" style="border: 0.5px"></iframe>
+</div>
+```
+
 # Babine Fence
 
 The Babine fence was installed and fish tight on July 14.
@@ -437,9 +474,9 @@ Information on the Kitwanga fence operations can be found here: [Gitanyow Fisher
 
 ## North Coast Salmon Update
 
-Update #1 (July 8 2025) from DFO
+Update #3 (July 22 2025) from DFO
 
-![](North%20Coast%20Salmon%20Update%20July%208%202025.pdf)
+![](NCA%20Weekly%20Update%20#3%20July%2022%202025.pdf)
 
 ## Area 4 Fishery Openings
 
