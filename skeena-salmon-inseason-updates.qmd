@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 26, 2025"
+subtitle: "July 27, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -11,6 +11,7 @@ execute:
   messages: FALSE
 steelhead:
   pdf: "steelhead/steelhead_update_july_17_25.pdf"
+
 ---
 
 ```{r load libraries}
@@ -39,14 +40,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-07-25")
-tyee.date<-"July 25"
+tyee.day<-as.Date("2025-07-26")
+tyee.date<-"July 26"
 figures.x.date<-as.Date("2025-08-15")
 
-fence.day<-as.Date("2025-07-25")
-fence.date<-"July 25"
+fence.day<-as.Date("2025-07-26")
+fence.date<-"July 26"
 
-today<-as.Date("2025-07-26")
+today<-as.Date("2025-07-27")
 ```
 
 # Summary
@@ -60,10 +61,10 @@ today<-as.Date("2025-07-26")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   Sockeye escapement estimates are tracking right around the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last week and then decreasing slightly to around 1.5-1.6M on average timing (2.7M if one week late, and 1.05M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
-    -   Run-timing is still uncertain, but it looks like it is possible that the run is a bit late.
+    -   Sockeye escapement estimates are tracking right around the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last 2 weeks while decreasing slightly to around 1.5-1.6M on average timing (2.5M if one week late, and 1.14M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
+    -   If average run-timing, ~ 55% of the run has passed Tyee to date.
     -   The Chinook index index is tracking between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking near the 75th percentile.
-    -   Pink salmon have started entering the Skeena, and are tracking off the charts well above the highest run index ever. Supporting information from Area 3 and other fisheries indicates a very large pink return this year.
+    -   Pink salmon were tracking off the charts well above the highest run index ever. Supporting information from Area 3 and other fisheries indicates a very large pink return this year.
     -   Chum, steelhead, and coho have started showing up at Tyee, with indices remaining low to date.
 
 -   Babine
@@ -174,7 +175,7 @@ The 2025 sockeye escapement estimate at Tyee is shown below and compared to hist
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2024 (grey lines). 2025 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-escapement-sockeye
 
-make.tyee.sockeye.escapement.plots(500000,2000000,figures.x.date)
+make.tyee.sockeye.escapement.plots(250000,2000000,figures.x.date)
 
 ```
 
@@ -188,8 +189,8 @@ source("scripts/plot_recent_sx_esc.R")
 ```{r, fig.height=7, fig.cap="Daily (top panel) and cumulative (bottom panel) sockeye escapement for 2021-2025."}
 #| label: fig-esc-recent-yrs
 
-p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2025-08-01"))
-p2<-make.recent.cum.plot(sx.cumesc,1000000,as.Date("2025-08-01"))
+p1<-make.recent.esc.plot(sx.daily.recent,figures.x.date)
+p2<-make.recent.cum.plot(sx.cumesc,1500000,figures.x.date)
 ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
@@ -243,7 +244,7 @@ daily<-fread("data/common/tyee_daily_indices_chinook_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=chinook)
 
-make.index.figures(daily,current,20,500,figures.x.date)
+make.index.figures(daily,current,15,400,figures.x.date)
 ```
 
 For comparison, the following figures show the Chinook index compared to more recent years since Chinook abundance declined to much lower levels. In comparison to the previous figures showing Chinook abundance since 1956, the Chinook index in 2025 is looking relatively optimistic.
@@ -328,7 +329,6 @@ make.index.figures(daily,current,10,100,figures.x.date)
 
 The following Tyee steelhead updates to July 17 were provided by the Province of BC via email. For any questions please contact Kenji Miyazaki at BC.
 
-
 ```{css echo=FALSE}
 .embed-container {
     position: relative;
@@ -349,7 +349,6 @@ The following Tyee steelhead updates to July 17 were provided by the Province of
 }
 ```
 
-```{=html}
 <p class="text-center">
   <a class="btn btn-primary btn-sm steelhead-download" href="`r rmarkdown::metadata$steelhead$pdf`" target="_blank">
     <i class="fa-solid fa-file-arrow-down"></i>&ensp;Download steelhead update
@@ -359,7 +358,6 @@ The following Tyee steelhead updates to July 17 were provided by the Province of
 <div class="embed-container">
   <iframe src="`r rmarkdown::metadata$steelhead$pdf`" style="border: 0.5px"></iframe>
 </div>
-```
 
 # Babine Fence
 
@@ -472,11 +470,15 @@ Information on the Kitwanga fence operations can be found here: [Gitanyow Fisher
 
 # Fisheries
 
+This section contains information on fisheries in Area 4. Included are the weekly in-season updates provided by DFO North Coast Resource Management
+
 ## North Coast Salmon Update
 
-Update #3 (July 22 2025) from DFO
+[Update #3-July 22](/data/nc_stad_weekly_updates/NCA_Weekly_Update_3_July_22_2025.pdf)
 
-![](NCA%20Weekly%20Update%20#3%20July%2022%202025.pdf)
+[Update #2-July 15](/data/nc_stad_weekly_updates/NCA_Weekly_Update_2_July_15_2025.pdf)
+
+[Update #1-July 8](/data/nc_stad_weekly_updates/NCA_Weekly_Update_1_July_8_2025.pdf)
 
 ## Area 4 Fishery Openings
 
