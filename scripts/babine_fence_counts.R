@@ -1,10 +1,10 @@
 
 library(lubridate)
 
-get.babine.data<-function(species) {
-  
-species<-"Large Sockeye"
-historical<-read_excel("data/common/babine fence counts 1946-2024 compiled 20240717.xlsx",sheet=species)%>%
+make.babine.figures<-function(species.in,babine.x.high,daily.yhigh,cum.yhigh) {
+
+historical<-read_excel("data/common/babine fence counts 1946-2024 compiled 20240717.xlsx",
+                       sheet=species.in)%>%
   mutate(Date=as.Date(Date))%>%
   mutate_at(vars("1946":"2024"), ~replace(., is.na(.), 0)) %>%
   mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")))
@@ -12,7 +12,7 @@ historical<-read_excel("data/common/babine fence counts 1946-2024 compiled 20240
 #str(historical)
 
 current<-fread("data/current_year/babine fence 2025.csv") %>%
-select(Date,"2025"=species)%>%
+select(Date,"2025"=species.in)%>%
   mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")))
 
 #str(current)
@@ -42,8 +42,9 @@ gg.daily.quants<-gg.daily %>%
 
 gg.daily.cum<-daily.index%>%
   pivot_longer(`1946`:`2025`,names_to="Year",values_to="Fish") %>%
+  mutate(Fish=replace_na(Fish,0))%>%
   group_by(Year)%>%
-  mutate(cum_sum=cumsum(replace_na(Fish,0)))
+  mutate(cum_sum=cumsum(Fish))
 
 gg.daily.cum.quants<-gg.daily.cum %>%
   group_by(Date) %>%
@@ -60,44 +61,12 @@ gg.daily.cum.quants<-gg.daily.cum %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.x.high,daily.yhigh)
+
+babine.cum<-make.babine.cum.plot(gg.daily.cum,gg.daily.cum.quants,babine.x.high,cum.yhigh)
+
+ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
+
 }
 #daily and cumulative index plots
 
-make.babine.daily.plot<-function(daily.data,daily.quants,babine.xhigh,daily.yhigh) {
-  
-  ggplot(daily.data,aes(x=Date, y=Fish,group=Date))+
-    geom_line(data=daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
-    geom_line(data = daily.data %>% filter(Year == 2025),
-              aes(x = Date, y = Fish, group = 1, color = "2025 Data"),
-              linewidth = 1.5,alpha=.7)+
-    geom_line(data = daily.data %>% filter(Year <2025), aes(x = Date, y = Fish,group=Year),
-              linewidth = .5,alpha=.1)+
-    scale_color_manual(values=c("grey75","purple","grey50","black"))+
-    labs(y="Daily Count",color="")+
-    theme_bw()+
-    theme(legend.position="bottom",axis.title.x=element_blank())+
-    ylim(0,daily.yhigh)+
-    xlim(as.Date("2025-07-01"),babine.xhigh)
-}
-
-#babine.xhigh=as.Date("2025-08-01")
-#cum.yhigh=10000
-
-make.babine.cum.plot<-function(babine.xhigh,cum.yhigh){
-  
-  ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
-    geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
-  
-    geom_line(data = gg.daily.cum %>% filter(Year == 2025&Date<=tyee.day),
-              aes(x = Date, y = cum_sum, group = 1,color = "2025 Data"),
-              linewidth = 1.5,alpha=.7)+
-    geom_line(data = gg.daily.cum %>% filter(Year <2025), aes(x = Date, y = cum_sum,group=Year),
-              linewidth = .5,alpha=.1)+
-    scale_color_manual(values=c("grey75","purple","grey50","black"))+
-    labs(y="Cumulative Daily Count",color="")+
-    theme_bw()+
-    theme(legend.position = "bottom")+
-    xlim(as.Date("2025-07-01"),babine.xhigh)+
-    ylim(0,cum.yhigh)
-  
-}

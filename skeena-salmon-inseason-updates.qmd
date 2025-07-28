@@ -327,7 +327,9 @@ current<-fread("data/current_year/tyee data 2025.csv") %>%
 make.index.figures(daily,current,10,100,figures.x.date)
 ```
 
-The following Tyee steelhead updates to July 17 were provided by the Province of BC via email. For any questions please contact Kenji Miyazaki at BC.
+Steelhead updates are also provided by the Province of BC. Please reach out to Kenji Miyazaki with any questions.
+
+Most recent steelhead update:
 
 ```{css echo=FALSE}
 .embed-container {
@@ -359,6 +361,12 @@ The following Tyee steelhead updates to July 17 were provided by the Province of
   <iframe src="`r rmarkdown::metadata$steelhead$pdf`" style="border: 0.5px"></iframe>
 </div>
 
+
+
+Previous steelhead updates:
+
+[Update to July 17](/data/steelhead/Skeena_Summer_Steelhead_Update_to_July_17_25.xlsx)
+
 # Babine Fence
 
 The Babine fence was installed and fish tight on July 14.
@@ -367,6 +375,7 @@ Information on the Babine fence counts are updated daily [here](https://www.pac.
 
 ```{r}
 source("scripts/babine_fence_counts.R")
+source("scripts/make_babine_plots.R")
 
 babine.figures.x.high<-as.Date("2025-08-15")
 ```
@@ -376,12 +385,8 @@ babine.figures.x.high<-as.Date("2025-08-15")
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
 
-get.babine.data("Large Sockeye")
+make.babine.figures("Large Sockeye",babine.figures.x.high,50000,200000)
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,10000)
-babine.cum<-make.babine.cum.plot(babine.figures.x.high,100000)
-  
-ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine comparison with Tyee
@@ -391,12 +396,7 @@ ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-sockeye
 
-get.babine.data("Jack Sockeye")
-
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,10000)
-babine.cum<-make.babine.cum.plot(babine.figures.x.high,100000)
-  
-ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
+make.babine.figures("Jack Sockeye",babine.figures.x.high,1000,25000)
 ```
 
 ### Babine Adult Chinook
@@ -404,12 +404,8 @@ ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large Chinook salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-chinook
 
-get.babine.data("Large Chinook")
+make.babine.figures("Large Chinook",babine.figures.x.high,100,5000)
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,100)
-babine.cum<-make.babine.cum.plot(babine.figures.x.high,5000)
-  
-ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine Jack Chinook
@@ -417,12 +413,8 @@ ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack Chinook salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-chinook
 
-get.babine.data("Jack Chinook")
+make.babine.figures("Jack Chinook",babine.figures.x.high,100,500)
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,100)
-babine.cum<-make.babine.cum.plot(babine.figures.x.high,5000)
-  
-ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine Pink
@@ -430,12 +422,8 @@ ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for pink salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-pink
 
-get.babine.data("Pink")
+make.babine.figures("Pink",babine.figures.x.high,10000,50000)
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,1000)
-babine.cum<-make.babine.cum.plot(babine.figures.x.high,100000)
-  
-ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine Coho
@@ -443,12 +431,8 @@ ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for coho salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-coho
 
-get.babine.data("Coho")
+make.babine.figures("Coho",babine.figures.x.high,100,500)
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,100)
-babine.cum<-make.babine.cum.plot(babine.figures.x.high,10000)
-  
-ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ### Babine Steelhead
@@ -456,12 +440,8 @@ ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for steelhead at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-steelhead
 
-get.babine.data("Steelhead")
+make.babine.figures("Steelhead",babine.figures.x.high,50,500)
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,50)
-babine.cum<-make.babine.cum.plot(babine.figures.x.high,100)
-  
-ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 # Kitwanga Fence
@@ -473,6 +453,8 @@ Information on the Kitwanga fence operations can be found here: [Gitanyow Fisher
 This section contains information on fisheries in Area 4. Included are the weekly in-season updates provided by DFO North Coast Resource Management
 
 ## North Coast Salmon Update
+
+DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
 
 [Update #3-July 22](/data/nc_stad_weekly_updates/NCA_Weekly_Update_3_July_22_2025.pdf)
 
