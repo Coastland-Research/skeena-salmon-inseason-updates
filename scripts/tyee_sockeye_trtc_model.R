@@ -1,4 +1,3 @@
-library(zoo)
 
 tyee.sx.data<-fread("data/current_year/tyee data 2025.csv")%>%
   select(Date,Runtiming,esctyee)%>%
@@ -21,17 +20,20 @@ sx.trtc.model.all <- left_join(tyee.sx.data, total.catch) %>%
     catch = gncatch + sncatch,
     rtlate = lag(Runtiming, 7),
     rtearly = lead(Runtiming, 7),
-    Average = cumesc / Runtiming,
-    Early = cumesc / rtearly,
-    Late = cumesc / rtlate,
-    adjusted_catch = rollmean(catch, k = 5, fill = NA, align = "left"),
-    daily_trtc = (adjusted_catch + esctyee)
+    adjusted_catch = rollmean(catch, k = 5, fill = NA, align = "right"),
+    daily_trtc = (adjusted_catch + esctyee),
+    daily_trtc = replace_na(daily_trtc,0),
+    cum_trtc = cumsum(daily_trtc),
+    Average = cum_trtc / Runtiming,
+    Early = cum_trtc / rtearly,
+    Late = cum_trtc / rtlate
   )
 
 
 sx.trtc.model<-sx.trtc.model.all%>%
   select(Date,Early,Average,Late)%>%
-  pivot_longer("Early":"Late",names_to="Timing",values_to="Estimate")
+  pivot_longer("Early":"Late",names_to="Timing",values_to="Estimate")%>%
+  filter(Date<=tyee.day)
 
 todays.trtc.estimates<-sx.trtc.model.all%>%filter(Date==tyee.day)
 

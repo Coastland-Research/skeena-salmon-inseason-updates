@@ -22,6 +22,8 @@ library(knitr)
 library(ggpubr)
 library(kableExtra)
 library(ggpubr)
+library(zoo)
+library(lubridate)
 
 options(scipen=10000)
 ```
@@ -216,7 +218,7 @@ kable(trtc.table)
 ```{r, fig.height=5,fig.cap="Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing. The dashed line shows the pre-season forecast of a TRTC of ~2.4 million."}
 #| label: fig-sx-trtc-model
 
-make.trtc.sx.plot(sx.trtc.model,7500000)
+make.trtc.sx.plot(sx.trtc.model,7500000,as.Date("2025-08-30"))
 
 write.csv(sx.trtc.model,"data/current_year/Tyee model data 2025.csv",row.names=FALSE)
 
