@@ -451,6 +451,8 @@ make.babine.figures("Steelhead",babine.figures.x.high,50,500)
 
 Information on the Kitwanga fence operations can be found here: [Gitanyow Fisheries Authority](http://www.gitanyowfisheries.com/).
 
+[2025 Kitwanga River Salmon Enumeration Update #1](/data/kitwanga/KSEF_Update_1_July29_2025.pdf)
+
 # Fisheries
 
 This section contains information on fisheries in Area 4. Included are the weekly in-season updates provided by DFO North Coast Resource Management
