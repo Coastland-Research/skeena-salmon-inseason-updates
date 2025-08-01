@@ -689,9 +689,10 @@ ggplot(rtm2,aes(x=dev))+
   labs(y="Stock",x="Date",title="Stock run-timing at Tyee based on 2000-2014 GSI",subtitle="NBRR data provided by Karl English July 2022")+
   geom_vline(aes(xintercept=u,color=stock), size=1,alpha=.5)+
   scale_x_continuous(breaks=seq(152,258,10),labels=days)+
-  guides(fill="none",color="none")+
-  annotate("rect", xmin = 196, xmax = 219, ymin = 0, ymax = Inf,alpha = .2)
-  
+  guides(fill="none",color="none")
+#  annotate("rect", xmin = 196, xmax = 219, ymin = 0, ymax = Inf,alpha = .2)
+
+ggsave("Tyee sockeye stock run timing without harvest window.png")  
 ```
 
 ```{r}
@@ -717,12 +718,12 @@ ggplot(rtm2,aes(x=dev),color=stock)+
         plot.caption.position="plot",
         plot.caption=element_text(hjust=.5))+
   geom_vline(aes(xintercept=u,color=stock), size=1,alpha=.5)+
-  labs(y="Stock",x="Date",caption="Stock run-timing at Tyee based on average run-timing (2000-2014) plus 3 weeks.\nVertical lines show the mean for each stock, with the 2022 harvest window\nshown by the grey shaded box.\nData from Karl English from NBRR update provided July 2022.")+
+  labs(y="Stock",x="Date")+
   scale_x_continuous(breaks=seq(152,258,10),labels=days)+
-  guides(fill="none",color="none")+
-   annotate("rect", xmin = 196, xmax = 219, ymin = 0, ymax = Inf,alpha = .2)
+  guides(fill="none",color="none")
+   #annotate("rect", xmin = 196, xmax = 219, ymin = 0, ymax = Inf,alpha = .2)
 
-#ggsave("Tyee stock run timing.png",dpi=600,height=8,width=7)
+#ggsave("Tyee stock run timing densitty without harvest window.png",dpi=600,height=8,width=7)
 ```
 
 ```{r}
