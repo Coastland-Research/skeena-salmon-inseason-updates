@@ -115,7 +115,7 @@ make_p4 <- function(catch.gn, catch.sn) {
     theme(legend.position = "top")+
     labs(y="Sockeye CPUE")+
     expand_limits(y=0)+
-    expand_limits(x=c(as.Date("2024-07-01"),as.Date("2024-09-01")))
+    expand_limits(x=c(as.Date("2025-07-01"),as.Date("2025-09-01")))
     
 }
 
