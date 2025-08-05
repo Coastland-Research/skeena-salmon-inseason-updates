@@ -398,6 +398,18 @@ make.babine.figures("Large Sockeye",babine.figures.x.high,100000,500000)
 
 ### Babine comparison with Tyee
 
+This comparison aims to provide a coarse idea on the catchability at Tyee. The red line in the figure below shows the difference between the escapement past Tyee and the total run being counted at the Babine Fence, based on some assumptions. These assumptions include 3 week migration timing, 10% non-Babine stock composition and a rough estimate of in-river FSC and demo harvest to date between Tyee and Babine. 
+
+```{r, fig.height=6, fig.cap="Estimated difference between the Tyee test fishery and the Babine fence with the assumptions listed above."}
+#| label: fig-babine-tyee-comparison
+
+source("scripts/babine versus tyee.R")
+
+make.tyee.vs.babine.plot(.1,.97,-250000,1500000,as.Date("2025-06-01"),as.Date("2025-10-01"))
+
+```
+
+
 ### Jack sockeye
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
