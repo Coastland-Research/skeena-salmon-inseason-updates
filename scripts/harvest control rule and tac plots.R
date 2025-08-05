@@ -29,7 +29,7 @@ ggplot(hcr,aes(x=TRTC/10^6,y=HR))+
   labs(y = "Canadian Harvest Rate", x = "Skeena sockeye return to Canada (millions)")
 }
 
-make.sx.hcr.plot(hcr,tac.data)
+#make.sx.hcr.plot(hcr,tac.data)
 
 #create figure with Ttac.data = #create figure with TAC trend and total cumulative catch for current year
 
@@ -55,6 +55,7 @@ ggplot(tac.estimates,aes(x=Date,y=TAC,color=Timing))+
   scale_color_manual(values=c("black","#E41A1C","#377EB8","#4DAF4A"))+
   labs(y="Total Allowable Catch\nCatch to Date")+
   ylim(0,2000000)+
+  xlim(as.Date("2025-06-10"),as.Date("2025-09-01"))+
   theme_bw()+
   theme(legend.position="bottom")
 }

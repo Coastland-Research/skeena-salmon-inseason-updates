@@ -473,9 +473,11 @@ Information on the Kitwanga fence operations can be found here: [Gitanyow Fisher
 
 This section contains information on fisheries in Area 4. Included are the weekly in-season updates provided by DFO North Coast Resource Management
 
-## North Coast Salmon Update
+## North Coast Salmon Updates
 
 DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
+
+[Update #4-July 29](/data/nc_stad_weekly_updates/NCA_Weekly_Update_4_July_29_2025.pdf)
 
 [Update #3-July 22](/data/nc_stad_weekly_updates/NCA_Weekly_Update_3_July_22_2025.pdf)
 
