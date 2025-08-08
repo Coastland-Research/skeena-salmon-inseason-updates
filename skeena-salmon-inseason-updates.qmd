@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 7, 2025"
+subtitle: "August 8, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -41,14 +41,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-08-06")
-tyee.date<-"August 6"
+tyee.day<-as.Date("2025-08-07")
+tyee.date<-"August 7"
 figures.x.date<-as.Date("2025-09-01")
 
-fence.day<-as.Date("2025-08-06")
-fence.date<-"August 6"
+fence.day<-as.Date("2025-08-07")
+fence.date<-"August 7"
 
-today<-as.Date("2025-08-07")
+today<-as.Date("2025-08-08")
 ```
 
 # Summary
@@ -64,7 +64,7 @@ today<-as.Date("2025-08-07")
     -   The Tyee test fishery started operations on June 10.
     -   Moving towards smaller tides which may improve fish movement.
     -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last 2 weeks while decreasing slightly to around 1.7M on average timing (2.25M if one week late, and 1.5M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
-    -   If average run-timing, \~ 82% of the run has passed Tyee to date.
+    -   If average run-timing, \~ 84% of the run has passed Tyee to date.
     -   The Chinook index index is tracking between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking near the 75th percentile.
     -   Pink salmon were tracking off the charts well above the highest run index ever. Supporting information from Area 3 and other fisheries indicates a very large pink return this year, however decreasing index values may indicate a very early pink run this year.
     -   Chum, steelhead, and coho have started showing up at Tyee, with indices remaining near average to date.
