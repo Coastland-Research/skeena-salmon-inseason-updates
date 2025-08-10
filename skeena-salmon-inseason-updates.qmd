@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 9, 2025"
+subtitle: "August 10, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -41,14 +41,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-08-08")
-tyee.date<-"August 8"
+tyee.day<-as.Date("2025-08-09")
+tyee.date<-"August 9"
 figures.x.date<-as.Date("2025-09-01")
 
-fence.day<-as.Date("2025-08-08")
-fence.date<-"August 8"
+fence.day<-as.Date("2025-08-09")
+fence.date<-"August 9"
 
-today<-as.Date("2025-08-09")
+today<-as.Date("2025-08-10")
 ```
 
 # Summary
@@ -62,18 +62,21 @@ today<-as.Date("2025-08-09")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   Moving towards smaller tides which may improve fish movement.
-    -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last 2 weeks while decreasing slightly to around 1.7M on average timing (2.25M if one week late, and 1.5M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
-    -   If average run-timing, \~ 85% of the run has passed Tyee to date.
-    -   The Chinook index index is tracking between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking near the 75th percentile.
+    -   Moving towards larger tides which may improve fish movement.
+    -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last 2 weeks while decreasing slightly to around 1.67M on average timing (1.96M if one week late, and 1.65M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
+    -   If average run-timing, \~ 87% of the run has passed Tyee to date.
+    -   The Chinook index index is tracking between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking between the 50th and 75th percentiles.
     -   Pink salmon were tracking off the charts well above the highest run index ever. Supporting information from Area 3 and other fisheries indicates a very large pink return this year, however decreasing index values may indicate a very early pink run this year.
-    -   Chum, steelhead, and coho have started showing up at Tyee, with indices remaining near average to date.
+    -   Chum and coho are tracking around the long-term median to date.
+    -   Steelhead started fairly stong, but are now tracking jsut below the long-term median.
 
 -   Babine
 
-    -   The Babine fence typically started operations on July 14. Large sockeye counts have started.
-
-    -   Babine vs Tyee comparison will be added shortly.
+    -   The Babine fence typically started operations on July 14.
+    -   Large sockeye are tracking around the 75th percentile to date.
+    -   In comparison to Tyee, the Babine fence is showing less sockeye so far than expected, which could be a result of a Tyee overestimate, longer than expected migration between Tyee and the Babine fence, or a grearter proportion of non-Babine sockeye than 10% this year.
+    -   Jack sockeye, which predict 4-yr old sockeye returns next year, are tracking right around the long-term median.
+    -   Pink salmon have also started showing up at the Babine fence, and are also indicating an early return there.
 
 -   Kitwanga Fence
 
@@ -85,10 +88,10 @@ today<-as.Date("2025-08-09")
 
 -   Commercial Fisheries
 
-    -   Commercial fisheries targetting sockeye in Area 4 started on July 12 with 4 gillnet openings to date, and 1 seine opening.
-    -   Catch numbers have been updated through July 21.
-    -   Further commercial fisheries may be opened pending run size information in the next while.
-    -   First Nations demonstration fisheries targetting sockeye in Area 4 opened on July 9. Catch information for demo fisheries has been updated and will be updated with preliminary information as it comes in.
+    -   Commercial fisheries targetting sockeye in Area 4 started on July 12 and the last commercial opportunity was August 4-7 for seines, and August 8 for gillnets.
+    -   First Nations demonstration fisheries targeting sockeye in Area 4 opened on July 9 for Lax Kw'alaams, Metlakatla and NCSFNSS.
+    -   In-river demo fisheries are ongoing, with openings for Kitsumkalum, Kitselas, and Gitksan to date.
+    -   Catch information for demo fisheries has been updated and will be updated with preliminary information as it comes in.
 
 -   Recreational Fisheries
 
@@ -144,7 +147,7 @@ Tides influence the movement of sockeye and other salmon migrating into the Skee
 
 Tide data from: <a href="https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest" target="_blank">https://www.tide-forecast.com/locations/Port-Edward-British-Columbia/tides/latest</a>
 
-# Tyee Test Fishery-Index and Escapement Estimates
+# Tyee Test Fishery
 
 The section below shows index data (and escapement data for sockeye) from 2025 compared to historical index values through Tyee. Data is uploaded from the DFO Tyee test fishery website (index and expanded estimates) almost daily.
 
@@ -275,7 +278,7 @@ daily<-fread("data/common/tyee_daily_indices_chum_1956-2024.csv")
 current<-fread("data/current_year/tyee data 2025.csv") %>%
   select(Date,"2025"=chum)
 
-make.index.figures(daily,current,20,300,figures.x.date)
+make.index.figures(daily,current,10,150,figures.x.date)
 ```
 
 ## Pink Salmon
