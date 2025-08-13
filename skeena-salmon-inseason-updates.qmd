@@ -9,8 +9,7 @@ execute:
   echo: FALSE
   warning: FALSE
   messages: FALSE
-steelhead:
-  pdf: "steelhead/steelhead_update_july_17_25.pdf"
+
 ---
 
 ```{r load libraries}
@@ -334,39 +333,10 @@ make.index.figures(daily,current,10,300,figures.x.date)
 
 Steelhead updates are also provided by the Province of BC. Please reach out to Kenji Miyazaki with any questions.
 
-Most recent steelhead update:
 
-```{css echo=FALSE}
-.embed-container {
-    position: relative;
-    padding-bottom: 129%;
-    height: 0;
-    overflow: hidden;
-    max-width: 100%;
-}
+Steelhead updates:
 
-.embed-container iframe,
-.embed-container object,
-.embed-container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 75%;
-    height: 100%;
-}
-```
-
-<p class="text-center">
-
-<a class="btn btn-primary btn-sm steelhead-download" href="`r rmarkdown::metadata$steelhead$pdf`" target="_blank"> <i class="fa-solid fa-file-arrow-down"></i> Download steelhead update </a>
-
-</p>
-
-::: embed-container
-<iframe src="`r rmarkdown::metadata$steelhead$pdf`" style="border: 0.5px"></iframe>
-:::
-
-Previous steelhead updates:
+[Update to August 11](/data/steelhead/Skeena_Summer_Steelhead_Update_to_Aug_11_25.xlsx)
 
 [Update to July 31](/data/steelhead/Skeena_Summer_Steelhead_Update_to_July_31_25.xlsx)
 
@@ -384,7 +354,7 @@ Information on the Babine fence counts are updated daily [here](https://www.pac.
 source("scripts/babine_fence_counts.R")
 source("scripts/make_babine_plots.R")
 
-babine.figures.x.high<-as.Date("2025-08-15")
+babine.figures.x.high<-as.Date("2025-09-01")
 ```
 
 ### Babine Sockeye
@@ -392,7 +362,7 @@ babine.figures.x.high<-as.Date("2025-08-15")
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
 
-make.babine.figures("Large Sockeye",babine.figures.x.high,100000,500000)
+make.babine.figures("Large Sockeye",babine.figures.x.high,100000,750000)
 
 ```
 
@@ -440,7 +410,7 @@ make.babine.figures("Jack Chinook",babine.figures.x.high,100,500)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for pink salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-pink
 
-make.babine.figures("Pink",babine.figures.x.high,10000,50000)
+make.babine.figures("Pink",babine.figures.x.high,10000,250000)
 
 ```
 
@@ -476,7 +446,9 @@ This section contains information on fisheries in Area 4. Included are the weekl
 
 DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
 
-[Update #5-July 29](/data/nc_stad_weekly_updates/NCA-Weekly-Update-5-August-5-2025.pdf)
+[Update #6-August 12](/data/nc_stad_weekly_updates/NCA-Weekly-Update-6-August-12-2025.pdf)
+
+[Update #5-August 5](/data/nc_stad_weekly_updates/NCA-Weekly-Update-5-August-5-2025.pdf)
 
 [Update #4-July 29](/data/nc_stad_weekly_updates/NCA_Weekly_Update_4_July_29_2025.pdf)
 
