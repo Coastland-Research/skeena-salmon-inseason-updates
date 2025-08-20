@@ -436,7 +436,7 @@ make.babine.figures("Steelhead",babine.figures.x.high,50,500)
 
 Information on the Kitwanga fence operations can be found here: [Gitanyow Fisheries Authority](http://www.gitanyowfisheries.com/).
 
-[2025 Kitwanga River Salmon Enumeration Update #3](/data/kitwanga/KSEF_Update_3_August 12_2025.pdf)
+[2025 Kitwanga River Salmon Enumeration Update #4](/data/kitwanga/KSEF_Update_4_August 19_2025.pdf)
 
 # Fisheries
 
@@ -445,6 +445,8 @@ This section contains information on fisheries in Area 4. Included are the weekl
 ## North Coast Salmon Updates
 
 DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
+
+[Update #7-August 19](/data/nc_stad_weekly_updates/NCA Weekly Salmon Update #7.pdf)
 
 [Update #6-August 12](/data/nc_stad_weekly_updates/NCA-Weekly-Update-6-August-12-2025.pdf)
 
