@@ -4,10 +4,10 @@ library(tidyverse)
 library(ggpubr)
 
 #daily parameters
-current.index<-41.72
+current.index<-42.08
 multiplier=245
-todate<-as.Date("2025-08-21")
-todate.label<-"August 21"
+todate<-as.Date("2025-08-24")
+todate.label<-"August 24"
 
 #load historical data
 daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = T)
