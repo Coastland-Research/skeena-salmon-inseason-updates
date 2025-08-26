@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 25, 2025"
+subtitle: "August 26, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -40,14 +40,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-08-24")
-tyee.date<-"August 24"
+tyee.day<-as.Date("2025-08-25")
+tyee.date<-"August 25"
 figures.x.date<-as.Date("2025-09-15")
 
-fence.day<-as.Date("2025-08-24")
-fence.date<-"August 24"
+fence.day<-as.Date("2025-08-25")
+fence.date<-"August 25"
 
-today<-as.Date("2025-08-25")
+today<-as.Date("2025-08-26")
 ```
 
 # Summary
