@@ -20,7 +20,8 @@ data <- daily %>%
          CumFish = CumIndex*multiplier,
          FinalIndex = sum(Index,na.rm=TRUE),
          FinalFish = sum(Fish,na.rm=TRUE),
-         p = CumIndex/FinalIndex)
+         p = CumIndex/FinalIndex,
+         isittoday=ifelse(Date==todate,"today","nottoday"))
 
 # Create storage dataframe
 results <- data.frame(Date=as.Date(character()),
@@ -43,7 +44,7 @@ for (todate in dates2025) {
   
   if(nrow(todays.data)==0) next
   
-  # -------- proportion model --------
+  # proportion model
   med.today <- median(todays.data$p, na.rm=TRUE)
   p25 <- quantile(todays.data$p, .25, na.rm=TRUE)
   p75 <- quantile(todays.data$p, .75, na.rm=TRUE)
@@ -52,7 +53,7 @@ for (todate in dates2025) {
   p25.fish <- multiplier*current.index/p25
   p75.fish <- multiplier*current.index/p75
   
-  # -------- lm model --------
+  # lm model
   dat <- data.frame(count=todays.data$CumFish, final=todays.data$FinalFish)
   m <- lm(final ~ count, data=dat)
   
@@ -73,7 +74,7 @@ for (todate in dates2025) {
   p25.lm  <- pred_current[1,"lwr"]
   p75.lm  <- pred_current[1,"upr"]
   
-  # -------- store results --------
+  # store results
   results <- rbind(results, data.frame(
     Date = as.Date(todate),
     med = round(med.today,3),
