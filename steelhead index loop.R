@@ -42,19 +42,19 @@ for (todate in dates2025) {
   todays.data <- data %>%
     filter(Date==todate)
   
-  if(nrow(todays.data)==0) next
+  # if(nrow(todays.data)==0) next
   
   # proportion model
-  med.today <- median(todays.data$p, na.rm=TRUE)
-  p25 <- quantile(todays.data$p, .25, na.rm=TRUE)
-  p75 <- quantile(todays.data$p, .75, na.rm=TRUE)
+  med.today <- median(todays.data$p, na.rm=TRUE)*100
+  p25 <- quantile(todays.data$p, .25, na.rm=TRUE) *100
+  p75 <- quantile(todays.data$p, .75, na.rm=TRUE) *100
   
   med.fish <- multiplier*current.index/med.today
   p25.fish <- multiplier*current.index/p25
   p75.fish <- multiplier*current.index/p75
   
   # lm model
-  dat <- data.frame(count=todays.data$CumFish, final=todays.data$FinalFish)
+  dat <- data.frame(count=todays.data$CumIndex, final=todays.data$FinalIndex)
   m <- lm(final ~ count, data=dat)
   
   s <- summary(m)
@@ -91,30 +91,37 @@ for (todate in dates2025) {
   ))
 }
 
-head(results)
 
-# Plot both models 
-# Proportion model results
-prop_df <- results %>%
-  select(Date, medFish, p25Fish, p75Fish) %>%
-  mutate(model="Proportion")
+#plot
+results$Date <- as.Date(results$Date)
 
-# lm model results
-lm_df <- results %>%
-  select(Date, lm_med, lm_p25, lm_p75) %>%
-  rename(medFish=lm_med, p25Fish=lm_p25, p75Fish=lm_p75) %>%
-  mutate(model="Regression")
+# Scale proportion model to run size
+# (assuming FinalIndex is the final run size from your dataset)
+final_run_size <- max(data$FinalFish, na.rm=TRUE)
 
-# Combine into one plotting dataframe
-plot_df <- bind_rows(prop_df, lm_df)
+plot_data <- results %>%
+  mutate(
+    med_prop_scaled = med * final_run_size,
+    p25_prop_scaled = p25 * final_run_size,
+    p75_prop_scaled = p75 * final_run_size,
+    med_lm_scaled = lm_med * final_run_size,
+    p25_lm_scaled = lm_p25 * final_run_size,
+    p75_lm_scaled = lm_p75 * final_run_size
+  )
 
-# Plot with ribbons
-ggplot(plot_df, aes(x=Date, color=model, fill=model)) +
-  geom_line(aes(y=medFish), size=1) +
-  geom_ribbon(aes(ymin=p25Fish, ymax=p75Fish), alpha=0.2, color=NA) +
-  scale_color_manual(values=c("Proportion"="blue","Regression"="red")) +
-  scale_fill_manual(values=c("Proportion"="blue","Regression"="red")) +
-  labs(y="Estimated Final Escapement",
-       x="Date",
-       title="Steelhead Run Forecasts (Proportion vs Regression Models)") +
-  theme_bw()
+
+ggplot(plot_data, aes(x=Date)) +
+  # # Proportion model (blue)
+  geom_ribbon(aes(ymin=p25_prop_scaled, ymax=p75_prop_scaled),
+               fill="blue", alpha=0.2) +
+  geom_line(aes(y=med_prop_scaled), color="blue", size=1) +
+  
+  # Regression model (red)
+  geom_ribbon(aes(ymin=lm_p25, ymax=lm_p75),
+              fill="red", alpha=0.2) +
+  geom_line(aes(y=lm_med), color="red", size=1) +
+  
+  labs(title="Run size predictions using proportion model and regression model",
+       y="Predicted Run Size",
+       caption="Blue = Proportion Model | Red = Regression Model") +
+  theme_minimal()
