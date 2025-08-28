@@ -132,5 +132,5 @@ ggplot(plot_data, aes(x=Date)) +
   
   labs(title="Run size predictions using proportion model and regression model",
        y="Predicted Run Size",
-       caption="Blue = Proportion Model | Red = Regression Model") +
+       caption="Blue = proportion model | Red = lm model") +
   theme_minimal()
