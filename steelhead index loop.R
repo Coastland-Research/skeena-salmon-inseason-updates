@@ -4,8 +4,8 @@ library(ggpubr)
 
 current.index <- 42.08
 multiplier <- 245
-todate<-as.Date("2025-08-24")
-todate.label<-"August 24"
+todate<-as.Date("2025-08-27")
+todate.label<-"August 27"
 
 daily <- fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = TRUE)
 
@@ -23,7 +23,7 @@ data <- daily %>%
          p = CumIndex/FinalIndex,
          isittoday=ifelse(Date==todate,"today","nottoday"))
 
-# Create storage dataframe
+# storage dataframe
 results <- data.frame(Date=as.Date(character()),
                       med=double(), p25=double(), p75=double(),
                       medFish=double(), p25Fish=double(), p75Fish=double(),
@@ -42,16 +42,25 @@ for (todate in dates2025) {
   todays.data <- data %>%
     filter(Date==todate)
   
-  # if(nrow(todays.data)==0) next
+  #if(nrow(todays.data)==0) next
   
-  # proportion model
-  med.today <- median(todays.data$p, na.rm=TRUE)*100
-  p25 <- quantile(todays.data$p, .25, na.rm=TRUE) *100
-  p75 <- quantile(todays.data$p, .75, na.rm=TRUE) *100
+  # # proportion model
+  # med.today <- median(todays.data$p, na.rm=TRUE)
+  # p25 <- quantile(todays.data$p, .25, na.rm=TRUE)
+  # p75 <- quantile(todays.data$p, .75, na.rm=TRUE)
+  # 
+  # med.fish <- multiplier*current.index/med.today
+  # p25.fish <- multiplier*current.index/p25
+  # p75.fish <- multiplier*current.index/p75
   
-  med.fish <- multiplier*current.index/med.today
-  p25.fish <- multiplier*current.index/p25
-  p75.fish <- multiplier*current.index/p75
+  med.today<-round(median(todays.data$p,na.rm=TRUE),5)
+  p25<-round(quantile(todays.data$p,.25,na.rm=TRUE),5)
+  p75<-round(quantile(todays.data$p,.75,na.rm=TRUE),5)
+  
+  #estimate number of fish at todates proportions
+  med.fish<-round(multiplier*current.index/med.today,0)
+  p25.fish<-round(multiplier*current.index/p25,0)
+  p75.fish<-round(multiplier*current.index/p75,0)
   
   # lm model
   dat <- data.frame(count=todays.data$CumIndex, final=todays.data$FinalIndex)
@@ -77,9 +86,9 @@ for (todate in dates2025) {
   # store results
   results <- rbind(results, data.frame(
     Date = as.Date(todate),
-    med = round(med.today,3),
-    p25 = round(p25,3),
-    p75 = round(p75,3),
+    med = round(med.today,5),
+    p25 = round(p25,5),
+    p75 = round(p75,5),
     medFish = round(med.fish,0),
     p25Fish = round(p25.fish,0),
     p75Fish = round(p75.fish,0),
