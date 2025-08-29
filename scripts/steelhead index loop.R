@@ -2,6 +2,8 @@ library(data.table)
 library(tidyverse)
 library(ggpubr)
 
+options(scipen=1000)
+
 current.index <- 42.08
 multiplier <- 245
 todate<-as.Date("2025-08-27")
@@ -36,6 +38,10 @@ results <- data.frame(Date=as.Date(character()),
 dates2025 <- unique(data$Date[format(data$Date, "%Y")=="2025"])
 dates2025 <- sort(dates2025)
 dates2025 <- dates2025[dates2025 >= as.Date("2025-07-03")]
+
+
+todate
+
 
 for (todate in dates2025) {
   
@@ -110,9 +116,9 @@ final_run_size <- max(data$FinalFish, na.rm=TRUE)
 
 plot_data <- results %>%
   mutate(
-    med_prop_scaled = med * final_run_size,
-    p25_prop_scaled = p25 * final_run_size,
-    p75_prop_scaled = p75 * final_run_size,
+    med_prop_scaled = medFish,
+    p25_prop_scaled = p25Fish,
+    p75_prop_scaled = p75Fish,
     med_lm_scaled = lm_med * final_run_size,
     p25_lm_scaled = lm_p25 * final_run_size,
     p75_lm_scaled = lm_p75 * final_run_size
@@ -133,4 +139,9 @@ ggplot(plot_data, aes(x=Date)) +
   labs(title="Run size predictions using proportion model and regression model",
        y="Predicted Run Size",
        caption="Blue = proportion model | Red = lm model") +
-  theme_minimal()
+  ylim(0,100000)+
+  theme_bw()
+
+
+ggsave("steelhead/model outputs lm and proportion model with uncertainty.png",
+       units="in",dpi=300,height=6,width=6)
