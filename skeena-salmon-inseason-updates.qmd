@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 28, 2025"
+subtitle: "August 29, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -40,14 +40,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-08-27")
-tyee.date<-"August 27"
+tyee.day<-as.Date("2025-08-28")
+tyee.date<-"August 28"
 figures.x.date<-as.Date("2025-09-15")
 
-fence.day<-as.Date("2025-08-27")
-fence.date<-"August 27"
+fence.day<-as.Date("2025-08-28")
+fence.date<-"August 28"
 
-today<-as.Date("2025-08-28")
+today<-as.Date("2025-08-29")
 ```
 
 # Summary
@@ -62,8 +62,8 @@ today<-as.Date("2025-08-28")
 
     -   The Tyee test fishery started operations on June 10.
     -   Moving towards larger tides which may improve fish movement.
-    -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last 2 weeks while decreasing slightly to around 1.65M on average timing (1.69M if one week late, and 1.63M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
-    -   If average run-timing, \~ 98% of the run has passed Tyee to date.
+    -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last 2 weeks while decreasing slightly to around 1.64M on average timing (1.68M if one week late, and 1.62M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
+    -   If average run-timing, \~ 98.6% of the run has passed Tyee to date.
     -   The Chinook index index is tracking between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking between the 50th and 75th percentiles.
     -   Pink salmon were tracking off the charts well above the highest run index ever. Supporting information from Area 3 and other fisheries indicates a very large pink return this year, however decreasing index values may indicate a very early pink run this year.
     -   Chum and coho are tracking around the long-term median to date.
@@ -194,7 +194,7 @@ source("scripts/plot_recent_sx_esc.R")
 #| label: fig-esc-recent-yrs
 
 p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2025-09-01"))
-p2<-make.recent.cum.plot(sx.cumesc,2000000,as.Date("2025-09-01"))
+p2<-make.recent.cum.plot(sx.cumesc,2500000,as.Date("2025-09-01"))
 ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
@@ -366,7 +366,7 @@ babine.figures.x.high<-as.Date("2025-09-15")
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
 
-make.babine.figures("Large Sockeye",babine.figures.x.high,100000,900000)
+make.babine.figures("Large Sockeye",babine.figures.x.high,100000,1500000)
 
 ```
 
@@ -379,7 +379,7 @@ This comparison aims to provide a coarse idea on the catchability at Tyee. The r
 
 source("scripts/babine versus tyee.R")
 
-make.tyee.vs.babine.plot(.1,.97,-250000,1500000,as.Date("2025-06-01"),as.Date("2025-10-01"))
+make.tyee.vs.babine.plot(.1,.97,-500000,1500000,as.Date("2025-06-01"),as.Date("2025-10-01"))
 
 ```
 
@@ -388,7 +388,7 @@ make.tyee.vs.babine.plot(.1,.97,-250000,1500000,as.Date("2025-06-01"),as.Date("2
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-sockeye
 
-make.babine.figures("Jack Sockeye",babine.figures.x.high,10000,100000)
+make.babine.figures("Jack Sockeye",babine.figures.x.high,20000,250000)
 ```
 
 ### Babine Adult Chinook
@@ -405,7 +405,7 @@ make.babine.figures("Large Chinook",babine.figures.x.high,500,10000)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack Chinook salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-chinook
 
-make.babine.figures("Jack Chinook",babine.figures.x.high,200,1000)
+make.babine.figures("Jack Chinook",babine.figures.x.high,200,2000)
 
 ```
 
@@ -423,7 +423,7 @@ make.babine.figures("Pink",babine.figures.x.high,20000,500000)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for coho salmon at the Babine fence. 2025 values are shown in purple, with various percentiles of historical data (1954-2024) shown by the grey dashed lines. The median (5oth) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-coho
 
-make.babine.figures("Coho",babine.figures.x.high,200,1000)
+make.babine.figures("Coho",babine.figures.x.high,500,5000)
 
 ```
 
