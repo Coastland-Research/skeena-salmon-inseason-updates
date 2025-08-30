@@ -53,52 +53,57 @@ todate
 for (todate in dates2025) {
   
   todays.data <- data %>%
-    filter(Date==todate)
+    filter(Date == todate)
   
-  med.today<-round(median(todays.data$p,na.rm=TRUE),5)
-  p25<-round(quantile(todays.data$p,.25,na.rm=TRUE),5)
-  p75<-round(quantile(todays.data$p,.75,na.rm=TRUE),5)
+  # get the cumulative 2025 index up to this date
+  current.index <- todays.data %>% 
+    filter(Year == 2025) %>% 
+    pull(CumIndex)
   
-  #estimate number of fish at todates proportions
-  med.fish<-round(multiplier*current.index/med.today,0)
-  p25.fish<-round(multiplier*current.index/p25,0)
-  p75.fish<-round(multiplier*current.index/p75,0)
+  # proportion model
+  med.today <- round(median(todays.data$p, na.rm=TRUE), 5)
+  p25 <- round(quantile(todays.data$p, .25, na.rm=TRUE), 5)
+  p75 <- round(quantile(todays.data$p, .75, na.rm=TRUE), 5)
+  
+  med.fish <- round(multiplier * current.index / med.today, 0)
+  p25.fish <- round(multiplier * current.index / p25, 0)
+  p75.fish <- round(multiplier * current.index / p75, 0)
   
   # lm model
-  dat <- data.frame(count=todays.data$CumIndex, final=todays.data$FinalIndex)
-  m <- lm(final ~ count, data=dat)
+  dat <- data.frame(count = todays.data$CumIndex, final = todays.data$FinalIndex)
+  m <- lm(final ~ count, data = dat)
   
   s <- summary(m)
   r2 <- s$r.squared
   pval <- coef(s)[2,4]
   
-  # predicted final fish for current count
-  currentx <- current.index*multiplier
+  # predicted final fish for *current cumulative count*
+  currentx <- current.index * multiplier
   pred_current <- predict(
     m, 
-    newdata=data.frame(count=currentx),
-    interval="prediction",
-    level=0.75
+    newdata = data.frame(count = currentx),
+    interval = "prediction",
+    level = 0.75
   )
   
-  med.lm  <- pred_current[1,"fit"]
-  p25.lm  <- pred_current[1,"lwr"]
-  p75.lm  <- pred_current[1,"upr"]
+  med.lm <- pred_current[1,"fit"]
+  p25.lm <- pred_current[1,"lwr"]
+  p75.lm <- pred_current[1,"upr"]
   
   # store results
   results <- rbind(results, data.frame(
     Date = as.Date(todate),
-    med = round(med.today,5),
-    p25 = round(p25,5),
-    p75 = round(p75,5),
-    medFish = round(med.fish,0),
-    p25Fish = round(p25.fish,0),
-    p75Fish = round(p75.fish,0),
-    r2 = round(r2,3),
-    pval = round(pval,5),
-    lm_med = round(med.lm,0),
-    lm_p25 = round(p25.lm,0),
-    lm_p75 = round(p75.lm,0)
+    med = med.today,
+    p25 = p25,
+    p75 = p75,
+    medFish = med.fish,
+    p25Fish = p25.fish,
+    p75Fish = p75.fish,
+    r2 = round(r2, 3),
+    pval = round(pval, 5),
+    lm_med = round(med.lm, 0),
+    lm_p25 = round(p25.lm, 0),
+    lm_p75 = round(p75.lm, 0)
   ))
 }
 
@@ -126,16 +131,16 @@ ggplot(plot_data, aes(x=Date)) +
   geom_ribbon(aes(ymin=p25_prop_scaled, ymax=p75_prop_scaled),
                fill="blue", alpha=0.2) +
   geom_line(aes(y=med_prop_scaled), color="blue", size=1) +
-  
+
   # Regression model (red)
   geom_ribbon(aes(ymin=lm_p25, ymax=lm_p75),
               fill="red", alpha=0.2) +
   geom_line(aes(y=lm_med), color="red", size=1) +
-  
+
   labs(title="Run size predictions using proportion model and regression model",
        y="Predicted Run Size",
        caption="Blue = proportion model | Red = lm model") +
-  ylim(0,100000)+
+  ylim(0,60000)+
   theme_bw()
 
 
