@@ -4,16 +4,23 @@ library(ggpubr)
 
 options(scipen=1000)
 
-current.index <- 42.08
+current.index <- 42.44
 multiplier <- 245
-todate<-as.Date("2025-08-27")
-todate.label<-"August 27"
+todate<-as.Date("2025-08-28")
+todate.label<-"August 28"
 
 daily <- fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = TRUE)
 
-data <- daily %>%
+index_2025 <- fread("data/current_year/tyee data 2025.csv", header = TRUE) %>%
+  select(c(Date, steelhead)) %>%
+  rename("2025" = steelhead)
+
+# add 2025 index values to common data
+data <- left_join(daily, index_2025, by = "Date")
+
+data <- data %>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer(`1956`:`2024`, names_to="Year", values_to="Index") %>%
+  pivot_longer(`1956`:`2025`, names_to="Year", values_to="Index") %>%
   mutate(Year = as.numeric(Year)) %>%
   group_by(Year) %>%
   mutate(Index = replace_na(Index,0),
@@ -47,17 +54,6 @@ for (todate in dates2025) {
   
   todays.data <- data %>%
     filter(Date==todate)
-  
-  #if(nrow(todays.data)==0) next
-  
-  # # proportion model
-  # med.today <- median(todays.data$p, na.rm=TRUE)
-  # p25 <- quantile(todays.data$p, .25, na.rm=TRUE)
-  # p75 <- quantile(todays.data$p, .75, na.rm=TRUE)
-  # 
-  # med.fish <- multiplier*current.index/med.today
-  # p25.fish <- multiplier*current.index/p25
-  # p75.fish <- multiplier*current.index/p75
   
   med.today<-round(median(todays.data$p,na.rm=TRUE),5)
   p25<-round(quantile(todays.data$p,.25,na.rm=TRUE),5)
