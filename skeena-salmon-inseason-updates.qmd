@@ -9,7 +9,6 @@ execute:
   echo: FALSE
   warning: FALSE
   messages: FALSE
-
 ---
 
 ```{r load libraries}
@@ -61,36 +60,37 @@ today<-as.Date("2025-09-05")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   Moving towards larger tides which may improve fish movement.
-    -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2024, with the TRTC model estimate stabilising over the last 2 weeks while decreasing slightly to around 1.63M on average timing (1.66M if one week late, and 1.62M if one week early), but still well below the pre-season forecast for early and average run-timing projections.
-    -   If average run-timing, \~ 99% of the run has passed Tyee to date.
-    -   The Chinook index index is tracking between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking between the 50th and 75th percentiles.
-    -   Pink salmon were tracking off the charts well above the highest run index ever. Supporting information from Area 3 and other fisheries indicates a very large pink return this year, however decreasing index values may indicate a very early pink run this year.
-    -   Chum and coho are tracking around the long-term median to date.
-    -   Steelhead started fairly stong, but are now tracking jsut below the long-term median.
+    -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2024, with the TRTC model estimate stabilised since the start of August - final estimates for TRTC are just above 1.6M, well below the pre-season forecast for early and average run-timing projections. Very few more sockeye are expected through Tyee.
+    -   Run-timing of sockeye appears to be near average.
+    -   Chinook are also done passing Tyee, and tracked between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking between the 50th and 75th percentiles. Final TRTC estimates will be available around March 2026 once the Kitsumkalum mark recapture estimate is available and genetic analysis for the expansion to aggregate is completed.
+    -   Pink salmon were tracking off the charts well above the highest run index ever at the start of the run. However, pink estimates fell off and it appears that it was a very early run. Some areas have strong pink returns (e.g. Kitwanga) while other areas are not showing expected pink abundance (Lakelse, Babine).
+    -   Chum have mostly stopped passing Tyee, with the index tracking fairly strong at the start of the season but falling off now to just above the 25th percentile of historical returns.
+    -   Coho are still entering the Skeena, but are also falling off and currently well below average.
+    -   Steelhead started fairly strong, but are now tracking well below the long-term median, and just above the provincial Extreme Conservation Concern level at just over 8,000.
 
 -   Babine
 
-    -   The Babine fence typically started operations on July 14.
-    -   Large sockeye are tracking around the 75th percentile to date.
+    -   The Babine fence started operations mid-July
+    -   Large sockeye are tracking around the 75th percentile to date with just over 1M past the fence to date.
     -   In comparison to Tyee, the Babine fence is showing less sockeye so far than expected, which could be a result of a Tyee overestimate, longer than expected migration between Tyee and the Babine fence, or a grearter proportion of non-Babine sockeye than 10% this year.
-    -   Jack sockeye, which predict 4-yr old sockeye returns next year, are tracking right around the long-term median.
-    -   Pink salmon have also started showing up at the Babine fence, and are also indicating an early return there.
+    -   Jack sockeye, which predict 4-yr old sockeye returns next year, are tracking just above the 25th percentile, with less than 25,000 through the fence to date.
+    -   Pink salmon have also started showing up at the Babine fence, and are also indicating an early return there, however expected abundance is not showing up.
 
 -   Kitwanga Fence
 
-    -   The Kitwanga fence typically started operations on July 11. Information from the Kitwanga fence is shared weekly by Gitanyow Fisheries Authority.
+    -   The Kitwanga fence started operations on July 11. Information from the Kitwanga fence is shared weekly by Gitanyow Fisheries Authority and links to their reports can be found below.
 
 -   First Nations Food Fisheries
 
-    -   First Nations food fisheries are ongoing on the coast and marine approach waters, and in-river.
+    -   First Nations food fisheries are largely wrapped up, with harvests at the coast and in-river focussing on sockeye, with some retention of Chinook and other species.
+    -   Many Skeena Nations were unable to meet their FSC salmon needs again this year.
 
 -   Commercial Fisheries
 
     -   Commercial fisheries targetting sockeye in Area 4 started on July 12 and the last commercial opportunity was August 4-7 for seines, and August 8 for gillnets.
     -   First Nations demonstration fisheries targeting sockeye in Area 4 opened on July 9 for Lax Kw'alaams, Metlakatla and NCSFNSS.
-    -   In-river demo fisheries are ongoing, with openings for Kitsumkalum, Kitselas, and Gitksan to date.
-    -   Catch information for demo fisheries has been updated and will be updated with preliminary information as it comes in.
+    -   In-river demo fisheries are ongoing, with openings for Kitsumkalum, Kitselas, Gitksan, and Lake Babine Nation to date.
+    -   Expectations are for an ESSR Fishery in Babine Lake starting mid-September.
 
 -   Recreational Fisheries
 
@@ -220,7 +220,7 @@ kable(trtc.table)
 ```{r, fig.height=5,fig.cap="Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing. The dashed line shows the pre-season forecast of a TRTC of ~2.4 million."}
 #| label: fig-sx-trtc-model
 
-make.trtc.sx.plot(sx.trtc.model,7500000,as.Date("2025-08-30"))
+make.trtc.sx.plot(sx.trtc.model,7500000,as.Date("2025-09-30"))
 
 write.csv(sx.trtc.model,"data/current_year/Tyee model data 2025.csv",row.names=FALSE)
 
@@ -333,14 +333,13 @@ make.index.figures(daily,current,10,300,figures.x.date)
 
 Steelhead updates are also provided by the Province of BC. Please reach out to Kenji Miyazaki with any questions.
 
-
 Steelhead updates:
 
-[Update to September 2](/data/steelhead/Skeena Summer Steelhead Update to Sept 2_25.xlsx)
+[Update to September 2](/data/steelhead/Skeena%20Summer%20Steelhead%20Update%20to%20Sept%202_25.xlsx)
 
-[Update to August 25](/data/steelhead/Skeena Summer Steelhead Update to Aug 25_25.xlsx)
+[Update to August 25](/data/steelhead/Skeena%20Summer%20Steelhead%20Update%20to%20Aug%2025_25.xlsx)
 
-[Update to August 18](/data/steelhead/Skeena Summer Steelhead Update to Aug 18_25.xlsx)
+[Update to August 18](/data/steelhead/Skeena%20Summer%20Steelhead%20Update%20to%20Aug%2018_25.xlsx)
 
 [Update to August 11](/data/steelhead/Skeena_Summer_Steelhead_Update_to_Aug_11_25.xlsx)
 
@@ -442,7 +441,7 @@ make.babine.figures("Steelhead",babine.figures.x.high,50,500)
 
 Information on the Kitwanga fence operations can be found here: [Gitanyow Fisheries Authority](http://www.gitanyowfisheries.com/).
 
-[2025 Kitwanga River Salmon Enumeration Update #6](/data/KSEF_Update_6_September 3_2025.pdf)
+[2025 Kitwanga River Salmon Enumeration Update #6](/data/KSEF_Update_6_September%203_2025.pdf)
 
 # Fisheries
 
@@ -452,11 +451,11 @@ This section contains information on fisheries in Area 4. Included are the weekl
 
 DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
 
-[Update #8-September 2](/data/nc_stad_weekly_updates/NCA Weekly Update #9 Sept 2 2025.pdf)
+[Update #8-September 2](/data/nc_stad_weekly_updates/NCA%20Weekly%20Update%20#9%20Sept%202%202025.pdf)
 
-[Update #8-August 26](/data/nc_stad_weekly_updates/NCA Weekly Update #8 Aug 26 2025 .pdf)
+[Update #8-August 26](/data/nc_stad_weekly_updates/NCA%20Weekly%20Update%20#8%20Aug%2026%202025%20.pdf)
 
-[Update #7-August 19](/data/nc_stad_weekly_updates/NCA Weekly Salmon Update #7.pdf)
+[Update #7-August 19](/data/nc_stad_weekly_updates/NCA%20Weekly%20Salmon%20Update%20#7.pdf)
 
 [Update #6-August 12](/data/nc_stad_weekly_updates/NCA-Weekly-Update-6-August-12-2025.pdf)
 
