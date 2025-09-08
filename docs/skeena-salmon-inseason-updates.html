@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,10 +35,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2be10d9e998f81ff6e49e26833438aa5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -179,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Skeena Salmon In-Season Update</h1>
-<p class="subtitle lead">September 5, 2025</p>
+<p class="subtitle lead">September 8, 2025</p>
 </div>
 
 
@@ -351,7 +351,7 @@ Figure&nbsp;3: Daily (top panel) and cumulative (bottom panel) sockeye escapemen
 <p>Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table (<a href="#tbl-trtc-outputs" class="quarto-xref">Table&nbsp;1</a>) and figure (<a href="#fig-sx-trtc-model" class="quarto-xref">Figure&nbsp;4</a>) show estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season).</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Model estimates as of September 4"</code></pre>
+<pre><code>[1] "Model estimates as of September 7"</code></pre>
 </div>
 <div id="tbl-trtc-outputs" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -373,20 +373,20 @@ Table&nbsp;1: The % of run past Tyee and the associated TRTC estimate for averag
 <tr class="odd">
 <td style="text-align: left;">Early</td>
 <td style="text-align: right;">1472364</td>
-<td style="text-align: left;">99.9%</td>
-<td style="text-align: right;">1625855</td>
+<td style="text-align: left;">100%</td>
+<td style="text-align: right;">1624857</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Average</td>
 <td style="text-align: right;">1472364</td>
-<td style="text-align: left;">99.6%</td>
-<td style="text-align: right;">1631498</td>
+<td style="text-align: left;">99.8%</td>
+<td style="text-align: right;">1628312</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Late</td>
 <td style="text-align: right;">1472364</td>
-<td style="text-align: left;">98.6%</td>
-<td style="text-align: right;">1647355</td>
+<td style="text-align: left;">99.1%</td>
+<td style="text-align: right;">1638337</td>
 </tr>
 </tbody>
 </table>
@@ -1250,6 +1250,17 @@ Figure&nbsp;19: Daily (top) and cumulative (bottom) fence counts for steelhead a
 <td style="text-align: right;">NA</td>
 <td style="text-align: left;">Lake Babine Nation ESSR fishery opportunity, sockeye retention only</td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">FN0921</td>
+<td style="text-align: left;">Aboriginal</td>
+<td style="text-align: left;">Sept 6-Sept 12</td>
+<td style="text-align: left;">Sockeye</td>
+<td style="text-align: left;">Selective gear methods</td>
+<td style="text-align: left;">Region 6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">CSAF demonstration fishery opportunity for Gitanyow First Nation in Meziadin River: Lax An Zok. Sockeye retention only</td>
+</tr>
 </tbody>
 </table>
 
@@ -1558,6 +1569,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1668,6 +1681,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
