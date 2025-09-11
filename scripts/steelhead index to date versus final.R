@@ -13,7 +13,7 @@ todate.label<-"August 24"
 daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2024.csv", header = T)
 
 #add cumulative daily index and fish and move to long format
-data<-daily%>%
+data<-daily %>%
   mutate_if(is.character, as.numeric) %>%
   pivot_longer(`1956`:`2024`,names_to="Year",values_to="Index") %>%
   mutate(Year=as.numeric(Year)) %>%
@@ -77,8 +77,7 @@ summary(m)
 newx <- seq(min(dat$count,na.rm=TRUE), max(dat$count,na.rm=TRUE), by=10)
 pred_interval <- predict(m, newdata=data.frame(count=newx), interval="prediction",
                          level = 0.75)
-#pred_interval <- predict(m, newdata=data.frame(count=newx), interval="confidence",
-#                         level = 0.95)
+
 pred_interval <- as.data.frame(pred_interval)
 pred_interval$newx<-newx
 
@@ -86,8 +85,7 @@ current=current.index*multiplier
 currentx <- current
 pred_current <- predict(m, newdata=data.frame(count=currentx), interval="prediction",
                         level = 0.75)
-#pred_current <- predict(m, newdata=data.frame(count=currentx), interval="confidence",
-#                        level = 0.95)
+
 pred_current <- as.data.frame(pred_current)
 
 ggplot(data=dat, aes(x = count)) + 

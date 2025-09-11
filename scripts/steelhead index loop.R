@@ -32,6 +32,7 @@ data <- data %>%
          p = CumIndex/FinalIndex,
          isittoday=ifelse(Date==todate,"today","nottoday"))
 
+
 # storage dataframe
 results <- data.frame(Date=as.Date(character()),
                       med=double(), p25=double(), p75=double(),
@@ -41,14 +42,9 @@ results <- data.frame(Date=as.Date(character()),
                       stringsAsFactors=FALSE)
 
 # Loop across each day starting July 3
-
 dates2025 <- unique(data$Date[format(data$Date, "%Y")=="2025"])
 dates2025 <- sort(dates2025)
 dates2025 <- dates2025[dates2025 >= as.Date("2025-07-03")]
-
-
-todate
-
 
 for (todate in dates2025) {
   
@@ -60,7 +56,7 @@ for (todate in dates2025) {
     filter(Year == 2025) %>% 
     pull(CumIndex)
   
-  # proportion model
+  # proportion model ---------------------------------------
   med.today <- round(median(todays.data$p, na.rm=TRUE), 5)
   p25 <- round(quantile(todays.data$p, .25, na.rm=TRUE), 5)
   p75 <- round(quantile(todays.data$p, .75, na.rm=TRUE), 5)
@@ -69,27 +65,40 @@ for (todate in dates2025) {
   p25.fish <- round(multiplier * current.index / p25, 0)
   p75.fish <- round(multiplier * current.index / p75, 0)
   
-  # lm model
-  dat <- data.frame(count = todays.data$CumIndex, final = todays.data$FinalIndex)
-  m <- lm(final ~ count, data = dat)
+  # regression model ---------------------------------------
+  dat <- data %>%
+    filter(Date == todate, Year < 2025) %>%
+    select(CumIndex, FinalIndex)
   
+  m <- lm(FinalIndex ~ CumIndex, data = dat)
   s <- summary(m)
   r2 <- s$r.squared
   pval <- coef(s)[2,4]
   
-  # predicted final fish for *current cumulative count*
-  currentx <- current.index * multiplier
+  # prediction for current cumulative index
   pred_current <- predict(
     m, 
-    newdata = data.frame(count = currentx),
+    newdata = data.frame(CumIndex = current.index),
     interval = "prediction",
     level = 0.75
   )
   
-  med.lm <- pred_current[1,"fit"]
-  p25.lm <- pred_current[1,"lwr"]
-  p75.lm <- pred_current[1,"upr"]
-  
+  med.lm <- pred_current[1,"fit"] * multiplier
+  p25.lm <- pred_current[1,"lwr"] * multiplier
+  p75.lm <- pred_current[1,"upr"] * multiplier
+
+  newx <- seq(min(dat$CumIndex,na.rm=TRUE),
+              max(dat$CumIndex,na.rm=TRUE), by=10)
+  pred_interval <- predict(
+    m,
+    newdata=data.frame(CumIndex=newx),
+    interval="prediction",
+    level=0.75
+  )
+  pred_interval <- as.data.frame(pred_interval)
+  pred_interval$CumIndex <- newx
+  pred_interval$Date <- todate   # tag with current forecast date if storing
+
   # store results
   results <- rbind(results, data.frame(
     Date = as.Date(todate),
@@ -107,42 +116,25 @@ for (todate in dates2025) {
   ))
 }
 
-
-#plot
-results$Date <- as.Date(results$Date)
-
-# Scale proportion model to run size
-# (assuming FinalIndex is the final run size from your dataset)
-final_run_size <- max(data$FinalFish, na.rm=TRUE)
-
-plot_data <- results %>%
-  mutate(
-    med_prop_scaled = medFish,
-    p25_prop_scaled = p25Fish,
-    p75_prop_scaled = p75Fish,
-    med_lm_scaled = lm_med * final_run_size,
-    p25_lm_scaled = lm_p25 * final_run_size,
-    p75_lm_scaled = lm_p75 * final_run_size
-  )
-
-
-ggplot(plot_data, aes(x=Date)) +
-  # # Proportion model (blue)
-  geom_ribbon(aes(ymin=p25_prop_scaled, ymax=p75_prop_scaled),
-               fill="blue", alpha=0.2) +
-  geom_line(aes(y=med_prop_scaled), color="blue", size=1) +
-
-  # Regression model (red)
+# plot ------------------------------------------------------
+ggplot(results, aes(x=Date)) +
+  # proportion model (blue)
+  geom_ribbon(aes(ymin=p25Fish, ymax=p75Fish),
+              fill="blue", alpha=0.2) +
+  geom_line(aes(y=medFish), color="blue", size=1) +
+  
+  # regression model (red)
   geom_ribbon(aes(ymin=lm_p25, ymax=lm_p75),
               fill="red", alpha=0.2) +
   geom_line(aes(y=lm_med), color="red", size=1) +
-
+  
   labs(title="Run size predictions using proportion model and regression model",
-       y="Predicted Run Size",
-       caption="Blue = proportion model | Red = lm model") +
-  ylim(0,60000)+
+       y="Predicted Run Size (fish)",
+       caption="Blue = proportion model | Red = regression model") +
+  ylim(0,60000) +
   theme_bw()
 
 
 ggsave("steelhead/model outputs lm and proportion model with uncertainty.png",
        units="in",dpi=300,height=6,width=6)
+
