@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "September 8, 2025"
+subtitle: "September 10, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -39,14 +39,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-09-07")
-tyee.date<-"September 7"
+tyee.day<-as.Date("2025-09-09")
+tyee.date<-"September 9"
 figures.x.date<-as.Date("2025-09-30")
 
-fence.day<-as.Date("2025-09-07")
-fence.date<-"September 7"
+fence.day<-as.Date("2025-09-09")
+fence.date<-"September 9"
 
-today<-as.Date("2025-09-08")
+today<-as.Date("2025-09-10")
 ```
 
 # Summary
@@ -441,7 +441,7 @@ make.babine.figures("Steelhead",babine.figures.x.high,50,500)
 
 Information on the Kitwanga fence operations can be found here: [Gitanyow Fisheries Authority](http://www.gitanyowfisheries.com/).
 
-[2025 Kitwanga River Salmon Enumeration Update #6](/data/KSEF_Update_6_September%203_2025.pdf)
+[2025 Kitwanga River Salmon Enumeration Update #7](/data/kitwanga/KSEF_Update_7_September 9_2025.pdf)
 
 # Fisheries
 
