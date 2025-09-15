@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "September 12, 2025"
+subtitle: "September 15, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -39,14 +39,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-09-11")
-tyee.date<-"September 11"
+tyee.day<-as.Date("2025-09-14")
+tyee.date<-"September 14"
 figures.x.date<-as.Date("2025-09-30")
 
-fence.day<-as.Date("2025-09-11")
-fence.date<-"September 11"
+fence.day<-as.Date("2025-09-14")
+fence.date<-"September 14"
 
-today<-as.Date("2025-09-12")
+today<-as.Date("2025-09-15")
 ```
 
 # Summary
@@ -138,7 +138,7 @@ Tides influence the movement of sockeye and other salmon migrating into the Skee
 
 <figure>
 
-<img src="/images/tides13.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+<img src="/images/tides14.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
 
 <figcaption>Tides at Port Edward</figcaption>
 
