@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "September 22, 2025"
+subtitle: "September 26, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -39,14 +39,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-09-21")
-tyee.date<-"September 21"
+tyee.day<-as.Date("2025-09-17")
+tyee.date<-"September 17"
 figures.x.date<-as.Date("2025-09-30")
 
-fence.day<-as.Date("2025-09-21")
-fence.date<-"September 21"
+fence.day<-as.Date("2025-09-17")
+fence.date<-"September 17"
 
-today<-as.Date("2025-09-22")
+today<-as.Date("2025-09-18")
 ```
 
 # Summary
@@ -611,6 +611,130 @@ cum_tyee_years
 </figure>
 
 # Appendix B - Catch of pink, chum, coho, chinook and steelhead
+
+```{r}
+#| label: fig-other
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "Number of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks)."
+#| include: true
+#| fig-height: 7
+
+seinecatch<-read.csv("data/current_year/commercial catch 2025-seine.csv")
+gncatch <- read.csv("data/current_year/commercial catch 2025-gillnet.csv")
+allcatch <- bind_rows(seinecatch, gncatch)
+
+#oc2<-othercatch%>%pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
+#  mutate(cpue=Catch/effort)%>%
+#  filter(Date>as.Date("2024-07-05")&Date<as.Date("2024-08-10"))%>%
+#  mutate(type=ifelse(Species%in%c("Chinook (Released)","Chum #(Released)","Steelhead (Released)","Coho #(Released)"),"Released","Kept"))%>%
+#  mutate(sp=case_when(Species=="Chinook (Released)"~"Chinook",
+#                      Species=="Coho (Released)"~"Coho",
+#                      Species=="Pink (Kept)"~"Pink Kept",
+#                      Species=="Pink (Released)"~"Pink Rel",
+#                      Species=="Chum (Released)"~"Chum",
+#                      Species=="Steelhead #(Released)"~"Steelhead",
+#                      Species=="Sockeye (Kept)"~"Sockeye"))
+
+oc2<-allcatch%>%pivot_longer(4:14,names_to="Species",values_to="Catch")%>%
+  mutate(cpue=Catch/Effort,
+         Date = as.Date(Date, format = "%Y-%m-%d"))%>%
+  filter(Date>as.Date("2025-07-05")&Date<as.Date("2025-08-10"))%>%mutate(dis=ifelse(Species%in%c("Chinook..Released.","Chum..Released.","Steelhead.. Released.","Coho..Released.","Sockeye..Released.","Pink..Released."),"Released","Kept"))%>%
+  mutate(sp=case_when(Species=="Chinook..Released."~"Chinook",
+Species=="Chinook..Kept."~"Chinook",
+                      Species=="Coho..Released."~"Coho",
+                      Species=="Coho..Kept."~"Coho",
+                      Species=="Pink..Kept."~"Pink",
+                      Species=="Pink..Released."~"Pink",
+Species=="Chum..Kept."~"Chum",
+                      Species=="Chum..Released."~"Chum",
+                      Species=="Steelhead..Released."~"Steelhead",
+                      Species=="Sockeye..Kept."~"Sockeye",
+Species=="Sockeye..Released."~"Sockeye"))
+
+
+ggplot(oc2,aes(x=Date,y=Catch,color=Gear))+
+  geom_line()+geom_point()+
+  theme_bw()+
+  grids()+
+  #facet_wrap(~Species,ncol=2,scales="free_y")+
+  facet_grid(sp~dis,scales="free_y")+
+  theme(legend.position="top")+
+  expand_limits(y=0) +
+  theme(axis.text.x = element_text(size = 7, angle = 60, vjust = 0.5, hjust=0.5))+
+    scale_x_date(date_breaks = "1 week", date_labels = "%b %d")
+
+```
+
+```{r}
+#| label: fig-other_cpue
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "CPUE of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks) by gillnets."
+#| include: true
+#| fig-height: 7
+
+gncpue<-oc2%>%filter(Gear=="Gillnet")
+
+ggplot(gncpue,aes(x=Date,y=cpue))+
+  geom_line()+geom_point()+
+  theme_bw()+
+  grids()+
+  #facet_wrap(~Species,ncol=2,scales="free_y")+
+  facet_grid(sp~dis,scales="free_y")+
+  theme(legend.position="top")
+```
+
+```{r}
+#| label: fig-seine
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-cap: "CPUE of other species caught and released (coho, chinook, chum and steelhead), or kept (pinks) by seines."
+#| include: true
+#| fig-height: 7
+
+sncpue<-oc2%>%filter(Gear=="Seine")
+
+ggplot(sncpue,aes(x=Date,y=cpue))+
+  geom_line()+geom_point()+
+  theme_bw()+
+  grids()+
+  #facet_wrap(~Species,ncol=2,scales="free_y")+
+  facet_grid(sp~dis,scales="free_y")+
+  theme(legend.position="top")
+```
+
+\FloatBarrier
+\newpage
+
+```{r}
+#| label: fig-area4
+#| echo: false
+#| message: false
+#| warning: false
+#| include: true
+#| fig-height: 6
+
+oc.total<-oc2%>%group_by(Gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
+
+oc.table<-oc.total%>%pivot_wider(names_from=c("Gear","dis"),values_from="total")
+
+kable(oc.table,caption=paste0("Total catch (kept/released) of coho, chum, chinook, sockeye and pink salmon, and steelhead in the commercial marine Area C and A gillent and seine fisheries to ",tyee.date,"."))
+
+# ggplot(oc.total,aes(x=Species,y=total,fill=Gear))+
+# geom_col()+
+#  scale_color_brewer(palette="Set1")+
+#  geom_text(aes(label=total),vjust=-.3,color="black")+
+#  facet_wrap(~dis,ncol=1,scales="free_y")+
+#  theme_bw()+
+# labs(y="Total Catch",x="Species")+
+#  scale_y_continuous(expand=c(.1,0))+
+#  theme(strip.background = element_blank())
+
+```
 
 # Appendix C - Population specific run-timing through Tyee
 
