@@ -185,7 +185,8 @@ di <- sum(demo_inriver$sockeye, na.rm=TRUE)
 
 marine.fsc <- 35000
 inriver.fsc <- 50000
-total.fsc <- marine.fsc+inriver.fsc
+# total.fsc <- marine.fsc+inriver.fsc
+total.fsc <- 100000
 
 t<- e + s + gn + dm + marine.fsc
 
@@ -209,7 +210,7 @@ i<-match(fence.day,current$Date)
 bab_sockeye <- current$cumesc[i]
 
 # 3. Total catch below Babine
-tc_below <- s + gn + di + dm + 75000
+tc_below <- s + gn + di + dm + 100000
 
 # 4. TRTC Estimate based on Babine and 10% non-Babine
 trtc_est <- bab_sockeye/0.9
