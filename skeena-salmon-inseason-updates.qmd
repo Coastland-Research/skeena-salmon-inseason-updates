@@ -199,7 +199,8 @@ kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.dat
 ```{r catch trtc table, echo= FALSE, results='asis'}
 current<-read.csv("data/current_year/babine fence 2025.csv") %>%
 select(Date,Large.Sockeye)%>%
-  mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")))
+  mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")),
+         cumesc = cumsum(Large.Sockeye))
 
 # 1. headers = Estimate / Number of sockeye 
 
@@ -217,7 +218,7 @@ stat4 <- data.frame(`Estimate`=c("Babine Fence", "Total Catch Below Babine", "TR
 
 names(stat4) <- gsub('[.]', ' ', names(stat4))
 
-kable(stat4,caption=paste0("Total number of sockeye through the Babine fence, total sockeye catch below the Babine fence, and TRTC estimate to  ",tyee.date,".","All numbers are preliminary and based on 90% of sockeye returning to the Babine with 10% non-Babine"))
+kable(stat4,caption=paste0("Total number of sockeye through the Babine fence, total sockeye catch below the Babine fence, and TRTC estimate to  ",tyee.date,"."," All numbers are preliminary and based on 90% of sockeye returning to the Babine with 10% non-Babine"))
 ```
 
 ```{r run timing table , echo = FALSE, results = 'asis'}
