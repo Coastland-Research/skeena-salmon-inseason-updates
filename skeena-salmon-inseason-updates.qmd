@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "October 7, 2025"
+subtitle: "October 9, 2025"
 format: html
 editor: visual
 editor_options: 
@@ -38,6 +38,7 @@ source("scripts/index_figures_pink.R")
 
 ```
 
+
 ```{r set days, echo=FALSE}
 tyee.day<-as.Date("2025-09-17")
 tyee.date<-"September 17"
@@ -47,6 +48,11 @@ fence.day<-as.Date("2025-10-01")
 fence.date<-"October 3"
 
 today<-as.Date("2025-10-04")
+```
+
+```{r catch prep and figures}
+
+source("scripts/harvest control rule and tac plots.R")
 ```
 
 # Summary
@@ -152,6 +158,81 @@ The section below shows index data (and escapement data for sockeye) from 2025 c
 
 The DFO Tyee test fishery website can be found here: [Tyee test fishery website](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/skeenatyee-eng.html)
 
+```{r}
+source("scripts/tyee_sockeye_trtc_model.R")
+source("scripts/first nations demo catches.R")
+```
+
+```{r tyee table,echo=FALSE,results='asis'}
+i<-match(tyee.day,sx.trtc.model.all$Date)
+
+average<-sx.trtc.model.all$Average[i]
+
+e<-sx.trtc.model.all$cumesc[i]
+c<-sx.trtc.model.all$cumcatch[i]
+
+s <- sum(sncatch$sncatch, na.rm = TRUE)
+
+gn <- sum(gncatch$gncatch, na.rm=TRUE)
+
+demo_marine <- demo.data %>%
+  filter(nation %in% c("Lax Kw'alaams", "NCS", "Metlakatla"))
+dm <- sum(demo_marine$sockeye, na.rm=TRUE)
+
+demo_inriver <- demo.data %>%
+  filter(nation %in% c("Gitksan", "Lake Babine Nation"))
+di <- sum(demo_inriver$sockeye, na.rm=TRUE)
+
+marine.fsc <- 35000
+inriver.fsc <- 50000
+total.fsc <- marine.fsc+inriver.fsc
+
+t<- e + s + gn + dm + marine.fsc
+
+stat3<-data.frame(`Cumulative to Date`=c("Escapement Past Tyee", "Area A Seine Catch", "Area C Gillnet Catch", "First Nations Demo Catch (Marine)", "First Nations Demo Catch (In-River)", "Total First Nations FSC Catch", "TRTC (Escapement to Tyee+Catch before Tyee)"),`Number of Sockeye`=c(e, s, gn, dm, di, total.fsc, t))
+names(stat3) <- gsub('[.]', ' ', names(stat3))
+
+kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.date,"."," All numbers are preliminary, and the Tyee escapement estimate has not been corrected to resolve any discrepancy with Babine fence counts and proportion Babine in the total Skeena aggregate."))
+```
+
+
+```{r catch trtc table, echo= FALSE, results='asis'}
+current<-read.csv("data/current_year/babine fence 2025.csv") %>%
+select(Date,Large.Sockeye)%>%
+  mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")))
+
+# 1. headers = Estimate / Number of sockeye 
+
+# 2. Babine fence = total large sockeye from babine fence
+i<-match(fence.day,current$Date)
+bab_sockeye <- current$cumesc[i]
+
+# 3. Total catch below Babine
+tc_below <- s + gn + di + dm + 75000
+
+# 4. TRTC Estimate based on Babine and 10% non-Babine
+trtc_est <- bab_sockeye/0.9
+
+stat4 <- data.frame(`Estimate`=c("Babine Fence", "Total Catch Below Babine", "TRTC Estimate (based on Babine and 10% non-Babine)"),`Number of Sockeye`=c(bab_sockeye, tc_below, trtc_est))
+
+names(stat4) <- gsub('[.]', ' ', names(stat4))
+
+kable(stat4,caption=paste0("Total number of sockeye through the Babine fence, total sockeye catch below the Babine fence, and TRTC estimate to  ",tyee.date,".","All numbers are preliminary and based on 90% of sockeye returning to the Babine with 10% non-Babine"))
+```
+
+```{r run timing table , echo = FALSE, results = 'asis'}
+
+# avgper<-round(sx.trtc.model$Timing[i],3)*100
+# earlyper<-round(sx.trtc.model$Timing[i+7],3)*100
+# lateper<-round(sx.trtc.model$Timing[i-7],3)*100
+# 
+# stat5 <- data.frame(`Run Timing`=c("Average","One week early","One week late"),`Percent Through`=c(avgper,earlyper,lateper))
+# 
+# names(stat4) <- gsub('[.]', ' ', names(stat4))
+# 
+# kable(stat5, caption=paste0("Percent of the sockeye run through Tyee to ",tyee.date,"."))
+```
+
 ## Sockeye Salmon
 
 ### Sockeye index
@@ -187,7 +268,6 @@ make.tyee.sockeye.escapement.plots(300000,5000000,figures.x.date)
 
 ```{r}
 source("scripts/plot_recent_sx_esc.R")
-
 ```
 
 ```{r, fig.height=7, fig.cap="Daily (top panel) and cumulative (bottom panel) sockeye escapement for 2021-2025."}
@@ -488,10 +568,6 @@ kable_styling(latex_options = "HOLD_position")
 
 The following section shows the harvest control rule for commercial sockeye fisheries in the Skeena, the estimated TAC for various run-timings, and the available information on catches in the Area 4 commercial marine gillnet and seine fisheries targeting sockeye at the mouth of the Skeena River (generally sub-areas 4-12 and 4-15). Information should be considered preliminary until reviewed by DFO staff in the post-season.
 
-```{r catch prep and figures}
-
-source("scripts/harvest control rule and tac plots.R")
-```
 
 ```{r, fig.height=4,fig.cap="The Skeena sockeye harvest control rule based on TRTC. The vertical lines show the estimated TRTC for 2025 by run-timing (red=early, green=average, blue=late)."}
 #| label: fig-skeena-sx-hcr

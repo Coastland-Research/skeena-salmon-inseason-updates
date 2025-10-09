@@ -24,6 +24,7 @@ sx.trtc.model.all <- left_join(tyee.sx.data, total.catch) %>%
     daily_trtc = (adjusted_catch + esctyee),
     daily_trtc = replace_na(daily_trtc,0),
     cum_trtc = cumsum(daily_trtc),
+    cumcatch = cumsum(catch),
     Average = cum_trtc / Runtiming,
     Early = cum_trtc / rtearly,
     Late = cum_trtc / rtlate
