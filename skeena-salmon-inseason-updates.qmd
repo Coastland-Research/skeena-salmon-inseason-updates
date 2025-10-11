@@ -39,8 +39,8 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025-09-17")
-tyee.date<-"September 17"
+tyee.day<-as.Date("2025-10-03")
+tyee.date<-"October 3"
 figures.x.date<-as.Date("2025-10-03")
 
 fence.day<-as.Date("2025-10-03")

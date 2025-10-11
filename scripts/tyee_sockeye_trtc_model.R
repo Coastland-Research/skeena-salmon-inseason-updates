@@ -38,9 +38,14 @@ sx.trtc.model<-sx.trtc.model.all%>%
 
 todays.trtc.estimates<-sx.trtc.model.all%>%filter(Date==tyee.day)
 
-cumesctodate<-tyee.sx.data%>%
-  filter(Date==tyee.day)%>%
-  getElement("cumesc")
+# cumesctodate<-tyee.sx.data%>%
+#   filter(Date==tyee.day)%>%
+#   getElement("cumesc")
+
+cumesctodate <- tyee.sx.data %>%
+  filter(Date <= tyee.day) %>%
+  slice_tail(n = 1) %>%
+  pull(cumesc)
   
 early=round(todays.trtc.estimates$Early,0)
 average=round(todays.trtc.estimates$Average,0)
