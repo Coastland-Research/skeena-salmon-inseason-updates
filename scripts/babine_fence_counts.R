@@ -1,7 +1,7 @@
 
 library(lubridate)
 
-make.babine.figures<-function(species.in,babine.x.high,daily.yhigh,cum.yhigh) {
+make.babine.figures<-function(species.in,babine.figures.x.high,daily.yhigh,cum.yhigh) {
 
 historical<-read_excel("data/common/babine fence counts 1946-2024 compiled 20240717.xlsx",
                        sheet=species.in)%>%
@@ -61,9 +61,9 @@ gg.daily.cum.quants<-gg.daily.cum %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
-babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.x.high,daily.yhigh)
+babine.daily<-make.babine.daily.plot(gg.daily,gg.daily.quants,babine.figures.x.high,daily.yhigh)
 
-babine.cum<-make.babine.cum.plot(gg.daily.cum,gg.daily.cum.quants,babine.x.high,cum.yhigh)
+babine.cum<-make.babine.cum.plot(gg.daily.cum,gg.daily.cum.quants,babine.figures.x.high,cum.yhigh)
 
 ggarrange(babine.daily,babine.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 

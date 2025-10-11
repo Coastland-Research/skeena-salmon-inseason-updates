@@ -1,4 +1,4 @@
-make.babine.daily.plot<-function(daily.data,daily.quants,babine.xhigh,daily.yhigh) {
+make.babine.daily.plot<-function(daily.data,daily.quants,babine.figures.x.high,daily.yhigh) {
   
   ggplot(daily.data,aes(x=Date, y=Fish,group=Date))+
     geom_line(data=daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
@@ -12,13 +12,13 @@ make.babine.daily.plot<-function(daily.data,daily.quants,babine.xhigh,daily.yhig
     theme_bw()+
     theme(legend.position="bottom",axis.title.x=element_blank())+
     ylim(0,daily.yhigh)+
-    xlim(as.Date("2025-07-01"),babine.xhigh)
+    xlim(as.Date("2025-07-01"),babine.figures.x.high)
 }
 
-#babine.xhigh=as.Date("2025-08-01")
+#babine.figures.x.high=as.Date("2025-08-01")
 #cum.yhigh=10000
 
-make.babine.cum.plot<-function(gg.daily.cum,gg.daily.cum.quants,babine.xhigh,cum.yhigh){
+make.babine.cum.plot<-function(gg.daily.cum,gg.daily.cum.quants,babine.figures.x.high,cum.yhigh){
   
   ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
     geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
@@ -32,7 +32,7 @@ make.babine.cum.plot<-function(gg.daily.cum,gg.daily.cum.quants,babine.xhigh,cum
     labs(y="Cumulative Daily Count",color="")+
     theme_bw()+
     theme(legend.position = "bottom")+
-    xlim(as.Date("2025-07-01"),babine.xhigh)+
+    xlim(as.Date("2025-07-01"),babine.figures.x.high)+
     ylim(0,cum.yhigh)
   
 }
