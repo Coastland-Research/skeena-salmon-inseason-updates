@@ -39,7 +39,7 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2025=6-06-10")
+tyee.day<-as.Date("2026-06-10")
 tyee.date<-"June 10"
 figures.x.date<-as.Date("2026-06-10")
 

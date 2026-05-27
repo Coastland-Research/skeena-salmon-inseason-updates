@@ -2,7 +2,7 @@
 #create harvest control rule line
 #load tyee trtc model data and calculate TAC using HCR points
 
-tac.data<-fread("data/current_year/Tyee model data 2025.csv")%>%
+tac.data<-fread("data/current_year/Tyee model data 2026.csv")%>%
   mutate(Date = as.Date(Date))%>%
   mutate(TAC=case_when(Estimate<1050000~0,
                        Estimate>=1050000&Estimate<2000000~((Estimate-1050000)/(2000000-1050000)*(.2-.0)+0)*Estimate,
@@ -34,8 +34,8 @@ ggplot(hcr,aes(x=TRTC/10^6,y=HR))+
 #create figure with Ttac.data = #create figure with TAC trend and total cumulative catch for current year
 
 #load catch data and combine for total cumulative catch
-catch.gn<-fread("data/current_year/commercial catch 2025-gillnet.csv")
-catch.sn<-fread("data/current_year/commercial catch 2025-seine.csv")
+catch.gn<-fread("data/current_year/commercial catch 2026-gillnet.csv")
+catch.sn<-fread("data/current_year/commercial catch 2026-seine.csv")
 
 make.tacandtotalcatch.plot<-function(catch.gn,catch.sn,tac.data) {
 

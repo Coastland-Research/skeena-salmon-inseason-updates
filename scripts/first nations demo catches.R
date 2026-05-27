@@ -2,7 +2,7 @@
 #create a table with nation, date and total sockeye catch
 #function for a figure showing all nations demo catches
 
-demo.data<-fread("data/current_year/fns demo catches 2025.csv")
+demo.data<-fread("data/current_year/fns demo catches 2026.csv")
 
 demo.totals<-demo.data%>%
   group_by(Nation=nation)%>%
@@ -20,7 +20,7 @@ plot.fns.demo.catch<-function(data) {
   geom_col()+
   labs(y="Number of Sockeye",x="Date",fill="Nation")+
   theme_bw()+
-  xlim(c(as.Date("2025-07-01"),as.Date("2025-09-01")))
+  xlim(c(as.Date("2026-07-01"),as.Date("2026-09-01")))
 
 }
 

@@ -1,14 +1,14 @@
 
-tyee.sx.data<-fread("data/current_year/tyee data 2025.csv")%>%
+tyee.sx.data<-fread("data/current_year/tyee data 2026.csv")%>%
   select(Date,Runtiming,esctyee)%>%
-  filter(Date>=as.Date("2025-06-10"))%>%
+  filter(Date>=as.Date("2026-06-10"))%>%
   mutate(cumesc=cumsum(esctyee))
 
-gncatch<-fread("data/current_year/commercial catch 2025-gillnet.csv")%>%
+gncatch<-fread("data/current_year/commercial catch 2026-gillnet.csv")%>%
   select(Date,gncatch=`Sockeye (Kept)`) %>% 
   replace(is.na(.), 0)
   
-sncatch<-fread("data/current_year/commercial catch 2025-seine.csv")%>%
+sncatch<-fread("data/current_year/commercial catch 2026-seine.csv")%>%
   select(Date,sncatch=`Sockeye (Kept)`) %>% 
   replace(is.na(.), 0)
 
