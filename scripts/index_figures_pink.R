@@ -7,7 +7,7 @@ make.index.figures.pink <-function(daily,current,yhigh,y.cum.high,xhigh) {
   
   gg.daily<-daily.index%>%
     mutate_if(is.character, as.numeric) %>%
-    pivot_longer(`1957`:`2025`,names_to="Year",values_to="Fish") %>%
+    pivot_longer(`1956`:`2024`,names_to="Year",values_to="Fish") %>%
     mutate(Year=as.numeric(Year)) %>%
     mutate(Index=replace_na(Fish,0))
   
@@ -31,7 +31,7 @@ make.index.figures.pink <-function(daily,current,yhigh,y.cum.high,xhigh) {
   gg.daily<-gg.daily%>%filter(!Year%in%years_out)
   
   gg.daily.cum<-daily.index%>%
-    pivot_longer(`1957`:`2025`,names_to="Year",values_to="Fish") %>%
+    pivot_longer(`1956`:`2024`,names_to="Year",values_to="Fish") %>%
     group_by(Year)%>%
     mutate(cum_sum=cumsum(replace_na(Fish,0)))
   
@@ -57,7 +57,7 @@ make.index.figures.pink <-function(daily,current,yhigh,y.cum.high,xhigh) {
   daily.index<-make.daily.index.plot.pink(gg.daily,gg.daily.quants,xhigh,yhigh)
   cum.index<-make.cum.index.plot.pink(gg.daily.cum,gg.daily.cum.quants,xhigh,y.cum.high)
   
-  #Daily plot with 2025 and quants
+  #Daily plot with 2026 and quants
   ggarrange(daily.index,cum.index,align="v",ncol=1,common.legend = TRUE,legend="bottom")
   
 }

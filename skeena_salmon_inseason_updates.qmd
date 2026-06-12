@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "June 10, 2026"
+subtitle: "June 12, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -39,14 +39,14 @@ source("scripts/index_figures_pink.R")
 ```
 
 ```{r set days, echo=FALSE}
-tyee.day<-as.Date("2026-06-10")
-tyee.date<-"June 10"
-figures.x.date<-as.Date("2026-06-10")
+tyee.day<-as.Date("2026-06-11")
+tyee.date<-"June 11"
+figures.x.date<-as.Date("2026-06-11")
 
-fence.day<-as.Date("2026-06-10")
-fence.date<-"June 10"
+fence.day<-as.Date("2026-06-11")
+fence.date<-"June 11"
 
-today<-as.Date("2026-06-10")
+today<-as.Date("2026-06-12")
 ```
 
 ```{r catch prep and figures}
@@ -117,9 +117,9 @@ The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges fr
 
 <figure>
 
-<img src="/images/2025_sk_forecast.png" title="2026 Sockeye Total Return Forecast" alt="2026 Sockeye Total Return Forecast" width="700"/>
+<img src="/images/2026_sk_forecast.png" title="2026 Sockeye Total Return Forecast" alt="2026 Sockeye Total Return Forecast" width="700"/>
 
-<figcaption>2026 Sockeye Total Return Forecast. Source: DFO 2024 Post Season Review Sockeye Presentation.</figcaption>
+<figcaption>2026 Sockeye Total Return Forecast. Source: NC Stad Charmaine Carr-Harris Post-Season Review Presentation.</figcaption>
 
 </figure>
 
@@ -200,7 +200,7 @@ select(Date,Large.Sockeye)%>%
   mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")),
          cumesc = cumsum(Large.Sockeye))
 
-# 1. headers = Estimate / Number of sockeye 
+# 1. headers = Estimate / Number of sockeye
 
 # 2. Babine fence = total large sockeye from babine fence
 i<-match(fence.day,current$Date)
@@ -220,7 +220,7 @@ kable(stat4,caption=paste0("Total number of sockeye through the Babine fence, to
 ```
 
 ```{r run timing table , echo = FALSE, results = 'asis'}
-
+# 
 # avgper<-round(sx.trtc.model$Timing[i],3)*100
 # earlyper<-round(sx.trtc.model$Timing[i+7],3)*100
 # lateper<-round(sx.trtc.model$Timing[i-7],3)*100
@@ -244,6 +244,7 @@ The 2026 sockeye index is shown below and compared to historical index data from
 daily<-fread("data/common/tyee_daily_indices_sockeye_1956-2025.csv")
 
 current<-fread("data/current_year/tyee data 2026.csv") %>%
+  mutate(Date = as.IDate(Date))%>%
   select(Date,"2026"=sockeye)
 
 make.index.figures(daily,current,150,5000,figures.x.date)
@@ -279,7 +280,7 @@ ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 ```
 
 ### In-season abundance estimate
-
+    
 Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table (@tbl-trtc-outputs) and figure (@fig-sx-trtc-model) show estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season).
 
 ```{r}
@@ -365,15 +366,16 @@ The 2026 pink salmon index is shown below and compared to historical index data 
 
 ### Even years
 
-```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for pink salmon from 1956-2025 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
-#| label: fig-index-pink-odd
-
-daily<-fread("data/common/tyee_daily_indices_pink-odd_1957-2024.csv", header = TRUE) 
-
-current<-fread("data/current_year/tyee data 2026.csv") %>%
-  select(Date,"2026"=`pink`) 
-
-make.index.figures.pink(daily,current,150,5000,figures.x.date)
+```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for pink salmon from 1956-2026 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
+#| label: fig-index-pink-even
+# 
+# daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = TRUE) %>%
+#   mutate(Date = as.IDate(Date))
+# 
+# current<-fread("data/current_year/tyee data 2026.csv") %>%
+#   select(Date,"2026"=`pink`) 
+# 
+# make.index.figures.pink(daily,current,150,5000,figures.x.date)
 ```
 
 ### Odd years
@@ -402,7 +404,8 @@ The 2026 steelhead index is shown below and compared to historical index data fr
 ```{r, fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for steelhead from 1956-2025 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-steelhead
 
-daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2025.csv", header = T)
+daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2025.csv", header = T) %>%
+mutate(Date = as.IDate(Date))
 
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=steelhead)
@@ -414,11 +417,9 @@ Steelhead updates are also provided by the Province of BC. Please reach out to K
 
 Steelhead updates:
 
-[Update to July 17](/data/steelhead/Skeena_Summer_Steelhead_Update_to_July_17_25.xlsx)
+will be updated soon
 
 # Babine Fence
-
-The Babine fence was installed and fish tight on July 14.
 
 Information on the Babine fence counts are updated daily [here](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/babine-eng.html). We extract information from this site and update daily.
 
@@ -508,7 +509,6 @@ make.babine.figures("Steelhead",babine.figures.x.high,50,500)
 
 Information on the Kitwanga fence operations can be found here: [Gitanyow Fisheries Authority](http://www.gitanyowfisheries.com/).
 
-[2026 Kitwanga River Salmon Enumeration Update #1](/data/kitwanga/KSEF_Update_7_September%209_2025.pdf)
 
 # Fisheries
 
@@ -518,7 +518,6 @@ This section contains information on fisheries in Area 4. Included are the weekl
 
 DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
 
-[Update #1-July 8](/data/nc_stad_weekly_updates/NCA_Weekly_Update_1_July_8_2025.pdf)
 
 ## Area 4 Fishery Openings
 
@@ -526,10 +525,10 @@ Fisheries notices for Skeena salmon are shown below. These are a list of the rel
 
 ```{r table of skeena fisheries openings, echo=FALSE, warning=FALSE, include=TRUE}
 
-openings<-read_csv("data/current_year/fisheries openings 2026.csv")
-
-kable(openings,caption="Fisheries openings in the Skeena area for 2026")%>%
-kable_styling(latex_options = "HOLD_position")
+# openings<-read_csv("data/current_year/fisheries openings 2026.csv")
+# 
+# kable(openings,caption="Fisheries openings in the Skeena area for 2026")%>%
+# kable_styling(latex_options = "HOLD_position")
 
 ```
 
@@ -542,26 +541,26 @@ The following section shows the harvest control rule for commercial sockeye fish
 ```{r, fig.height=4,fig.cap="The Skeena sockeye harvest control rule based on TRTC. The vertical lines show the estimated TRTC for 2026 by run-timing (red=early, green=average, blue=late)."}
 #| label: fig-skeena-sx-hcr
 
-make.sx.hcr.plot(hcr,tac.data)
+# make.sx.hcr.plot(hcr,tac.data)
 ```
 
 ```{r, fig.height=4,fig.cap="Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."}
 #| label: fig.skeena.sx.tacandcatch
 
-make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
+# make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 
 ```
 
 ```{r, fig.height=4,fig.cap="Skeena Sockeye catch by gear type."}
 #| label: fig-skeena-sx-gear
 
-make_p3(catch.gn, catch.sn)
+#make_p3(catch.gn, catch.sn)
 ```
 
 ```{r, fig.height=4,fig.cap="Skeena Sockeye CPUE by gear type."}
 #| label: fig-skeena-sx-cpue
 
-make_p4(catch.gn, catch.sn)
+#make_p4(catch.gn, catch.sn)
 ```
 
 ```{r}
@@ -585,8 +584,8 @@ source("scripts/first nations demo catches.R")
 ```
 
 ```{r FNs demo fishery catch table}
-kable(demo.table,caption="Preliminary Area 4 First Nations demo catches of sockeye.")%>%
-  row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
+# kable(demo.table,caption="Preliminary Area 4 First Nations demo catches of sockeye.")%>%
+#   row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
 ```
 
 ```{r FNs demo fishery catch figure,echo=FALSE,message=FALSE,warning=FALSE,include=TRUE}
@@ -596,7 +595,7 @@ kable(demo.table,caption="Preliminary Area 4 First Nations demo catches of socke
 #| include: true
 #| fig-height: 4
 
-plot.fns.demo.catch(demo.data)
+#plot.fns.demo.catch(demo.data)
 ```
 
 ## Recreational Fisheries
@@ -665,9 +664,9 @@ cum_tyee_years
 #| include: true
 #| fig-height: 7
 
-seinecatch<-read.csv("data/current_year/commercial catch 2026-seine.csv")
-gncatch <- read.csv("data/current_year/commercial catch 2026-gillnet.csv")
-allcatch <- bind_rows(seinecatch, gncatch)
+# seinecatch<-read.csv("data/current_year/commercial catch 2026-seine.csv")
+# gncatch <- read.csv("data/current_year/commercial catch 2026-gillnet.csv")
+# allcatch <- bind_rows(seinecatch, gncatch)
 
 #oc2<-othercatch%>%pivot_longer(4:10,names_to="Species",values_to="Catch")%>%
 #  mutate(cpue=Catch/effort)%>%
@@ -681,33 +680,33 @@ allcatch <- bind_rows(seinecatch, gncatch)
 #                      Species=="Steelhead #(Released)"~"Steelhead",
 #                      Species=="Sockeye (Kept)"~"Sockeye"))
 
-oc2<-allcatch%>%pivot_longer(4:14,names_to="Species",values_to="Catch")%>%
-  mutate(cpue=Catch/Effort,
-         Date = as.Date(Date, format = "%Y-%m-%d"))%>%
-  filter(Date>as.Date("2026-07-05")&Date<as.Date("2026-08-10"))%>%mutate(dis=ifelse(Species%in%c("Chinook..Released.","Chum..Released.","Steelhead.. Released.","Coho..Released.","Sockeye..Released.","Pink..Released."),"Released","Kept"))%>%
-  mutate(sp=case_when(Species=="Chinook..Released."~"Chinook",
-Species=="Chinook..Kept."~"Chinook",
-                      Species=="Coho..Released."~"Coho",
-                      Species=="Coho..Kept."~"Coho",
-                      Species=="Pink..Kept."~"Pink",
-                      Species=="Pink..Released."~"Pink",
-Species=="Chum..Kept."~"Chum",
-                      Species=="Chum..Released."~"Chum",
-                      Species=="Steelhead..Released."~"Steelhead",
-                      Species=="Sockeye..Kept."~"Sockeye",
-Species=="Sockeye..Released."~"Sockeye"))
-
-
-ggplot(oc2,aes(x=Date,y=Catch,color=Gear))+
-  geom_line()+geom_point()+
-  theme_bw()+
-  grids()+
-  #facet_wrap(~Species,ncol=2,scales="free_y")+
-  facet_grid(sp~dis,scales="free_y")+
-  theme(legend.position="top")+
-  expand_limits(y=0) +
-  theme(axis.text.x = element_text(size = 7, angle = 60, vjust = 0.5, hjust=0.5))+
-    scale_x_date(date_breaks = "1 week", date_labels = "%b %d")
+# oc2<-allcatch%>%pivot_longer(4:14,names_to="Species",values_to="Catch")%>%
+#   mutate(cpue=Catch/Effort,
+#          Date = as.Date(Date, format = "%Y-%m-%d"))%>%
+#   filter(Date>as.Date("2026-07-05")&Date<as.Date("2026-08-10"))%>%mutate(dis=ifelse(Species%in%c("Chinook..Released.","Chum..Released.","Steelhead.. Released.","Coho..Released.","Sockeye..Released.","Pink..Released."),"Released","Kept"))%>%
+#   mutate(sp=case_when(Species=="Chinook..Released."~"Chinook",
+# Species=="Chinook..Kept."~"Chinook",
+#                       Species=="Coho..Released."~"Coho",
+#                       Species=="Coho..Kept."~"Coho",
+#                       Species=="Pink..Kept."~"Pink",
+#                       Species=="Pink..Released."~"Pink",
+# Species=="Chum..Kept."~"Chum",
+#                       Species=="Chum..Released."~"Chum",
+#                       Species=="Steelhead..Released."~"Steelhead",
+#                       Species=="Sockeye..Kept."~"Sockeye",
+# Species=="Sockeye..Released."~"Sockeye"))
+# 
+# 
+# ggplot(oc2,aes(x=Date,y=Catch,color=Gear))+
+#   geom_line()+geom_point()+
+#   theme_bw()+
+#   grids()+
+#   #facet_wrap(~Species,ncol=2,scales="free_y")+
+#   facet_grid(sp~dis,scales="free_y")+
+#   theme(legend.position="top")+
+#   expand_limits(y=0) +
+#   theme(axis.text.x = element_text(size = 7, angle = 60, vjust = 0.5, hjust=0.5))+
+#     scale_x_date(date_breaks = "1 week", date_labels = "%b %d")
 
 ```
 
@@ -720,15 +719,15 @@ ggplot(oc2,aes(x=Date,y=Catch,color=Gear))+
 #| include: true
 #| fig-height: 7
 
-gncpue<-oc2%>%filter(Gear=="Gillnet")
-
-ggplot(gncpue,aes(x=Date,y=cpue))+
-  geom_line()+geom_point()+
-  theme_bw()+
-  grids()+
-  #facet_wrap(~Species,ncol=2,scales="free_y")+
-  facet_grid(sp~dis,scales="free_y")+
-  theme(legend.position="top")
+# gncpue<-oc2%>%filter(Gear=="Gillnet")
+# 
+# ggplot(gncpue,aes(x=Date,y=cpue))+
+#   geom_line()+geom_point()+
+#   theme_bw()+
+#   grids()+
+#   #facet_wrap(~Species,ncol=2,scales="free_y")+
+#   facet_grid(sp~dis,scales="free_y")+
+#   theme(legend.position="top")
 ```
 
 ```{r}
@@ -740,15 +739,15 @@ ggplot(gncpue,aes(x=Date,y=cpue))+
 #| include: true
 #| fig-height: 7
 
-sncpue<-oc2%>%filter(Gear=="Seine")
-
-ggplot(sncpue,aes(x=Date,y=cpue))+
-  geom_line()+geom_point()+
-  theme_bw()+
-  grids()+
-  #facet_wrap(~Species,ncol=2,scales="free_y")+
-  facet_grid(sp~dis,scales="free_y")+
-  theme(legend.position="top")
+# sncpue<-oc2%>%filter(Gear=="Seine")
+# 
+# ggplot(sncpue,aes(x=Date,y=cpue))+
+#   geom_line()+geom_point()+
+#   theme_bw()+
+#   grids()+
+#   #facet_wrap(~Species,ncol=2,scales="free_y")+
+#   facet_grid(sp~dis,scales="free_y")+
+#   theme(legend.position="top")
 ```
 
 \FloatBarrier
@@ -762,11 +761,11 @@ ggplot(sncpue,aes(x=Date,y=cpue))+
 #| include: true
 #| fig-height: 6
 
-oc.total<-oc2%>%group_by(Gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
-
-oc.table<-oc.total%>%pivot_wider(names_from=c("Gear","dis"),values_from="total")
-
-kable(oc.table,caption=paste0("Total catch (kept/released) of coho, chum, chinook, sockeye and pink salmon, and steelhead in the commercial marine Area C and A gillent and seine fisheries to ",tyee.date,"."))
+# oc.total<-oc2%>%group_by(Gear,Species=sp,dis)%>%summarise(total=sum(Catch,na.rm=TRUE))
+# 
+# oc.table<-oc.total%>%pivot_wider(names_from=c("Gear","dis"),values_from="total")
+# 
+# kable(oc.table,caption=paste0("Total catch (kept/released) of coho, chum, chinook, sockeye and pink salmon, and steelhead in the commercial marine Area C and A gillent and seine fisheries to ",tyee.date,"."))
 
 # ggplot(oc.total,aes(x=Species,y=total,fill=Gear))+
 # geom_col()+

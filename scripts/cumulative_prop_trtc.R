@@ -1,16 +1,16 @@
 
-# 2025 update -------------------------------------------------------------
+# 2026 update -------------------------------------------------------------
 
-daily_25 <- read.csv("data/common/sk_cumu_prop.csv") %>%
+daily_26 <- read.csv("data/common/sk_cumu_prop.csv") %>%
   rename_with(~ sub("^X", "", .x), starts_with("X"))
   
-gg.daily.pcum<-daily_25%>%select("Date":"2024")%>%
-  pivot_longer("1956":"2024",names_to="Year",values_to="Sockeye")%>%
+gg.daily.pcum<-daily_26%>%select("Date":"2025")%>%
+  pivot_longer("1956":"2025",names_to="Year",values_to="Sockeye")%>%
   mutate(Year=as.numeric(Year), Date = as.Date(Date))
 
-data <- read.csv("data/current_year/tyee data 2025.csv") %>%
+data <- read.csv("data/current_year/tyee data 2026.csv") %>%
   mutate(Date = as.Date(Date)) %>%
-  mutate(Date = as.Date(gsub("2025", "2024", Date)))
+  mutate(Date = as.Date(gsub("2026", "2025", Date)))
 
 # read in data 
 data2<-data.frame(date=data$Date,cumtrtc=data$cum_check)%>%
@@ -27,8 +27,8 @@ make.prop.figure<-function(gg.daily.pcum, data2) {
   ggplot(gg.daily.pcum,aes(x=Date,y=Sockeye,group=Date))+
     geom_boxplot(fill="white",color="grey70",alpha=.5)+
     geom_line(data = data2, aes(x=date,y=p,color=estimate,group=estimate),linewidth=1,linewidth=1) +
-    geom_segment(aes(x=as.Date("2024-06-01"),y=.5,xend=as.Date("2024-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
-    geom_segment(aes(x=as.Date("2024-07-24"),y=.5,xend=as.Date("2024-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
+    geom_segment(aes(x=as.Date("2025-06-01"),y=.5,xend=as.Date("2025-07-24"),yend=.5),color="blue",linewidth=1,linetype="dashed")+
+    geom_segment(aes(x=as.Date("2025-07-24"),y=.5,xend=as.Date("2025-07-24"),yend=0),color="blue",arrow = arrow(length=unit(.25, 'cm')),linewidth=1,linetype="dashed")+
     #ylim(0,150000)+
     theme_bw()+
     ylim(0,1)+

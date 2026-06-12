@@ -8,6 +8,6 @@ ggplot(data,aes(x=Date,y=Estimate,color=Timing))+
     ylim(0,yhigh)+
     theme(legend.position="bottom")+
     labs(y="Sockeye TRTC Estimate at Tyee")+
-    xlim(as.Date("2025-06-10"),xhigh)
+    xlim(as.Date("2026-06-10"),xhigh)
     
 }

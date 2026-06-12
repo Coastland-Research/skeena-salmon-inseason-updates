@@ -1,18 +1,18 @@
 
-daily<-fread("data/common/tyee_daily_indices_chinook_1956-2024.csv")
+daily<-fread("data/common/tyee_daily_indices_chinook_1956-2025.csv")
   
-current<-fread("data/current_year/tyee data 2025.csv") %>%
-  select(Date,"2025"=chinook)
+current<-fread("data/current_year/tyee data 2026.csv") %>%
+  select(Date,"2026"=chinook)
   
 daily.index<-left_join(daily,current,by="Date")%>%
     mutate(Date=as.Date(Date))
   
   gg.daily<-daily.index%>%
     mutate_if(is.character, as.numeric) %>%
-    pivot_longer(`1956`:`2025`,names_to="Year",values_to="Fish") %>%
+    pivot_longer(`1956`:`2026`,names_to="Year",values_to="Fish") %>%
     mutate(Year=as.numeric(Year)) %>%
     mutate(Index=replace_na(Fish,0))%>%
-    filter(Year>=2011)
+    filter(Year>=2012)
   
   gg.daily.quants<-gg.daily %>%
     group_by(Date) %>%
@@ -34,10 +34,10 @@ daily.index<-left_join(daily,current,by="Date")%>%
   gg.daily<-gg.daily%>%filter(!Year%in%years_out)
   
   gg.daily.cum<-daily.index%>%
-    pivot_longer(`1956`:`2025`,names_to="Year",values_to="Fish") %>%
+    pivot_longer(`1956`:`2026`,names_to="Year",values_to="Fish") %>%
     group_by(Year)%>%
     mutate(cum_sum=cumsum(replace_na(Fish,0)))%>%
-    filter(Year>=2011)
+    filter(Year>=2012)
   
   gg.daily.cum.quants<-gg.daily.cum %>%
     group_by(Date) %>%
@@ -62,33 +62,33 @@ daily.index<-left_join(daily,current,by="Date")%>%
     
     ggplot(daily.data,aes(x=Date, y=Fish,group=Date))+
       geom_line(data=daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
-      geom_line(data = daily.data %>% filter(Year == 2025),
-                aes(x = Date, y = Fish, group = 1, color = "2025 Data"),
+      geom_line(data = daily.data %>% filter(Year == 2026),
+                aes(x = Date, y = Fish, group = 1, color = "2026 Data"),
                 linewidth = 1.5,alpha=.7)+
-      geom_line(data = daily.data %>% filter(Year <2025), aes(x = Date, y = Fish,group=Year),
+      geom_line(data = daily.data %>% filter(Year <2026), aes(x = Date, y = Fish,group=Year),
                 linewidth = .5,alpha=.1)+
       scale_color_manual(values=c("grey75","purple","grey50","black"))+
       labs(y="Daily Index",color="")+
       theme_bw()+
       theme(legend.position="bottom",axis.title.x=element_blank())+
       ylim(0,yhigh)+
-      xlim(as.Date("2025-06-03"),xhigh)
+      xlim(as.Date("2026-06-03"),xhigh)
   }
   
   make.recent.cum.index.plot<-function(cum.data,cum.quants,xhigh,y.cum.high){
     
     ggplot(cum.data,aes(x=Date, y=cum_sum,group=Date))+
       geom_line(data=cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
-      geom_line(data = cum.data %>% filter(Year == 2025&Date<=tyee.day),
-                aes(x = Date, y = cum_sum, group = 1,color = "2025 Data"),
+      geom_line(data = cum.data %>% filter(Year == 2026&Date<=tyee.day),
+                aes(x = Date, y = cum_sum, group = 1,color = "2026 Data"),
                 linewidth = 1.5,alpha=.7)+
-      geom_line(data = cum.data %>% filter(Year <2025), aes(x = Date, y = cum_sum,group=Year),
+      geom_line(data = cum.data %>% filter(Year <2026), aes(x = Date, y = cum_sum,group=Year),
                 linewidth = .5,alpha=.1)+
       scale_color_manual(values=c("grey75","purple","grey50","black"))+
       labs(y="Cumulative Daily Index",color="")+
       theme_bw()+
       theme(legend.position = "bottom")+
-      xlim(as.Date("2025-06-03"),xhigh)+
+      xlim(as.Date("2026-06-03"),xhigh)+
       ylim(0,y.cum.high)
     
   }

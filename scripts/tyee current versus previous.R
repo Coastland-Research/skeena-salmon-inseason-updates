@@ -1,6 +1,6 @@
 
-# 2025 tyee data
-data<-read_csv("data/current_year/Tyee data 2025.csv") %>%
+# 2026 tyee data
+data<-read_csv("data/current_year/tyee data 2026.csv") %>%
   mutate(Date = as.Date(Date)) %>%
   mutate(cumtyee = cumsum(replace_na(esctyee,0)))
 
@@ -12,11 +12,11 @@ daily <- read_excel("data/2024_archive/Tyee data 2024.xlsx",sheet="tyee daily") 
   group_by(Year)%>%
   mutate(cum_sum=cumsum(replace_na(Sockeye,0)))
 
-# 2025 daily escapement versus 2000-2004
+# 2026 daily escapement versus 2000-2004
 daily_tyee_years <- daily %>%
   filter(Year >= 2000) %>%
   ggplot(aes(x = Date, y = Sockeye, color = "daily sockeye escapement")) + geom_line() + 
-  geom_line(data = data%>%filter(Date<=tyee.day), aes(x = Date, y = esctyee, color = "2025 daily sockeye escapement")) + # line for 2025 data
+  geom_line(data = data%>%filter(Date<=tyee.day), aes(x = Date, y = esctyee, color = "2026 daily sockeye escapement")) + # line for 2026 data
   facet_wrap(~Year, scales = "free_y") +
   theme_minimal()+
   theme(legend.position = "top") +
@@ -24,11 +24,11 @@ daily_tyee_years <- daily %>%
   ylab("Sockeye Escapement") +
   theme(axis.text.x = element_text(angle = 45))
 
-# 2025 cumulative escapement versus 2000-2024
+# 2026 cumulative escapement versus 2000-2024
 cum_tyee_years <- daily %>%
   filter(Year >= 2000) %>%
   ggplot(aes(x = Date, y = cum_sum, color = "cumulative sockeye escapement")) + geom_line() +
-  geom_line(data = data%>%filter(Date<=tyee.day), aes(x = Date, y = cumtyee, color = "2025 cumulative sockeye escapement")) +
+  geom_line(data = data%>%filter(Date<=tyee.day), aes(x = Date, y = cumtyee, color = "2026 cumulative sockeye escapement")) +
   facet_wrap(~Year,scales="free_y") +
   theme_minimal()+
   theme(legend.position = "top") +

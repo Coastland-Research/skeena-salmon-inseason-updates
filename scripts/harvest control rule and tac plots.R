@@ -2,7 +2,7 @@
 #create harvest control rule line
 #load tyee trtc model data and calculate TAC using HCR points
 
-tac.data<-fread("data/current_year/Tyee model data 2026.csv")%>%
+tac.data<-fread("data/2025_archive/Tyee model data 2025.csv")%>%
   mutate(Date = as.Date(Date))%>%
   mutate(TAC=case_when(Estimate<1050000~0,
                        Estimate>=1050000&Estimate<2000000~((Estimate-1050000)/(2000000-1050000)*(.2-.0)+0)*Estimate,
@@ -34,8 +34,8 @@ ggplot(hcr,aes(x=TRTC/10^6,y=HR))+
 #create figure with Ttac.data = #create figure with TAC trend and total cumulative catch for current year
 
 #load catch data and combine for total cumulative catch
-catch.gn<-fread("data/current_year/commercial catch 2026-gillnet.csv")
-catch.sn<-fread("data/current_year/commercial catch 2026-seine.csv")
+catch.gn<-fread("data/2025_archive/commercial catch 2025-gillnet.csv")
+catch.sn<-fread("data/2025_archive/commercial catch 2025-seine.csv")
 
 make.tacandtotalcatch.plot<-function(catch.gn,catch.sn,tac.data) {
 
@@ -108,7 +108,7 @@ make_p4 <- function(catch.gn, catch.sn) {
     select(Date,Gillnet,Seine)%>%
     pivot_longer(2:3,names_to="Gear",values_to="CPUE")%>%
     filter(Date>"2025-07-01"&Date<"2025-09-01")
-  
+
     ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
     geom_line()+geom_point()+
     scale_color_brewer(palette="Set1")+
@@ -117,7 +117,53 @@ make_p4 <- function(catch.gn, catch.sn) {
     labs(y="Sockeye CPUE")+
     expand_limits(y=0)+
     expand_limits(x=c(as.Date("2025-07-01"),as.Date("2025-09-01")))
-    
+
 }
 
+# make_p4 <- function(catch.gn, catch.sn) {
+#   
+#   cpue <- rbind(catch.gn, catch.sn) %>%
+#     select(Date, Gear, Effort, Catch = "Sockeye (Kept)") %>%
+#     group_by(Date, Gear) %>%
+#     summarise(
+#       Effort = sum(Effort, na.rm = TRUE),
+#       Catch = sum(Catch, na.rm = TRUE),
+#       .groups = "drop"
+#     ) %>%
+#     mutate(
+#       gear_prefix = case_when(
+#         Gear == "Gillnet" ~ "gn",
+#         Gear == "Seine" ~ "sn"
+#       )
+#     ) %>%
+#     pivot_wider(
+#       names_from = gear_prefix,
+#       values_from = c(Effort, Catch),
+#       names_glue = "{gear_prefix}{.value}"
+#     ) %>%
+#     mutate(
+#       Gillnet = gnCatch / gnEffort,
+#       Seine = snCatch / snEffort
+#     ) %>%
+#     select(Date, Gillnet, Seine) %>%
+#     pivot_longer(
+#       2:3,
+#       names_to = "Gear",
+#       values_to = "CPUE"
+#     ) %>%
+#     filter(Date > "2025-07-01" & Date < "2025-09-01")
+#   
+#   ggplot(cpue, aes(x = Date, y = CPUE, color = Gear)) +
+#     geom_line() +
+#     geom_point() +
+#     scale_color_brewer(palette = "Set1") +
+#     theme_bw() +
+#     theme(legend.position = "top") +
+#     labs(y = "Sockeye CPUE") +
+#     expand_limits(y = 0) +
+#     expand_limits(x = c(as.Date("2025-07-01"),
+#                         as.Date("2025-09-01")))
+# }
+
 make_p4(catch.gn, catch.sn)
+

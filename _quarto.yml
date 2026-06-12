@@ -1,4 +1,6 @@
 project:
+  render:
+    - skeena_salmon_inseason_updates.qmd
   type: website
   output-dir: docs
 

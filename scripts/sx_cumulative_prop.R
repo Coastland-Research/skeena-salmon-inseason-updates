@@ -46,10 +46,10 @@ ggarrange(g1,g2,align="v",ncol=1)
 
 ```
 
-dailycum<-read_excel("data/2024_archive/Tyee data 2024.xlsx",sheet="tyee pcum")
+dailycum<-read_excel("data/2025_archive/Tyee data 2025.xlsx",sheet="tyee pcum")
 
-gg.daily.pcum<-dailycum%>%select("Date":"2023")%>%
-  pivot_longer("1970":"2023",names_to="Year",values_to="Sockeye")%>%
+gg.daily.pcum<-dailycum%>%select("Date":"2024")%>%
+  pivot_longer("1970":"2024",names_to="Year",values_to="Sockeye")%>%
   mutate(Year=as.numeric(Year))
 
 data2<-data.frame(date=data$Date,cumtrtc=data$cumtyee)%>%

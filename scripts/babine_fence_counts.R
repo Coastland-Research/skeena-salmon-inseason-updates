@@ -3,17 +3,17 @@ library(lubridate)
 
 make.babine.figures<-function(species.in,babine.figures.x.high,daily.yhigh,cum.yhigh) {
 
-historical<-read_excel("data/common/babine fence counts 1946-2024 compiled 20240717.xlsx",
+historical<-read_excel("data/common/babine fence counts 1946-2025 compiled 20240717.xlsx",
                        sheet=species.in)%>%
   mutate(Date=as.Date(Date))%>%
-  mutate_at(vars("1946":"2024"), ~replace(., is.na(.), 0)) %>%
-  mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")))
+  mutate_at(vars("1946":"2025"), ~replace(., is.na(.), 0)) %>%
+  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))
 
 #str(historical)
 
-current<-fread("data/current_year/babine fence 2025.csv") %>%
-select(Date,"2025"=species.in)%>%
-  mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")))
+current<-fread("data/current_year/babine fence 2026.csv") %>%
+select(Date,"2026"=species.in)%>%
+  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))
 
 #str(current)
 

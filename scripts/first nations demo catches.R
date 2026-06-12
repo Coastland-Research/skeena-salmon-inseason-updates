@@ -24,7 +24,3 @@ plot.fns.demo.catch<-function(data) {
 
 }
 
-
-
-
-

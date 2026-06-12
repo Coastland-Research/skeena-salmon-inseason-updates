@@ -12,7 +12,8 @@ sncatch<-fread("data/current_year/commercial catch 2026-seine.csv")%>%
   select(Date,sncatch=`Sockeye (Kept)`) %>% 
   replace(is.na(.), 0)
 
-total.catch<-left_join(gncatch,sncatch)
+total.catch<-left_join(gncatch,sncatch) %>%
+  mutate(Date = as.IDate(Date))
 
 
 sx.trtc.model.all <- left_join(tyee.sx.data, total.catch) %>%

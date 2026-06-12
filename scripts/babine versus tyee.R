@@ -3,11 +3,11 @@
 
 make.tyee.vs.babine.plot<-function(pernonbabine,p.catch.babine,ylow,yhigh,start.date,end.date) {
 
-ty<-fread("data/current_year/Tyee data 2025.csv")%>%
+ty<-fread("data/current_year/Tyee data 2026.csv")%>%
   mutate(Date = as.Date(Date))%>%
   select(Date, Observed.Tyee=cum_check)
 
-fe<-fread("data/current_year/babine fence 2025.csv")%>%
+fe<-fread("data/current_year/babine fence 2026.csv")%>%
   mutate(Date = as.Date(Date),
          cumrun=cumsum(`Large Sockeye`))%>%
   select(Date,Actual.Fence=cumrun)

@@ -5,28 +5,30 @@
 # 1. Read in data ------------------------------------------------------------
 
 library(RColorBrewer)
-tyee.sx.daily <- fread("data/current_year/tyee data 2025.csv") %>%
-  select(Date,"2025"=esctyee)
+tyee.sx.daily <- fread("data/current_year/tyee data 2026.csv") %>%
+  mutate(Date = as.IDate(Date))%>%
+  select(Date,"2026"=esctyee)
 
-recent.sx.esc <- fread("data/common/tyee_daily_sockeye_escapement_1970-2024.csv") 
+recent.sx.esc <- fread("data/common/tyee_daily_sockeye_escapement_1970-2025.csv") %>%
+  mutate(Date = as.IDate(Date))
 
 all.sx.data <- left_join(recent.sx.esc, tyee.sx.daily, by="Date") %>%
   mutate(Date=as.Date(Date))
 
 # daily escapement
 sx.daily.recent <- all.sx.data %>%
-  pivot_longer("1970":"2025",names_to="Year",values_to="Fish") %>%
+  pivot_longer("1970":"2026",names_to="Year",values_to="Fish") %>%
   mutate(Year=as.factor(Year)) %>%
   mutate(Index=replace_na(Fish,0)) %>%
-  filter(Year %in% c("2021", "2022", "2023", "2024", "2025"))
+  filter(Year %in% c("2022", "2023", "2024", "2025", "2026"))
 
 # cumulative escapement
 sx.cumesc <- all.sx.data %>%
-  pivot_longer("1970":"2025",names_to="Year",values_to="Fish") %>%
+  pivot_longer("1970":"2026",names_to="Year",values_to="Fish") %>%
   group_by(Year)%>%
   mutate(Year=as.factor(Year)) %>%
   mutate(Index=replace_na(Fish,0)) %>% 
-  filter(Year %in% c("2021", "2022", "2023", "2024", "2025")) %>%
+  filter(Year %in% c("2022", "2023", "2024", "2025", "2026")) %>%
   mutate(cum_sum=cumsum(replace_na(Fish, 0)))
 
 
@@ -42,12 +44,12 @@ make.recent.esc.plot <- function(sx.daily.recent,xhigh) {
 
   ggplot() +
     geom_line(
-      data = filter(sx.daily.recent, Year != 2025),
+      data = filter(sx.daily.recent, Year != 2026),
       aes(x = Date, y = Fish, group = Year, colour = factor(Year)),
       linewidth = 0.5) +
     geom_line(
-      data = filter(sx.daily.recent, Year == 2025),
-      aes(x = Date, y = Fish, group = Year,color="2025"),
+      data = filter(sx.daily.recent, Year == 2026),
+      aes(x = Date, y = Fish, group = Year,color="2026"),
      linewidth = 1.2) +
     #scale_color_brewer(palette = "Dark2") +
     scale_color_manual(values=c(brewer.pal(4,"Dark2"),"black"))+
@@ -55,7 +57,7 @@ make.recent.esc.plot <- function(sx.daily.recent,xhigh) {
     theme(axis.title.x=element_blank())+
     labs(colour = "Year") +
     ylab("Daily Sockeye Escapement")+
-    xlim(as.Date("2025-06-10"),xhigh)
+    xlim(as.Date("2026-06-10"),xhigh)
 }
 
 # 2b. daily cumulative 2021-2025 plot
@@ -63,19 +65,19 @@ make.recent.cum.plot <- function(sx.cumesc,yhigh,xhigh) {
   
   ggplot() +
     geom_line(
-      data = filter(sx.cumesc, Year != 2025),
+      data = filter(sx.cumesc, Year != 2026),
       aes(x = Date, y=cum_sum,group=Year, colour = factor(Year)),
       linewidth = 0.5) +
     geom_line(
-      data = filter(sx.cumesc, Year == 2025&Date<=tyee.day),
-      aes(x = Date, y = cum_sum, group = Year,color="2025"),
+      data = filter(sx.cumesc, Year == 2026&Date<=tyee.day),
+      aes(x = Date, y = cum_sum, group = Year,color="2026"),
       linewidth= 1.2) +
     #scale_color_brewer(palette = "Dark2") +
     scale_color_manual(values=c(brewer.pal(4,"Dark2"),"black"))+
     theme_bw() +
     labs(colour = "Year") +
     ylab("Cumulative Sockeye Escapement")+
-    xlim(as.Date("2025-06-10"),xhigh)+
+    xlim(as.Date("2026-06-10"),xhigh)+
     ylim(0,yhigh)
   
   # ggplot(sx.cumesc, aes(x=Date, y=cum_sum,group=Year, colour = Year))+
