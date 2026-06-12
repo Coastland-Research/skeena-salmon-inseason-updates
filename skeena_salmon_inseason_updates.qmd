@@ -58,50 +58,32 @@ source("scripts/harvest control rule and tac plots.R")
 
 -   Pre-season forecasts
 
-    -   The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranged from  to  million (90% confidence range) with a point estimate (p50) of  million.
+    -   The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges from 728,000 to 3.3 million (90% confidence range) with a point estimate (p50) of 1.5 million.
     -   On average, Alaskan fisheries take approximately 5-10% of the aggregate sockeye run, but this depends on their pink salmon fisheries and effort, and can be much higher in some years.
-    -   The pre-season forecast for the terminal run of Skeena Chinook point estimate is  with a 50% confidence interval of  (p25) to  (p75).
 
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   Sockeye escapement estimates are tracking just below the median of returns from 1970-2025, with the TRTC model estimate stabilised since the start of August - final estimates for TRTC are just above 1.6M, well below the pre-season forecast for early and average run-timing projections. Very few more sockeye are expected through Tyee.
-    -   Run-timing of sockeye appears to be near average.
-    -   Chinook are also done passing Tyee, and tracked between the 25th and 50th percentiles of all years to date. Compared to recent years (2011 on), the Chinook index is looking quite good tracking between the 50th and 75th percentiles. Final TRTC estimates will be available around March 2026 once the Kitsumkalum mark recapture estimate is available and genetic analysis for the expansion to aggregate is completed.
-    -   Pink salmon were tracking off the charts well above the highest run index ever at the start of the run. However, pink estimates fell off and it appears that it was a very early run. Some areas have strong pink returns (e.g. Kitwanga) while other areas are not showing expected pink abundance (Lakelse, Babine).
-    -   Chum have mostly stopped passing Tyee, with the index tracking fairly strong at the start of the season but falling off now to just above the 25th percentile of historical returns.
-    -   Coho are still entering the Skeena, but are also falling off and currently well below average.
-    -   Steelhead started fairly strong, but are now tracking well below the long-term median, and just above the provincial Extreme Conservation Concern level at just over 8,000.
 
 -   Babine
 
-    -   The Babine fence started operations mid-July
-    -   Large sockeye are tracking around the 75th percentile to date with just over 1M past the fence to date.
-    -   In comparison to Tyee, the Babine fence is showing less sockeye so far than expected, which could be a result of a Tyee overestimate, longer than expected migration between Tyee and the Babine fence, or a grearter proportion of non-Babine sockeye than 10% this year.
-    -   Jack sockeye, which predict 4-yr old sockeye returns next year, are tracking just above the 25th percentile, with less than 25,000 through the fence to date.
-    -   Pink salmon have also started showing up at the Babine fence, and are also indicating an early return there, however expected abundance is not showing up.
+    -   The Babine fence starts operations in mid-July.
 
 -   Kitwanga Fence
 
-    -   The Kitwanga fence started operations on July 11. Information from the Kitwanga fence is shared weekly by Gitanyow Fisheries Authority and links to their reports can be found below.
+    -   The Kitwanga fence starts operations in mid-July. Information from the Kitwanga fence will be shared weekly by Gitanyow Fisheries Authority and links to their reports can be found below.
 
 -   First Nations Food Fisheries
 
-    -   First Nations food fisheries are largely wrapped up, with harvests at the coast and in-river focussing on sockeye, with some retention of Chinook and other species.
-    -   Many Skeena Nations were unable to meet their FSC salmon needs again this year.
+    -   to be updated
 
 -   Commercial Fisheries
 
-    -   Commercial fisheries targetting sockeye in Area 4 started on July 12 and the last commercial opportunity was August 4-7 for seines, and August 8 for gillnets.
-    -   First Nations demonstration fisheries targeting sockeye in Area 4 opened on July 9 for Lax Kw'alaams, Metlakatla and NCSFNSS.
-    -   In-river demo fisheries are ongoing, with openings for Kitsumkalum, Kitselas, Gitksan, and Lake Babine Nation to date.
-    -   Expectations are for an ESSR Fishery in Babine Lake starting mid-September.
+    -   to be updated
 
 -   Recreational Fisheries
 
-    -   Recreational fisheries for sockeye have opened following the IFMP and the commercial opening for sockeye.
-    -   Early recreational fisheries for Chinook occurred in Areas 3/4 however effort was lower in 2025 than in previous years, bag limits were reduced, and as of June 22 there was non-retention of Chinook in the Area 3&4 fishery.
-    -   Retention of Chinook in Areas 3-5 resumed July 24 with a daily limit of 1 per day.
+    -   to be updated
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
@@ -113,7 +95,7 @@ source("scripts/harvest control rule and tac plots.R")
 
 ## Sockeye
 
-The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges from  to  million (90% confidence range) with a point estimate (p50) of  million.
+The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges from 728,000 to 3.3 million (90% confidence range) with a point estimate (p50) of 1.5 million.
 
 <figure>
 
@@ -125,17 +107,6 @@ The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges fr
 
 ## Chinook
 
-The pre-season forecast for Chinook is \~  large Chinook.
-
-The table below shows the total 2026 Skeena Chinook terminal run point forecast (highlighted in yellow) and forecasted returns by age. Age-specific forecasts are obtained using ForecastR, which uses a model selection and ranking approach and retrospective forecast performance.
-
-<figure>
-
-<img src="/images/cn_forecast.png" title="2026 Skeena Chinook forecast" alt="2026 Skeena Chinook forecast" width="700"/>
-
-<figcaption>2026 Skeena Chinook forecast</figcaption>
-
-</figure>
 
 # Tide information at Port Edward {#tide-information-at-port-edward}
 
@@ -143,7 +114,7 @@ Tides influence the movement of sockeye and other salmon migrating into the Skee
 
 <figure>
 
-<img src="/images/tides14.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+<img src="/images/tides1.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
 
 <figcaption>Tides at Port Edward</figcaption>
 
