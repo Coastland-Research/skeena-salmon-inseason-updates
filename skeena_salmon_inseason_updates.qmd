@@ -107,7 +107,18 @@ The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges fr
 
 ## Chinook
 
--   The Chinook forecast for 2026 is similar to last year, at ~ 33,000
+The Chinook forecast for 2026 is similar to last year, at ~ 33,000
+
+The table below shows the total 2026 Skeena Chinook terminal run point forecast (highlighted in pink) and forecasted returns by age. Age-specific forecasts are obtained using ForecastR, which uses a model selection and ranking approach and retrospective forecast performance.
+
+<figure>
+
+<img src="/images/cn_forecast26.png" title="2026 Skeena Chinook forecast" alt="2026 Skeena Chinook forecast" width="600"/>
+
+<figcaption>2026 Skeena Chinook forecast</figcaption>
+
+</figure>
+
 
 # Tide information at Port Edward {#tide-information-at-port-edward}
 
@@ -245,8 +256,8 @@ source("scripts/plot_recent_sx_esc.R")
 ```{r, fig.height=7, fig.cap="Daily (top panel) and cumulative (bottom panel) sockeye escapement for 2021-2026."}
 #| label: fig-esc-recent-yrs
 
-p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2026-07-01"),5000)
-p2<-make.recent.cum.plot(sx.cumesc,2500000,as.Date("2026-07-01"))
+p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2026-07-01"),16000)
+p2<-make.recent.cum.plot(sx.cumesc,100000,as.Date("2026-07-01"))
 ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
@@ -393,6 +404,8 @@ will be updated soon
 
 # Babine Fence
 
+Will be updated once Babine Fence operations start.
+
 Information on the Babine fence counts are updated daily [here](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/babine-eng.html). We extract information from this site and update daily.
 
 ```{r}
@@ -402,79 +415,81 @@ source("scripts/make_babine_plots.R")
 babine.figures.x.high<-as.Date("2026-07-14")
 ```
 
-### Babine Sockeye
-
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
+#| include: false
 
+### Babine Sockeye
 make.babine.figures("Large Sockeye",babine.figures.x.high,100000,1500000)
 
 ```
 
-### Babine comparison with Tyee
-
-This comparison aims to provide a coarse idea on the catchability at Tyee. The red line in the figure below shows the difference between the escapement past Tyee and the total run being counted at the Babine Fence, based on some assumptions. These assumptions include 3 week migration timing, 10% non-Babine stock composition and a rough estimate of in-river FSC and demo harvest to date between Tyee and Babine.
 
 ```{r, fig.height=6, fig.cap="Estimated difference between the Tyee test fishery and the Babine fence with the assumptions listed above."}
 #| label: fig-babine-tyee-comparison
+#| include: false
 
 source("scripts/babine versus tyee.R")
 
+### Babine comparison with Tyee
+
+# This comparison aims to provide a coarse idea on the catchability at Tyee. The red line in the figure below shows the difference between the escapement past Tyee and the total run being counted at the Babine Fence, based on some assumptions. These assumptions include 3 week migration timing, 10% non-Babine stock composition and a rough estimate of in-river FSC and demo harvest to date between Tyee and Babine.
+
 make.tyee.vs.babine.plot(.1,.97,-500000,1500000,as.Date("2026-06-01"),as.Date("2026-10-01"))
-
 ```
-
-### Jack sockeye
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-sockeye
+#| include: false
+
+### Jack sockeye
 
 make.babine.figures("Jack Sockeye",babine.figures.x.high,20000,250000)
 ```
 
-### Babine Adult Chinook
-
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large Chinook salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-chinook
+#| include: false
+
+### Babine Adult Chinook
 
 make.babine.figures("Large Chinook",babine.figures.x.high,500,10000)
-
 ```
-
-### Babine Jack Chinook
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack Chinook salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-chinook
+#| include: false
+
+### Babine Jack Chinook
 
 make.babine.figures("Jack Chinook",babine.figures.x.high,200,2000)
-
 ```
-
-### Babine Pink
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for pink salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-pink
+#| include: false
+
+### Babine Pink
 
 make.babine.figures("Pink",babine.figures.x.high,20000,500000)
-
 ```
-
-### Babine Coho
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for coho salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-coho
+#| include: false
+
+### Babine Coho
 
 make.babine.figures("Coho",babine.figures.x.high,500,5000)
-
 ```
-
-### Babine Steelhead
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for steelhead at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-steelhead
+#| include: false
+
+### Babine Steelhead
 
 make.babine.figures("Steelhead",babine.figures.x.high,50,500)
-
 ```
 
 # Kitwanga Fence
@@ -511,26 +526,26 @@ The following section shows the harvest control rule for commercial sockeye fish
 ```{r, fig.height=4,fig.cap="The Skeena sockeye harvest control rule based on TRTC. The vertical lines show the estimated TRTC for 2026 by run-timing (red=early, green=average, blue=late)."}
 #| label: fig-skeena-sx-hcr
 
-# make.sx.hcr.plot(hcr,tac.data)
+make.sx.hcr.plot(hcr,tac.data)
 ```
 
 ```{r, fig.height=4,fig.cap="Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."}
 #| label: fig.skeena.sx.tacandcatch
 
-# make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
+make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 
 ```
 
 ```{r, fig.height=4,fig.cap="Skeena Sockeye catch by gear type."}
 #| label: fig-skeena-sx-gear
 
-#make_p3(catch.gn, catch.sn)
+make_p3(catch.gn, catch.sn)
 ```
 
 ```{r, fig.height=4,fig.cap="Skeena Sockeye CPUE by gear type."}
 #| label: fig-skeena-sx-cpue
 
-#make_p4(catch.gn, catch.sn)
+make_p4(catch.gn, catch.sn)
 ```
 
 ```{r}
@@ -550,7 +565,6 @@ First Nations CSAF demonstration fisheries opened on July 9 in 2026 The catch as
 
 ```{r FNs demo fishery catches prep}
 source("scripts/first nations demo catches.R")
-
 ```
 
 ```{r FNs demo fishery catch table}
@@ -574,7 +588,7 @@ The following table shows the updated management guidelines for recreational fis
 
 <figure>
 
-<img src="/images/dailylimits.png" title="Guidelines for Management Actions for Recreational Sockeye Fisheries in the Skeena Watershed" alt="Guidelines for Management Actions for Recreational Sockeye Fisheries in the Skeena Watershed" width="700"/>
+<img src="/images/dailylimits26.png" title="Guidelines for Management Actions for Recreational Sockeye Fisheries in the Skeena Watershed" alt="Guidelines for Management Actions for Recreational Sockeye Fisheries in the Skeena Watershed" width="700"/>
 
 <figcaption>Guidelines for Management Actions for Recreational Sockeye Fisheries in the Skeena Watershed</figcaption>
 
