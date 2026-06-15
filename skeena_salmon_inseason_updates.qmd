@@ -71,19 +71,19 @@ source("scripts/harvest control rule and tac plots.R")
 
 -   Kitwanga Fence
 
-    -   The Kitwanga fence starts operations in mid-July. Information from the Kitwanga fence will be shared weekly by Gitanyow Fisheries Authority and links to their reports can be found below.
+    -   The Kitwanga fence starts operations in mid-July. Information from the Kitwanga fence will be shared weekly by Gitanyow Fisheries Authority and links to their reports for 2026 will be updated below.
 
 -   First Nations Food Fisheries
 
-    -   to be updated
+    -   Will be udpdated as they occur
 
 -   Commercial Fisheries
 
-    -   to be updated
+    -   Will be updated as they occur
 
 -   Recreational Fisheries
 
-    -   to be updated
+    -   Will be updated as they occur
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
@@ -101,12 +101,13 @@ The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges fr
 
 <img src="/images/2026_sk_forecast.png" title="2026 Sockeye Total Return Forecast" alt="2026 Sockeye Total Return Forecast" width="700"/>
 
-<figcaption>2026 Sockeye Total Return Forecast. Source: NC Stad Charmaine Carr-Harris Post-Season Review Presentation.</figcaption>
+<figcaption>2026 Sockeye Total Return Forecast. Source: NC STAD Charmaine Carr-Harris Post-Season Review Presentation.</figcaption>
 
 </figure>
 
 ## Chinook
 
+-   The Chinook forecast for 2026 is similar to last year, at ~ 33,000
 
 # Tide information at Port Edward {#tide-information-at-port-edward}
 
@@ -153,8 +154,8 @@ demo_inriver <- demo.data %>%
   filter(nation %in% c("Gitksan", "Lake Babine Nation"))
 di <- sum(demo_inriver$sockeye, na.rm=TRUE)
 
-marine.fsc <- 25000
-inriver.fsc <- 50000
+marine.fsc <- 0
+inriver.fsc <- 0
 total.fsc <- marine.fsc+inriver.fsc
 
 t<- e + s + gn + dm + marine.fsc
@@ -178,7 +179,7 @@ i<-match(fence.day,current$Date)
 bab_sockeye <- current$cumesc[i]
 
 # 3. Total catch below Babine
-tc_below <- s + gn + di + dm + 100000
+tc_below <- s + gn + di + dm + 0
 
 # 4. TRTC Estimate based on Babine and 10% non-Babine
 trtc_est <- bab_sockeye/0.9
@@ -187,7 +188,7 @@ stat4 <- data.frame(`Estimate`=c("Babine Fence", "Total Catch Below Babine", "TR
 
 names(stat4) <- gsub('[.]', ' ', names(stat4))
 
-kable(stat4,caption=paste0("Total number of sockeye through the Babine fence, total sockeye catch below the Babine fence, and TRTC estimate to  ",tyee.date,"."," All numbers are preliminary and based on 90% of sockeye returning to the Babine with 10% non-Babine"))
+kable(stat4,caption=paste0("Total number of sockeye through the Babine fence, total sockeye catch below the Babine fence, and TRTC estimate to ",tyee.date,"."," All numbers are preliminary and based on 90% of sockeye returning to the Babine with 10% non-Babine"))
 ```
 
 ```{r run timing table , echo = FALSE, results = 'asis'}
@@ -218,7 +219,7 @@ current<-fread("data/current_year/tyee data 2026.csv") %>%
   mutate(Date = as.IDate(Date))%>%
   select(Date,"2026"=sockeye)
 
-make.index.figures(daily,current,150,5000,figures.x.date)
+make.index.figures(daily,current,25,250,figures.x.date)
 
 ```
 
@@ -231,7 +232,7 @@ The 2025 sockeye escapement estimate at Tyee is shown below and compared to hist
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2025 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-escapement-sockeye
 
-make.tyee.sockeye.escapement.plots(300000,5000000,figures.x.date)
+make.tyee.sockeye.escapement.plots(20000,100000,figures.x.date)
 
 ```
 
@@ -244,14 +245,14 @@ source("scripts/plot_recent_sx_esc.R")
 ```{r, fig.height=7, fig.cap="Daily (top panel) and cumulative (bottom panel) sockeye escapement for 2021-2026."}
 #| label: fig-esc-recent-yrs
 
-p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2026-07-10"))
-p2<-make.recent.cum.plot(sx.cumesc,2500000,as.Date("2026-07-10"))
+p1<-make.recent.esc.plot(sx.daily.recent,as.Date("2026-07-01"),5000)
+p2<-make.recent.cum.plot(sx.cumesc,2500000,as.Date("2026-07-01"))
 ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
 
 ### In-season abundance estimate
-    
+
 Sockeye in-season abundance (TRTC) is estimated through the Tyee test fishery using the cumulative run-to Tyee (escapement past Tyee plus adjusted marine catch estimates) and run-timing. The following table (@tbl-trtc-outputs) and figure (@fig-sx-trtc-model) show estimates of the final forecasted TRTC for average, one-week late, and one-week early run-timing. This does not incorporate variability in the catchability of the Tyee test fishery (which is confirmed post-season).
 
 ```{r}
@@ -281,7 +282,7 @@ write.csv(sx.trtc.model,"data/current_year/Tyee model data 2026.csv",row.names=F
 source("scripts/cumulative_prop_trtc.R")
 ```
 
-```{r, fig.height = 5, fig.cap = "Comparison of sockeye cumulative proportions from 1956-2025 to this year using different escapement estimates."}
+```{r,include=FALSE, fig.height = 5, fig.cap = "Comparison of sockeye cumulative proportions from 1956-2025 to this year using different escapement estimates."}
 #| label: fig-sx-cum-prop
 
 make.prop.figure(gg.daily.pcum, data2)
@@ -480,7 +481,6 @@ make.babine.figures("Steelhead",babine.figures.x.high,50,500)
 
 Information on the Kitwanga fence operations can be found here: [Gitanyow Fisheries Authority](http://www.gitanyowfisheries.com/).
 
-
 # Fisheries
 
 This section contains information on fisheries in Area 4. Included are the weekly in-season updates provided by DFO North Coast Resource Management
@@ -488,7 +488,6 @@ This section contains information on fisheries in Area 4. Included are the weekl
 ## North Coast Salmon Updates
 
 DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
-
 
 ## Area 4 Fishery Openings
 
@@ -902,4 +901,3 @@ ggplot(babrt2,aes(x=fencert))+
 
 #ggsave("Babine run timing for Donna.png",dpi=600,height=8,width=7)
 ```
-

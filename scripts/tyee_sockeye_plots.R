@@ -2,9 +2,8 @@
 
 make.tyee.sockeye.escapement.plots <- function(daily.y.high,cum.y.high,x.date) {
 
-tyee.sx.data<-fread("data/2025_archive/tyee data 2025.csv") %>%
-  select(Date,"2025"=esctyee)%>%
-  select(-"2025")
+tyee.sx.data<-fread("data/current_year/tyee data 2026.csv") %>%
+  select(Date,"2026"=esctyee)
 
 hist.sx.data<-fread("data/common/tyee_daily_indices_sockeye_1956-2025.csv")
 
@@ -13,7 +12,7 @@ all.sx.data<-left_join(hist.sx.data,tyee.sx.data,by="Date") %>%
 
 sx.daily<-all.sx.data%>%
   #mutate_if(is.character, as.numeric) %>%
-  pivot_longer("1970":"2025",names_to="Year",values_to="Fish") %>%
+  pivot_longer("1970":"2026",names_to="Year",values_to="Fish") %>%
   mutate(Year=as.numeric(Year)) %>%
   mutate(Index=replace_na(Fish,0))
 
@@ -33,7 +32,7 @@ sx.quants<-sx.daily %>%
                           Q=="per50"~"Median"))
 
 sx.daily.cum<-all.sx.data%>%
-  pivot_longer("1970":"2025",names_to="Year",values_to="Fish") %>%
+  pivot_longer("1970":"2026",names_to="Year",values_to="Fish") %>%
   group_by(Year)%>%
   mutate(cum_sum=cumsum(replace_na(Fish,0)))
 
@@ -52,9 +51,13 @@ sx.cum.quants<-sx.daily.cum %>%
                           Q=="per25"|Q=="per75"~"25/75th",
                           Q=="per50"~"Median"))
 
-sx.esc.daily<-make.daily.esc.plot(sx.daily,sx.quants,0,daily.y.high,"2025-06-10",x.date)
-sx.esc.cum<-make.cum.esc.plot(sx.daily.cum,sx.cum.quants,cum.y.high,"2025-06-10",x.date)
+sx.esc.daily<-make.daily.esc.plot(sx.daily,sx.quants,0,daily.y.high,"2026-06-09",x.date)
+sx.esc.cum<-make.cum.esc.plot(sx.daily.cum,sx.cum.quants,cum.y.high,"2026-06-09",x.date)
 
 ggarrange(sx.esc.daily,sx.esc.cum,align="v",ncol=1,common.legend = TRUE,legend="bottom")
 
 }
+
+#daily.y.high=10000
+#cum.y.high=50000
+#x.date=as.Date("2026-06-15")

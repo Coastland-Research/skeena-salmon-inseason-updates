@@ -14,7 +14,7 @@ ggplot(daily.data,aes(x=Date, y=Fish,group=Date))+
   theme_bw()+
   theme(legend.position="bottom",axis.title.x=element_blank())+
   ylim(0,yhigh)+
-  xlim(as.Date("2025-06-03"),xhigh)
+  xlim(as.Date("2026-06-03"),xhigh)
 }
 
 make.cum.index.plot<-function(cum.data,cum.quants,xhigh,y.cum.high){
@@ -30,7 +30,7 @@ ggplot(cum.data,aes(x=Date, y=cum_sum,group=Date))+
   labs(y="Cumulative Daily Index",color="")+
   theme_bw()+
   theme(legend.position = "bottom")+
-  xlim(as.Date("2025-06-03"),xhigh)+
+  xlim(as.Date("2026-06-03"),xhigh)+
   ylim(0,y.cum.high)
 
 }
