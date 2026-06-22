@@ -35,6 +35,7 @@ source("scripts/plot_index_figures_pink.R")
 source("scripts/index_figures.R")
 source("scripts/tyee_sockeye_plots.R")
 source("scripts/index_figures_pink.R")
+source("scripts/cumulative_index_by_year.R")
 
 ```
 
@@ -247,10 +248,10 @@ make.tyee.sockeye.escapement.plots(20000,100000,figures.x.date)
 
 ```
 
-# Cumulative Index by Year for today's date
-```{r, fig.height=7, fig.cap = "Cumulative index for sockeye for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+### Cumulative index by year for today's date
+```{r, fig.height=5, fig.cap = "Cumulative index for sockeye for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
 
-
+make.hist.index.plot(daily, current, figures.x.date)
 ```
 
 ### Daily and cumulative escapement for recent years (2021-2025) vs. 2026
