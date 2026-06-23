@@ -20,13 +20,28 @@ make.hist.index.plot <-function(daily,current, figures.x.date) {
   
   plot_data <- plot_data %>%
   arrange(Year) %>%
-  mutate(rolling_10yr = rollmean(Cumulative_Index, k = 10,align = "right",fill = NA))
+  mutate(rolling_10yr = rollmean(lag(Cumulative_Index), k = 10,align = "right",fill = NA))
   
-  ggplot(plot_data, aes(x = Year)) +
-  geom_col(aes(y = Cumulative_Index),
-           fill = "steelblue") +
+  avg5 <- plot_data %>%
+    filter(Year >= max(Year) - 4) %>%
+    summarise(avg = mean(Cumulative_Index)) %>%
+    pull(avg)
+  
+  ggplot(plot_data, aes(x = Year, y = Cumulative_Index, fill = Year == 2026)) +
+    geom_col()+
+    scale_fill_manual(
+      values = c("TRUE" = "purple",
+                 "FALSE" = "steelblue"),
+      guide = "none")+
+    geom_segment(
+      aes(x = max(Year) - 4,
+        xend = max(Year),
+        y = avg5,
+        yend = avg5),
+      colour = "red",
+      linewidth = 0.9)+
   geom_line(aes(y = rolling_10yr),
-            colour = "red",
+            colour = "black",
             linewidth = 1.2) +
   theme_bw() +
   scale_x_continuous(breaks=seq(1950, 2026, by = 5))+
