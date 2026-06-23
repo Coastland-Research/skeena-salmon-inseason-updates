@@ -335,6 +335,11 @@ ggarrange(p1,p2,ncol=1,common.legend = TRUE,legend="bottom")
 
 ```
 
+```{r, fig.height=5, fig.cap = "Cumulative index for Chinook salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+
+make.hist.index.plot(daily, current, figures.x.date)
+```
+
 ## Chum Salmon
 
 The 2026 chum salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-chum).
@@ -342,7 +347,8 @@ The 2026 chum salmon index is shown below and compared to historical index data 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for chum salmon from 1956-2026 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-chum
 
-daily<-fread("data/common/tyee_daily_indices_chum_1956-2025.csv")
+daily<-fread("data/common/tyee_daily_indices_chum_1956-2025.csv")%>%
+  mutate_if(is.character, as.numeric)
 
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=chum)
@@ -350,6 +356,10 @@ current<-fread("data/current_year/tyee data 2026.csv") %>%
 make.index.figures(daily,current,10,150,figures.x.date)
 ```
 
+```{r, fig.height=5, fig.cap = "Cumulative index for Chum salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+
+#make.hist.index.plot(daily, current, figures.x.date)
+```
 ## Pink Salmon
 
 The 2026 pink salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-pink-odd).
@@ -368,6 +378,11 @@ The 2026 pink salmon index is shown below and compared to historical index data 
 # make.index.figures.pink(daily,current,150,5000,figures.x.date)
 ```
 
+```{r, fig.height=5, fig.cap = "Cumulative index for even-year Pink salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+
+#make.hist.index.plot(daily, current, figures.x.date)
+```
+
 ### Odd years
 
 -   Will be updated next year!
@@ -379,7 +394,8 @@ The 2026 coho salmon index is shown below and compared to historical index data 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for coho salmon from 1956-2025 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-coho
 
-daily<-fread("data/common/tyee_daily_indices_coho_1956-2025.csv")
+daily<-fread("data/common/tyee_daily_indices_coho_1956-2025.csv")%>%
+  mutate_if(is.character, as.numeric)
 
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=coho)
@@ -387,6 +403,10 @@ current<-fread("data/current_year/tyee data 2026.csv") %>%
 make.index.figures(daily,current,10,300,figures.x.date)
 ```
 
+```{r, fig.height=5, fig.cap = "Cumulative index for coho for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+
+#make.hist.index.plot(daily, current, figures.x.date)
+```
 ## Steelhead
 
 The 2026 steelhead index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-steelhead).
@@ -395,12 +415,18 @@ The 2026 steelhead index is shown below and compared to historical index data fr
 #| label: fig-index-steelhead
 
 daily<-fread("data/common/tyee_daily_indices_steelhead_1956-2025.csv", header = T) %>%
-mutate(Date = as.IDate(Date))
+mutate(Date = as.IDate(Date))%>%
+  mutate_if(is.character, as.numeric)
 
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=steelhead)
 
 make.index.figures(daily,current,10,300,figures.x.date)
+```
+
+```{r, fig.height=5, fig.cap = "Cumulative index for steelhead for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+
+#make.hist.index.plot(daily, current, figures.x.date)
 ```
 
 Steelhead updates are also provided by the Province of BC. Please reach out to Kenji Miyazaki with any questions.
