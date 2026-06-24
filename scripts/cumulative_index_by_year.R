@@ -23,7 +23,7 @@ make.hist.index.plot <-function(daily,current, figures.x.date) {
   mutate(rolling_10yr = rollmean(lag(Cumulative_Index), k = 10,align = "right",fill = NA))
   
   avg5 <- plot_data %>%
-    filter(Year >= max(Year) - 4) %>%
+    filter(Year >= max(Year) - 5 & Year < max(Year)) %>%
     summarise(avg = mean(Cumulative_Index)) %>%
     pull(avg)
   
@@ -34,8 +34,8 @@ make.hist.index.plot <-function(daily,current, figures.x.date) {
                  "FALSE" = "steelblue"),
       guide = "none")+
     geom_segment(
-      aes(x = max(Year) - 4,
-        xend = max(Year),
+      aes(x = max(Year) - 5,
+        xend = max(Year)-1,
         y = avg5,
         yend = avg5),
       colour = "red",

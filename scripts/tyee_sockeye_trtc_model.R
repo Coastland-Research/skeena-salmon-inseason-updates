@@ -1,8 +1,8 @@
 
 tyee.sx.data<-fread("data/current_year/tyee data 2026.csv")%>%
   select(Date,Runtiming,esctyee)%>%
-  filter(Date>=as.Date("2026-06-10"))%>%
-  mutate(cumesc=cumsum(esctyee))
+  mutate(cumesc=cumsum(esctyee))%>%
+  mutate(Date=as.Date(Date))
 
 gncatch<-fread("data/current_year/commercial catch 2026-gillnet.csv")%>%
   select(Date,gncatch=`Sockeye (Kept)`) %>% 
@@ -13,8 +13,9 @@ sncatch<-fread("data/current_year/commercial catch 2026-seine.csv")%>%
   replace(is.na(.), 0)
 
 total.catch<-left_join(gncatch,sncatch) %>%
-  mutate(Date = as.IDate(Date))
+  mutate(Date = as.Date(Date))
 
+left_join(tyee.sx.data, total.catch)
 
 sx.trtc.model.all <- left_join(tyee.sx.data, total.catch) %>%
   mutate(
