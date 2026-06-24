@@ -42,7 +42,7 @@ source("scripts/cumulative_index_by_year.R")
 ```{r set days, echo=FALSE}
 tyee.day<-as.Date("2026-06-23")
 tyee.date<-"June 23"
-figures.x.date<-as.Date("2026-06-23")
+figures.x.date<-as.Date("2026-07-01")
 
 fence.day<-as.Date("2026-06-23")
 fence.date<-"June 23"
@@ -66,6 +66,7 @@ source("scripts/harvest control rule and tac plots.R")
 
     -   The Tyee test fishery started operations on June 10.
     -   To date 61,751 sockeye are estimated to have passed the Tyee test fishery.
+    -   It is too early to rely on the run-timing model estimates for the final TRTC.
 
 -   Babine
 
@@ -322,7 +323,7 @@ current<-fread("data/current_year/tyee data 2026.csv") %>%
 make.index.figures(daily,current,20,400,figures.x.date)
 ```
 
-For comparison, the following figures show the Chinook index compared to more recent years since Chinook abundance declined to much lower levels. In comparison to the previous figures showing Chinook abundance since 1956, the Chinook index in 2026 is looking relatively optimistic.
+For comparison, the following figures show the Chinook index compared to more recent years since Chinook abundance declined to much lower levels.
 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for Chinook salmon from 2011-2025 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-chinook-recent
