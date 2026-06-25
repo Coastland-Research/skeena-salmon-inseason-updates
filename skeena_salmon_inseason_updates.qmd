@@ -546,10 +546,10 @@ Fisheries notices for Skeena salmon are shown below. These are a list of the rel
 
 ```{r table of skeena fisheries openings, echo=FALSE, warning=FALSE, include=TRUE}
 
-# openings<-read_csv("data/current_year/fisheries openings 2026.csv")
-# 
-# kable(openings,caption="Fisheries openings in the Skeena area for 2026")%>%
-# kable_styling(latex_options = "HOLD_position")
+openings<-read_csv("data/current_year/fisheries openings 2026.csv")
+
+kable(openings,caption="Fisheries openings in the Skeena area for 2026")%>%
+kable_styling(latex_options = "HOLD_position")
 
 ```
 
