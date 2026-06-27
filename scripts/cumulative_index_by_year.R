@@ -1,5 +1,8 @@
 
 # historical time series for cumulative index by date ith 10yr rolling average
+#daily<-daily
+#current<-current
+
 make.hist.index.plot <-function(daily,current, figures.x.date) {
   
   daily.index<-left_join(daily,current,by="Date")%>%
@@ -16,7 +19,7 @@ make.hist.index.plot <-function(daily,current, figures.x.date) {
   ungroup()
   
   plot_data <- long_dat %>%
-  filter(Date == figures.x.date)
+  filter(Date == tyee.day)
   
   plot_data <- plot_data %>%
   arrange(Year) %>%
