@@ -1,9 +1,9 @@
 
-# historical time series for cumulative index by date ith 10yr rolling average
+# historical time series for cumulative index by date with 10yr rolling average
 #daily<-daily
 #current<-current
 
-make.hist.index.plot <-function(daily,current, figures.x.date) {
+make.hist.index.plot <-function(daily,current, fence.day) {
   
   daily.index<-left_join(daily,current,by="Date")%>%
   mutate(Date=as.Date(Date))
@@ -51,6 +51,4 @@ make.hist.index.plot <-function(daily,current, figures.x.date) {
   theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   labs(x = "Year", y = paste("Cumulative Index through", tyee.date))
 }
-
-
 

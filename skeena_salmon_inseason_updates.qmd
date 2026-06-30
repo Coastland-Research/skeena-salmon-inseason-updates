@@ -62,7 +62,7 @@ source("scripts/harvest control rule and tac plots.R")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   To date 104,494 sockeye are estimated to have passed the Tyee test fishery.
+    -   To date 140,670 sockeye are estimated to have passed the Tyee test fishery.
     -   It is too early to rely on the run-timing model estimates for the final TRTC.
 
 -   Babine
@@ -229,7 +229,7 @@ current<-fread("data/current_year/tyee data 2026.csv") %>%
   mutate(Date = as.IDate(Date))%>%
   select(Date,"2026"=sockeye)
 
-make.index.figures(daily,current,25,250,figures.x.date)
+make.index.figures(daily,current,50,500,figures.x.date)
 
 ```
 
@@ -242,7 +242,7 @@ The 2025 sockeye escapement estimate at Tyee is shown below and compared to hist
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) escapement estimates at Tyee for sockeye salmon from 1970-2025 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-escapement-sockeye
 
-make.tyee.sockeye.escapement.plots(50000,200000,figures.x.date)
+make.tyee.sockeye.escapement.plots(70000,500000,figures.x.date)
 
 ```
 
@@ -250,7 +250,7 @@ make.tyee.sockeye.escapement.plots(50000,200000,figures.x.date)
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for sockeye for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
 
-make.hist.index.plot(daily, current, figures.x.date)
+make.hist.index.plot(daily, current, fence.day)
 ```
 
 ### Daily and cumulative escapement for recent years (2021-2025) vs. 2026
@@ -262,8 +262,8 @@ source("scripts/plot_recent_sx_esc.R")
 ```{r, fig.height=7, fig.cap="Daily (top panel) and cumulative (bottom panel) sockeye escapement for 2021-2026."}
 #| label: fig-esc-recent-yrs
 
-p1<-make.recent.esc.plot(sx.daily.recent,as.Date(figures.x.date),25000)
-p2<-make.recent.cum.plot(sx.cumesc,200000,as.Date(figures.x.date))
+p1<-make.recent.esc.plot(sx.daily.recent,as.Date(figures.x.date),30000)
+p2<-make.recent.cum.plot(sx.cumesc,300000,as.Date(figures.x.date))
 ggarrange(p1,p2,ncol=1,align="v",common.legend = TRUE,legend="bottom")
 
 ```
@@ -286,7 +286,7 @@ print(paste0("Model estimates as of ",tyee.date))
 kable(trtc.table)
 ```
 
-```{r, fig.height=5,fig.cap="Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing. The dashed line shows the pre-season forecast of a TRTC of ~2.4 million."}
+```{r, fig.height=5,fig.cap="Final estimated TRTC from the simple sockeye in-season abundance estimator for early (green line), average (red line) and late (blue line) run-timing. The dashed line shows the pre-season forecast of a TRTC of ~1.5 million."}
 #| label: fig-sx-trtc-model
 
 make.trtc.sx.plot(sx.trtc.model,7500000,as.Date("2026-07-10"))
@@ -336,7 +336,7 @@ ggarrange(p1,p2,ncol=1,common.legend = TRUE,legend="bottom")
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for Chinook salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
 
-make.hist.index.plot(daily, current, figures.x.date)
+make.hist.index.plot(daily, current, fence.day)
 ```
 
 ## Chum Salmon
