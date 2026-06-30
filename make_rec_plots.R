@@ -2,39 +2,51 @@
 creel_catch <- read.csv("data/current_year/recreational creel/rec_creel_catch.csv") %>%
   mutate(Month = factor(Month, levels = c("May", "June", "July", "August")))
          
-# creel_effort <- read.csv("data/current_year/recreational creel/rec_creel_effort.csv")
+creel_effort <- read.csv("data/current_year/recreational creel/rec_creel_effort.csv")
 
-view(creel_catch)
+effort_long <- creel_effort %>%
+  mutate(Disposition = "Effort",
+         Species = NA_character_) %>%
+  rename(Value = Effort) %>%
+  select(Year, Species, Month, Disposition, Value)
 
-creel_catch %>%
+species <- unique(creel_catch$Species)
+
+effort_long <- tidyr::crossing(
+  Species = species,
+  effort_long %>% select(-Species))
+
+combined_creel <- bind_rows(creel_catch, effort_long)
+
+(chinook_creel <- combined_creel %>%
   filter(Species == "Chinook") %>%
   ggplot(aes(x = Year, y = Value, fill = Month))+
   geom_col()+
   scale_fill_brewer(palette = "Spectral")+
-  ggtitle("Chinook recreational catch estimates")+
+  ggtitle("Chinook Salmon")+
   facet_grid(Month~Disposition)+
   theme_minimal()+
   theme(legend.position = "none", axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1))+
-  scale_x_continuous(breaks = seq(2015, 2026, by = 1))
+  scale_x_continuous(breaks = seq(2015, 2026, by = 1)))
 
-creel_catch %>%
+(coho_creel <- combined_creel %>%
   filter(Species == "Coho") %>%
   ggplot(aes(x = Year, y = Value, fill = Month))+
   scale_fill_brewer(palette = "Spectral")+
   geom_col()+
-  ggtitle("Coho recreational catch estimates")+
+  ggtitle("Coho Salmon")+
   facet_grid(Month~Disposition)+
   theme_minimal()+
   theme(legend.position = "none", axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1))+
-  scale_x_continuous(breaks = seq(2015, 2026, by = 1))
+  scale_x_continuous(breaks = seq(2015, 2026, by = 1)))
 
-creel_catch %>%
+(halibut_creel <- combined_creel %>%
   filter(Species == "Pacific Halibut") %>%
   ggplot(aes(x = Year, y = Value, fill = Month))+
   geom_col()+
   scale_fill_brewer(palette = "Spectral")+
-  ggtitle("Pacific Halibut recreational catch estimates")+
+  ggtitle("Pacific Halibut")+
   facet_grid(Month~Disposition)+
   theme_minimal()+
   theme(legend.position = "none", axis.text.x = element_text(angle = 45, vjust = 0.5, hjust = 1))+
-  scale_x_continuous(breaks = seq(2015, 2026, by = 1))
+  scale_x_continuous(breaks = seq(2015, 2026, by = 1)))
