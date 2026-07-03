@@ -62,7 +62,7 @@ source("scripts/harvest control rule and tac plots.R")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   To date 172,415 sockeye are estimated to have passed the Tyee test fishery.
+    -   To date 226,754 sockeye are estimated to have passed the Tyee test fishery.
     -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are ecouraging, with a final TRTC estimate of 3.86M based on average run-timing (1.56M if the run is one week early, and 10.4M if the run is one week late).
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season.
 
