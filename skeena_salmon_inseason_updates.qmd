@@ -566,20 +566,20 @@ make.sx.hcr.plot(hcr,tac.data)
 ```{r, fig.height=4,fig.cap="Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."}
 #| label: fig.skeena.sx.tacandcatch
 
-make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
+#make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 
 ```
 
 ```{r, fig.height=4,fig.cap="Skeena Sockeye catch by gear type."}
 #| label: fig-skeena-sx-gear
 
-make_p3(catch.gn, catch.sn)
+#make_p3(catch.gn, catch.sn)
 ```
 
 ```{r, fig.height=4,fig.cap="Skeena Sockeye CPUE by gear type."}
 #| label: fig-skeena-sx-cpue
 
-make_p4(catch.gn, catch.sn)
+#make_p4(catch.gn, catch.sn)
 ```
 
 ```{r}
