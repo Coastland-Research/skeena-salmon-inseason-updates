@@ -566,7 +566,7 @@ make.sx.hcr.plot(hcr,tac.data)
 ```{r, fig.height=4,fig.cap="Cumulative Area 4 gillnet and seine sockeye catch versus daily estimates of TAC based on early (blue), average (red), and late (green) run-timing from the in-season TRTC model."}
 #| label: fig.skeena.sx.tacandcatch
 
-#make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
+make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 
 ```
 

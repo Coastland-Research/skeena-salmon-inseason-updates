@@ -2,7 +2,7 @@
 #create harvest control rule line
 #load tyee trtc model data and calculate TAC using HCR points
 
-tac.data<-fread("data/2025_archive/Tyee model data 2025.csv")%>%
+tac.data<-fread("data/current_year/Tyee model data 2026.csv")%>%
   mutate(Date = as.Date(Date))%>%
   mutate(TAC=case_when(Estimate<1050000~0,
                        Estimate>=1050000&Estimate<2000000~((Estimate-1050000)/(2000000-1050000)*(.2-.0)+0)*Estimate,
@@ -34,8 +34,8 @@ ggplot(hcr,aes(x=TRTC/10^6,y=HR))+
 #create figure with Ttac.data = #create figure with TAC trend and total cumulative catch for current year
 
 #load catch data and combine for total cumulative catch
-catch.gn<-fread("data/2025_archive/commercial catch 2025-gillnet.csv")
-catch.sn<-fread("data/2025_archive/commercial catch 2025-seine.csv")
+catch.gn<-fread("data/current_year/commercial catch 2026-gillnet.csv")
+catch.sn<-fread("data/current_year/commercial catch 2026-seine.csv")
 
 make.tacandtotalcatch.plot<-function(catch.gn,catch.sn,tac.data) {
 
@@ -55,7 +55,7 @@ ggplot(tac.estimates,aes(x=Date,y=TAC,color=Timing))+
   scale_color_manual(values=c("black","#E41A1C","#377EB8","#4DAF4A"))+
   labs(y="Total Allowable Catch\nCatch to Date")+
   ylim(0,2000000)+
-  xlim(as.Date("2025-06-10"),as.Date("2025-09-01"))+
+  xlim(as.Date("2026-06-10"),as.Date("2026-09-01"))+
   theme_bw()+
   theme(legend.position="bottom")
 }
@@ -87,7 +87,7 @@ make_p3 <- function(catch.gn, catch.sn) {
     scale_fill_brewer(palette="Set1")+
     theme_bw()+
     theme(legend.position="top")+
-    expand_limits(x=c(as.Date("2025-07-01"),as.Date("2025-09-01")))
+    expand_limits(x=c(as.Date("2026-07-01"),as.Date("2026-09-01")))
   
 }
 
@@ -107,7 +107,7 @@ make_p4 <- function(catch.gn, catch.sn) {
     mutate(Gillnet=gnCatch/gnEffort,Seine=snCatch/snEffort)%>%
     select(Date,Gillnet,Seine)%>%
     pivot_longer(2:3,names_to="Gear",values_to="CPUE")%>%
-    filter(Date>"2025-07-01"&Date<"2025-09-01")
+    filter(Date>"2026-07-01"&Date<"2026-09-01")
 
     ggplot(cpue,aes(x=Date,y=CPUE,color=Gear))+
     geom_line()+geom_point()+
@@ -116,7 +116,7 @@ make_p4 <- function(catch.gn, catch.sn) {
     theme(legend.position = "top")+
     labs(y="Sockeye CPUE")+
     expand_limits(y=0)+
-    expand_limits(x=c(as.Date("2025-07-01"),as.Date("2025-09-01")))
+    expand_limits(x=c(as.Date("2026-07-01"),as.Date("2026-09-01")))
 
 }
 
