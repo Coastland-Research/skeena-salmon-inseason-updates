@@ -628,6 +628,12 @@ The following table shows the updated management guidelines for recreational fis
 
 </figure>
 
+### North Coast Recreational Angling Creel Surveys
+```{r rec creel surveys data}
+source("scripts/make_rec_plots.R")
+```
+
+
 # Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2026 data
 
 ```{r tyee escapement by year prep}
