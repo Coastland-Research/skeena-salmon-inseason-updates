@@ -631,8 +631,25 @@ The following table shows the updated management guidelines for recreational fis
 ### North Coast Recreational Angling Creel Surveys
 ```{r rec creel surveys data}
 source("scripts/make_rec_plots.R")
+
+creel_catch <- read.csv("data/current_year/recreational creel/rec_creel_catch.csv") %>%
+  mutate(Month = factor(Month, levels = c("May", "June", "July", "August")))%>%
+  rename(Estimate = Value)
+
+creel_effort <- read.csv("data/current_year/recreational creel/rec_creel_effort.csv")
 ```
 
+```{r rec creel effort and catch}
+make.creel.plot(creel_catch, creel_effort)
+```
+
+```{r rec creel summary}
+make.creel.summary.plot(creel_catch, creel_effort)
+```
+
+```{r rec creel CPUE plot}
+make.creel.cpue.plot(creel_catch, creel_effort)
+```
 
 # Appendix A - Tyee daily and cumulative sockeye escapement for each year since 2000 vs 2026 data
 
