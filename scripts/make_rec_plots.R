@@ -1,9 +1,5 @@
+library(patchwork)
 
-# creel_catch <- read.csv("data/current_year/recreational creel/rec_creel_catch.csv") %>%
-#   mutate(Month = factor(Month, levels = c("May", "June", "July", "August")))%>%
-#   rename(Estimate = Value)
-#          
-# creel_effort <- read.csv("data/current_year/recreational creel/rec_creel_effort.csv")
 make.creel.plot <- function(creel_catch, creel_effort){
   
   effort_long <- creel_effort %>%
@@ -71,9 +67,10 @@ make.creel.plot <- function(creel_catch, creel_effort){
           axis.title.x = element_text(margin = margin(t = 15)))+  
     scale_x_continuous(breaks = seq(2015, 2026, by = 1))
   
-  print(chinook_creel)
-  print(coho_creel)
-  print(halibut_creel)
+  chinook_creel /
+    coho_creel /
+    halibut_creel
+  
 }
 
 

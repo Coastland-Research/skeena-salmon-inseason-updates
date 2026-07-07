@@ -21,6 +21,7 @@ library(kableExtra)
 library(ggpubr)
 library(zoo)
 library(lubridate)
+library(patchwork)
 
 options(scipen=1000)
 ```
@@ -640,14 +641,34 @@ creel_effort <- read.csv("data/current_year/recreational creel/rec_creel_effort.
 ```
 
 ```{r rec creel effort and catch}
+#| label: fig-creel-effort-catch
+#| include: true
+#| echo: false
+#| warning: false
+#| fig-cap: "Estimates of recreational angling effort and catch (retained and released) for Chinook salmon, coho salmon, and Pacific halibut, by month and year (2016-2026). Data from 2026 is preliminary and is shown by the black outline."
+#| fig-height: 15
+
 make.creel.plot(creel_catch, creel_effort)
+
 ```
 
 ```{r rec creel summary}
+#| label: fig-creel-summary
+#| include: true
+#| echo: false
+#| warning: false
+#| fig-cap: "Overall annual estimated effort and catch (retained and released) for Chinook salmon, coho salmon, and Pacific halibut (2016-2026)."
+#| fig-height: 5
 make.creel.summary.plot(creel_catch, creel_effort)
 ```
 
 ```{r rec creel CPUE plot}
+#| label: fig-creel-cpue
+#| include: true
+#| echo: false
+#| warning: false
+#| fig-cap: "Annual estimated CPUE for Chinook salmon, coho salmon, and Pacific halibut (2016-2026)."
+#| fig-height: 5
 make.creel.cpue.plot(creel_catch, creel_effort)
 ```
 
