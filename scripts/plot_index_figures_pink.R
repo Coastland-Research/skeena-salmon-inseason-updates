@@ -14,7 +14,7 @@ make.daily.index.plot.pink<-function(daily.data,daily.quants,xhigh,yhigh) {
     theme_bw()+
     theme(legend.position="bottom",axis.title.x=element_blank())+
     ylim(0,yhigh)+
-    xlim(as.Date("2025-06-03"),xhigh)
+    xlim(as.Date("2026-06-03"),xhigh)
 }
 
 make.cum.index.plot.pink <-function(cum.data,cum.quants,xhigh,y.cum.high){

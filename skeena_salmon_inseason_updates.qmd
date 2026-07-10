@@ -30,12 +30,12 @@ options(scipen=1000)
 #load functions
 source("scripts/plot_index_figures.R")
 source("scripts/plot_sockeye_escapement_figures.R")
-source("scripts/plot_index_figures_pink.R")
+#source("scripts/plot_index_figures_pink.R")
 
 #load wrappers
 source("scripts/index_figures.R")
 source("scripts/tyee_sockeye_plots.R")
-source("scripts/index_figures_pink.R")
+
 source("scripts/cumulative_index_by_year.R")
 
 tyee.day<-as.Date("2026-07-09")
@@ -64,12 +64,13 @@ source("scripts/harvest control rule and tac plots.R")
 
     -   The Tyee test fishery started operations on June 10.
     -   To date 506,125 sockeye are estimated to have passed the Tyee test fishery.
-    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are ecouraging, with a final TRTC estimate of 4.0M based on average run-timing (1.8M if the run is one week early, and 10.0M if the run is one week late).
-    -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season.
+    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are ecouraging, with a final TRTC estimate of 3.8M based on average run-timing (1.8M if the run is one week early, and 9.4M if the run is one week late).
+    -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26, when the certainty of the model forecast will increase.
+    -   The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
 
 -   Babine
 
-    -   The Babine fence starts operations in mid-July.
+    -   The Babine fence starts operations in mid-July. Information will be updated once operations start.
 
 -   Kitwanga Fence
 
@@ -81,11 +82,15 @@ source("scripts/harvest control rule and tac plots.R")
 
 -   Commercial Fisheries
 
-    -   Will be updated as they occur
+    -   First Nations demonstration fisheries opened in the marine areas on July 8 and 9 targeting sockeye.
+    -   Area C gillnet fisheries will started July 10-11 targeting Skeena sockeye.
+    -   Area 3 seine fisheries opened July 7 and 8 targeting Nass pink salmon, with pink salmon catches being extremely low. Sockeye and chum retention is allowed, with decent catches of chum.
 
 -   Recreational Fisheries
 
-    -   Will be updated as they occur
+    -   Recreational fisheries for sockeye in Areas 3-6 opened July 10 with a daily limit of 4 per day.
+    -   Recreational fisheries for Skeena sockeye in portions of Region 6 opened July 10 (portions of the Skeena mainstem) and August 1 (Babine Lake, Fulton River, Pinkut Creek) with a daily limit of 2 per day.
+    -   Recreational fisheries for Chinook in Area 3-5 are currently closed, and will open at 1 per day on July 18, and 2 per day on August 1. 
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
@@ -364,20 +369,24 @@ make.index.figures(daily,current,10,150,figures.x.date)
 
 ## Pink Salmon
 
-The 2026 pink salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-pink-odd).
+The 2026 pink salmon index is shown below and compared to historical index data from the Tyee test fishery (@fig-index-pink-even).
 
 ### Even years
 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for pink salmon from 1956-2026 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-pink-even
 # 
-# daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = TRUE) %>%
-#   mutate(Date = as.IDate(Date))
-# 
-# current<-fread("data/current_year/tyee data 2026.csv") %>%
-#   select(Date,"2026"=`pink`) 
-# 
-# make.index.figures.pink(daily,current,150,5000,figures.x.date)
+
+source("scripts/index_figures_pink.R")
+daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = TRUE) %>%
+  mutate(Date = as.IDate(Date))%>%
+    select(-"month-day",-DAY,-MONTH)
+
+current<-fread("data/current_year/tyee data 2026.csv") %>%
+   select(Date,"2026"=`pink`) 
+ 
+make.index.figures.pink(daily,current,10,10,figures.x.date)
+
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for even-year Pink salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
@@ -630,7 +639,8 @@ The following table shows the updated management guidelines for recreational fis
 </figure>
 
 ### North Coast Recreational Angling Creel Surveys
-The North Coast Skeena First Nations Stewardship Society (NCSFNSS) has operated a creel survey program since 2015 in Areas 3 and 4, consisting of access point angler interviews and aerial overflights for the months of June through August (May through August beginning in 2019). Lodge-based recreational effort and harvest are monitored using DFO's voluntary logbook program.  
+
+The North Coast Skeena First Nations Stewardship Society (NCSFNSS) has operated a creel survey program since 2015 in Areas 3 and 4, consisting of access point angler interviews and aerial overflights for the months of June through August (May through August beginning in 2019). Lodge-based recreational effort and harvest are monitored using DFO's voluntary logbook program.
 
 The following plots show the estimated recreational effort and catch for Chinook and coho salmon and Pacific halibut by year and month, and estimated CPUE for each species by year.
 
