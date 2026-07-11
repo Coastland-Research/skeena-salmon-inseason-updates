@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 10, 2026"
+subtitle: "July 11, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,16 +38,16 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-07-09")
-tyee.date<-"July 9"
+tyee.day<-as.Date("2026-07-10")
+tyee.date<-"July 10"
 
 #controls right hand extent of index and escapement figures
-figures.x.date<-as.Date("2026-07-20")
+figures.x.date<-as.Date("2026-07-30")
 
 fence.day<-as.Date("2026-07-09")
 fence.date<-"July 9"
 
-today<-as.Date("2026-07-10")
+today<-as.Date("2026-07-11")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -63,8 +63,9 @@ source("scripts/harvest control rule and tac plots.R")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
-    -   To date 506,125 sockeye are estimated to have passed the Tyee test fishery.
-    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are ecouraging, with a final TRTC estimate of 3.8M based on average run-timing (1.8M if the run is one week early, and 9.4M if the run is one week late).
+    -   information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
+    -   To date 521,724 sockeye are estimated to have passed the Tyee test fishery.
+    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are ecouraging, with a final TRTC estimate of 3.5M based on average run-timing (1.7M if the run is one week early, and 8.5M if the run is one week late).
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26, when the certainty of the model forecast will increase.
     -   The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
 
@@ -171,8 +172,8 @@ demo_inriver <- demo.data %>%
   filter(nation %in% c("Gitksan", "Lake Babine Nation"))
 di <- sum(demo_inriver$sockeye, na.rm=TRUE)
 
-marine.fsc <- 0
-inriver.fsc <- 0
+marine.fsc <- 20000
+inriver.fsc <- 5000
 total.fsc <- marine.fsc+inriver.fsc
 
 t<- e + s + gn + dm + marine.fsc
@@ -605,15 +606,15 @@ make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 
 ### First Nations Demonstration and Economic Opportunity
 
-First Nations CSAF demonstration fisheries opened on July 9 in 2026 The catch associated with each demonstration fishery is determined using the weekly TAC. In 2026, the CTAC approach is being implemented, which means that the catch allocation of the demonstration fishery is no longer directly linked to what the commercial marine fishery catches each week. Catch by Nation/Nation group and gear type are shown below.
+First Nations CSAF demonstration fisheries opened on July 8 in 2026. The catch associated with each demonstration fishery is determined using a proportion of the weekly TAC. In 2026, the CTAC approach is being implemented, which means that the catch allocation of the demonstration fishery is no longer directly linked to what the commercial marine fishery catches each week. Catch by Nation or Nation group and gear type are shown below.
 
 ```{r FNs demo fishery catches prep}
 source("scripts/first nations demo catches.R")
 ```
 
 ```{r FNs demo fishery catch table}
-# kable(demo.table,caption="Preliminary Area 4 First Nations demo catches of sockeye.")%>%
-#   row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
+kable(demo.table,caption="Preliminary Area 4 First Nations demo catches of sockeye.")%>%
+  row_spec(2,hline_after=T) %>% kable_styling(latex_options = "HOLD_position")
 ```
 
 ```{r FNs demo fishery catch figure,echo=FALSE,message=FALSE,warning=FALSE,include=TRUE}
@@ -623,7 +624,7 @@ source("scripts/first nations demo catches.R")
 #| include: true
 #| fig-height: 4
 
-#plot.fns.demo.catch(demo.data)
+plot.fns.demo.catch(demo.data)
 ```
 
 ## Recreational Fisheries

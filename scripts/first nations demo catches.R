@@ -14,6 +14,7 @@ total.row<-tibble(Nation="Total","Total Demo Sockeye Catch"=total.demo.catch)
 
 demo.table<-rbind(demo.totals,total.row)
 
+#data<-demo.data
 plot.fns.demo.catch<-function(data) {
   
   ggplot(data,aes(x=date,y=sockeye,fill=nation))+
