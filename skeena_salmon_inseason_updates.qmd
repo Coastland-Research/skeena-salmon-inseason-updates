@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 11, 2026"
+subtitle: "July 12, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,8 +38,8 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-07-10")
-tyee.date<-"July 10"
+tyee.day<-as.Date("2026-07-11")
+tyee.date<-"July 11"
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-07-30")
@@ -47,7 +47,7 @@ figures.x.date<-as.Date("2026-07-30")
 fence.day<-as.Date("2026-07-09")
 fence.date<-"July 9"
 
-today<-as.Date("2026-07-11")
+today<-as.Date("2026-07-12")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -64,8 +64,8 @@ source("scripts/harvest control rule and tac plots.R")
 
     -   The Tyee test fishery started operations on June 10.
     -   information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date 521,724 sockeye are estimated to have passed the Tyee test fishery.
-    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are ecouraging, with a final TRTC estimate of 3.5M based on average run-timing (1.7M if the run is one week early, and 8.5M if the run is one week late).
+    -   To date 537,969 sockeye are estimated to have passed the Tyee test fishery.
+    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are ecouraging, albeit with a slight downturn recently, with a final TRTC estimate of 3.2M based on average run-timing (1.6M if the run is one week early, and 7.7M if the run is one week late).
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26, when the certainty of the model forecast will increase.
     -   The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
 
