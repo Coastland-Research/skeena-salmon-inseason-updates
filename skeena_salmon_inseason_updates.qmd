@@ -360,12 +360,12 @@ daily<-fread("data/common/tyee_daily_indices_chum_1956-2025.csv")%>%
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=chum)
 
-make.index.figures(daily,current,10,150,figures.x.date)
+make.index.figures(daily,current,5,10,figures.x.date)
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for Chum salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
 
-#make.hist.index.plot(daily, current, figures.x.date)
+make.hist.index.plot(daily, current, figures.x.date)
 ```
 
 ## Pink Salmon
@@ -390,9 +390,12 @@ make.index.figures.pink(daily,current,10,10,figures.x.date)
 
 ```
 
-```{r, fig.height=5, fig.cap = "Cumulative index for even-year Pink salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+```{r, fig.height=5, fig.cap = "Cumulative index for even-year Pink salmon for today's date by year for 1956-2024, with rolling 10-year average shown by red line."}
 
-#make.hist.index.plot(daily, current, figures.x.date)
+daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = TRUE) %>%
+  mutate(Date = as.IDate(Date))
+
+make.hist.index.plot(daily, current, figures.x.date)
 ```
 
 ### Odd years
@@ -417,7 +420,7 @@ make.index.figures(daily,current,10,300,figures.x.date)
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for coho for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
 
-#make.hist.index.plot(daily, current, figures.x.date)
+make.hist.index.plot(daily, current, figures.x.date)
 ```
 
 ## Steelhead
@@ -439,7 +442,7 @@ make.index.figures(daily,current,10,300,figures.x.date)
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for steelhead for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
 
-#make.hist.index.plot(daily, current, figures.x.date)
+make.hist.index.plot(daily, current, figures.x.date)
 ```
 
 Steelhead updates are also provided by the Province of BC. Please reach out to Kenji Miyazaki with any questions.
