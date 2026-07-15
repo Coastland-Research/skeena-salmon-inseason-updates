@@ -182,21 +182,10 @@
 2026,Chinook,May,Retained,2115
 2026,Coho,May,Retained,41
 2026,Pacific Halibut,May,Retained,1205
-2016,Chinook,June,Retained,5678
-2016,Chinook,June,Released,975
-2016,Chinook,July,Retained,3474
-2016,Chinook,July,Released,710
-2016,Chinook,August,Retained,891
-2016,Chinook,August,Released,506
-2016,Coho,June,Retained,4389
-2016,Coho,June,Released,568
-2016,Coho,July,Retained,21761
-2016,Coho,July,Released,3168
-2016,Coho,August,Retained,11200
-2016,Coho,August,Released,980
-2016,Pacific Halibut,June,Retained,4032
-2016,Pacific Halibut,June,Released,2408
-2016,Pacific Halibut,July,Retained,6069
-2016,Pacific Halibut,July,Released,3422
-2016,Pacific Halibut,August,Retained,3670
-2016,Pacific Halibut,August,Released,1645
+2026,Chinook,May,Released,1220
+2026,Coho,May,Released,0
+2026,Chinook,June,Retained,2757
+2026,Coho,June,Retained,1014
+2026,Pacific Halibut,June,Retained,3038
+2026,Chinook,June,Released,3861
+2026,Coho,June,Released,91
