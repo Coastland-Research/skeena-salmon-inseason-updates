@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 14, 2026"
+subtitle: "July 15, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -62,16 +62,10 @@ source("scripts/harvest control rule and tac plots.R")
 
 -   Tyee Test Fishery
 
-    -   The Tyee test fishery started operations on June 10.
-<<<<<<< Updated upstream
-    -   information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date 634,439 sockeye are estimated to have passed the Tyee test fishery.
-    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are encouraging, albeit with a slight downturn recently, with a final TRTC estimate of 3.1M based on average run-timing (1.6M if the run is one week early, and 7.0M if the run is one week late).
-=======
+
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
     -   To date 670,696 sockeye are estimated to have passed the Tyee test fishery.
     -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are encouraging, albeit with a slight downturn recently, with a final TRTC estimate of 3.1M based on average run-timing (1.6M if the run is one week early, and 7.2M if the run is one week late).
->>>>>>> Stashed changes
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26, when the certainty of the model forecast will increase.
     -   The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
 
@@ -459,15 +453,13 @@ will be updated soon
 
 # Babine Fence
 
-Will be updated once Babine Fence operations start.
-
 Information on the Babine fence counts are updated daily [here](https://www.pac.dfo-mpo.gc.ca/fm-gp/northcoast-cotenord/babine-eng.html). We extract information from this site and update daily.
 
 ```{r}
 source("scripts/babine_fence_counts.R")
 source("scripts/make_babine_plots.R")
 
-babine.figures.x.high<-as.Date("2026-07-14")
+babine.figures.x.high<-as.Date("2026-07-30")
 ```
 
 ### Babine Sockeye
