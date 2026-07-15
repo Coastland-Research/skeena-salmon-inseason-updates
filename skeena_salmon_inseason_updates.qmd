@@ -38,16 +38,16 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-07-13")
-tyee.date<-"July 13"
+tyee.day<-as.Date("2026-07-14")
+tyee.date<-"July 14"
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-07-30")
 
-fence.day<-as.Date("2026-07-13")
-fence.date<-"July 13"
+fence.day<-as.Date("2026-07-14")
+fence.date<-"July 14"
 
-today<-as.Date("2026-07-14")
+today<-as.Date("2026-07-15")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -63,9 +63,15 @@ source("scripts/harvest control rule and tac plots.R")
 -   Tyee Test Fishery
 
     -   The Tyee test fishery started operations on June 10.
+<<<<<<< Updated upstream
     -   information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
     -   To date 634,439 sockeye are estimated to have passed the Tyee test fishery.
     -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are encouraging, albeit with a slight downturn recently, with a final TRTC estimate of 3.1M based on average run-timing (1.6M if the run is one week early, and 7.0M if the run is one week late).
+=======
+    -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
+    -   To date 670,696 sockeye are estimated to have passed the Tyee test fishery.
+    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are encouraging, albeit with a slight downturn recently, with a final TRTC estimate of 3.1M based on average run-timing (1.6M if the run is one week early, and 7.2M if the run is one week late).
+>>>>>>> Stashed changes
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26, when the certainty of the model forecast will increase.
     -   The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
 
@@ -386,7 +392,7 @@ daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = 
 current<-fread("data/current_year/tyee data 2026.csv") %>%
    select(Date,"2026"=`pink`) 
  
-make.index.figures.pink(daily,current,50,200,figures.x.date)
+make.index.figures.pink(daily,current,50,500,figures.x.date)
 
 ```
 
@@ -464,78 +470,72 @@ source("scripts/make_babine_plots.R")
 babine.figures.x.high<-as.Date("2026-07-14")
 ```
 
+### Babine Sockeye
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
-#| include: false
 
-### Babine Sockeye
 make.babine.figures("Large Sockeye",babine.figures.x.high,100000,1500000)
 
 ```
 
-```{r, fig.height=6, fig.cap="Estimated difference between the Tyee test fishery and the Babine fence with the assumptions listed above."}
-#| label: fig-babine-tyee-comparison
-#| include: false
-
-source("scripts/babine versus tyee.R")
 
 ### Babine comparison with Tyee
 
-# This comparison aims to provide a coarse idea on the catchability at Tyee. The red line in the figure below shows the difference between the escapement past Tyee and the total run being counted at the Babine Fence, based on some assumptions. These assumptions include 3 week migration timing, 10% non-Babine stock composition and a rough estimate of in-river FSC and demo harvest to date between Tyee and Babine.
+This comparison aims to provide a coarse idea on the catchability at Tyee. The red line in the figure below shows the difference between the escapement past Tyee and the total run being counted at the Babine Fence, based on some assumptions. These assumptions include 3 week migration timing, 10% non-Babine stock composition and a rough estimate of in-river FSC and demo harvest to date between Tyee and Babine.
+
+```{r, fig.height=6, fig.cap="Estimated difference between the Tyee test fishery and the Babine fence with the assumptions listed above."}
+#| label: fig-babine-tyee-comparison
+
+source("scripts/babine versus tyee.R")
 
 make.tyee.vs.babine.plot(.1,.97,-500000,1500000,as.Date("2026-06-01"),as.Date("2026-10-01"))
 ```
 
+### Jack sockeye
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-sockeye
-#| include: false
-
-### Jack sockeye
 
 make.babine.figures("Jack Sockeye",babine.figures.x.high,20000,250000)
 ```
 
+### Babine Adult Chinook
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large Chinook salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-chinook
-#| include: false
-
-### Babine Adult Chinook
 
 make.babine.figures("Large Chinook",babine.figures.x.high,500,10000)
 ```
 
+### Babine Jack Chinook
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack Chinook salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-chinook
-#| include: false
-
-### Babine Jack Chinook
 
 make.babine.figures("Jack Chinook",babine.figures.x.high,200,2000)
 ```
 
+### Babine Pink
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for pink salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-pink
-#| include: false
-
-### Babine Pink
 
 make.babine.figures("Pink",babine.figures.x.high,20000,500000)
 ```
 
+### Babine Coho
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for coho salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-coho
-#| include: false
-
-### Babine Coho
 
 make.babine.figures("Coho",babine.figures.x.high,500,5000)
 ```
 
+### Babine Steelhead
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for steelhead at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-steelhead
-#| include: false
-
-### Babine Steelhead
 
 make.babine.figures("Steelhead",babine.figures.x.high,50,500)
 ```
@@ -604,7 +604,10 @@ make.tacandtotalcatch.plot(catch.gn,catch.sn,tac.data)
 #| include: true
 #| fig-height: 6
 
-#ggarrange(p3,p4,ncol=1,align="v")
+p3 <- make_p3(catch.gn, catch.sn)
+p4 <- make_p4(catch.gn, catch.sn)
+
+ggarrange(p3,p4,ncol=1,align="v")
 ```
 
 ### First Nations Demonstration and Economic Opportunity
