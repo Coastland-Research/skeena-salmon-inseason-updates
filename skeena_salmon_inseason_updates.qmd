@@ -64,8 +64,8 @@ source("scripts/harvest control rule and tac plots.R")
 
     -   The Tyee test fishery started operations on June 10.
     -   information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date 574,653 sockeye are estimated to have passed the Tyee test fishery.
-    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are encouraging, albeit with a slight downturn recently, with a final TRTC estimate of 3.1M based on average run-timing (1.6M if the run is one week early, and 7.2M if the run is one week late).
+    -   To date 634,439 sockeye are estimated to have passed the Tyee test fishery.
+    -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are encouraging, albeit with a slight downturn recently, with a final TRTC estimate of 3.1M based on average run-timing (1.6M if the run is one week early, and 7.0M if the run is one week late).
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26, when the certainty of the model forecast will increase.
     -   The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
 
@@ -83,8 +83,8 @@ source("scripts/harvest control rule and tac plots.R")
 
 -   Commercial Fisheries
 
-    -   First Nations demonstration fisheries opened in the marine areas on July 8 and 9 targeting sockeye.
-    -   Area C gillnet fisheries will started July 10-11 targeting Skeena sockeye.
+    -   First Nations demonstration fisheries opened in the marine areas on July 8 and 9 targeting sockeye and will continue this week.
+    -   Area C gillnet fisheries started July 10-11 targeting Skeena sockeye.
     -   Area 3 seine fisheries opened July 7 and 8 targeting Nass pink salmon, with pink salmon catches being extremely low. Sockeye and chum retention is allowed, with decent catches of chum.
 
 -   Recreational Fisheries
@@ -159,11 +159,11 @@ average<-sx.trtc.model.all$Average[i]
 
 e<-sx.trtc.model.all$cumesc[i]
 c<-sx.trtc.model.all$cumcatch[i]
-
+c<-23098
 s <- sum(sncatch$sncatch, na.rm = TRUE)
 
 gn <- sum(gncatch$gncatch, na.rm=TRUE)
-
+gn<-23098
 demo_marine <- demo.data %>%
   filter(nation %in% c("Lax Kw'alaams", "NCS", "Metlakatla"))
 dm <- sum(demo_marine$sockeye, na.rm=TRUE)
