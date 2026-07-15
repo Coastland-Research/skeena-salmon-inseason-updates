@@ -544,6 +544,8 @@ This section contains information on fisheries in Area 4. Included are the weekl
 
 DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
 
+[Update #3-July 15](/data/nc_stad_weekly_updates/NCA Weekly Update #3 July 14 2026.pdf)
+
 ## Area 4 Fishery Openings
 
 Fisheries notices for Skeena salmon are shown below. These are a list of the relevant fisheries notices for Skeena salmon but are not an exhaustive list of current regulations. All fisheries notices can be found on the [DFO Fisheries Notice website](https://notices.dfo-mpo.gc.ca/fns-sap/index-eng.cfm).
