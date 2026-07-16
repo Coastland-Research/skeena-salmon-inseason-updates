@@ -62,7 +62,6 @@ source("scripts/harvest control rule and tac plots.R")
 
 -   Tyee Test Fishery
 
-
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
     -   To date 718,321 sockeye are estimated to have passed the Tyee test fishery.
     -   While it is too early to rely on the run-timing model estimates for the final TRTC, current projections are encouraging, albeit with a slight downturn recently, with a final TRTC estimate of 3.1M based on average run-timing (1.6M if the run is one week early, and 7.2M if the run is one week late).
@@ -79,19 +78,20 @@ source("scripts/harvest control rule and tac plots.R")
 
 -   First Nations Food Fisheries
 
-    -   Will be udpdated as they occur
+    -   First Nations food fisheries are ongoing in the marine approaches and in-river.
 
 -   Commercial Fisheries
 
     -   First Nations demonstration fisheries opened in the marine areas on July 8 and 9 targeting sockeye and will continue this week.
-    -   Area C gillnet fisheries started July 10-11 targeting Skeena sockeye.
+    -   Area C gillnet fisheries started July 10-11 targeting Skeena sockeye. There were openings on July 13/14, and openings will continue July 16/17.
+    -   Area A seine fisheries targeting Skeena sockeye open July 15-19.
     -   Area 3 seine fisheries opened July 7 and 8 targeting Nass pink salmon, with pink salmon catches being extremely low. Sockeye and chum retention is allowed, with decent catches of chum.
 
 -   Recreational Fisheries
 
     -   Recreational fisheries for sockeye in Areas 3-6 opened July 10 with a daily limit of 4 per day.
     -   Recreational fisheries for Skeena sockeye in portions of Region 6 opened July 10 (portions of the Skeena mainstem) and August 1 (Babine Lake, Fulton River, Pinkut Creek) with a daily limit of 2 per day.
-    -   Recreational fisheries for Chinook in Area 3-5 are currently closed, and will open at 1 per day on July 18, and 2 per day on August 1. 
+    -   Recreational fisheries for Chinook in Area 3-5 are currently closed, and will open at 1 per day on July 18, and 2 per day on August 1.
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
@@ -159,11 +159,11 @@ average<-sx.trtc.model.all$Average[i]
 
 e<-sx.trtc.model.all$cumesc[i]
 c<-sx.trtc.model.all$cumcatch[i]
-c<-23098
+#c<-23098
 s <- sum(sncatch$sncatch, na.rm = TRUE)
 
 gn <- sum(gncatch$gncatch, na.rm=TRUE)
-gn<-23098
+#gn<-23098
 demo_marine <- demo.data %>%
   filter(nation %in% c("Lax Kw'alaams", "NCS", "Metlakatla"))
 dm <- sum(demo_marine$sockeye, na.rm=TRUE)
@@ -185,10 +185,14 @@ kable(stat3,caption=paste0("Cumulative escapement, catch, and TRTC to ",tyee.dat
 ```
 
 ```{r catch trtc table, echo= FALSE, results='asis'}
-current<-read.csv("data/current_year/babine fence 2026.csv") %>%
-select(Date,Large.Sockeye)%>%
-  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")),
-         cumesc = cumsum(Large.Sockeye))
+library(readr)
+current<-read_csv("data/current_year/babine fence 2026.csv")%>%
+select(Date,`Large Sockeye`)%>%
+  mutate(Date=as.Date(Date),
+         cumesc = cumsum(`Large Sockeye`))
+
+#  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")),
+#         cumesc = cumsum("Large Sockeye"))
 
 # 1. headers = Estimate / Number of sockeye
 
@@ -200,7 +204,7 @@ bab_sockeye <- current$cumesc[i]
 tc_below <- s + gn + di + dm + 0
 
 # 4. TRTC Estimate based on Babine and 10% non-Babine
-trtc_est <- bab_sockeye/0.9
+trtc_est <- round(bab_sockeye/0.9 + tc_below,0)
 
 stat4 <- data.frame(`Estimate`=c("Babine Fence", "Total Catch Below Babine", "TRTC Estimate (based on Babine and 10% non-Babine)"),`Number of Sockeye`=c(bab_sockeye, tc_below, trtc_est))
 
@@ -471,7 +475,6 @@ make.babine.figures("Large Sockeye",babine.figures.x.high,100000,1500000)
 
 ```
 
-
 ### Babine comparison with Tyee
 
 This comparison aims to provide a coarse idea on the catchability at Tyee. The red line in the figure below shows the difference between the escapement past Tyee and the total run being counted at the Babine Fence, based on some assumptions. These assumptions include 3 week migration timing, 10% non-Babine stock composition and a rough estimate of in-river FSC and demo harvest to date between Tyee and Babine.
@@ -544,7 +547,7 @@ This section contains information on fisheries in Area 4. Included are the weekl
 
 DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
 
-[Update #3-July 15](/data/nc_stad_weekly_updates/NCA Weekly Update #3 July 14 2026.pdf)
+[Update #3-July 15](/data/nc_stad_weekly_updates/NCA%20Weekly%20Update%20#3%20July%2014%202026.pdf)
 
 ## Area 4 Fishery Openings
 
