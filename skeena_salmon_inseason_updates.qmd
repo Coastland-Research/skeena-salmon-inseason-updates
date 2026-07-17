@@ -165,7 +165,7 @@ s <- sum(sncatch$sncatch, na.rm = TRUE)
 gn <- sum(gncatch$gncatch, na.rm=TRUE)
 #gn<-23098
 demo_marine <- demo.data %>%
-  filter(nation %in% c("Lax Kw'alaams", "NCS", "Metlakatla"))
+  filter(nation %in% c("Lax Kw'alaams", "North Coast Skeena", "Metlakatla"))
 dm <- sum(demo_marine$sockeye, na.rm=TRUE)
 
 demo_inriver <- demo.data %>%
