@@ -33,7 +33,7 @@ make.prop.figure<-function(gg.daily.pcum, data2) {
     #ylim(0,150000)+
     theme_bw()+
     ylim(0,1)+
-    expand_limits(x=c(as.Date("2026-06-01"),as.Date("2026-10-01")))+
+    xlim(as.Date("2026-06-01"),as.Date("2026-10-01"))+
     labs(color="Estimate",y="Cumulative Proportion of TRTC")+
     theme(legend.position = "bottom")
   
