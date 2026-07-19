@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 18, 2026"
+subtitle: "July 19, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,16 +38,16 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-07-17")
-tyee.date<-"July 17"
+tyee.day<-as.Date("2026-07-18")
+tyee.date<-"July 18"
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-08-05")
 
-fence.day<-as.Date("2026-07-17")
-fence.date<-"July 17"
+fence.day<-as.Date("2026-07-18")
+fence.date<-"July 18"
 
-today<-as.Date("2026-07-18")
+today<-as.Date("2026-07-19")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -63,14 +63,15 @@ source("scripts/harvest control rule and tac plots.R")
 -   Tyee Test Fishery
 
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date 812,652 sockeye are estimated to have passed the Tyee test fishery.
-    -   While it is a little early to rely on the run-timing model estimates for the final TRTC, current projections are encouraging, albeit with a slight downturn recently, with a final TRTC estimate of 2.9M based on average run-timing (1.7M if the run is one week early, and 5.8M if the run is one week late).
+    -   To date 846,549 sockeye are estimated to have passed the Tyee test fishery.
+    -   While it is a little early to rely on the run-timing model estimates for the final TRTC, current projections are encouraging, albeit with a slight downturn recently, with a final TRTC estimate of 2.8M based on average run-timing (1.7M if the run is one week early, and 5.5M if the run is one week late).
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26, when the certainty of the model forecast will increase.
     -   The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
 
 -   Babine
 
-    -   The Babine fence starts operations on July 15. Information will be updated once operations start.
+    -   The Babine fence started operations on July 15.
+    -   Sockeye have started coming through the fence in very low numbers.
 
 -   Kitwanga Fence
 
@@ -310,10 +311,12 @@ write.csv(sx.trtc.model,"data/current_year/Tyee model data 2026.csv",row.names=F
 
 ```{r}
 source("scripts/cumulative_prop_trtc.R")
+
 ```
 
-```{r,include=FALSE, fig.height = 5, fig.cap = "Comparison of sockeye cumulative proportions from 1956-2025 to this year using different escapement estimates."}
+```{r, fig.height = 5, fig.cap = "Comparison of sockeye cumulative proportions from 1956-2025 to this year using different run past Tyee estimates."}
 #| label: fig-sx-cum-prop
+#| include: TRUE
 
 make.prop.figure(gg.daily.pcum, data2)
 ```
