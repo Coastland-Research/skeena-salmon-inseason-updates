@@ -3,7 +3,7 @@ make.babine.daily.plot<-function(daily.data,daily.quants,babine.figures.x.high,d
   ggplot(daily.data,aes(x=Date, y=Fish,group=Date))+
     geom_line(data=daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
     geom_line(data = daily.data %>% filter(Year == 2026),
-              aes(x = Date, y = Fish, group = 1, color = "2025 Data"),
+              aes(x = Date, y = Fish, group = 1, color = "2026 Data"),
               linewidth = 1.5,alpha=.7)+
     geom_line(data = daily.data %>% filter(Year <2026), aes(x = Date, y = Fish,group=Year),
               linewidth = .5,alpha=.1)+

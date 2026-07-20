@@ -21,7 +21,7 @@ daily.index<-left_join(historical,current,by="Date")
 
 gg.daily<-daily.index%>%
   mutate_if(is.character, as.numeric) %>%
-  pivot_longer(`1946`:`2025`,names_to="Year",values_to="Fish") %>%
+  pivot_longer(`1946`:`2026`,names_to="Year",values_to="Fish") %>%
   mutate(Year=as.numeric(Year)) %>%
   mutate(Index=replace_na(Fish,0))
 
@@ -41,7 +41,7 @@ gg.daily.quants<-gg.daily %>%
                           Q=="per50"~"Median"))
 
 gg.daily.cum<-daily.index%>%
-  pivot_longer(`1946`:`2025`,names_to="Year",values_to="Fish") %>%
+  pivot_longer(`1946`:`2026`,names_to="Year",values_to="Fish") %>%
   mutate(Fish=replace_na(Fish,0))%>%
   group_by(Year)%>%
   mutate(cum_sum=cumsum(Fish))
