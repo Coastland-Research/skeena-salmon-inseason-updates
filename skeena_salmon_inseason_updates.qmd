@@ -553,11 +553,11 @@ This section contains information on fisheries in Area 4. Included are the weekl
 
 DFO Stock Assessment and Resource Management provide stakeholders a weekly update every Tuesday. These updates contain information for Skeena salmon, as well as other North Coast and Central Coast areas, including fisheries catch numbers, in-season forecasts, and other relevant information.
 
-[Update #1-June 30](/data/nc_stad_weekly_updates/NCA%Weekly%Update%#1%June%30.pdf)
+[Update #1-June 30](/data/nc_stad_weekly_updates/NCA_Update_June_30.pdf)
 
-[Update #2-July 7](/data/nc_stad_weekly_updates/NCA%Weekly%Update%#2%July%7.pdf)
+[Update #2-July 7](/data/nc_stad_weekly_updates/NCA_Update_July_7.pdf)
 
-[Update #3-July 14](/data/nc_stad_weekly_updates/NCA%20Weekly%20Update%20#3%20July%2014%202026.pdf)
+[Update #3-July 14](/data/nc_stad_weekly_updates/NCA_Update_July_14.pdf)
 
 ## Area 4 Fishery Openings
 
