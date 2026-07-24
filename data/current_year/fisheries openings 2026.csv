@@ -1,23 +1,24 @@
 Fisheries Notice,Sector,Date(s),Target Species,Gear,Area/Type,Days Open,Quota,Notes
-FN0503,Recreational,29-May,Chinook,Angling,"Areas 1-5, 101-105, 142",,,"Areas 1, 2, 142, and west portion of Area 101: 1 Chinook per day effective May 29 to July 31. Areas 3 to 5, 103 to 105, sub-area 102-1, and east portion of 101: 1 Chinook per day effective June 1 to June 22, and 0 Chinook per day effective June 23 until further notice. Tidal portion of Gingolx (Kincolith) River: 0 Chinook per day effective June 23 until further notice."
-FN0666,Commercial,10-Jul,Sockeye,Gillnet,"Area C, Area 4",2,,Gill nets open 05:00 to 22:00 hours on July 10 - 11. Retention of sockeye and pink salmon.
-FN0667,Recreational,10-Jul,Sockeye,Angling,Areas 3 to 5,265,,"The daily limit for sockeye is four (4) per day in the tidal waters of Areas 3, 4, and 5"
+FN0503,Recreational,May 29,Chinook,Angling,"Areas 1-5, 101-105, 142",,,"Areas 1, 2, 142, and west portion of Area 101: 1 Chinook per day effective May 29 to July 31. Areas 3 to 5, 103 to 105, sub-area 102-1, and east portion of 101: 1 Chinook per day effective June 1 to June 22, and 0 Chinook per day effective June 23 until further notice. Tidal portion of Gingolx (Kincolith) River: 0 Chinook per day effective June 23 until further notice."
+FN0666,Commercial,July  10,Sockeye,Gillnet,"Area C, Area 4",2,,Gill nets open 05:00 to 22:00 hours on July 10 - 11. Retention of sockeye and pink salmon.
+FN0667,Recreational,July 10,Sockeye,Angling,Areas 3 to 5,265,,"The daily limit for sockeye is four (4) per day in the tidal waters of Areas 3, 4, and 5"
 FN0676,Aboriginal,July 8-9,Sockeye,Gillnet,Lax Kw'alaams and North Coast Skeena,2,,"Target sockeye, non-retention coho, chinook, chum and steelhead"
 FN0679,Recreational,Various,Sockeye,Angling,Portions of Area 6,,2 per day,"August 1 Babine Lake, Fulton River, Pinkut Creek, July 10 portions of the Skeena mainstem."
 FN0682,Aboriginal,July 8-9,Sockeye,Gillnet,Metlakatla,2,,"Target sockeye, non-retention coho, chinook, chum and steelhead"
 FN0686,Recreational,Various,Chinook,Angling,"Areas 1-5, 101-105, 142",,,"Areas 3-5, 0 Chinook per day to July 17, 1 Chinook per day July 18-31, 2 Chinook per day as of August 1"
-FN0700,Aboriginal,12-Jul,Sockeye,Gillnet,North Coast Skeena,1,,"Target sockeye, non-retention coho, chinook, chum and steelhead"
+FN0700,Aboriginal,July 12,Sockeye,Gillnet,North Coast Skeena,1,,"Target sockeye, non-retention coho, chinook, chum and steelhead"
 FN0701,Recreational,Various,Sockeye,Angling,"Areas 1-5, 101-105, 142",July 10-March 31,,"Correction to FN0667, retention to 4 per day"
-FN0710,Aboriginal,12-Jul,Sockeye,Gillnet,Area 4,1,,"CSAF demo fishery for Lax Kw’alaams Band, sockeye target with pink retention, non-retention of coho, chum, Chinook, and steelhead"
+FN0710,Aboriginal,July 12,Sockeye,Gillnet,Area 4,1,,"CSAF demo fishery for Lax Kw’alaams Band, sockeye target with pink retention, non-retention of coho, chum, Chinook, and steelhead"
 FN0712,Commercial,July 16-17,Sockeye,Gillnet,"Area C, Area 4",2,,Gill nets open 05:00 to 22:00 hours on July 16 - 17. Retention of sockeye and pink salmon.
 FN0714,Commercial,Jul 15-19,Sockeye,Seine,"Area A, Area 4",5,"20,300 aggregate","Target sockeye, retention of pink permitted, non-retention of coho, Chinook, chum, and steelhead"
-FN0709,Aboriginal,12-Jul,Sockeye,Gillnet,Area 4,1,,"CSAF demo fishery for Metlakatla First Nation. Target sockeye, pink retention permitted, non-retention of coho, Chinook, chum, and steelhead"
-FN0715,Aboriginal,15-Jul,Sockeye,Gillnet,Area 4,1,,"CSAF demo fishery for North Coast Skeena First Nations Stewardship Society and Lax Kw’alaams Band. Target sockeye, pink retention permitted, non-retention of coho, Chinook, chum, and steelhead"
+FN0709,Aboriginal,July 12,Sockeye,Gillnet,Area 4,1,,"CSAF demo fishery for Metlakatla First Nation. Target sockeye, pink retention permitted, non-retention of coho, Chinook, chum, and steelhead"
+FN0715,Aboriginal,July 15,Sockeye,Gillnet,Area 4,1,,"CSAF demo fishery for North Coast Skeena First Nations Stewardship Society and Lax Kw’alaams Band. Target sockeye, pink retention permitted, non-retention of coho, Chinook, chum, and steelhead"
 FN0726,Aboriginal,July 16-20,Sockeye,Selective gear methods,Region 6,5,,CSAF demo fishery for Kitselas First Nation. Sockeye retention only. Type B dual fishing permitted.
 FN0730,Commercial,July 19-20,Sockeye,Gillnet,"Area C, Area 4",2,,Gill nets open 05:00 to 22:00 hours on July 19-20. Retention of sockeye and pink salmon.
 FN0734,Aboriginal,July 18-24,Sockeye,Selective Gears,Demonstration Fishery,6,,CSAF demo fishery for Kitselas First Nation. Sockeye retention only. Type B dual fishing permitted.
-FN0738,Aboriginal,July  18,Sockeye,Gillnet,Demonstration Fishery,1,,"CSAF demo fishery for North Coast Skeena, Metlakatla and Lax Kw'alaams targeting Skeena sockeye."
+FN0738,Aboriginal,July 18,Sockeye,Gillnet,Demonstration Fishery,1,,"CSAF demo fishery for North Coast Skeena, Metlakatla and Lax Kw'alaams targeting Skeena sockeye."
 FN0749,Aboriginal,Jul 21-27,Sockeye,Selective gear methods,Demonstration Fishery,7,,"CSAF demo fishery for Kitselas First Nation, sockeye retention only. Open 08:00 to 19:00 daily in Kitselas Canyon."
 FN0751,Commercial,Jul 23-25,Sockeye,Gillnet,"Area C, Area 4",3,,Gill nets open 05:00 to 22:00 hours on July 23 - 25. Retention of sockeye and pink salmon.
 FN0755,Aboriginal,July 22,Sockeye,Gillnet,Demonstration Fishery,1,,"CSAF demo fishery for North Coast Skeena First Nations Stewardship Society, Metlakatla First Nation, and Lax Kw’alaams Band. Sockeye and pink retention only. Type B dual fishing permitted."
 FN0759,Commercial,July 22-26,Sockeye,Seine,"Area A, Area 4",5,"75,400 aggregate","Target sockeye, retention of pink permitted, non-retention of coho, Chinook, chum, and steelhead. ITQ fishery (1.72%) equates to 1300 Sockeye per license."
+FN0772,Aboriginal,July 26,Sockeye,Gillnet,Demonstration Fishery,1,,"CSAF demo fishery for North Coast Skeena, Metlakatla and Lax Kw'alaams targeting Skeena sockeye."
