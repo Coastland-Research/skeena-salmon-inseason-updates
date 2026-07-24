@@ -63,15 +63,9 @@ source("scripts/harvest control rule and tac plots.R")
 -   Tyee Test Fishery
 
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-<<<<<<< Updated upstream
-    -   To date 985,613 sockeye are estimated to have passed the Tyee test fishery.
-    -   We are nearing the historical mid-point (peak) of the run through Tyee. While early estimates of final run size were encouraging, the run-timing model forecast for TRTC continues to decline with a final TRTC estimate of 2.6M based on average run-timing (1.7M if the run is one week early, and 4.6M if the run is one week late).
-    -   The shape of the run-timing curve suggests that the final run could be near the forecast at 1.5M, and that there was a strong and early start to the run.
-=======
     -   To date 1,022,556 sockeye are estimated to have passed the Tyee test fishery.
     -   We are nearing the historical mid-point (peak) of the run through Tyee. While early estimates of final run size were encouraging, the run-timing model forecast for TRTC continues to decline with a final TRTC estimate of 2.5M based on average run-timing (1.7M if the run is one week early, and 4.3M if the run is one week late).
     -   The shape of the run-timing curve suggests that the run could be near the forecast at 1.5M, and that there was a strong and early start to the run.
->>>>>>> Stashed changes
     -   The daily expected run through Tyee at a final run size of 2M and average run timing would be about 55-60,000.
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26, when the certainty of the model forecast will increase.
     -   The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
