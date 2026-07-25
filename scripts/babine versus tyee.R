@@ -1,5 +1,24 @@
 #Explanation for figure
-#This comparison aims to provide a coarse idea on the catchability at Tyee. #The red line in the figure below shows the difference between the escapement #past Tyee and the total run being counted at the Babine Fence, based on some #assumptions. These assumptions include 3 week migration timing, 10% #non-Babine stock composition and a rough estimate of in-river FSC and demo #harvest to date between Tyee and Babine. In 2023 some sockeye were missed #due to the delay from wildfire evacuations, however DFO and LBN staff #indicate that no sockeye were visible below the fence when it was evacuated, #and therefore the number of sockeye missed was probably fairly low. #Additional analysis will be required to provide an estimate of the number of #missed sockeye.
+
+#This comparison aims to provide a coarse idea on the catchability at Tyee.
+#The red line in the figure below shows the difference between the escapement
+#past Tyee and the total run being counted at the Babine Fence, based on some #assumptions.
+#These assumptions include 3 week migration timing, 10% #non-Babine stock composition and a 
+#rough estimate of in-river FSC and demo #harvest to date between Tyee and Babine.
+#In 2023 some sockeye were missed #due to the delay from wildfire evacuations, however DFO and LBN staff
+#indicate that no sockeye were visible below the fence when it was evacuated,
+#and therefore the number of sockeye missed was probably fairly low.
+#Additional analysis will be required to provide an estimate of the number of #missed sockeye.
+
+#library(dplyr)
+#library(data.table)
+
+#pernonbabine<-.1
+#p.catch.babine<-.97
+#ylow<--150000
+#yhigh<-500000
+#start.date<-as.Date("2026-06-01")
+#end.date<-as.Date("2026-09-01")
 
 make.tyee.vs.babine.plot<-function(pernonbabine,p.catch.babine,ylow,yhigh,start.date,end.date) {
 
