@@ -479,10 +479,29 @@ babine.figures.x.high<-as.Date("2026-08-15")
 
 ### Babine Sockeye
 
+```{r, include=FALSE}
+current<-fread("data/current_year/babine fence 2026.csv") %>%
+  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))%>%
+  mutate(cumrun=cumsum(`Large Sockeye`), cumjacks = cumsum(`Jack Sockeye`))
+```
+
+```{r babine-sockeye-table,include=TRUE,echo=FALSE}
+
+i<-match(fence.day,current$Date)
+
+totalrun<-current$cumrun[i]
+cumjacks<-current$cumjacks[i]
+
+stat2<-tibble(`Babine Fence`=c("Large Sockeye","Jack Sockeye"),`Total Run`=c(totalrun,cumjacks))
+
+kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River fence to ",fence.date,".")) %>% kable_styling(latex_options = "HOLD_position")
+
+```
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
 
-make.babine.figures("Large Sockeye",babine.figures.x.high,80000,800000)
+make.babine.figures("Large Sockeye",babine.figures.x.high,80000,1000000)
 ```
 
 ### Babine comparison with Tyee
@@ -497,6 +516,7 @@ source("scripts/babine versus tyee.R")
 make.tyee.vs.babine.plot(.1,.97,-500000,1500000,as.Date("2026-06-01"),as.Date("2026-10-01"))
 ```
 
+### Babine Large Sockeye cumulative index by year
 ```{r, include=FALSE}
 species.in <- "Large Sockeye"
 
@@ -509,8 +529,6 @@ current<-fread("data/current_year/babine fence 2026.csv") %>%
 select(Date,"2026"=species.in)%>%
   mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))
 ```
-
-### Babine Large Sockeye cumulative index by year
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for sockeye at the Babine fence for today's date by year for 1946-2026, with rolling 10-year average shown by the black line and the recent 5-year average shown by the red line."}
 #| label: fig-hist-cum-babine-sk
@@ -547,6 +565,7 @@ select(Date,"2026"=species.in)%>%
 
 make.hist.index.plot(daily, current, fence.day)
 ```
+
 ### Babine Adult Chinook
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large Chinook salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
