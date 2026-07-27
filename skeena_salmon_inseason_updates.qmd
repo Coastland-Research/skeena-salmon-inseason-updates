@@ -498,6 +498,7 @@ kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River f
 
 ```
 
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
 
