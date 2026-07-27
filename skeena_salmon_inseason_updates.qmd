@@ -265,6 +265,7 @@ make.tyee.sockeye.escapement.plots(300000,8000000,figures.x.date)
 ### Cumulative index by year for today's date
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for sockeye for today's date by year for 1956-2025, with rolling 10-year average shown by the black line and the recent 5-year average shown by the red line."}
+#| label: fig-hist-cum-tyee-sk
 
 make.hist.index.plot(daily, current, fence.day)
 ```
@@ -353,6 +354,7 @@ ggarrange(p1,p2,ncol=1,common.legend = TRUE,legend="bottom")
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for Chinook salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+#| label: fig-hist-cum-tyee-cn
 
 make.hist.index.plot(daily, current, fence.day)
 ```
@@ -374,6 +376,7 @@ make.index.figures(daily,current,50,100,figures.x.date)
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for Chum salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+#| label: fig-hist-cum-tyee-chum
 
 make.hist.index.plot(daily, current, figures.x.date)
 ```
@@ -386,7 +389,6 @@ The 2026 pink salmon index is shown below and compared to historical index data 
 
 ```{r,fig.height=7,fig.cap="Daily (top) and cumulative (bottom) index values for pink salmon from 1956-2026 (grey lines). 2026 values are shown in purple, and various percentiles are shown by the grey dashed lines."}
 #| label: fig-index-pink-even
-# 
 
 source("scripts/index_figures_pink.R")
 daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = TRUE) %>%
@@ -396,11 +398,12 @@ daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = 
 current<-fread("data/current_year/tyee data 2026.csv") %>%
    select(Date,"2026"=`pink`) 
  
-make.index.figures.pink(daily,current,100,8000,figures.x.date)
+make.index.figures.pink(daily,current,100,15000,figures.x.date)
 
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for even-year Pink salmon for today's date by year for 1956-2024, with rolling 10-year average shown by red line."}
+#| label: fig-hist-cum-tyee-pink
 
 daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = TRUE) %>%
   mutate(Date = as.IDate(Date))
@@ -429,6 +432,7 @@ make.index.figures(daily,current,10,300,figures.x.date)
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for coho for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+#| label: fig-hist-cum-tyee-coho
 
 make.hist.index.plot(daily, current, figures.x.date)
 ```
@@ -451,6 +455,7 @@ make.index.figures(daily,current,50,300,figures.x.date)
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for steelhead for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
+#| label: fig-hist-cum-tyee-stl
 
 make.hist.index.plot(daily, current, figures.x.date)
 ```
@@ -478,7 +483,6 @@ babine.figures.x.high<-as.Date("2026-08-15")
 #| label: fig-babine-large-sockeye
 
 make.babine.figures("Large Sockeye",babine.figures.x.high,80000,800000)
-
 ```
 
 ### Babine comparison with Tyee
@@ -493,6 +497,27 @@ source("scripts/babine versus tyee.R")
 make.tyee.vs.babine.plot(.1,.97,-500000,1500000,as.Date("2026-06-01"),as.Date("2026-10-01"))
 ```
 
+```{r, include=FALSE}
+species.in <- "Large Sockeye"
+
+daily<-read_excel("data/common/babine fence counts 1946-2025 compiled 20240717.xlsx", sheet=species.in)%>%
+  mutate(Date=as.Date(Date))%>%
+  mutate_at(vars("1946":"2025"), ~replace(., is.na(.), 0)) %>%
+  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))
+
+current<-fread("data/current_year/babine fence 2026.csv") %>%
+select(Date,"2026"=species.in)%>%
+  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))
+```
+
+### Babine Large Sockeye cumulative index by year
+
+```{r, fig.height=5, fig.cap = "Cumulative index for sockeye at the Babine fence for today's date by year for 1946-2026, with rolling 10-year average shown by the black line and the recent 5-year average shown by the red line."}
+#| label: fig-hist-cum-babine-sk
+
+make.hist.index.plot(daily, current, fence.day)
+```
+
 ### Jack sockeye
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
@@ -501,6 +526,27 @@ make.tyee.vs.babine.plot(.1,.97,-500000,1500000,as.Date("2026-06-01"),as.Date("2
 make.babine.figures("Jack Sockeye",babine.figures.x.high,25000,250000)
 ```
 
+```{r, include=FALSE}
+species.in <- "Jack Sockeye"
+
+daily<-read_excel("data/common/babine fence counts 1946-2025 compiled 20240717.xlsx", sheet=species.in)%>%
+  mutate(Date=as.Date(Date))%>%
+  mutate_at(vars("1946":"2025"), ~replace(., is.na(.), 0)) %>%
+  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))
+
+current<-fread("data/current_year/babine fence 2026.csv") %>%
+select(Date,"2026"=species.in)%>%
+  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))
+
+```
+
+### Babine Jack Sockeye cumulative index by year
+
+```{r, fig.height=5, fig.cap = "Cumulative index for jack sockeye at the Babine fence for today's date by year for 1946-2026, with rolling 10-year average shown by the black line and the recent 5-year average shown by the red line."}
+#| label: fig-hist-cum-babine-jack
+
+make.hist.index.plot(daily, current, fence.day)
+```
 ### Babine Adult Chinook
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large Chinook salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
