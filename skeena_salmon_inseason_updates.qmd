@@ -517,8 +517,9 @@ source("scripts/babine versus tyee.R")
 make.tyee.vs.babine.plot(.1,.97,-500000,1500000,as.Date("2026-06-01"),as.Date("2026-10-01"))
 ```
 
-### Babine Large Sockeye cumulative index by year
+### Babine Large Sockeye cumulative count by year
 ```{r, include=FALSE}
+source("scripts/cumulative_count_babine.R")
 species.in <- "Large Sockeye"
 
 daily<-read_excel("data/common/babine fence counts 1946-2025 compiled 20240717.xlsx", sheet=species.in)%>%
@@ -534,7 +535,7 @@ select(Date,"2026"=species.in)%>%
 ```{r, fig.height=5, fig.cap = "Cumulative index for sockeye at the Babine fence for today's date by year for 1946-2026, with rolling 10-year average shown by the black line and the recent 5-year average shown by the red line."}
 #| label: fig-hist-cum-babine-sk
 
-make.hist.index.plot(daily, current, fence.day)
+make.hist.index.babine(daily, current, fence.day)
 ```
 
 ### Jack sockeye
@@ -559,12 +560,12 @@ select(Date,"2026"=species.in)%>%
 
 ```
 
-### Babine Jack Sockeye cumulative index by year
+### Babine Jack Sockeye cumulative count by year
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for jack sockeye at the Babine fence for today's date by year for 1946-2026, with rolling 10-year average shown by the black line and the recent 5-year average shown by the red line."}
 #| label: fig-hist-cum-babine-jack
 
-make.hist.index.plot(daily, current, fence.day)
+make.hist.index.babine(daily, current, fence.day)
 ```
 
 ### Babine Adult Chinook
