@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "July 28, 2026"
+subtitle: "July 29, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,16 +38,16 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-07-27")
-tyee.date<-"July 27"
+tyee.day<-as.Date("2026-07-28")
+tyee.date<-"July 28"
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-08-15")
 
-fence.day<-as.Date("2026-07-27")
-fence.date<-"July 27"
+fence.day<-as.Date("2026-07-28")
+fence.date<-"July 28"
 
-today<-as.Date("2026-07-28")
+today<-as.Date("2026-07-29")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -63,8 +63,8 @@ source("scripts/harvest control rule and tac plots.R")
 -   Tyee Test Fishery
 
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date 1,184,445 sockeye are estimated to have passed the Tyee test fishery.
-    -   We are nearing the historical mid-point (peak) of the run through Tyee. While early estimates of final run size were encouraging, the average and late run-timing model forecasts for TRTC continue to decline with a final TRTC estimate of 2.4M based on average run-timing (1.8M if the run is one week early, and 3.7M if the run is one week late).
+    -   To date 1,221,809 sockeye are estimated to have passed the Tyee test fishery.
+    -   We are nearing the historical mid-point (peak) of the run through Tyee. While early estimates of final run size were encouraging, the average and late run-timing model forecasts for TRTC continue to decline with a final TRTC estimate of 2.4M based on average run-timing (1.9M if the run is one week early, and 3.6M if the run is one week late).
     -   The shape of the run-timing curve suggests that the run could be near the forecast at 1.5M, and that there was a strong and early start to the run.
     -   The daily expected run through Tyee at a final run size of 2M and average run timing would be about 55-60,000.
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26, when the certainty of the model forecast will increase.
@@ -73,7 +73,7 @@ source("scripts/harvest control rule and tac plots.R")
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of 35,819 large sockeye through to date, and 884 jack to date.
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of 66,150 large sockeye through to date, and 1732 jack to date.
 
 -   Kitwanga Fence
 
@@ -336,7 +336,7 @@ daily<-fread("data/common/tyee_daily_indices_chinook_1956-2025.csv")
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=chinook)
 
-make.index.figures(daily,current,20,400,figures.x.date)
+make.index.figures(daily,current,20,500,figures.x.date)
 ```
 
 For comparison, the following figures show the Chinook index compared to more recent years since Chinook abundance declined to much lower levels.
@@ -630,19 +630,6 @@ DFO Stock Assessment and Resource Management provide stakeholders a weekly updat
 
 [Update #5-July 28](/data/nc_stad_weekly_updates/NCA_Update_July_28.pdf)
 
-## Area 4 Fishery Openings
-
-Fisheries notices for Skeena salmon are shown below. These are a list of the relevant fisheries notices for Skeena salmon but are not an exhaustive list of current regulations. All fisheries notices can be found on the [DFO Fisheries Notice website](https://notices.dfo-mpo.gc.ca/fns-sap/index-eng.cfm).
-
-```{r table of skeena fisheries openings, echo=FALSE, warning=FALSE, include=TRUE}
-
-openings<-read_csv("data/current_year/fisheries openings 2026.csv")
-
-kable(openings,caption="Fisheries openings in the Skeena area for 2026")%>%
-kable_styling(latex_options = "HOLD_position")
-
-```
-
 ## Commercial Fisheries
 
 ### Area C Gillnet and Area A Seine
@@ -883,16 +870,11 @@ for (i in 1:nrow(rt)){
   sd<-rt$SD[i]
   
   g<-data.frame(stock=rt$Stock[i],dev=rnorm(n,rt$MeanJulian[i],rt$SD[i]))
-  rtm<-rbind(rtm,g)
-  
-}
-
-#as.numeric(format(as.Date("2022-08-07"), "%j"))
+  rtm<-rbind(rtm,g)}
 
 days<-format(seq(as.Date("2022-06-01"),as.Date("2022-09-15"),10),"%b-%d")
 
 rtm2<-rtm%>%filter(dev>=152&dev<=258)%>%group_by(stock)%>%mutate(u=mean(dev))
-
 ```
 
 ```{r}
@@ -911,7 +893,6 @@ ggplot(rtm2,aes(x=dev,y=reorder(stock,dev,FUN=median),fill=stock))+
   labs(y="Stock",x="Date",title="Stock run-timing at Tyee based on 2000-2014 GSI",subtitle="NBRR data provided by Karl English July 2022")+
  scale_x_continuous(breaks=seq(152,258,10),labels=days)+
   theme(axis.text.x = element_text(angle=90))
-
 ```
 
 ```{r}
@@ -951,7 +932,6 @@ ggsave("Tyee sockeye stock run timing without harvest window.png")
 
 ggplot(rtm2,aes(x=dev),color=stock)+
   geom_density(aes(fill=stock),alpha=.3)+
-  #scale_fill_brewer(palette="Set1")+
   facet_wrap(~reorder(stock,dev,FUN=median),scales="free_y",ncol=1,strip.position="left")+
   theme_classic()+grids()+
    theme(strip.text.y.left = element_text(angle=0,size=8),
@@ -968,8 +948,6 @@ ggplot(rtm2,aes(x=dev),color=stock)+
   scale_x_continuous(breaks=seq(152,258,10),labels=days)+
   guides(fill="none",color="none")
    #annotate("rect", xmin = 196, xmax = 219, ymin = 0, ymax = Inf,alpha = .2)
-
-#ggsave("Tyee stock run timing densitty without harvest window.png",dpi=600,height=8,width=7)
 ```
 
 ```{r}
@@ -1005,6 +983,18 @@ ggplot(babrt2,aes(x=fencert))+
   caption="Stock run-timing at Babine fence based on average Tyee run-timing (2000-2014) plus 3 weeks.\nData from Karl English from NBRR update provied July 2022.")+
   scale_x_continuous(breaks=seq(182,280,7),labels=days)+
   guides(fill="none",color="none")
-
-#ggsave("Babine run timing for Donna.png",dpi=600,height=8,width=7)
 ```
+
+# Appendix C - Area 4 Fishery Openings
+
+Fisheries notices for Skeena salmon are shown below. These are a list of the relevant fisheries notices for Skeena salmon but are not an exhaustive list of current regulations. All fisheries notices can be found on the [DFO Fisheries Notice website](https://notices.dfo-mpo.gc.ca/fns-sap/index-eng.cfm).
+
+```{r table of skeena fisheries openings, echo=FALSE, warning=FALSE, include=TRUE}
+
+openings<-read_csv("data/current_year/fisheries openings 2026.csv")
+
+kable(openings,caption="Fisheries openings in the Skeena area for 2026")%>%
+kable_styling(latex_options = "HOLD_position")
+
+```
+
