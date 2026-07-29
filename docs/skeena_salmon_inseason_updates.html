@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,10 +35,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2be10d9e998f81ff6e49e26833438aa5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -313,11 +313,11 @@ Tides at Port Edward
 </tr>
 <tr class="even">
 <td style="text-align: left;">First Nations Demo Catch (Marine)</td>
-<td style="text-align: right;">13090</td>
+<td style="text-align: right;">14173</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">First Nations Demo Catch (In-River)</td>
-<td style="text-align: right;">1069</td>
+<td style="text-align: right;">1419</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Total First Nations FSC Catch</td>
@@ -325,7 +325,7 @@ Tides at Port Edward
 </tr>
 <tr class="odd">
 <td style="text-align: left;">TRTC (Escapement to Tyee+Catch before Tyee)</td>
-<td style="text-align: right;">1519240</td>
+<td style="text-align: right;">1520323</td>
 </tr>
 </tbody>
 </table>
@@ -344,11 +344,11 @@ Tides at Port Edward
 </tr>
 <tr class="even">
 <td style="text-align: left;">Total Catch Below Babine</td>
-<td style="text-align: right;">278500</td>
+<td style="text-align: right;">279933</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">TRTC Estimate (based on Babine and 10% non-Babine)</td>
-<td style="text-align: right;">352000</td>
+<td style="text-align: right;">353433</td>
 </tr>
 </tbody>
 </table>
@@ -1107,7 +1107,7 @@ Figure&nbsp;32: Area 4 gillnet and seine CPUE (catch per unit effort) of all spe
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Kitselas</td>
-<td style="text-align: right;">238</td>
+<td style="text-align: right;">588</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kitsumkalum</td>
@@ -1115,7 +1115,7 @@ Figure&nbsp;32: Area 4 gillnet and seine CPUE (catch per unit effort) of all spe
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Lax Kw'alaams</td>
-<td style="text-align: right;">1530</td>
+<td style="text-align: right;">2613</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Metlakatla</td>
@@ -1127,7 +1127,7 @@ Figure&nbsp;32: Area 4 gillnet and seine CPUE (catch per unit effort) of all spe
 </tr>
 <tr class="even">
 <td style="text-align: left;">Total</td>
-<td style="text-align: right;">14159</td>
+<td style="text-align: right;">15592</td>
 </tr>
 </tbody>
 </table>
@@ -1715,8 +1715,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1827,7 +1825,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
