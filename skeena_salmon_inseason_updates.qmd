@@ -87,8 +87,8 @@ source("scripts/harvest control rule and tac plots.R")
 
     -   First Nations demonstration fisheries opened in the marine areas on July 8 and 9 targeting sockeye and are ongoing.
     -   First Nations demonstration fisheries opened in-river July 16 and are ongoing.
-    -   Area C gillnet fisheries started July 10 targeting Skeena sockeye. There were openings on July 10/11, 13/14, 16/17, 19/20/21 and openings continue July 23/24/25.
-    -   Area A seine fisheries targeting Skeena sockeye opened July 15-19 and continue July 22-26.
+    -   Area C gillnet fisheries started July 10 targeting Skeena sockeye. There were openings on July 10/11, 13/14, 16/17, 19/20/21, 23/24/25 July 28/29.
+    -   Area A seine fisheries targeting Skeena sockeye opened July 15-19, 22-26, and continue July 29-August 2.
     -   Area 3 seine fisheries opened July 7 and 8 targeting Nass pink salmon, with pink salmon catches being extremely low. Sockeye and chum retention is allowed, with decent catches of chum.
 
 -   Recreational Fisheries
@@ -99,9 +99,9 @@ source("scripts/harvest control rule and tac plots.R")
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
--   Appendix B will include information on the other species caught in the Area 4 commercial fishery and CPUEs and will be updated once fisheries begin.
+-   Appendix B includes information on run-timing of specific Skeena Conservation Units/stocks.
 
--   Appendix C includes information on run-timing of specific Skeena Conservation Units/stocks.
+-   Appendix C shows all Skeena fisheries notices from 2026.
 
 # Pre-Season Forecasts
 
@@ -173,7 +173,7 @@ demo_marine <- demo.data %>%
 dm <- sum(demo_marine$sockeye, na.rm=TRUE)
 
 demo_inriver <- demo.data %>%
-  filter(nation %in% c("Gitksan", "Lake Babine Nation"))
+  filter(nation %in% c("Gitksan", "Lake Babine Nation", "Kitselas","Kitsumkalum"))
 di <- sum(demo_inriver$sockeye, na.rm=TRUE)
 
 marine.fsc <- 20000
