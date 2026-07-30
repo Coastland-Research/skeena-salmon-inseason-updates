@@ -35,28 +35,42 @@ daily.index<-left_join(daily,current,by="Date")%>%
   
   gg.daily.cum<-daily.index%>%
     pivot_longer(`1956`:`2026`,names_to="Year",values_to="Fish") %>%
+    mutate(Year = as.numeric(Year)) %>%
     group_by(Year)%>%
     mutate(cum_sum=cumsum(replace_na(Fish,0)))%>%
     filter(Year>=2012)
   
-  gg.daily.cum.quants<-gg.daily.cum %>%
-    group_by(Date) %>%
-    summarise(per10 = quantile(Fish,.1, na.rm = TRUE), 
-              per25 = quantile(Fish,.25, na.rm = TRUE), 
-              per50 = quantile(Fish,.50, na.rm = TRUE),
-              per75 = quantile(Fish,.75, na.rm = TRUE),
-              per90 = quantile(Fish,.9, na.rm = TRUE))%>%
-    select(Date,per10,per25,per50,per75,per90)%>%
-    pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
-    group_by(Q)%>%
-    mutate(cum_sum=cumsum(Index))%>%
-    mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
-                            Q=="per25"|Q=="per75"~"25/75th",
-                            Q=="per50"~"Median"))
+  # gg.daily.cum.quants<-gg.daily.cum %>%
+  #   group_by(Date) %>%
+  #   summarise(per10 = quantile(Fish,.1, na.rm = TRUE), 
+  #             per25 = quantile(Fish,.25, na.rm = TRUE), 
+  #             per50 = quantile(Fish,.50, na.rm = TRUE),
+  #             per75 = quantile(Fish,.75, na.rm = TRUE),
+  #             per90 = quantile(Fish,.9, na.rm = TRUE))%>%
+  #   select(Date,per10,per25,per50,per75,per90)%>%
+  #   pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  #   group_by(Q)%>%
+  #   mutate(cum_sum=cumsum(Index))%>%
+  #   mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+  #                           Q=="per25"|Q=="per75"~"25/75th",
+  #                           Q=="per50"~"Median"))
   
-  #years_out<-c("2008","2009","2010")
+gg.daily.cum.quants <- gg.daily.cum %>%
+  group_by(Date) %>%
+  summarise(
+    per10 = quantile(cum_sum, 0.10, na.rm = TRUE),
+    per25 = quantile(cum_sum, 0.25, na.rm = TRUE),
+    per50 = quantile(cum_sum, 0.50, na.rm = TRUE),
+    per75 = quantile(cum_sum, 0.75, na.rm = TRUE),
+    per90 = quantile(cum_sum, 0.90, na.rm = TRUE)) %>%
+  pivot_longer(per10:per90, names_to = "Q", values_to = "cum_sum") %>%
+  mutate(qgroup = case_when(
+    Q %in% c("per10", "per90") ~ "10/90th",
+    Q %in% c("per25", "per75") ~ "25/75th", TRUE ~ "Median"))
   
-  #gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
+  years_out<-c("2008","2009","2010")
+  
+  gg.daily.cum<-gg.daily.cum%>%filter(!Year%in%years_out)
 
   make.recent.daily.index.plot<-function(daily.data,daily.quants,xhigh,yhigh) {
     
