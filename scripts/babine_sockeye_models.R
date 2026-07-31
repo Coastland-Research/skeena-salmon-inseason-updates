@@ -5,19 +5,15 @@ library(tidyverse)
 library(data.table)
 
 species.in="Large Sockeye"
-historical<-read_excel("data/common/babine fence counts 1946-2024 compiled 20240717.xlsx",
+historical<-read_excel("data/common/babine fence counts 1946-2025 compiled 20240717.xlsx",
                        sheet=species.in)%>%
   mutate(Date=as.Date(Date))%>%
-  mutate_at(vars("1946":"2024"), ~replace(., is.na(.), 0)) %>%
-  mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")))
+  mutate_at(vars("1946":"2025"), ~replace(., is.na(.), 0)) %>%
+  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))
 
-#str(historical)
-
-current<-fread("data/current_year/babine fence 2025.csv") %>%
-  select(Date,"2025"=species.in)%>%
-  mutate(Date=as.Date(paste("2025",month(Date),day(Date),sep="-")))
-
-#str(current)
+current<-fread("data/current_year/babine fence 2026.csv") %>%
+  select(Date,"2026"=species.in)%>%
+  mutate(Date=as.Date(paste("2026",month(Date),day(Date),sep="-")))
 
 daily.index<-left_join(historical,current,by="Date")
 
@@ -47,3 +43,70 @@ gg.daily.cum<-daily.index%>%
   mutate(Fish=replace_na(Fish,0))%>%
   group_by(Year)%>%
   mutate(cum_sum=cumsum(Fish))
+
+### Babine sockeye model
+historical <- historical %>%
+  pivot_longer(
+    cols = `1946`:`2025`,
+    names_to = "Year",
+    values_to = "Count") %>%
+  mutate(Year = as.numeric(Year)) %>%
+  arrange(Year, Date) %>%
+  group_by(Year) %>%
+  mutate(
+    Count = replace_na(Count, 0),
+    cum_fence = cumsum(Count),
+    final_return = max(cum_fence),
+    run_prop = cum_fence / final_return) %>%
+  ungroup()
+
+
+babine_timing <- historical %>%
+  group_by(Date) %>%
+  summarise(
+    mean_prop = mean(run_prop, na.rm = TRUE),
+    p25 = quantile(run_prop, 0.25, na.rm = TRUE),
+    p75 = quantile(run_prop, 0.75, na.rm = TRUE),
+    .groups = "drop")
+
+babine_forecast <- current %>% 
+  left_join(babine_timing, by = "Date") %>%
+  mutate(
+    daily_count = replace_na(`2026`, 0),
+    daily_cum = cumsum(daily_count),
+    rtlate = lag(mean_prop, 7),
+    rtearly = lead(mean_prop, 7),
+    Average = daily_cum / mean_prop,
+    Early = daily_cum / rtearly,
+    Late = daily_cum / rtlate) %>%
+  rename(`2026_count` = `2026`)
+
+babine.model <- babine_forecast %>%
+  select(Date, Early, Average, Late) %>%
+  pivot_longer(
+    Early:Late,
+    names_to = "Timing",
+    values_to = "Estimate") %>%
+  filter(Date <= fence.day)
+
+todays.babine.estimates <- babine_forecast %>%
+  filter(Date == fence.day)
+
+cumfencetodate <- babine_forecast %>%
+  filter(Date <= fence.day) %>%
+  slice_tail(n = 1) %>%
+  pull(daily_cum)
+
+early <- round(todays.babine.estimates$Early, 0)
+average <- round(todays.babine.estimates$Average, 0)
+late <- round(todays.babine.estimates$Late, 0)
+
+rtearly <- paste0(round(todays.babine.estimates$rtearly * 100, 1), "%")
+rtaverage <- paste0(round(todays.babine.estimates$mean_prop * 100, 1), "%")
+rtlate <- paste0(round(todays.babine.estimates$rtlate * 100, 1), "%")
+
+babine.table <- tibble(
+  "Run-timing" = c("Early", "Average", "Late"),
+  "Run to Babine to Date" = cumfencetodate,
+  "% of Run Through" = c(rtearly, rtaverage, rtlate),
+  "Babine Estimate" = c(early, average, late))

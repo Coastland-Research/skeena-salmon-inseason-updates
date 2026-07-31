@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,10 +35,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-2be10d9e998f81ff6e49e26833438aa5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -146,6 +146,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#babine-sockeye" id="toc-babine-sockeye" class="nav-link" data-scroll-target="#babine-sockeye">Babine Sockeye</a></li>
   <li><a href="#babine-comparison-with-tyee" id="toc-babine-comparison-with-tyee" class="nav-link" data-scroll-target="#babine-comparison-with-tyee">Babine comparison with Tyee</a></li>
   <li><a href="#babine-large-sockeye-cumulative-count-by-year" id="toc-babine-large-sockeye-cumulative-count-by-year" class="nav-link" data-scroll-target="#babine-large-sockeye-cumulative-count-by-year">Babine Large Sockeye cumulative count by year</a></li>
+  <li><a href="#babine-in-season-total-run-estimate" id="toc-babine-in-season-total-run-estimate" class="nav-link" data-scroll-target="#babine-in-season-total-run-estimate">Babine in-season total run estimate</a></li>
   <li><a href="#jack-sockeye" id="toc-jack-sockeye" class="nav-link" data-scroll-target="#jack-sockeye">Jack sockeye</a></li>
   <li><a href="#babine-jack-sockeye-cumulative-count-by-year" id="toc-babine-jack-sockeye-cumulative-count-by-year" class="nav-link" data-scroll-target="#babine-jack-sockeye-cumulative-count-by-year">Babine Jack Sockeye cumulative count by year</a></li>
   <li><a href="#babine-adult-chinook" id="toc-babine-adult-chinook" class="nav-link" data-scroll-target="#babine-adult-chinook">Babine Adult Chinook</a></li>
@@ -265,7 +266,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="chinook" class="level2">
 <h2 class="anchored" data-anchor-id="chinook">Chinook</h2>
-<p>The Chinook forecast for 2026 is similar to last year, at ~ 33,000</p>
+<p>The Chinook forecast for 2026 is similar to last year, at ~ 33,000.</p>
 <p>The table below shows the total 2026 Skeena Chinook terminal run point forecast (highlighted in pink) and forecasted returns by age. Age-specific forecasts are obtained using ForecastR, which uses a model selection and ranking approach and retrospective forecast performance.</p>
 <figure class="figure">
 <p><img src="./images/cn_forecast26.png" title="2026 Skeena Chinook forecast" alt="2026 Skeena Chinook forecast" width="600" class="figure-img"></p>
@@ -772,6 +773,55 @@ Figure&nbsp;20: Cumulative index for sockeye at the Babine fence for today’s d
 </figcaption>
 </figure>
 </div>
+</div>
+</div>
+</section>
+<section id="babine-in-season-total-run-estimate" class="level3">
+<h3 class="anchored" data-anchor-id="babine-in-season-total-run-estimate">Babine in-season total run estimate</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Model estimates as of July 30"</code></pre>
+</div>
+<div id="tbl-babine-model-outputs" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-babine-model-outputs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: The % of run past the Babine fence and the total run estimate for average, one-week early, and one-week late run-timing.
+</figcaption>
+<div aria-describedby="tbl-babine-model-outputs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Run-timing</th>
+<th style="text-align: right;">Run to Babine to Date</th>
+<th style="text-align: left;">% of Run Through</th>
+<th style="text-align: right;">Babine Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Early</td>
+<td style="text-align: right;">76524</td>
+<td style="text-align: left;">24.1%</td>
+<td style="text-align: right;">317707</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Average</td>
+<td style="text-align: right;">76524</td>
+<td style="text-align: left;">10.6%</td>
+<td style="text-align: right;">724138</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Late</td>
+<td style="text-align: right;">76524</td>
+<td style="text-align: left;">2.8%</td>
+<td style="text-align: right;">2718741</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
 </div>
 </div>
 </section>
@@ -1749,6 +1799,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1859,6 +1911,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

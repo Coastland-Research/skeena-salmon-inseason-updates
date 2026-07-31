@@ -119,7 +119,7 @@ The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges fr
 
 ## Chinook
 
-The Chinook forecast for 2026 is similar to last year, at \~ 33,000
+The Chinook forecast for 2026 is similar to last year, at \~ 33,000.
 
 The table below shows the total 2026 Skeena Chinook terminal run point forecast (highlighted in pink) and forecasted returns by age. Age-specific forecasts are obtained using ForecastR, which uses a model selection and ranking approach and retrospective forecast performance.
 
@@ -475,6 +475,7 @@ Information on the Babine fence counts are updated daily [here](https://www.pac.
 ```{r}
 source("scripts/babine_fence_counts.R")
 source("scripts/make_babine_plots.R")
+source("scripts/babine_sockeye_models.R")
 
 babine.figures.x.high<-as.Date("2026-08-15")
 ```
@@ -539,6 +540,18 @@ select(Date,"2026"=species.in)%>%
 
 make.hist.index.babine(daily, current, fence.day)
 ```
+
+### Babine in-season total run estimate
+
+```{r}
+#| label: tbl-babine-model-outputs
+#| tbl-cap: "The % of run past the Babine fence and the total run estimate for average, one-week early, and one-week late run-timing."
+
+print(paste0("Model estimates as of ",fence.date))
+
+kable(babine.table)
+```
+
 
 ### Jack sockeye
 
