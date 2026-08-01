@@ -110,3 +110,41 @@ babine.table <- tibble(
   "Run to Babine to Date" = cumfencetodate,
   "% of Run Through" = c(rtearly, rtaverage, rtlate),
   "Babine Estimate" = c(early, average, late))
+
+
+
+# Linear model ------------------------------------------------------------
+historical <- historical %>%
+  pivot_longer(cols = `1946`:`2025`,
+    names_to = "Year",
+    values_to = "Count") %>%
+  mutate(Year = as.numeric(Year)) %>%
+  arrange(Year, Date) %>%
+  group_by(Year) %>%
+  mutate(cum_count = cumsum(Count))
+
+final_totals <- historical %>%
+  group_by(Year) %>%
+  summarise(FinalCount = max(cum_count))
+
+historical <- historical %>%
+  filter(format(Date, "%m-%d") == format(fence.day, "%m-%d")) %>%
+  select(Year, cum_count) %>%
+  left_join(final_totals, by = "Year")
+
+fit <- lm(FinalCount ~ cum_count, data = historical)
+
+summary(fit)
+
+today_count <- babine_forecast %>%
+  filter(Date == fence.day) %>%
+  pull(daily_cum)
+
+predict(fit, newdata = data.frame(cum_count = today_count))
+
+predict(fit,
+  newdata = data.frame(cum_count = today_count),
+  interval = "prediction",
+  level = 0.90)
+
+
