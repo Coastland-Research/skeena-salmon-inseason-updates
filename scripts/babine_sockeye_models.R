@@ -45,7 +45,7 @@ gg.daily.cum<-daily.index%>%
   mutate(cum_sum=cumsum(Fish))
 
 ### Babine sockeye model
-historical <- historical %>%
+historical2 <- historical %>%
   pivot_longer(
     cols = `1946`:`2025`,
     names_to = "Year",
@@ -61,7 +61,7 @@ historical <- historical %>%
   ungroup()
 
 
-babine_timing <- historical %>%
+babine_timing <- historical2 %>%
   group_by(Date) %>%
   summarise(
     mean_prop = mean(run_prop, na.rm = TRUE),
@@ -114,8 +114,8 @@ babine.table <- tibble(
 
 
 # Linear model ------------------------------------------------------------
-historical <- historical %>%
-  pivot_longer(cols = `1946`:`2025`,
+historical3 <- historical %>%
+  pivot_longer(cols = "1946":"2025",
     names_to = "Year",
     values_to = "Count") %>%
   mutate(Year = as.numeric(Year)) %>%
@@ -123,16 +123,21 @@ historical <- historical %>%
   group_by(Year) %>%
   mutate(cum_count = cumsum(Count))
 
-final_totals <- historical %>%
+final_totals <- historical3 %>%
   group_by(Year) %>%
   summarise(FinalCount = max(cum_count))
 
-historical <- historical %>%
+historical4 <- historical3 %>%
   filter(format(Date, "%m-%d") == format(fence.day, "%m-%d")) %>%
   select(Year, cum_count) %>%
   left_join(final_totals, by = "Year")
 
-fit <- lm(FinalCount ~ cum_count, data = historical)
+fit <- lm(FinalCount ~ cum_count, data = historical4)
+
+#ggplot(historical4,aes(y=FinalCount,x=cum_count))+
+#  geom_point()+
+#  geom_smooth(method="lm",se=FALSE)+
+#  theme_bw()
 
 summary(fit)
 
