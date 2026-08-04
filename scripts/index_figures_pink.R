@@ -3,7 +3,6 @@
 #daily and cumulative index plots
 #functions to make daily and cumulative index plots for pink salmon
 
-
 make.daily.index.plot.pink<-function(daily.data,daily.quants,xhigh,yhigh) {
   
 ggplot(daily.data,aes(x=Date, y=Fish,group=Date))+
@@ -41,12 +40,12 @@ make.cum.index.plot.pink <-function(cum.data,cum.quants,xhigh,y.cum.high){
 }
 
 # 
-#daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = TRUE) %>%
-#  mutate(Date = as.IDate(Date))%>%
-#  select(-"month-day",-DAY,-MONTH)
+daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = TRUE) %>%
+ mutate(Date = as.IDate(Date))%>%
+ select(-"month-day",-DAY,-MONTH)
 
-#current<-fread("data/current_year/tyee data 2026.csv") %>%
-#  select(Date,"2026"=`pink`) 
+current<-fread("data/current_year/tyee data 2026.csv") %>%
+ select(Date,"2026"=`pink`)
 
 make.index.figures.pink <-function(daily,current,yhigh,y.cum.high,xhigh) {
   
@@ -84,20 +83,37 @@ make.index.figures.pink <-function(daily,current,yhigh,y.cum.high,xhigh) {
     group_by(Year)%>%
     mutate(cum_sum=cumsum(replace_na(Fish,0)))
   
-  gg.daily.cum.quants<-gg.daily.cum %>%
+  # gg.daily.cum.quants<-gg.daily.cum %>%
+  #   group_by(Date) %>%
+  #   summarise(per10 = quantile(cum_sum,.1, na.rm = TRUE), 
+  #             per25 = quantile(cum_sum,.25, na.rm = TRUE), 
+  #             per50 = quantile(cum_sum,.50, na.rm = TRUE),
+  #             per75 = quantile(cum_sum,.75, na.rm = TRUE),
+  #             per90 = quantile(cum_sum,.9, na.rm = TRUE))%>%
+  #   select(Date,per10,per25,per50,per75,per90)%>%
+  #   pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
+  #   group_by(Q)%>%
+  #   mutate(cum_sum=cumsum(Index))%>%
+  #   mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
+  #                           Q=="per25"|Q=="per75"~"25/75th",
+  #                           Q=="per50"~"Median"))
+  
+  gg.daily.cum.quants <- gg.daily.cum %>%
     group_by(Date) %>%
-    summarise(per10 = quantile(cum_sum,.1, na.rm = TRUE), 
-              per25 = quantile(cum_sum,.25, na.rm = TRUE), 
-              per50 = quantile(cum_sum,.50, na.rm = TRUE),
-              per75 = quantile(cum_sum,.75, na.rm = TRUE),
-              per90 = quantile(cum_sum,.9, na.rm = TRUE))%>%
-    select(Date,per10,per25,per50,per75,per90)%>%
-    pivot_longer("per10":"per90",names_to="Q",values_to="Index")%>%
-    group_by(Q)%>%
-    mutate(cum_sum=cumsum(Index))%>%
-    mutate(qgroup=case_when(Q=="per10"|Q=="per90"~"10/90th",
-                            Q=="per25"|Q=="per75"~"25/75th",
-                            Q=="per50"~"Median"))
+    summarise(
+      per10 = quantile(cum_sum, .10, na.rm = TRUE),
+      per25 = quantile(cum_sum, .25, na.rm = TRUE),
+      per50 = quantile(cum_sum, .50, na.rm = TRUE),
+      per75 = quantile(cum_sum, .75, na.rm = TRUE),
+      per90 = quantile(cum_sum, .90, na.rm = TRUE)
+    ) %>%
+    pivot_longer(per10:per90,
+                 names_to = "Q",
+                 values_to = "cum_sum") %>%
+    mutate(qgroup = case_when(
+      Q %in% c("per10","per90") ~ "10/90th",
+      Q %in% c("per25","per75") ~ "25/75th",
+      TRUE ~ "Median"))
   
   years_out<-c("2008","2009","2010")
   

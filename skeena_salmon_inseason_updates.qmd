@@ -402,7 +402,7 @@ daily<-fread("data/common/tyee_daily_indices_pink_even_1956-2024.csv", header = 
 current<-fread("data/current_year/tyee data 2026.csv") %>%
    select(Date,"2026"=`pink`) 
  
-make.index.figures.pink(daily,current,100,15000,figures.x.date)
+make.index.figures.pink(daily,current,100,5000,figures.x.date)
 
 ```
 
@@ -568,7 +568,7 @@ make.babine.rt.plot(
   xhigh = fence.day)
 ```
 
-#### Linear model
+#### Linear regression model
 ```{r, fig.height = 5, fig.cap = "Babine fence final count vs cumulative count to date with estimated final count for 2026 based on linear regression model."}
 #| label: fig-babine-linear-model
 make.babine.linear.plot(historical4)

@@ -152,7 +152,8 @@ modsum <- summary(fit)
 r2 <- modsum$r.squared
 pval <- coef(modsum)[2,4]
 
-model_label <- paste0("R² = ", round(r2,3),"\nP = ", signif(pval,3))
+model_label <- paste0("R² = ", round(r2,3),
+                      "\nP = ", format(pval, scientific = TRUE, digits = 3))
 
 pred_label <- paste0("Forecast = ", format(round(today_pred$fit,0), big.mark=","),"\n95% PI: ",
   format(round(today_pred$lwr,0), big.mark=",")," - ",format(round(today_pred$upr,0), big.mark=","))
