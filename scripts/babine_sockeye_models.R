@@ -112,7 +112,6 @@ babine.table <- tibble(
   "Babine Estimate" = c(early, average, late))
 
 
-
 # Linear model ------------------------------------------------------------
 historical3 <- historical %>%
   pivot_longer(cols = "1946":"2025",
@@ -134,6 +133,10 @@ historical4 <- historical3 %>%
 
 fit <- lm(FinalCount ~ cum_count, data = historical4)
 
+today_count <- babine_forecast %>%
+  filter(Date == fence.day) %>%
+  pull(daily_cum)
+
 newdat <- tibble(cum_count = seq(min(historical4$cum_count), max(historical4$cum_count),
                                  length.out = 200))
 
@@ -154,21 +157,5 @@ model_label <- paste0("R² = ", round(r2,3),"\nP = ", signif(pval,3))
 pred_label <- paste0("Forecast = ", format(round(today_pred$fit,0), big.mark=","),"\n95% PI: ",
   format(round(today_pred$lwr,0), big.mark=",")," - ",format(round(today_pred$upr,0), big.mark=","))
 
-# ggplot(historical4,aes(y=FinalCount,x=cum_count))+
-#  geom_point()+
-#  geom_smooth(method="lm",se=FALSE)+
-#  theme_bw()+
-#   labs(x = "Cumulative Count", y = "Final Count")
-
-today_count <- babine_forecast %>%
-  filter(Date == fence.day) %>%
-  pull(daily_cum)
-
-predict(fit, newdata = data.frame(cum_count = today_count))
-
-predict(fit,
-  newdata = data.frame(cum_count = today_count),
-  interval = "prediction",
-  level = 0.90)
 
 

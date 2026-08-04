@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 3, 2026"
+subtitle: "August 4, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,16 +38,16 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-08-02")
-tyee.date<-"August 2"
+tyee.day<-as.Date("2026-08-03")
+tyee.date<-"August 3"
 
 #controls right hand extent of index and escapement figures
-figures.x.date<-as.Date("2026-08-15")
+figures.x.date<-as.Date("2026-08-21")
 
-fence.day<-as.Date("2026-08-02")
-fence.date<-"August 2"
+fence.day<-as.Date("2026-08-03")
+fence.date<-"August 3"
 
-today<-as.Date("2026-08-01")
+today<-as.Date("2026-08-04")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -549,6 +549,7 @@ make.hist.index.babine(daily, current, fence.day)
 
 ### Babine in-season total run estimate
 
+#### Run-timing model
 ```{r}
 #| label: tbl-babine-model-outputs
 #| tbl-cap: "The % of run past the Babine fence and the total run estimate for average, one-week early, and one-week late run-timing."
@@ -558,7 +559,6 @@ print(paste0("Model estimates as of ",fence.date))
 kable(babine.table)
 ```
 
-
 ```{r, fig.height = 5, fig.cap = "Final estimated fence count from the simple sockeye in-season abundance estimator for early (green line), average (red line), and late (blue line) run timing."}
 #| label: fig-babine-rt-model
 
@@ -566,10 +566,10 @@ make.babine.rt.plot(
   babine.model,
   yhigh = max(babine.model$Estimate, na.rm = TRUE) * 1.05,
   xhigh = fence.day)
-
 ```
 
-```{r, fig.height = 5, fig.cap = "Estimated final count for Babine fence vs cumulative count based on linear model"}
+#### Linear model
+```{r, fig.height = 5, fig.cap = "Babine fence final count vs cumulative count to date with estimated final count for 2026 based on linear regression model."}
 #| label: fig-babine-linear-model
 make.babine.linear.plot(historical4)
 ```
