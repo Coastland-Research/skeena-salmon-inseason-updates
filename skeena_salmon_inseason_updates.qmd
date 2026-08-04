@@ -480,8 +480,9 @@ Information on the Babine fence counts are updated daily [here](https://www.pac.
 source("scripts/babine_fence_counts.R")
 source("scripts/make_babine_plots.R")
 source("scripts/babine_sockeye_models.R")
+source("scripts/plot_babine_models.R")
 
-babine.figures.x.high<-as.Date("2026-08-15")
+babine.figures.x.high<-as.Date("2026-08-21")
 ```
 
 ### Babine Sockeye
@@ -555,6 +556,22 @@ make.hist.index.babine(daily, current, fence.day)
 print(paste0("Model estimates as of ",fence.date))
 
 kable(babine.table)
+```
+
+
+```{r, fig.height = 5, fig.cap = "Final estimated fence count from the simple sockeye in-season abundance estimator for early (green line), average (red line), and late (blue line) run timing."}
+#| label: fig-babine-rt-model
+
+make.babine.rt.plot(
+  babine.model,
+  yhigh = max(babine.model$Estimate, na.rm = TRUE) * 1.05,
+  xhigh = fence.day)
+
+```
+
+```{r, fig.height = 5, fig.cap = "Estimated final count for Babine fence vs cumulative count based on linear model"}
+#| label: fig-babine-linear-model
+make.babine.linear.plot(historical4)
 ```
 
 

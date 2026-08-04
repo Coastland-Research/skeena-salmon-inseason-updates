@@ -134,12 +134,31 @@ historical4 <- historical3 %>%
 
 fit <- lm(FinalCount ~ cum_count, data = historical4)
 
-#ggplot(historical4,aes(y=FinalCount,x=cum_count))+
+newdat <- tibble(cum_count = seq(min(historical4$cum_count), max(historical4$cum_count),
+                                 length.out = 200))
+
+pred <- predict(fit, newdata = newdat, interval = "prediction", level= 0.95)
+pred_df <- bind_cols(newdat, as.data.frame(pred))
+
+today_pred <- predict(fit, newdata = data.frame(cum_count = today_count),
+                      interval = "prediction", level = 0.95)
+
+today_pred <- as.data.frame(today_pred)
+
+modsum <- summary(fit)
+r2 <- modsum$r.squared
+pval <- coef(modsum)[2,4]
+
+model_label <- paste0("R² = ", round(r2,3),"\nP = ", signif(pval,3))
+
+pred_label <- paste0("Forecast = ", format(round(today_pred$fit,0), big.mark=","),"\n95% PI: ",
+  format(round(today_pred$lwr,0), big.mark=",")," - ",format(round(today_pred$upr,0), big.mark=","))
+
+# ggplot(historical4,aes(y=FinalCount,x=cum_count))+
 #  geom_point()+
 #  geom_smooth(method="lm",se=FALSE)+
-#  theme_bw()
-
-summary(fit)
+#  theme_bw()+
+#   labs(x = "Cumulative Count", y = "Final Count")
 
 today_count <- babine_forecast %>%
   filter(Date == fence.day) %>%
