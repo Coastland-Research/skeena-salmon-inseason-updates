@@ -66,7 +66,7 @@ source("scripts/harvest control rule and tac plots.R")
     -   To date 1,545,365 sockeye are estimated to have passed the Tyee test fishery.
     -   We are past the historical mid-point (peak) of the run through Tyee. While early estimates of final run size were encouraging, the late run-timing forecast is still declining, and the average run-timing forecast has stabilized near 2.3M (2.0M if the run is one week early, and 2.8M if the run is one week late).
     -   The shape of the run-timing curve suggests that the run could be between 1.5M and 2M, and that there was a strong and early start to the run, and that the mid-point of the run was not as strong.
-    -   The daily expected run through Tyee at a final run size of 2M and average run timing would be about between 40,000 and 50,0000 over the next few days.
+    -   The daily expected run through Tyee at a final run size of 2M and average run timing would be around 30,000 over the next few days.
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26.
     -   The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
     -   The chum index suggests high abundance relative to historical index values.
@@ -78,6 +78,7 @@ source("scripts/harvest control rule and tac plots.R")
 
     -   The Babine fence started operations on July 15.
     -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of ~ 128,000 large sockeye through to date, and ~ 4,500 jack to date.
+    -   Currently 
 
 -   Kitwanga Fence
 
@@ -522,7 +523,7 @@ This comparison aims to provide a coarse idea on the catchability at Tyee. The r
 
 source("scripts/babine versus tyee.R")
 
-make.tyee.vs.babine.plot(.1,.97,-500000,1500000,as.Date("2026-06-01"),as.Date("2026-10-01"))
+make.tyee.vs.babine.plot(.1,.97,-750000,2000000,as.Date("2026-06-01"),as.Date("2026-10-01"))
 ```
 
 ### Babine Large Sockeye cumulative count by year

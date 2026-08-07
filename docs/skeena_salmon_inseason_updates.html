@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,10 +35,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2be10d9e998f81ff6e49e26833438aa5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -216,7 +216,7 @@ ul.task-list li input[type="checkbox"] {
 <li>To date 1,545,365 sockeye are estimated to have passed the Tyee test fishery.</li>
 <li>We are past the historical mid-point (peak) of the run through Tyee. While early estimates of final run size were encouraging, the late run-timing forecast is still declining, and the average run-timing forecast has stabilized near 2.3M (2.0M if the run is one week early, and 2.8M if the run is one week late).</li>
 <li>The shape of the run-timing curve suggests that the run could be between 1.5M and 2M, and that there was a strong and early start to the run, and that the mid-point of the run was not as strong.</li>
-<li>The daily expected run through Tyee at a final run size of 2M and average run timing would be about between 40,000 and 50,0000 over the next few days.</li>
+<li>The daily expected run through Tyee at a final run size of 2M and average run timing would be around 30,000 over the next few days.</li>
 <li>While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26.</li>
 <li>The Chinook cumulative index is well below the historical median, and just above the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.</li>
 <li>The chum index suggests high abundance relative to historical index values.</li>
@@ -228,6 +228,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>The Babine fence started operations on July 15.</li>
 <li>Adult and jack sockeye have started coming through the fence in increasing numbers with a total of ~ 128,000 large sockeye through to date, and ~ 4,500 jack to date.</li>
+<li>Currently</li>
 </ul></li>
 <li><p>Kitwanga Fence</p>
 <ul>
@@ -322,7 +323,7 @@ Tides at Port Edward
 </tr>
 <tr class="odd">
 <td style="text-align: left;">First Nations Demo Catch (In-River)</td>
-<td style="text-align: right;">2649</td>
+<td style="text-align: right;">3850</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Total First Nations FSC Catch</td>
@@ -349,11 +350,11 @@ Tides at Port Edward
 </tr>
 <tr class="even">
 <td style="text-align: left;">Total Catch Below Babine</td>
-<td style="text-align: right;">347072</td>
+<td style="text-align: right;">348273</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">TRTC Estimate (based on Babine and 10% non-Babine)</td>
-<td style="text-align: right;">489799</td>
+<td style="text-align: right;">491000</td>
 </tr>
 </tbody>
 </table>
@@ -1201,7 +1202,7 @@ Figure&nbsp;34: Area 4 gillnet and seine CPUE (catch per unit effort) of all spe
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kitsumkalum</td>
-<td style="text-align: right;">2061</td>
+<td style="text-align: right;">3262</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Lax Kw'alaams</td>
@@ -1217,7 +1218,7 @@ Figure&nbsp;34: Area 4 gillnet and seine CPUE (catch per unit effort) of all spe
 </tr>
 <tr class="even">
 <td style="text-align: left;">Total</td>
-<td style="text-align: right;">17286</td>
+<td style="text-align: right;">18487</td>
 </tr>
 </tbody>
 </table>
@@ -1849,8 +1850,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1961,7 +1960,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

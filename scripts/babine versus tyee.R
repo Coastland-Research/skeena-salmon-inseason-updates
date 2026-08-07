@@ -55,6 +55,7 @@ comp<-merge(ty,fe,by="Date",all=TRUE)%>%merge(catch,by="Date",all=TRUE)%>%
   select(Date,Observed.Tyee,Actual.Fence,Expected.Babine,`Difference @ 3 Weeks`)%>%
   pivot_longer(2:5,names_to="Count",values_to="Fish")
 
+#ylow=(-750000); yhigh<-2000000
 
 ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
   geom_line() +
