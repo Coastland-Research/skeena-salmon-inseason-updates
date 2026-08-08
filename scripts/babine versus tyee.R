@@ -72,25 +72,27 @@ ggplot(comp,aes(x=Date,y=Fish,color=Count,size=Count,linetype=Count)) +
 
 # Babine vs Tyee for last 25 years ----------------------------------------
 
-make.tyee.vs.babine.yrs<-function(start.date,end.date) {
-  
+make.tyee.vs.babine.yrs<-function(start.year,start.date,end.date,ylow,yhigh) {
+
+#start.year=2010
 # Load historical daily Tyee esc data
 tyee <- fread("data/common/tyee daily escapement data.csv") %>%
   pivot_longer(cols = c(`1970`:`2025`), names_to = "Year", values_to = "Tyee_Fish") %>%
   mutate(Year = as.integer(Year)) %>%
-  filter(Year >= 2000) %>%  #filter to years since 2000
+  filter(Year >= start.year) %>%  #filter to years since 2000
   group_by(Year) %>%
-  mutate(Babine_est = lag(Tyee_Fish, n = 21)*0.9) %>% #expected Tyee fish at Babine 3 weeks later
+  mutate(Babine_est = lag(Tyee_Fish, n = 21)*0.9,
+         Date=as.Date(Date)) %>% #expected Tyee fish at Babine 3 weeks later
   ungroup()
 
-# Load Babine data since 2000 and pivot longer by year
+# Lotyee# Load Babine data since 2000 and pivot longer by year
 babine <- fread("data/common/babine_daily_sockeye_historical.csv") %>%
   pivot_longer(cols = c(`1946`:`2025`), names_to = "Year", values_to = "Babine_Fish") %>%
   mutate(Year = as.integer(Year)) %>%
-  filter(Year >= 2000) %>%
-  mutate(Date = as.IDate(Date, format = "%m/%d/%y"))
+  filter(Year >= start.year) %>%
+  mutate(Date = as.Date(Date, format = "%m/%d/%y"))
 
-# merge the data by year and day
+# mebabine# merge the data by year and day
 combined <- left_join(babine,tyee, by = c("Year", "Date"))%>%
   rename(Month = MONTH, Day = DAY)
 
@@ -107,11 +109,12 @@ comp <- combined %>%
     Actual.Fence = cumsum(Babine_Fish),
     Expected.Babine = cumsum(replace_na(Expected_daily, 0)),
     `Difference @ 3 Weeks` = Actual.Fence - Expected.Babine) %>%
-  ungroup() %>%
+  ungroup()%>%
   pivot_longer(cols = c(Observed.Tyee, Actual.Fence, Expected.Babine, `Difference @ 3 Weeks`),
     names_to = "Count",values_to = "Fish") %>%
   mutate(Fish = na_if(Fish, 0), Date = as.Date(Date))
 
+#ylow=-500000;yhigh=4000000
 ggplot(comp,aes(Date, Fish, colour = Count, linetype = Count, linewidth = Count)) +
   geom_line() +
   facet_wrap(~Year) +
@@ -123,11 +126,12 @@ ggplot(comp,aes(Date, Fish, colour = Count, linetype = Count, linewidth = Count)
     "Difference @ 3 Weeks" = "solid",
     "Expected.Babine" = "dashed",
     "Observed.Tyee" = "solid")) +
-  scale_linewidth_manual(values = c("Actual.Fence" = 1.5,
+  scale_linewidth_manual(values = c("Actual.Fence" = 1,
     "Difference @ 3 Weeks" = 1,
     "Expected.Babine" = 1,
-    "Observed.Tyee" = 1.5)) +
+    "Observed.Tyee" = 1)) +
   ylab("Number of Large Sockeye")+ 
+  ylim(ylow,yhigh)+
   theme_bw() +
   theme(legend.position = "top")+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))+

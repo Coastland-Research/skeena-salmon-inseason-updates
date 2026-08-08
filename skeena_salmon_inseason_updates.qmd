@@ -53,6 +53,9 @@ today<-as.Date("2026-08-07")
 source("scripts/harvest control rule and tac plots.R")
 ```
 
+
+![](images/header map.png){fig-align="center" width="80%"}
+
 # Summary
 
 -   Pre-season forecasts
@@ -77,8 +80,8 @@ source("scripts/harvest control rule and tac plots.R")
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of ~ 128,000 large sockeye through to date, and ~ 4,500 jack to date.
-    -   Currently 
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 128,000 large sockeye through to date, and \~ 4,500 jack to date.
+    -   Currently
 
 -   Kitwanga Fence
 
@@ -508,6 +511,7 @@ kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River f
 ```
 
 \
+
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
 
@@ -529,11 +533,13 @@ make.tyee.vs.babine.plot(.1,.97,-750000,2000000,as.Date("2026-06-01"),as.Date("2
 ```{r, fig.height = 8, fig.cap = "Estimated difference between the Tyee test fishery and the Babine fence for the previous 25 years"}
 #| label: fig-babine-tyee-historical
 
-make.tyee.vs.babine.yrs(as.Date("2026-06-01"),as.Date("2026-10-01"))
+make.tyee.vs.babine.yrs(2010,as.Date("2026-06-01"),as.Date("2026-10-01"),-1000000,4000000)
+
+ggsave("figures/tyee versus babine since 2010.png",dpi=200,height=8,width=7,units="in")
 ```
 
-
 ### Babine Large Sockeye cumulative count by year
+
 ```{r, include=FALSE}
 source("scripts/cumulative_count_babine.R")
 
@@ -558,6 +564,7 @@ make.hist.index.babine(daily, current, fence.day)
 ### Babine in-season total run estimate
 
 #### Run-timing model
+
 ```{r}
 #| label: tbl-babine-model-outputs
 #| tbl-cap: "The % of run past the Babine fence and the total run estimate for average, one-week early, and one-week late run-timing."
@@ -577,11 +584,11 @@ make.babine.rt.plot(
 ```
 
 #### Linear regression model
+
 ```{r, fig.height = 5, fig.cap = "Babine fence final count vs cumulative count to date with estimated final count for 2026 based on linear regression model."}
 #| label: fig-babine-linear-model
 make.babine.linear.plot(historical4)
 ```
-
 
 ### Jack sockeye
 
@@ -1044,4 +1051,3 @@ kable(openings,caption="Fisheries openings in the Skeena area for 2026")%>%
 kable_styling(latex_options = "HOLD_position")
 
 ```
-
