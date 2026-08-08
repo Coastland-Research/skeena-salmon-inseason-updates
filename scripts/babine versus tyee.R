@@ -15,10 +15,10 @@
 
 # pernonbabine<-.1
 # p.catch.babine<-.97
-ylow<--150000
-yhigh<-500000
-start.date<-as.Date("2026-06-01")
-end.date<-as.Date("2026-09-01")
+# ylow<--150000
+# yhigh<-500000
+# start.date<-as.Date("2026-06-01")
+# end.date<-as.Date("2026-09-01")
 
 make.tyee.vs.babine.plot<-function(pernonbabine,p.catch.babine,ylow,yhigh,start.date,end.date) {
 
