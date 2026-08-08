@@ -2,11 +2,11 @@ make.babine.daily.plot<-function(daily.data,daily.quants,babine.figures.x.high,d
   
   ggplot(daily.data,aes(x=Date, y=Fish,group=Date))+
     geom_line(data=daily.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
+    geom_line(data = daily.data %>% filter(Year <2026), aes(x = Date, y = Fish,group=Year),
+              linewidth = .5,alpha=.1)+
     geom_line(data = daily.data %>% filter(Year == 2026),
               aes(x = Date, y = Fish, group = 1, color = "2026 Data"),
               linewidth = 1.5,alpha=.7)+
-    geom_line(data = daily.data %>% filter(Year <2026), aes(x = Date, y = Fish,group=Year),
-              linewidth = .5,alpha=.1)+
     scale_color_manual(values=c("grey75","purple","grey50","black"))+
     labs(y="Daily Count",color="")+
     theme_bw()+
@@ -22,12 +22,11 @@ make.babine.cum.plot<-function(gg.daily.cum,gg.daily.cum.quants,babine.figures.x
   
   ggplot(gg.daily.cum,aes(x=Date, y=cum_sum,group=Date))+
     geom_line(data=gg.daily.cum.quants,aes(colour=qgroup,group=Q),linetype="longdash",linewidth=1)+
-    
+    geom_line(data = gg.daily.cum %>% filter(Year <2026), aes(x = Date, y = cum_sum,group=Year),
+              linewidth = .5,alpha=.1)+
     geom_line(data = gg.daily.cum %>% filter(Year == 2026&Date<=tyee.day),
               aes(x = Date, y = cum_sum, group = 1,color = "2026 Data"),
               linewidth = 1.5,alpha=.7)+
-    geom_line(data = gg.daily.cum %>% filter(Year <2026), aes(x = Date, y = cum_sum,group=Year),
-              linewidth = .5,alpha=.1)+
     scale_color_manual(values=c("grey75","purple","grey50","black"))+
     labs(y="Cumulative Daily Count",color="")+
     theme_bw()+
