@@ -518,13 +518,20 @@ make.babine.figures("Large Sockeye",babine.figures.x.high,100000,1500000)
 
 This comparison aims to provide a coarse idea on the catchability at Tyee. The red line in the figure below shows the difference between the escapement past Tyee and the total run being counted at the Babine Fence, based on some assumptions. These assumptions include 3 week migration timing, 10% non-Babine stock composition and a rough estimate of in-river FSC and demo harvest to date between Tyee and Babine.
 
-```{r, fig.height=6, fig.cap="Estimated difference between the Tyee test fishery and the Babine fence with the assumptions listed above."}
+```{r, fig.height=5, fig.cap="Estimated difference between the Tyee test fishery and the Babine fence with the assumptions listed above."}
 #| label: fig-babine-tyee-comparison
 
 source("scripts/babine versus tyee.R")
 
 make.tyee.vs.babine.plot(.1,.97,-750000,2000000,as.Date("2026-06-01"),as.Date("2026-10-01"))
 ```
+
+```{r, fig.height = 8, fig.cap = "Estimated difference between the Tyee test fishery and the Babine fence for the previous 25 years"}
+#| label: fig-babine-tyee-historical
+
+make.tyee.vs.babine.yrs(as.Date("2026-06-01"),as.Date("2026-10-01"))
+```
+
 
 ### Babine Large Sockeye cumulative count by year
 ```{r, include=FALSE}
