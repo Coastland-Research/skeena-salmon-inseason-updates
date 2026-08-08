@@ -127,10 +127,10 @@ ggplot(comp,aes(Date, Fish, colour = Count, linetype = Count, linewidth = Count)
     "Difference @ 3 Weeks" = 1,
     "Expected.Babine" = 1,
     "Observed.Tyee" = 1.5)) +
-  # ylab("Number of Large Sockeye")+ 
+  ylab("Number of Large Sockeye")+ 
   theme_bw() +
   theme(legend.position = "top")+
-  # ylim(ylow,yhigh) +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   xlim(start.date,end.date)
 
 }
