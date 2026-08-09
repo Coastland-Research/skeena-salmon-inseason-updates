@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 7, 2026"
+subtitle: "August 9, 2026"
 format: html
 editor: visual
 editor_options: 
