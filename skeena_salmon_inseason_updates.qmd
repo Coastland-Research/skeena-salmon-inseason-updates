@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 9, 2026"
+subtitle: "August 10, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,16 +38,17 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-08-08")
-tyee.date<-"August 8"
+tyee.day<-as.Date("2026-08-09")
+tyee.date<-"August 9"
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-08-21")
+babine.figures.x.high<-as.Date("2026-08-21")
 
-fence.day<-as.Date("2026-08-08")
-fence.date<-"August 8"
+fence.day<-as.Date("2026-08-09")
+fence.date<-"August 9"
 
-today<-as.Date("2026-08-09")
+today<-as.Date("2026-08-10")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -66,7 +67,7 @@ source("scripts/harvest control rule and tac plots.R")
 -   Tyee Test Fishery
 
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date ~ 1,570,000 sockeye are estimated to have passed the Tyee test fishery.
+    -   To date ~ 1,580,000 sockeye are estimated to have passed the Tyee test fishery.
     -   We are now well past the historical mid-point (peak) of the run through Tyee. While early estimates of final run size were encouraging, the late run-timing forecast is still declining, and the average run-timing forecast has stabilized near 2.2M (2.0M if the run is one week early, and 2.6M if the run is one week late).
     -   The shape of the run-timing curve suggests that the run could be between 1.5M and 2M, and that there was a strong and early start to the run, and that the mid-point of the run was not as strong.
     -   The daily expected run through Tyee at a final run size of 2M and average run timing would be around 20-30,000 over the next few days.
@@ -80,7 +81,7 @@ source("scripts/harvest control rule and tac plots.R")
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 154,000 large sockeye through to date, and \~ 5,500 jack sockeye to date.
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 167,000 large sockeye through to date, and \~ 6,100 jack sockeye to date.
     -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date. 
 
@@ -486,8 +487,6 @@ source("scripts/babine_fence_counts.R")
 source("scripts/make_babine_plots.R")
 source("scripts/babine_sockeye_models.R")
 source("scripts/plot_babine_models.R")
-
-babine.figures.x.high<-as.Date("2026-08-21")
 ```
 
 ### Babine Sockeye
