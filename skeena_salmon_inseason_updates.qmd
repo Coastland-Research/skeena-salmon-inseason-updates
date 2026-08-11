@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 10, 2026"
+subtitle: "August 11, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,17 +38,17 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-08-09")
-tyee.date<-"August 9"
+tyee.day<-as.Date("2026-08-10")
+tyee.date<-"August 10"
 
 #controls right hand extent of index and escapement figures
-figures.x.date<-as.Date("2026-08-21")
-babine.figures.x.high<-as.Date("2026-08-21")
+figures.x.date<-as.Date("2026-08-28")
+babine.figures.x.high<-as.Date("2026-08-28")
 
-fence.day<-as.Date("2026-08-09")
+fence.day<-as.Date("2026-08-10")
 fence.date<-"August 9"
 
-today<-as.Date("2026-08-10")
+today<-as.Date("2026-08-11")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -81,7 +81,7 @@ source("scripts/harvest control rule and tac plots.R")
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 167,000 large sockeye through to date, and \~ 6,100 jack sockeye to date.
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 207,000 large sockeye through to date, and \~ 7,100 jack sockeye to date.
     -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date. 
 
@@ -382,7 +382,7 @@ daily<-fread("data/common/tyee_daily_indices_chum_1956-2025.csv")%>%
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=chum)
 
-make.index.figures(daily,current,50,100,figures.x.date)
+make.index.figures(daily,current,50,300,figures.x.date)
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for Chum salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
@@ -515,7 +515,7 @@ kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River f
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
 
-make.babine.figures("Large Sockeye",babine.figures.x.high,100000,1500000)
+make.babine.figures("Large Sockeye",babine.figures.x.high,100000,2000000)
 ```
 
 ### Babine comparison with Tyee
@@ -595,7 +595,7 @@ make.babine.linear.plot(historical4)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-sockeye
 
-make.babine.figures("Jack Sockeye",babine.figures.x.high,25000,250000)
+make.babine.figures("Jack Sockeye",babine.figures.x.high,25000,300000)
 ```
 
 ```{r, include=FALSE}
