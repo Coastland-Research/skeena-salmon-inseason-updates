@@ -67,8 +67,8 @@ source("scripts/harvest control rule and tac plots.R")
 -   Tyee Test Fishery
 
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date ~ 1,580,000 sockeye are estimated to have passed the Tyee test fishery.
-    -   We are now well past the historical mid-point (peak) of the run through Tyee. While early estimates of final run size were encouraging, the late run-timing forecast is still declining, and the average run-timing forecast has stabilized near 2.2M (2.0M if the run is one week early, and 2.6M if the run is one week late).
+    -   To date ~ 1,590,000 sockeye are estimated to have passed the Tyee test fishery.
+    -   We are now well past the historical mid-point (peak) of the run through Tyee. While early estimates of final run size were encouraging, the late run-timing forecast is still declining, and the average run-timing forecast has stabilized near 2.1M (2.0M if the run is one week early, and 2.4M if the run is one week late).
     -   The shape of the run-timing curve suggests that the run could be between 1.5M and 2M, and that there was a strong and early start to the run, and that the mid-point of the run was not as strong.
     -   The daily expected run through Tyee at a final run size of 2M and average run timing would be around 20-30,000 over the next few days.
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26.
@@ -81,7 +81,7 @@ source("scripts/harvest control rule and tac plots.R")
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 207,000 large sockeye through to date, and \~ 7,100 jack sockeye to date.
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 219,000 large sockeye through to date, and \~ 7,800 jack sockeye to date.
     -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date. 
 
@@ -515,7 +515,7 @@ kable(stat2,caption=paste0("Cumulative large sockeye and jacks to Babine River f
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for large sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-large-sockeye
 
-make.babine.figures("Large Sockeye",babine.figures.x.high,100000,2000000)
+make.babine.figures("Large Sockeye",babine.figures.x.high,150000,2500000)
 ```
 
 ### Babine comparison with Tyee
@@ -595,7 +595,7 @@ make.babine.linear.plot(historical4)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-sockeye
 
-make.babine.figures("Jack Sockeye",babine.figures.x.high,25000,300000)
+make.babine.figures("Jack Sockeye",babine.figures.x.high,30000,500000)
 ```
 
 ```{r, include=FALSE}
@@ -641,7 +641,7 @@ make.babine.figures("Jack Chinook",babine.figures.x.high,200,2000)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for pink salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-pink
 
-make.babine.figures("Pink",babine.figures.x.high,20000,500000)
+make.babine.figures("Pink",babine.figures.x.high,30000,500000)
 ```
 
 ### Babine Coho
@@ -649,7 +649,7 @@ make.babine.figures("Pink",babine.figures.x.high,20000,500000)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for coho salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-coho
 
-make.babine.figures("Coho",babine.figures.x.high,500,5000)
+make.babine.figures("Coho",babine.figures.x.high,800,6000)
 ```
 
 ### Babine Steelhead
@@ -683,6 +683,8 @@ DFO Stock Assessment and Resource Management provide stakeholders a weekly updat
 [Update #5-July 28](/data/nc_stad_weekly_updates/NCA_Update_July_28.pdf)
 
 [Update #6-Aug 4](/data/nc_stad_weekly_updates/NCA_Weekly_Update_Aug_4.pdf)
+
+[Update #7-Aug 11](/data/nc_stad_weekly_updates/NCA_Update_Aug_11.pdf)
 
 ## Commercial Fisheries
 
