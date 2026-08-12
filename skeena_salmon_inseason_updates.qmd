@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 11, 2026"
+subtitle: "August 12, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,17 +38,17 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-08-10")
-tyee.date<-"August 10"
+tyee.day<-as.Date("2026-08-11")
+tyee.date<-"August 11"
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-08-28")
 babine.figures.x.high<-as.Date("2026-08-28")
 
-fence.day<-as.Date("2026-08-10")
-fence.date<-"August 9"
+fence.day<-as.Date("2026-08-11")
+fence.date<-"August 11"
 
-today<-as.Date("2026-08-11")
+today<-as.Date("2026-08-12")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
