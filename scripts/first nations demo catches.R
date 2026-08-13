@@ -2,11 +2,16 @@
 #create a table with nation, date and total sockeye catch
 #function for a figure showing all nations demo catches
 
-demo.data<-fread("data/current_year/fns demo catches 2026.csv")
+demo.data<-fread("data/current_year/fns demo catches 2026 wide.csv")%>%
+  pivot_longer(2:8,names_to="nation",values_to="sockeye")
+
+#output wide table
+#demo.data.wide<-demo.data%>%pivot_wider(names_from="nation",values_from="sockeye")
+#write.csv(demo.data.wide,"data/fns demo catches 2026 wide.csv",row.names = FALSE)
 
 demo.totals<-demo.data%>%
   group_by(Nation=nation)%>%
-  summarise("Total Demo Sockeye Catch"=sum(sockeye))
+  summarise("Total Demo Sockeye Catch"=sum(sockeye,na.rm=TRUE))
 
 total.demo.catch=sum(demo.totals$`Total Demo Sockeye Catch`)
 
