@@ -1,30 +1,60 @@
 require(matrixStats)
 library(fitdistrplus)
 library(reshape2)
+library(tidyverse)
 
 options(scipen=10000)
 # setwd("C:/Users/elh1/coastland/skeena-salmon-inseason-updates/data")
 
 #read in-season data
-dfindex<-read.csv("data/common/tyee index daily.csv",header=TRUE,sep=",")
+#dfindex<-read.csv("data/common/tyee index daily.csv",header=TRUE,sep=",")
+dfindex<-read.csv("data/common/tyee_daily_indices_sockeye_1956-2025.csv", 
+                  header = TRUE, check.names = FALSE)
 
 #read Q data
 dftyeeQ<-read.csv("data/common/tyee Q.csv",header=TRUE,sep=",")
+
+years <- intersect(names(dfindex), as.character(dftyeeQ$Year))
+
+dfindex <- dfindex %>%
+  rename_with(~paste0("ind.", .x), all_of(years))
+
+for (yr in years) {
+  q <- dftyeeQ$q[dftyeeQ$Year == as.numeric(yr)]
+  
+  dfindex[[paste0("est.", yr)]] <-
+    dfindex[[paste0("ind.", yr)]]*q
+}
+
+info_cols <- c("Date", "MONTH", "DAY", "month-day")
+
+year_cols <- as.character(sort(as.numeric(years)))
+
+paired_cols <- unlist(lapply(year_cols, function(y) {
+  c(paste0("ind.", y), paste0("est.", y))
+}))
+
+dfindex <- dfindex %>%
+  select(all_of(info_cols), all_of(paired_cols)) %>%
+  mutate(Date = format(as.Date(Date), "%d-%b"))
+
+
 
 #read in run-timing from Tyee cumulative percent
 dfRT<-read.csv("data/common/tyee cumulative percent 1970-2018.csv",check.names=FALSE,
                header=TRUE,sep=",")
 
 #set current date
-cdate="13-Aug"
-today<-grep(paste0("^",cdate,"$"),dfindex$date)
+cdate="14-Aug"
+today<-grep(paste0("^",cdate,"$"),dfindex$Date)
 #current day index sum
-cum.index=sum(dfindex$ind.2020[1:today],na.rm=TRUE)
+cum.index=sum(dfindex$ind.2024[1:today],na.rm=TRUE)
 cum.index
 
 
 #set catchability distribution to be used in the estimate
-#either "meanlast3" or "overall" or "2020"
+
+# set to average of last 10 years
 catchabilitymean<-"meanlast10"
 
 #catchability distribution fit to logistic distribution
@@ -36,7 +66,7 @@ cfit<-fitdistr(catchability,"logistic")
 if (catchabilitymean == "overall"){
 meanc<-cfit$estimate[1]
 } else if (catchabilitymean =="meanlast10") {
-meanc<-mean(catchability[11:20])
+meanc<-mean(catchability[16:25])
 } else if (catchabilitymean =="2020") {
 meanc<-1058  
 }
@@ -111,7 +141,7 @@ png(file=paste0("Tyee inseason histogram estimate P10P90 to ",cdate," ",rt,".png
 eschist<-hist(esc.estimate,breaks=60,plot=FALSE)
 
 hist(esc.estimate,60,col="grey",
-     main=paste0("Frequency histogram of Tyee Inseason TRTC\n2020 to ",cdate," : ",rt," Timing"),
+     main=paste0("Frequency histogram of Tyee Inseason TRTC\n2025 to ",cdate," : ",rt," Timing"),
      xlab="Number of sockeye",ylab="Frequency",xlim=c(0,max(esc.estimate)))
 text(max(esc.estimate)*.8,1500,paste0("Median=",round(median(esc.estimate),digits=0)))
 
@@ -136,10 +166,10 @@ plot(eschist,col=rgb(0,0,255,max=255,alpha=75),add=TRUE)
 
 dev.off()
 
-####Point P90/P10 plot for 2020
+####Point P90/P10 plot for 2025
 
 #define input data
-index.data<-dfindex$ind.2020
+index.data<-dfindex$ind.2025
 #define start day (has to be after gamm fits work
 #also very little confidence really early on
 startrunday<-25
@@ -167,10 +197,10 @@ for (i in startrunday:endday){
   #esc_estimate2<-esc_estimate2[esc_estimate2 < quantile(esc_estimate,.99)]
   #dates[j]<-dfRT$Date[i]
   v[j,]<-c(median(esc_estimate2),quantile(esc_estimate2,.1),quantile(esc_estimate2,.9))
-}
+} # ERROR HERE
 
 #assign y-axis labels/points
-dates<-as.character(dfindex$date[startrunday:endday])
+dates<-as.character(dfindex$Date[startrunday:endday])
 days<-dfindex$day[startrunday:endday]
 
 #check lengths
@@ -283,10 +313,6 @@ boxplot(value~Day,data=RTlong,names=dfRT$Date,axes=TRUE,col="grey90",las=1,
 grid(NA,NULL,lwd=1,col="grey70",lty=2)
 
 dev.off()
-
-
-
-
 
 
 
