@@ -3,7 +3,6 @@ library(fitdistrplus)
 library(reshape2)
 
 options(scipen=10000)
-#sets your directory - you will have to change
 # setwd("C:/Users/elh1/coastland/skeena-salmon-inseason-updates/data")
 
 #read in-season data
@@ -13,30 +12,31 @@ dfindex<-read.csv("data/common/tyee index daily.csv",header=TRUE,sep=",")
 dftyeeQ<-read.csv("data/common/tyee Q.csv",header=TRUE,sep=",")
 
 #read in run-timing from Tyee cumulative percent
-dfRT<-read.csv("data/common/tyee cumulative percent 1970-2018.csv",header=TRUE,sep=",")
+dfRT<-read.csv("data/common/tyee cumulative percent 1970-2018.csv",check.names=FALSE,
+               header=TRUE,sep=",")
 
 #set current date
-cdate="24-Jul"
+cdate="13-Aug"
 today<-grep(paste0("^",cdate,"$"),dfindex$date)
 #current day index sum
 cum.index=sum(dfindex$ind.2020[1:today],na.rm=TRUE)
 cum.index
 
 
-
 #set catchability distribution to be used in the estimate
 #either "meanlast3" or "overall" or "2020"
-catchabilitymean<-"2020"
+catchabilitymean<-"meanlast10"
 
 #catchability distribution fit to logistic distribution
 catchability<-dftyeeQ$catchability
+
 #fit logistic to catchability
 cfit<-fitdistr(catchability,"logistic")
 
 if (catchabilitymean == "overall"){
 meanc<-cfit$estimate[1]
-} else if (catchabilitymean =="meanlast3") {
-meanc<-mean(catchability[18:20])
+} else if (catchabilitymean =="meanlast10") {
+meanc<-mean(catchability[11:20])
 } else if (catchabilitymean =="2020") {
 meanc<-1058  
 }
@@ -52,8 +52,9 @@ cdist<-sample(cdistpos,10000,TRUE)
 hist(catchability,prob=TRUE)
 lines(density(cdist))
 
-##Ste run timing as Average or Late - late is 1 week late and adjusts the run timing to 7 days earlier.
-rt<-"Average"
+##Set run timing as Average or Late - late is 1 week late and adjusts the run 
+# timing to 7 days earlier.
+rt<-"Late"
 
 if (rt == "Average"){
   rt.adj=0
@@ -65,7 +66,7 @@ rt.adj
 #find todays row in cumulative run timing 
 today<-grep(paste0("^",cdate,"$"),dfRT$Date)+rt.adj
 #create vector for runtiming on today (1985-2018)
-daily<-as.numeric(dfRT[today,18:length(dfRT)])
+daily<-as.numeric(dfRT[today,11:length(dfRT)])
 #fit daily run timing to gamma (positive only) distribution
 dailyfit<-fitdistr(daily,"gamma")
 
@@ -95,8 +96,8 @@ hist(esc.estimate,breaks=30)
 
 #remove outliers created by early season RT distribution values < 0 or very
 #small values
-#esc.estimate<-esc.estimate[esc.estimate <quantile(esc.estimate,.99)]
-#hist(esc.estimate)
+esc.estimate<-esc.estimate[esc.estimate <quantile(esc.estimate,.99)]
+hist(esc.estimate)
 
 #output percentiles from escapement distribution
 probsout<-(quantile(esc.estimate,c(.1,.25,.5,.75,.9)))
@@ -112,7 +113,7 @@ eschist<-hist(esc.estimate,breaks=60,plot=FALSE)
 hist(esc.estimate,60,col="grey",
      main=paste0("Frequency histogram of Tyee Inseason TRTC\n2020 to ",cdate," : ",rt," Timing"),
      xlab="Number of sockeye",ylab="Frequency",xlim=c(0,max(esc.estimate)))
-#text(max(esc_estimate)*.8,1500,paste0("Median=",round(median(esc_estimate),digits=0)))
+text(max(esc.estimate)*.8,1500,paste0("Median=",round(median(esc.estimate),digits=0)))
 
 tyeemedian<-round(median(esc.estimate),digits=0)
 tyee90th<-round(quantile(esc.estimate,.9))
