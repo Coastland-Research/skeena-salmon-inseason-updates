@@ -25,7 +25,7 @@ FN0772,Aboriginal,26-Jul,Sockeye,Gillnet,Demonstration Fishery,1,,"CSAF demo fis
 FN0778,Aboriginal,July 25-31,Sockeye,Selective Gear,Demonstration Fishery,7,,"CSAF demo fishery for Kitsumkalum. Sockeye and pink retention.  Dual fishing type ""B"" allowed."
 FN0784,Commercial,July 28-29,Sockeye,Gillnet,"Area C, Area 4",2,,"Area C gillnet opening, sockeye and pink retention"
 FN0785,Aboriginal,July 28-Aug 3,Sockeye,Selective Gear,Demonstration Fishery,7,,"CSAF demo fishery for Kitselas First Nation, sockeye retention only."
-FN0787,Recreational,July 29-Sept 15,Sockeye,Angling,Portions of Region 6,49,4 per day,Daily limit increase to 4 sockeye per day in Skeena River mainstream waters
+FN0787,Recreational,July 29-Sept 15,Sockeye,Angling,Portions of Region 6,49,4 per day,Daily limit increase to 4 sockeye per day in Skeena River mainstem waters
 FN0786,Commercial,July 29-Aug 2,Sockeye,Seine,"Area A, Area 4",5,"29,986 aggregate","Target sockeye, retention of pink permitted, non-retention coho, Chinook, Chum, and steelhead. ITQ fishery (1.72%) equates to 517 Sockeye per license."
 FN0793,Recreational,Aug 1-Aug 31,Sockeye,Angling,Region 6 - Babine River,31,2 per day,Babine River open to recreational sockeye fishing with a daily limit of 2 sockeye per day.
 FN0797,Aboriginal,Jul 30-Aug 5,Sockeye,Selective Gear,Region 6,7,,"CSAF demo fishery for Gitksan Nation. Target sockeye, non-retention of all non-target species. "
@@ -35,3 +35,5 @@ FN0829,Aboriginal,Aug 6-9,Sockeye,Selective Gear,Demonstration Fishery,4,,"CSAF 
 FN0840,Aboriginal,Aug 8-9,Sockeye,Selective Gear,Demonstration Fishery,2,,"CSAF demo fishery for Kitsumkalum. Sockeye and pink retention.  Dual fishing type ""B"" allowed."
 FN0850,Aboriginal,Aug 14-20,Pink,Selective Gear,Region 6 - Witset Canyon,7,,"Wet’suwet’en First Nation ESSR fishery opportunity in Witset Canyon, target Pink Salmon, non-retention of all non-target species."
 FN0849,Aboriginal,Aug 13-19,Sockeye,Selective Gear,Demonstration Fishery,7,,"CSAF demo fishery for Gitksan Nation. Target sockeye, non-retention of all non-target species. "
+FN0868,Recreational,Aug 17-Sept 15,Sockeye,Angling,Portions of Region 6,30,2 per day,Daily limit decrease to 2 sockeye per day in Skeena River mainstem waters.
+FN0869,Recreational,Aug 17-March 31,Sockeye,Angling,Region 6 - Babine River,227,0,The Babine River will be closed to recreational fishing for sockeye salmon effective August 17.

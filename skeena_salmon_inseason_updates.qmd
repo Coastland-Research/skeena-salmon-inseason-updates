@@ -107,6 +107,7 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
     -   Recreational fisheries for Skeena sockeye in portions of Region 6 opened July 10 (portions of the Skeena mainstem) and August 1 (Babine Lake, Fulton River, Pinkut Creek) with a daily limit of 2 per day, and increased to a daily limit of 4 per day July 29-Sept 15.
     -   Babine River opened to recreational fishing for sockeye on August 1-31 with a daily limit of 2 per day.
     -   Recreational fisheries for Chinook in Area 3-5 opened at 1 per day on July 18, and 2 per day on August 1.
+    -   Due to concerns about sockeye abundance, the Babine River was closed to fishing for sockeye and the Skeena River mainstem daily limits were reduced to 2 per day effective August 17.
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
@@ -478,6 +479,10 @@ Steelhead updates:
 [Update to July 16](/data/steelhead/Skeena_Summer_Steelhead_Update_to_July_16_2026.xlsx)
 
 [Update to July 28](/data/steelhead/Skeena_Summer_Steelhead_Update_to_July_28_2026.xlsx)
+
+[Update to August 6](/data/steelhead/Skeena_Summer_Steelhead_Update_to_Aug_6_2026.xlsx)
+
+[Update to August 13](/data/steelhead/Skeena_Summer_Steelhead_Update_to_Aug_13_2026.xlsx)
 
 # Babine Fence
 
