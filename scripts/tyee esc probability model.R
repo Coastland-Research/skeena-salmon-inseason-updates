@@ -4,11 +4,11 @@ library(data.table)
 
 options(scipen=10000)
 
-#read in-season data
+# historical in-season data
 dfindex<-read.csv("data/common/tyee_daily_indices_sockeye_1956-2025.csv", 
                   header = TRUE, check.names = FALSE)
 
-#read Q data
+# Q data
 dftyeeQ<-read.csv("data/common/tyee Q.csv",header=TRUE,sep=",")
 
 years <- intersect(names(dfindex), as.character(dftyeeQ$Year))
@@ -20,7 +20,7 @@ for (yr in years) {
   q <- dftyeeQ$q[dftyeeQ$Year == as.numeric(yr)]
   
   dfindex[[paste0("est.", yr)]] <-
-    dfindex[[paste0("ind.", yr)]]*q
+    dfindex[[paste0("ind.", yr)]]/q
 }
 
 info_cols <- c("Date", "MONTH", "DAY", "month-day")
@@ -58,7 +58,7 @@ cfit <- fitdistr(catchability, "logistic")
 if (catchabilitymean == "overall") {
   meanc <- cfit$estimate[1]
   } else if (catchabilitymean == "meanlast10") {
-    meanc <- mean(dftyeeQ$catchability[dftyeeQ$Year >= 2016 & dftyeeQ$Year <= 2025], na.rm = TRUE)
+    meanc <- mean(dftyeeQ$catchability[dftyeeQ$Year >= 2016 & dftyeeQ$Year <= 2025], na.rm = TRUE)/0.82
     } else if (catchabilitymean == "2020") {
       meanc <- 1058
       }
@@ -150,11 +150,14 @@ for (j in seq_len(nrow(results))) {
 summary(results)
 
 # Current-date escapement distribution ------------------------------------
-current_i <- endday
-index.data<-dfindex$ind.2025
+# current_i <- endday
+# index.data<-dfindex$ind.2025
+# 
+# # Cumulative index through current date
+# cum.index <- sum(index.data[1:current_i], na.rm = TRUE)
 
-# Cumulative index through current date
-cum.index <- sum(index.data[1:current_i], na.rm = TRUE)
+current_i <- endday
+cum.index <- sum(current$Index[season_start:current_i], na.rm = TRUE)
 
 # Q uncertainty
 index_dist <- cum.index * cdist
@@ -166,7 +169,7 @@ rt_row <- which(dfRT$rt_date == current_date)
 rt_row <- rt_row + rt.adj
 
 # Historical run-timing observations
-daily <- as.numeric(dfRT[rt_row, 18:ncol(dfRT)])
+daily <- as.numeric(dfRT[rt_row, rt_year_cols])
 daily <- daily[is.finite(daily) & daily > 0]
 
 # Fit gamma
