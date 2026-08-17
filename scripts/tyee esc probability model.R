@@ -173,3 +173,155 @@ tail(results)
 
 summary(results)
 
+
+# Current-date escapement distribution ------------------------------------
+
+current_i <- endday
+
+
+# Cumulative index through current date
+cum.index <- sum(
+  index.data[1:current_i],
+  na.rm = TRUE)
+
+# Q uncertainty
+index_dist <- cum.index * cdist
+
+# Find run-timing row for current date
+rt_row <- which(
+  dfRT$rt_date == current_date)
+
+# If using "Late" timing, shift 7 days earlier
+rt_row <- rt_row + rt.adj
+
+rt_row
+
+# Historical run-timing observations
+daily <- as.numeric(
+  dfRT[
+    rt_row,
+    18:ncol(dfRT)])
+
+# Remove invalid values
+daily <- daily[
+  is.finite(daily) &
+    daily > 0]
+
+# Fit gamma
+dailyfit <- fitdistr(daily,"gamma")
+
+# Simulate run timing
+RTdist <- rgamma(
+  10000,
+  shape = dailyfit$estimate[1],
+  rate = dailyfit$estimate[2])
+
+# Calculate escapement distribution
+esc.estimate <- index_dist / RTdist
+
+# Add catch
+esc.estimate <- esc.estimate + catch
+
+# Remove extreme values
+esc.estimate <- esc.estimate[
+  esc.estimate <
+    quantile(
+      esc.estimate,
+      0.99,
+      na.rm = TRUE)]
+
+p10 <- quantile(
+  esc.estimate,
+  0.10)
+
+p25 <- quantile(
+  esc.estimate,
+  0.25)
+
+p50 <- median(
+  esc.estimate)
+
+p75 <- quantile(
+  esc.estimate,
+  0.75)
+
+p90 <- quantile(
+  esc.estimate,
+  0.90)
+
+# Print results
+p10
+p25
+p50
+p75
+p90
+
+cum.index
+
+png(file = paste0(
+    "Tyee inseason histogram ",
+    cdate,
+    ".png"),
+  units = "in",
+  height = 4,
+  width = 6,
+  res = 300)
+
+
+hist(esc.estimate,
+  breaks = 60,
+  col = "grey80",
+  border = "white",
+  main = paste0(
+    "Tyee In-Season TRTC Estimate\n",
+    "2026 to ",
+    cdate,
+    " : ",
+    rt,
+    " Timing"),
+  xlab = "Number of sockeye",
+  ylab = "Frequency")
+
+# Median
+abline(v = p50,lwd = 3,lty = 2)
+
+# P10 / P90
+abline(v = c(p10, p90),lwd = 2,lty = 2)
+
+# P25 / P75
+abline(v = c(p25, p75),lwd = 2,lty = 3)
+
+legend("topright",
+  legend = c(
+    paste0(
+      "Median = ",
+      round(p50)),
+    paste0(
+      "P25–P75 = ",
+      round(p25),
+      "–",
+      round(p75)),
+    paste0(
+      "P10–P90 = ",
+      round(p10),
+      "–",
+      round(p90))),bty = "n")
+
+dev.off()
+
+# July 1 - Current date time series plot
+ggplot(results,aes(x = Date)) +
+geom_ribbon(
+  aes(ymin = p10,ymax = p90),
+  fill = "grey85") +
+geom_ribbon(aes(ymin = p25,ymax = p75),fill = "grey60") +
+geom_line(aes(y = median),linewidth = 1.2) +
+geom_vline(
+  xintercept = current_date,
+  linetype = "dashed") +
+labs(x = "Date",
+  y = "Escapement Estimate",
+  title = "Tyee In-Season TRTC Estimate",
+  subtitle = paste0("July 1 to ",cdate,
+    " | ",rt," run timing")) +
+  theme_classic()
