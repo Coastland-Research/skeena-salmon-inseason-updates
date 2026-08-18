@@ -1,6 +1,7 @@
 # Code to run Tyee probability-based escapement model for July 1 - todays date
 # source("scripts/tyee inseason run prob estimator clean.R")
 library(data.table)
+library(MASS)
 
 options(scipen=10000)
 
@@ -58,13 +59,14 @@ cfit <- fitdistr(catchability, "logistic")
 if (catchabilitymean == "overall") {
   meanc <- cfit$estimate[1]
   } else if (catchabilitymean == "meanlast10") {
-    meanc <- mean(dftyeeQ$catchability[dftyeeQ$Year >= 2016 & dftyeeQ$Year <= 2025], na.rm = TRUE)/0.82
+    meanc <- mean(dftyeeQ$catchability[dftyeeQ$Year >= 2016 & dftyeeQ$Year <= 2025], na.rm = TRUE)
     } else if (catchabilitymean == "2020") {
       meanc <- 1058
       }
 
 # Create distribution for 1/Q
-cdistfull <- rlogis(20000, location = meanc, scale = cfit$estimate[2])
+cdistfull <- rlogis(20000, location = meanc, scale = cfit$estimate[2])/0.82
+
 
 # Remove negative values
 cdistpos <- cdistfull[cdistfull > 0]
@@ -73,7 +75,7 @@ cdistpos <- cdistfull[cdistfull > 0]
 cdist <- sample(cdistpos, 10000, replace = TRUE)
 
 # Set run-timing assumption
-rt <- "Late"
+rt <- "Average"
 
 if (rt == "Average") {
   rt.adj <- 0
@@ -132,7 +134,13 @@ for (j in seq_len(nrow(results))) {
     rate = dailyfit$estimate["rate"])
   
   esc_estimate <- index_dist / RTdist
-  catch <- 0
+  
+  marine.gillnet<-269625
+  marine.seine<-60161
+  marine.demo<-20000
+  marine.fsc<-30000
+  
+  catch <- marine.gillnet + marine.seine + marine.demo + marine.fsc
   esc_estimate <- esc_estimate + catch
   
   esc_estimate <- esc_estimate[
@@ -193,8 +201,8 @@ p50 <- median(esc.estimate)
 p75 <- quantile(esc.estimate,0.75)
 p90 <- quantile(esc.estimate,0.90)
 
-png(file = paste0("Tyee inseason histogram ",cdate,".png"),
-  units = "in",height = 4,width = 6,res = 300)
+#png(file = paste0("Tyee inseason histogram ",cdate,".png"),
+#  units = "in",height = 4,width = 6,res = 300)
 
 hist(esc.estimate,breaks = 60,col = "grey80",border = "white",
   main = paste0("Tyee In-Season TRTC Estimate\n","2026 to ",cdate," : ", rt," Timing"),
@@ -208,7 +216,7 @@ legend("topright", legend = c(paste0("Median = ",round(p50)),
     paste0("P25–P75 = ",round(p25),"–", round(p75)),
     paste0("P10–P90 = ",round(p10),"–", round(p90))),bty = "n")
 
-dev.off()
+#dev.off()
 
 # July 1 - Current date time series plot
 ggplot(results,aes(x = Date)) +
@@ -225,5 +233,5 @@ labs(x = "Date",
   title = "Tyee In-Season TRTC Estimate",
   subtitle = paste0("July 1 to ",cdate,
     " | ",rt," run timing")) +
-  theme_classic()
+  theme_bw()
 
