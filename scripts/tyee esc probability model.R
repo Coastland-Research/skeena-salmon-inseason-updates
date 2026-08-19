@@ -2,6 +2,7 @@
 # source("scripts/tyee inseason run prob estimator clean.R")
 library(data.table)
 library(MASS)
+library(tidyverse)
 
 options(scipen=10000)
 
@@ -45,6 +46,24 @@ current <- fread("data/current_year/tyee data 2026.csv") %>%
   mutate(Date = as.IDate(Date))%>%
   select(Date,"Index"=sockeye) %>%
   drop_na(Index)
+
+# read in catch data
+gillnet <- fread("data/current_year/commercial catch 2026-gillnet.csv") %>%
+  select(Date, catch = `Sockeye (Kept)`)
+
+seine <- fread("data/current_year/commercial catch 2026-seine.csv") %>%
+  select(Date, catch = `Sockeye (Kept)`)
+
+demo <- fread("data/current_year/fns demo catches 2026.csv") %>%
+  select(Date = date, catch = sockeye)
+
+catch_daily <- bind_rows(gillnet, seine, demo) %>%
+  group_by(Date) %>%
+  summarise(
+    catch = sum(catch, na.rm = TRUE),
+    .groups = "drop") %>%
+  arrange(Date) %>%
+  mutate(cum_catch = cumsum(catch))
 
 current_date <- max(current$Date)
 cdate <- format(current_date,"%d-%b")
@@ -101,6 +120,10 @@ results <- data.frame(
   p10 = NA_real_,
   p90 = NA_real_)
 
+results <- results %>%
+  left_join(catch_daily, by = "Date") %>%
+  mutate(cum_catch = replace_na(cum_catch,0))
+
 for (j in seq_len(nrow(results))) {
   i <- startrunday + j - 1
   
@@ -141,8 +164,11 @@ for (j in seq_len(nrow(results))) {
   marine.demo<-20000
   marine.fsc<-30000
   
-  catch <- marine.gillnet + marine.seine + marine.demo + marine.fsc
-  esc_estimate <- esc_estimate + catch
+  # catch <- marine.gillnet + marine.seine + marine.demo + marine.fsc
+  # esc_estimate <- esc_estimate + catch
+  
+  catch_today <- results$cum_catch[j]
+  esc_estimate <- esc_estimate + catch_today
   
   esc_estimate <- esc_estimate[
     esc_estimate <

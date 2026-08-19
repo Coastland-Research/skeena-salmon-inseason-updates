@@ -4,12 +4,16 @@ library(reshape2)
 library(tidyverse)
 
 options(scipen=10000)
-# setwd("C:/Users/elh1/coastland/skeena-salmon-inseason-updates/data")
 
 #read in-season data
-#dfindex<-read.csv("data/common/tyee index daily.csv",header=TRUE,sep=",")
 dfindex<-read.csv("data/common/tyee_daily_indices_sockeye_1956-2025.csv", 
                   header = TRUE, check.names = FALSE)
+
+# read current index data
+current <- fread("data/current_year/tyee data 2026.csv") %>%
+  mutate(Date = as.IDate(Date))%>%
+  select(Date,"Index"=sockeye) %>%
+  drop_na(Index)
 
 #read Q data
 dftyeeQ<-read.csv("data/common/tyee Q.csv",header=TRUE,sep=",")
@@ -27,34 +31,49 @@ for (yr in years) {
 }
 
 info_cols <- c("Date", "MONTH", "DAY", "month-day")
-
 year_cols <- as.character(sort(as.numeric(years)))
-
 paired_cols <- unlist(lapply(year_cols, function(y) {
   c(paste0("ind.", y), paste0("est.", y))
 }))
 
 dfindex <- dfindex %>%
   select(all_of(info_cols), all_of(paired_cols)) %>%
-  mutate(Date = format(as.Date(Date), "%d-%b"))
-
+  mutate(Date = format(as.Date(Date), "%d-%b")) %>%
+  mutate(ind.2026 = current$Index[
+    match(Date, format(current$Date, "%d-%b"))])
 
 
 #read in run-timing from Tyee cumulative percent
 dfRT<-read.csv("data/common/tyee cumulative percent 1970-2018.csv",check.names=FALSE,
                header=TRUE,sep=",")
 
-#set current date
-cdate="14-Aug"
+# read in catch data
+gillnet <- fread("data/current_year/commercial catch 2026-gillnet.csv") %>%
+  select(Date, catch = `Sockeye (Kept)`)
+
+seine <- fread("data/current_year/commercial catch 2026-seine.csv") %>%
+  select(Date, catch = `Sockeye (Kept)`)
+
+demo <- fread("data/current_year/fns demo catches 2026.csv") %>%
+  select(Date = date, catch = sockeye)
+
+catch_daily <- bind_rows(gillnet, seine, demo) %>%
+  group_by(Date) %>%
+  summarise(
+    catch = sum(catch, na.rm = TRUE),
+    .groups = "drop") %>%
+  arrange(Date) %>%
+  mutate(cum_catch = cumsum(catch))
+
+# set todays date
+current_date <- max(current$Date)
+cdate <- format(current_date,"%d-%b")
 today<-grep(paste0("^",cdate,"$"),dfindex$Date)
 #current day index sum
-cum.index=sum(dfindex$ind.2024[1:today],na.rm=TRUE)
+cum.index=sum(dfindex$ind.2026[1:today],na.rm=TRUE)
 cum.index
 
-
 #set catchability distribution to be used in the estimate
-
-# set to average of last 10 years
 catchabilitymean<-"meanlast10"
 
 #catchability distribution fit to logistic distribution
@@ -97,8 +116,10 @@ rt.adj
 today<-grep(paste0("^",cdate,"$"),dfRT$Date)+rt.adj
 #create vector for runtiming on today (1985-2018)
 daily<-as.numeric(dfRT[today,11:length(dfRT)])
+daily <- daily[is.finite(daily) & daily > 0]
+
 #fit daily run timing to gamma (positive only) distribution
-dailyfit<-fitdistr(daily,"gamma")
+dailyfit <- fitdistr(daily, "gamma")
 
 #create gamma distribution
 RTdist<-rgamma(10000,shape=dailyfit$estimate[1],rate=dailyfit$estimate[2])
@@ -120,9 +141,22 @@ esc.estimate<-index_dist / RTdist
 hist(esc.estimate)
 
 #add in catch from marine commercial
-catch=0
-esc.estimate<-esc.estimate+catch
-hist(esc.estimate,breaks=30)
+# catch=0
+# esc.estimate<-esc.estimate+catch
+# hist(esc.estimate,breaks=30)
+
+catch_daily <- catch_daily %>%
+  mutate(month_day = format(Date, "%d-%b"))
+catch_to_date <- catch_daily$cum_catch[
+  match(cdate, catch_daily$month_day)]
+if (is.na(catch_to_date)) {
+  catch_to_date <- 0
+}
+
+# add cumulative catch to TRTC estimate
+esc.estimate <- esc.estimate + catch_to_date
+
+hist(esc.estimate, breaks = 30)
 
 #remove outliers created by early season RT distribution values < 0 or very
 #small values
@@ -169,11 +203,11 @@ dev.off()
 ####Point P90/P10 plot for 2025
 
 #define input data
-index.data<-dfindex$ind.2025
+index.data<-dfindex$ind.2026
 #define start day (has to be after gamm fits work
 #also very little confidence really early on
-startrunday<-25
-endday=length(index.data[!is.na(index.data)])
+startrunday<-which(dfindex$Date == "01-Jul")
+endday <- max(which(!is.na(dfindex$ind.2025)))
 
 looplength<-endday-startrunday
 
@@ -182,10 +216,8 @@ v<-data.frame(esc=numeric(looplength),p10=numeric(looplength),p90=numeric(loople
 j=0
 
 for (i in startrunday:endday){
-  #loopday=startrunday+j
-  #loopday=38
   j=j+1
-  cum.index<-sum(index.data[1:i])
+  cum.index<-sum(index.data[1:i], na.rm = T)
   index_dist<-cum.index*cdist
   daily<-as.numeric(dfRT[i,18:length(dfRT)])
   
