@@ -50,6 +50,8 @@ current_date <- max(current$Date)
 cdate <- format(current_date,"%d-%b")
 
 catchabilitymean <- "meanlast10"
+catchabilitymean <- "2026"
+
 catchability <- dftyeeQ$catchability
 
 # Fit logistic distribution to catchability
@@ -60,8 +62,8 @@ if (catchabilitymean == "overall") {
   meanc <- cfit$estimate[1]
   } else if (catchabilitymean == "meanlast10") {
     meanc <- mean(dftyeeQ$catchability[dftyeeQ$Year >= 2016 & dftyeeQ$Year <= 2025], na.rm = TRUE)
-    } else if (catchabilitymean == "2020") {
-      meanc <- 1058
+    } else if (catchabilitymean == "2026") {
+      meanc <- 1227
       }
 
 # Create distribution for 1/Q
