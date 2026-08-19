@@ -67,7 +67,6 @@ if (catchabilitymean == "overall") {
 # Create distribution for 1/Q
 cdistfull <- rlogis(20000, location = meanc, scale = cfit$estimate[2])/0.82
 
-
 # Remove negative values
 cdistpos <- cdistfull[cdistfull > 0]
 
@@ -162,8 +161,6 @@ summary(results)
 # index.data<-dfindex$ind.2025
 # 
 # # Cumulative index through current date
-# cum.index <- sum(index.data[1:current_i], na.rm = TRUE)
-
 current_i <- endday
 cum.index <- sum(current$Index[season_start:current_i], na.rm = TRUE)
 
