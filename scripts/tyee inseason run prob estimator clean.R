@@ -55,6 +55,7 @@ seine <- fread("data/current_year/commercial catch 2026-seine.csv") %>%
   select(Date, catch = `Sockeye (Kept)`)
 
 demo <- fread("data/current_year/fns demo catches 2026.csv") %>%
+  filter(nation %in% c("Lax Kw'alaams", "Metlakatla", "North Coast Skeena")) %>%
   select(Date = date, catch = sockeye)
 
 catch_daily <- bind_rows(gillnet, seine, demo) %>%
@@ -103,7 +104,7 @@ lines(density(cdist))
 
 ##Set run timing as Average or Late - late is 1 week late and adjusts the run 
 # timing to 7 days earlier.
-rt<-"Late"
+rt<-"Average"
 
 if (rt == "Average"){
   rt.adj=0
@@ -175,7 +176,7 @@ png(file=paste0("Tyee inseason histogram estimate P10P90 to ",cdate," ",rt,".png
 eschist<-hist(esc.estimate,breaks=60,plot=FALSE)
 
 hist(esc.estimate,60,col="grey",
-     main=paste0("Frequency histogram of Tyee Inseason TRTC\n2025 to ",cdate," : ",rt," Timing"),
+     main=paste0("Frequency histogram of Tyee Inseason TRTC\n2026 to ",cdate," : ",rt," Timing"),
      xlab="Number of sockeye",ylab="Frequency",xlim=c(0,max(esc.estimate)))
 text(max(esc.estimate)*.8,1500,paste0("Median=",round(median(esc.estimate),digits=0)))
 

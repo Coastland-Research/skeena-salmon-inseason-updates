@@ -55,6 +55,7 @@ seine <- fread("data/current_year/commercial catch 2026-seine.csv") %>%
   select(Date, catch = `Sockeye (Kept)`)
 
 demo <- fread("data/current_year/fns demo catches 2026.csv") %>%
+  filter(nation %in% c("Lax Kw'alaams", "Metlakatla", "North Coast Skeena")) %>%
   select(Date = date, catch = sockeye)
 
 catch_daily <- bind_rows(gillnet, seine, demo) %>%
@@ -185,9 +186,7 @@ for (j in seq_len(nrow(results))) {
 summary(results)
 
 # Current-date escapement distribution ------------------------------------
-# current_i <- endday
-# index.data<-dfindex$ind.2025
-# 
+
 # # Cumulative index through current date
 current_i <- endday
 cum.index <- sum(current$Index[season_start:current_i], na.rm = TRUE)
@@ -215,7 +214,7 @@ RTdist <- rgamma(10000, shape = dailyfit$estimate[1], rate = dailyfit$estimate[2
 esc.estimate <- index_dist / RTdist
 
 # Add catch
-esc.estimate <- esc.estimate + catch
+esc.estimate <- esc.estimate + catch_today
 
 # Remove extreme values
 esc.estimate <- esc.estimate[esc.estimate < quantile(esc.estimate, 0.99, na.rm = TRUE)]
@@ -226,8 +225,8 @@ p50 <- median(esc.estimate)
 p75 <- quantile(esc.estimate,0.75)
 p90 <- quantile(esc.estimate,0.90)
 
-#png(file = paste0("Tyee inseason histogram ",cdate,".png"),
-#  units = "in",height = 4,width = 6,res = 300)
+png(file = paste0("Tyee inseason histogram ",cdate,".png"),
+  units = "in",height = 4,width = 6,res = 300)
 
 hist(esc.estimate,breaks = 60,col = "grey80",border = "white",
   main = paste0("Tyee In-Season TRTC Estimate\n","2026 to ",cdate," : ", rt," Timing"),
@@ -241,7 +240,7 @@ legend("topright", legend = c(paste0("Median = ",round(p50)),
     paste0("P25–P75 = ",round(p25),"–", round(p75)),
     paste0("P10–P90 = ",round(p10),"–", round(p90))),bty = "n")
 
-#dev.off()
+dev.off()
 
 # July 1 - Current date time series plot
 ggplot(results,aes(x = Date)) +
