@@ -596,7 +596,12 @@ make.babine.rt.plot(
 make.babine.linear.plot(historical4)
 ```
 
-### Jack sockeye
+```{r, fig.height=5, fig.cap = "Predicted final Babine fence count from linear regression model based on cumulative fence count to date in 2026. Shaded area represents the 90% prediction interval."}
+#| label: fig-babine-linear-date-model
+make.babine.linear.date.plot(linear_pred_by_date)
+```
+
+### Babine Jack sockeye
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-sockeye

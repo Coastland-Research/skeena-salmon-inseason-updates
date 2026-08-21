@@ -158,5 +158,40 @@ model_label <- paste0("R² = ", round(r2,3),
 pred_label <- paste0("Forecast = ", format(round(today_pred$fit,0), big.mark=","),"\n90% PI: ",
   format(round(today_pred$lwr,0), big.mark=",")," - ",format(round(today_pred$upr,0), big.mark=","))
 
+# Linear model predictions through the season ----------------------------
 
+# linear_pred_by_date <- babine_forecast %>%
+#   filter(Date >= as.Date("2026-07-01"), Date <= fence.day)
+# 
+# pred_by_date <- predict(fit,
+#   newdata = data.frame(cum_count = linear_pred_by_date$daily_cum),
+#   interval = "prediction", level = 0.90)
+# 
+# linear_pred_by_date <- linear_pred_by_date %>%
+#   mutate(prediction = pred_by_date[, "fit"],
+#     lwr = pred_by_date[, "lwr"], upr = pred_by_date[, "upr"])
+
+linear_pred_by_date <- babine_forecast %>%
+  filter(Date >= as.Date("2026-07-01"),
+         Date <= fence.day)
+
+# Get model predictions and standard errors
+pred <- predict(fit,
+  newdata = data.frame(cum_count = linear_pred_by_date$daily_cum),se.fit = TRUE)
+
+# Residual standard error
+sigma <- summary(fit)$sigma
+
+# Standard error of a NEW observation
+pred_se <- sqrt(sigma^2 + pred$se.fit^2)
+
+linear_pred_by_date <- linear_pred_by_date %>%
+  mutate(
+    prediction = as.numeric(pred$fit),
+    # 10th–90th percentile prediction interval
+    lwr10 = prediction - qnorm(0.90) * pred_se,
+    upr90 = prediction + qnorm(0.90) * pred_se,
+    # 25th–75th percentile prediction interval
+    lwr25 = prediction - qnorm(0.75) * pred_se,
+    upr75 = prediction + qnorm(0.75) * pred_se)
 
