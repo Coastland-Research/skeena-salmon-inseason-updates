@@ -46,20 +46,14 @@ gg.daily.cum<-daily.index%>%
 
 ### Babine sockeye model
 historical2 <- historical %>%
-  pivot_longer(
-    cols = `1946`:`2025`,
-    names_to = "Year",
-    values_to = "Count") %>%
+  pivot_longer(cols = `1946`:`2025`,names_to = "Year",values_to = "Count") %>%
   mutate(Year = as.numeric(Year)) %>%
   arrange(Year, Date) %>%
   group_by(Year) %>%
-  mutate(
-    Count = replace_na(Count, 0),
-    cum_fence = cumsum(Count),
-    final_return = max(cum_fence),
+  mutate(Count = replace_na(Count, 0),
+    cum_fence = cumsum(Count),final_return = max(cum_fence),
     run_prop = cum_fence / final_return) %>%
   ungroup()
-
 
 babine_timing <- historical2 %>%
   group_by(Date) %>%
@@ -83,10 +77,7 @@ babine_forecast <- current %>%
 
 babine.model <- babine_forecast %>%
   select(Date, Early, Average, Late) %>%
-  pivot_longer(
-    Early:Late,
-    names_to = "Timing",
-    values_to = "Estimate") %>%
+  pivot_longer(Early:Late,names_to = "Timing",values_to = "Estimate") %>%
   filter(Date <= fence.day)
 
 todays.babine.estimates <- babine_forecast %>%
@@ -158,40 +149,50 @@ model_label <- paste0("R² = ", round(r2,3),
 pred_label <- paste0("Forecast = ", format(round(today_pred$fit,0), big.mark=","),"\n90% PI: ",
   format(round(today_pred$lwr,0), big.mark=",")," - ",format(round(today_pred$upr,0), big.mark=","))
 
-# Linear model predictions through the season ----------------------------
 
-# linear_pred_by_date <- babine_forecast %>%
-#   filter(Date >= as.Date("2026-07-01"), Date <= fence.day)
-# 
-# pred_by_date <- predict(fit,
-#   newdata = data.frame(cum_count = linear_pred_by_date$daily_cum),
-#   interval = "prediction", level = 0.90)
-# 
-# linear_pred_by_date <- linear_pred_by_date %>%
-#   mutate(prediction = pred_by_date[, "fit"],
-#     lwr = pred_by_date[, "lwr"], upr = pred_by_date[, "upr"])
-
-linear_pred_by_date <- babine_forecast %>%
-  filter(Date >= as.Date("2026-07-01"),
-         Date <= fence.day)
-
-# Get model predictions and standard errors
-pred <- predict(fit,
-  newdata = data.frame(cum_count = linear_pred_by_date$daily_cum),se.fit = TRUE)
-
-# Residual standard error
-sigma <- summary(fit)$sigma
-
-# Standard error of a NEW observation
-pred_se <- sqrt(sigma^2 + pred$se.fit^2)
-
-linear_pred_by_date <- linear_pred_by_date %>%
+# Linear model by date ----------------------------------------------------
+historical3 <- historical %>%
+  pivot_longer(cols = "1946":"2025",names_to = "Year",values_to = "Count") %>%
+  mutate(Year = as.numeric(Year)) %>%
+  arrange(Year, Date) %>%
+  group_by(Year) %>%
   mutate(
-    prediction = as.numeric(pred$fit),
-    # 10th–90th percentile prediction interval
-    lwr10 = prediction - qnorm(0.90) * pred_se,
-    upr90 = prediction + qnorm(0.90) * pred_se,
-    # 25th–75th percentile prediction interval
-    lwr25 = prediction - qnorm(0.75) * pred_se,
-    upr75 = prediction + qnorm(0.75) * pred_se)
+    Count = replace_na(Count, 0),
+    cum_count = cumsum(Count)) %>%
+  ungroup()
+
+# Final return for each historical year
+final_totals <- historical3 %>%
+  group_by(Year) %>%
+  summarise(
+    FinalCount = max(cum_count),
+    .groups = "drop")
+
+# Add final return to each historical daily observation
+historical_model_data <- historical3 %>%
+  left_join(final_totals, by = "Year")
+
+# Dates over which to generate 2026 predictions
+prediction_dates <- babine_forecast %>%
+  filter(Date >= as.Date("2026-07-01"), Date <= fence.day) %>%
+  select(Date, daily_cum)
+
+# Run a separate linear model for each date
+daily_predictions <- lapply(seq_len(nrow(prediction_dates)), function(i) {
+  this_date <- prediction_dates$Date[i]
+  this_count <- prediction_dates$daily_cum[i]
+  historical_day <- historical_model_data %>%
+    filter(format(Date, "%m-%d") == format(this_date, "%m-%d"))
+  # Fit historical relationship for this date
+  fit <- lm(FinalCount ~ cum_count, data = historical_day)
+  # Predict 2026 final return
+  pred <- predict(fit,
+    newdata = data.frame(cum_count = this_count),interval = "prediction",level = 0.90)
+  # results for this date
+  tibble(Date = this_date, daily_cum = this_count,
+    prediction = pred[1, "fit"], lwr90 = pred[1, "lwr"], upr90 = pred[1, "upr"],
+    r2 = summary(fit)$r.squared, pval = coef(summary(fit))[2, 4], n = nrow(historical_day))})
+
+daily_predictions <- bind_rows(daily_predictions)
+
 

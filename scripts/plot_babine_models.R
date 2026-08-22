@@ -26,23 +26,41 @@ make.babine.linear.plot <- function(data){
 
 make.babine.linear.date.plot <- function(data) {
   ggplot(data, aes(x = Date)) +
-    geom_ribbon(aes(ymin = lwr10, ymax = upr90),fill = "grey85") +
-    geom_ribbon(aes(ymin = lwr25, ymax = upr75),fill = "grey60") +
-    # Predicted final seasonal count
-    geom_line(aes(y = prediction, colour = "Predicted final count"),linewidth = 1.2) +
+    geom_ribbon(aes(ymin = lwr90, ymax = upr90),fill = "grey85") +
+    geom_line(aes(y = prediction),linewidth = 1.2,colour = "black") +
     # Actual cumulative 2026 count
-    geom_line(aes(y = daily_cum, colour = "Actual cumulative count"),linewidth = 1.2) +
-    # Today
-    geom_vline(xintercept = fence.day,
-      linetype = "dashed",colour = "red") +
-    geom_point(data = data %>% filter(Date == fence.day),
-      aes(y = prediction),size = 3,colour = "black") + # prediction
-    annotate("text", x = fence.day,y = Inf,
-      label = pred_label,hjust = 1.05,vjust = 1.2,colour = "red",size = 3.5) +
-    scale_colour_manual(values = c(
-        "Predicted final count" = "black",
-        "Actual cumulative count" = "blue")) +
-    labs(x = "Date",y = "Fence count",colour = NULL) +
-    theme_bw() +
-    theme(legend.position = "bottom")
+    geom_line(aes(y = daily_cum),linewidth = 1.2,colour = "blue") +
+    geom_vline(xintercept = fence.day, linetype = "dashed", colour = "red") +
+    labs(x = "Date", y = "Babine fence count") +
+    theme_bw()
 }
+
+
+
+
+
+
+
+
+# make.babine.linear.date.plot <- function(data) {
+#   ggplot(data, aes(x = Date)) +
+#     geom_ribbon(aes(ymin = lwr10, ymax = upr90),fill = "grey85") +
+#     geom_ribbon(aes(ymin = lwr25, ymax = upr75),fill = "grey60") +
+#     # Predicted final seasonal count
+#     geom_line(aes(y = prediction, colour = "Predicted final count"),linewidth = 1.2) +
+#     # Actual cumulative 2026 count
+#     geom_line(aes(y = daily_cum, colour = "Actual cumulative count"),linewidth = 1.2) +
+#     # Today
+#     geom_vline(xintercept = fence.day,
+#       linetype = "dashed",colour = "red") +
+#     geom_point(data = data %>% filter(Date == fence.day),
+#       aes(y = prediction),size = 3,colour = "black") + # prediction
+#     annotate("text", x = fence.day,y = Inf,
+#       label = pred_label,hjust = 1.05,vjust = 1.2,colour = "red",size = 3.5) +
+#     scale_colour_manual(values = c(
+#         "Predicted final count" = "black",
+#         "Actual cumulative count" = "blue")) +
+#     labs(x = "Date",y = "Fence count",colour = NULL) +
+#     theme_bw() +
+#     theme(legend.position = "bottom")
+# }

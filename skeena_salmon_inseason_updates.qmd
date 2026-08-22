@@ -598,7 +598,7 @@ make.babine.linear.plot(historical4)
 
 ```{r, fig.height=5, fig.cap = "Predicted final Babine fence count from linear regression model based on cumulative fence count to date in 2026. Shaded area represents the 90% prediction interval."}
 #| label: fig-babine-linear-date-model
-make.babine.linear.date.plot(linear_pred_by_date)
+make.babine.linear.date.plot(daily_predictions)
 ```
 
 ### Babine Jack sockeye
