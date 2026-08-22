@@ -185,14 +185,25 @@ daily_predictions <- lapply(seq_len(nrow(prediction_dates)), function(i) {
     filter(format(Date, "%m-%d") == format(this_date, "%m-%d"))
   # Fit historical relationship for this date
   fit <- lm(FinalCount ~ cum_count, data = historical_day)
-  # Predict 2026 final return
-  pred <- predict(fit,
-    newdata = data.frame(cum_count = this_count),interval = "prediction",level = 0.90)
-  # results for this date
-  tibble(Date = this_date, daily_cum = this_count,
-    prediction = pred[1, "fit"], lwr90 = pred[1, "lwr"], upr90 = pred[1, "upr"],
-    r2 = summary(fit)$r.squared, pval = coef(summary(fit))[2, 4], n = nrow(historical_day))})
-
+  newdata <- data.frame(cum_count = this_count)
+  pred <- predict(fit, newdata = newdata, se.fit = TRUE)
+  pred_se <- sqrt(pred$se.fit^2 + summary(fit)$sigma^2)
+  t90 <- qt(0.90, df = fit$df.residual)
+  t75 <- qt(0.75, df = fit$df.residual)
+  tibble(Date = this_date,
+    daily_cum = this_count,
+    prediction = as.numeric(pred$fit),
+    # 10-90% prediction interval
+    lwr10 = as.numeric(pred$fit - t90 * pred_se),
+    upr90 = as.numeric(pred$fit + t90 * pred_se),
+    # 25-75% prediction interval
+    lwr25 = as.numeric(pred$fit - t75 * pred_se),
+    upr75 = as.numeric(pred$fit + t75 * pred_se),
+    r2 = summary(fit)$r.squared,
+    pval = coef(summary(fit))[2, 4],
+    n = nrow(historical_day))
+})
+  
 daily_predictions <- bind_rows(daily_predictions)
 
 
