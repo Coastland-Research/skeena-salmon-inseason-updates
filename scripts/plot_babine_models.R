@@ -26,8 +26,8 @@ make.babine.linear.plot <- function(data){
 
 make.babine.linear.date.plot <- function(data) {
   ggplot(data, aes(x = Date)) +
-    geom_ribbon(aes(ymin = lwr10, ymax = upr90),fill = "grey85") +
-    geom_ribbon(aes(ymin = lwr25, ymax = upr75), fill = "grey60")+
+    geom_ribbon(aes(ymin = lwr10, ymax = upr90),fill = "grey75",alpha=.3) +
+    geom_ribbon(aes(ymin = lwr25, ymax = upr75), fill = "steelblue",alpha=.3)+
     geom_line(aes(y = prediction),linewidth = 1.2,colour = "black") +
     geom_line(aes(y = daily_cum),linewidth = 1.2,colour = "blue") +
     geom_vline(xintercept = fence.day, linetype = "dashed", colour = "red") +

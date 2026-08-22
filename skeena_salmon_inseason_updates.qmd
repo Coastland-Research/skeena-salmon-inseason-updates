@@ -533,7 +533,7 @@ This comparison aims to provide a coarse idea on the catchability at Tyee. The r
 
 source("scripts/babine versus tyee.R")
 
-make.tyee.vs.babine.plot(.1,.97,-750000,2000000,as.Date("2026-06-01"),as.Date("2026-10-01"))
+make.tyee.vs.babine.plot(.1,.97,-1000000,2000000,as.Date("2026-06-01"),as.Date("2026-10-01"))
 ```
 
 ```{r, fig.height = 8, fig.cap = "Estimated difference between the Tyee test fishery and the Babine fence for the previous 25 years"}
@@ -596,9 +596,11 @@ make.babine.rt.plot(
 make.babine.linear.plot(historical4)
 ```
 
-```{r, fig.height=5, fig.cap = "Predicted final Babine fence count from linear regression model based on cumulative fence count to date in 2026. Shaded area represents the 90% prediction interval."}
+```{r, fig.height=5, fig.cap = "Predicted final Babine fence count from linear regression model based on cumulative fence count to date in 2026. The blue shaded area represents the 50% prediction interval, and the light grey shaded area represents the 90% prediction intervals."}
 #| label: fig-babine-linear-date-model
+
 make.babine.linear.date.plot(daily_predictions)
+
 ```
 
 ### Babine Jack sockeye

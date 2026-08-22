@@ -120,7 +120,8 @@ final_totals <- historical3 %>%
 historical4 <- historical3 %>%
   filter(format(Date, "%m-%d") == format(fence.day, "%m-%d")) %>%
   select(Year, cum_count) %>%
-  left_join(final_totals, by = "Year")
+  left_join(final_totals, by = "Year")%>%
+  filter(Year>=1980)
 
 fit <- lm(FinalCount ~ cum_count, data = historical4)
 
@@ -170,7 +171,8 @@ final_totals <- historical3 %>%
 
 # Add final return to each historical daily observation
 historical_model_data <- historical3 %>%
-  left_join(final_totals, by = "Year")
+  left_join(final_totals, by = "Year")%>%
+  filter(Year>=1980)
 
 # Dates over which to generate 2026 predictions
 prediction_dates <- babine_forecast %>%
