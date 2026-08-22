@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 21, 2026"
+subtitle: "August 22, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,13 +38,13 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-08-20")
-tyee.date<-"August 20"
+tyee.day<-as.Date("2026-08-21")
+tyee.date<-"August 21"
 
-fence.day<-as.Date("2026-08-20")
-fence.date<-"August 20"
+fence.day<-as.Date("2026-08-21")
+fence.date<-"August 21"
 
-today<-as.Date("2026-08-21")
+today<-as.Date("2026-08-22")
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-09-07")
@@ -69,21 +69,22 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Tyee Test Fishery
 
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date ~ 1,625,000 sockeye are estimated to have passed the Tyee test fishery.
-    -   We are now near the end of the sockeye run through Tyee. While early estimates of final run size were encouraging, the in-season estimate has stabilized near 2M.
-    -   The daily expected run through Tyee at a final run size of 2M and average run timing would be around 10,000 over the next few days.
-    -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run is approximately July 24-26.
+    -   To date ~ 1,629,000 sockeye are estimated to have passed the Tyee test fishery.
+    -   We are now near the end of the sockeye run through Tyee. While early estimates of final run size were encouraging, the in-season TRTC estimate has stabilized near 2M, and the escapement past Tyee is around 1.7M.
+    -   The run through Tyee is nearly done, with over 95% of sockeye thorugh to date on average run-timing.
+    -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run was approximately July 24-26.
     -   The Chinook cumulative index is well below the historical median, and just at the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
-    -   The chum index suggests high abundance relative to historical index values.
-    -   The pink salmon index initally suggested high abundance similar to 2024 for even-year pink, but has dropped off over the last couple of days (still higher than 2022).
+    -   The chum index suggests high abundance relative to historical index values, and information from the river suggests high chum abundance.
+    -   The pink salmon index initally suggested high abundance similar to 2024 for even-year pink, but has dropped off over the last couple of days with some bumps up (still higher than 2022).
     -   The coho index suggests slightly below average abundance.
-    -   The steelhead index suggests very high abundance relative to historical years, with the index tracking the 90th percentile currently. The recent BC update suggests that the steelhead return is the 4th highest on record.
+    -   The steelhead index suggests very high abundance relative to historical years, with the index tracking the 90th percentile currently. The recent BC update suggests that the steelhead return is the 3th highest on record and information from the river supports Tyee indicies.
 
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 328,000 large sockeye through to date, and \~ 14,900 jack sockeye to date.
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 344,000 large sockeye through to date, and \~ 15,800 jack sockeye to date.
     -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
+    -   The Babine sockeye run-timing model suggests a return of ~ 570,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of ~677,000 (90% PIs at 323,000 - 1,031,000). 
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return. 
 
 -   Kitwanga Fence
@@ -92,7 +93,7 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 
 -   First Nations Food Fisheries
 
-    -   First Nations food fisheries are ongoing in the marine approaches and in-river.
+    -   First Nations food fisheries are mostly over in the marine approaches and ongoing in-river.
 
 -   Commercial Fisheries
 
@@ -108,6 +109,7 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
     -   Babine River opened to recreational fishing for sockeye on August 1-31 with a daily limit of 2 per day.
     -   Recreational fisheries for Chinook in Area 3-5 opened at 1 per day on July 18, and 2 per day on August 1.
     -   Due to concerns about sockeye abundance, the Babine River was closed to fishing for sockeye and the Skeena River mainstem daily limits were reduced to 2 per day effective August 17.
+    -   The Kispiox River was closed Aug. 24 to fishing for coho and pink salmon.
 
 -   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
@@ -608,7 +610,7 @@ make.babine.linear.date.plot(daily_predictions)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-sockeye
 
-make.babine.figures("Jack Sockeye",babine.figures.x.high,40000,600000)
+make.babine.figures("Jack Sockeye",babine.figures.x.high,20000,300000)
 ```
 
 ```{r, include=FALSE}
