@@ -605,6 +605,18 @@ make.babine.linear.date.plot(daily_predictions)
 
 ```
 
+
+```{r}
+source("scripts/cumulative_prop_babine.R")
+```
+
+```{r, fig.height = 5, fig.cap = "Comparison of sockeye cumulative proportions from 1956-2025 to this year using the median forecasted run past Babine fence from the linear model to today's date."}
+#| label: fig-sx-cum-prop-babine
+#| include: TRUE
+
+make.prop.figure.babine(gg.daily.pcum, data2)
+```
+
 ### Babine Jack sockeye
 
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
