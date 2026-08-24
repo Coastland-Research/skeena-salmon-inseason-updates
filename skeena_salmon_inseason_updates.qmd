@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 22, 2026"
+subtitle: "August 24, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,13 +38,13 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-08-21")
-tyee.date<-"August 21"
+tyee.day<-as.Date("2026-08-23")
+tyee.date<-"August 23"
 
-fence.day<-as.Date("2026-08-21")
-fence.date<-"August 21"
+fence.day<-as.Date("2026-08-23")
+fence.date<-"August 23"
 
-today<-as.Date("2026-08-22")
+today<-as.Date("2026-08-24")
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-09-07")
@@ -82,9 +82,9 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 344,000 large sockeye through to date, and \~ 15,800 jack sockeye to date.
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 374,000 large sockeye through to date, and \~ 17,300 jack sockeye to date.
     -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
-    -   The Babine sockeye run-timing model suggests a return of ~ 570,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of ~677,000 (90% PIs at 323,000 - 1,031,000). 
+    -   The Babine sockeye run-timing model suggests a return of ~ 575,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of ~670,000 (90% PIs at ~340,000 - 1,000,000). 
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return. 
 
 -   Kitwanga Fence
