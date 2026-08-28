@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 26, 2026"
+subtitle: "August 28, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,17 +38,17 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-08-25")
-tyee.date<-"August 25"
+tyee.day<-as.Date("2026-08-27")
+tyee.date<-"August 27"
 
-fence.day<-as.Date("2026-08-25")
-fence.date<-"August 25"
+fence.day<-as.Date("2026-08-27")
+fence.date<-"August 27"
 
-today<-as.Date("2026-08-26")
+today<-as.Date("2026-08-28")
 
 #controls right hand extent of index and escapement figures
-figures.x.date<-as.Date("2026-09-07")
-babine.figures.x.high<-as.Date("2026-09-07")
+figures.x.date<-as.Date("2026-09-14")
+babine.figures.x.high<-as.Date("2026-09-14")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -82,9 +82,9 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 395,000 large sockeye through to date, and \~ 18,000 jack sockeye to date.
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 425,000 large sockeye through to date, and \~ 19,000 jack sockeye to date.
     -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
-    -   The Babine sockeye run-timing model suggests a return of ~ 566,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of ~656,000 (90% PIs at ~359,000 - 954,000). 
+    -   The Babine sockeye run-timing model suggests a return of ~ 575,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of ~658,000 (90% PIs at ~386,000 - 930,000). 
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return. 
 
 -   Kitwanga Fence
@@ -151,7 +151,7 @@ Tides influence the movement of sockeye and other salmon migrating into the Skee
 
 <figure>
 
-<img src="/images/tides7.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+<img src="/images/tides8.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
 
 <figcaption>Tides at Port Edward</figcaption>
 
@@ -386,7 +386,7 @@ daily<-fread("data/common/tyee_daily_indices_chum_1956-2025.csv")%>%
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=chum)
 
-make.index.figures(daily,current,50,300,figures.x.date)
+make.index.figures(daily,current,50,500,figures.x.date)
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for Chum salmon for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
@@ -442,7 +442,7 @@ daily<-fread("data/common/tyee_daily_indices_coho_1956-2025.csv")%>%
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=coho)
 
-make.index.figures(daily,current,10,300,figures.x.date)
+make.index.figures(daily,current,50,500,figures.x.date)
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for coho for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
@@ -465,7 +465,7 @@ mutate(Date = as.IDate(Date))%>%
 current<-fread("data/current_year/tyee data 2026.csv") %>%
   select(Date,"2026"=steelhead)
 
-make.index.figures(daily,current,50,300,figures.x.date)
+make.index.figures(daily,current,50,500,figures.x.date)
 ```
 
 ```{r, fig.height=5, fig.cap = "Cumulative index for steelhead for today's date by year for 1956-2025, with rolling 10-year average shown by red line."}
@@ -622,7 +622,7 @@ make.prop.figure.babine(gg.daily.pcum, data2)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack sockeye salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-sockeye
 
-make.babine.figures("Jack Sockeye",babine.figures.x.high,20000,300000)
+make.babine.figures("Jack Sockeye",babine.figures.x.high,30000,500000)
 ```
 
 ```{r, include=FALSE}
@@ -660,7 +660,7 @@ make.babine.figures("Large Chinook",babine.figures.x.high,600,10000)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for jack Chinook salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-jack-chinook
 
-make.babine.figures("Jack Chinook",babine.figures.x.high,200,2000)
+make.babine.figures("Jack Chinook",babine.figures.x.high,300,4000)
 ```
 
 ### Babine Pink
@@ -668,7 +668,7 @@ make.babine.figures("Jack Chinook",babine.figures.x.high,200,2000)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for pink salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-pink
 
-make.babine.figures("Pink",babine.figures.x.high,40000,500000)
+make.babine.figures("Pink",babine.figures.x.high,40000,600000)
 ```
 
 ### Babine Coho
@@ -676,7 +676,7 @@ make.babine.figures("Pink",babine.figures.x.high,40000,500000)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for coho salmon at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-coho
 
-make.babine.figures("Coho",babine.figures.x.high,800,7000)
+make.babine.figures("Coho",babine.figures.x.high,1000,10000)
 ```
 
 ### Babine Steelhead
@@ -684,7 +684,7 @@ make.babine.figures("Coho",babine.figures.x.high,800,7000)
 ```{r,fig.cap="Daily (top) and cumulative (bottom) fence counts for steelhead at the Babine fence. 2026 values are shown in purple, with various percentiles of historical data (1954-2025) shown by the grey dashed lines. The median (50th) percentile of all years is shown by the blacked dashed line."}
 #| label: fig-babine-steelhead
 
-make.babine.figures("Steelhead",babine.figures.x.high,50,500)
+make.babine.figures("Steelhead",babine.figures.x.high,100,800)
 ```
 
 # Kitwanga Fence
