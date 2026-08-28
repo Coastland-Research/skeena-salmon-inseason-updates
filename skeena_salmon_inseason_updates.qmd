@@ -54,8 +54,7 @@ babine.figures.x.high<-as.Date("2026-09-14")
 source("scripts/harvest control rule and tac plots.R")
 ```
 
-
-![](images/header map.png){fig-align="center" width="80%"}
+![](images/header%20map.png){fig-align="center" width="80%"}
 
 # Summary
 
@@ -69,7 +68,7 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Tyee Test Fishery
 
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date ~ 1,630,000 sockeye are estimated to have passed the Tyee test fishery.
+    -   To date \~ 1,630,000 sockeye are estimated to have passed the Tyee test fishery.
     -   We are now near the end of the sockeye run through Tyee. While early estimates of final run size were encouraging, the in-season TRTC estimate has stabilized near 2M, and the escapement past Tyee is around 1.7M.
     -   The run through Tyee is nearly done, with over 95% of sockeye thorugh to date on average run-timing.
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run was approximately July 24-26.
@@ -84,8 +83,8 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
     -   The Babine fence started operations on July 15.
     -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 425,000 large sockeye through to date, and \~ 19,000 jack sockeye to date.
     -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
-    -   The Babine sockeye run-timing model suggests a return of ~ 575,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of ~658,000 (90% PIs at ~386,000 - 930,000). 
-    -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return. 
+    -   The Babine sockeye run-timing model suggests a return of \~ 575,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of \~658,000 (90% PIs at \~386,000 - 930,000).
+    -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return.
 
 -   Kitwanga Fence
 
@@ -604,7 +603,6 @@ make.babine.linear.plot(historical4)
 make.babine.linear.date.plot(daily_predictions)
 
 ```
-
 
 ```{r}
 source("scripts/cumulative_prop_babine.R")
