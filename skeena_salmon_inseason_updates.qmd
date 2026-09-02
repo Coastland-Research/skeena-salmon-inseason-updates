@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "August 31, 2026"
+subtitle: "September 2, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,13 +38,13 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-08-30")
-tyee.date<-"August 30"
+tyee.day<-as.Date("2026-09-01")
+tyee.date<-"September 1"
 
-fence.day<-as.Date("2026-08-30")
-fence.date<-"August 30"
+fence.day<-as.Date("2026-09-01")
+fence.date<-"September 1"
 
-today<-as.Date("2026-08-31")
+today<-as.Date("2026-09-02")
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-09-14")
@@ -68,11 +68,7 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Tyee Test Fishery
 
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-<<<<<<< Updated upstream
     -   To date \~ 1,630,000 sockeye are estimated to have passed the Tyee test fishery.
-=======
-    -   To date ~ 1,631,000 sockeye are estimated to have passed the Tyee test fishery.
->>>>>>> Stashed changes
     -   We are now near the end of the sockeye run through Tyee. While early estimates of final run size were encouraging, the in-season TRTC estimate has stabilized near 2M, and the escapement past Tyee is around 1.7M.
     -   The run through Tyee is nearly done, with over 95% of sockeye thorugh to date on average run-timing.
     -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run was approximately July 24-26.
@@ -85,15 +81,10 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 464,000 large sockeye through to date, and \~ 22,000 jack sockeye to date.
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 474,000 large sockeye through to date, and \~ 23,000 jack sockeye to date.
     -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
-<<<<<<< Updated upstream
-    -   The Babine sockeye run-timing model suggests a return of \~ 575,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of \~658,000 (90% PIs at \~386,000 - 930,000).
-    -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return.
-=======
-    -   The Babine sockeye run-timing model suggests a return of ~ 580,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of ~654,000 (90% PIs at ~415,000 - 893,000). 
+    -   The Babine sockeye run-timing model suggests a return of ~ 570,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of ~638,000 (90% PIs at ~419,000 - 856,000). 
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return. 
->>>>>>> Stashed changes
 
 -   Kitwanga Fence
 
