@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "September 2, 2026"
+subtitle: "September 4, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,13 +38,13 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-09-01")
-tyee.date<-"September 1"
+tyee.day<-as.Date("2026-09-03")
+tyee.date<-"September 3"
 
-fence.day<-as.Date("2026-09-01")
-fence.date<-"September 1"
+fence.day<-as.Date("2026-09-03")
+fence.date<-"September 3"
 
-today<-as.Date("2026-09-02")
+today<-as.Date("2026-09-04")
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-09-14")
@@ -60,61 +60,61 @@ source("scripts/harvest control rule and tac plots.R")
 
 Updates will be done daily until Aug 22, and then will be done on Mondays, Wednesdays, and Fridays.
 
--   Pre-season forecasts
+- Pre-season forecasts
 
-    -   The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges from 728,000 to 3.3 million (90% confidence range) with a point estimate (p50) of 1.5 million.
-    -   On average, Alaskan fisheries take approximately 5-10% of the aggregate sockeye run, but this depends on their pink salmon fisheries and effort, and can be much higher in some years.
+  - The pre-season forecast for the Total Return of Skeena sockeye in 2026 ranges from 728,000 to 3.3 million (90% confidence range) with a point estimate (p50) of 1.5 million.
+  - On average, Alaskan fisheries take approximately 5-10% of the aggregate sockeye run, but this depends on their pink salmon fisheries and effort, and can be much higher in some years.
 
--   Tyee Test Fishery
+- Tyee Test Fishery
 
-    -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date \~ 1,630,000 sockeye are estimated to have passed the Tyee test fishery.
-    -   We are now near the end of the sockeye run through Tyee. While early estimates of final run size were encouraging, the in-season TRTC estimate has stabilized near 2M, and the escapement past Tyee is around 1.7M.
-    -   The run through Tyee is nearly done, with over 95% of sockeye thorugh to date on average run-timing.
-    -   While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run was approximately July 24-26.
-    -   The Chinook cumulative index is well below the historical median, and just at the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
-    -   The chum index suggests high abundance relative to historical index values, and information from the river suggests high chum abundance.
-    -   The pink salmon index initally suggested high abundance similar to 2024 for even-year pink, but has dropped off over the last couple of days with some bumps up (still higher than 2022).
-    -   The coho index suggests slightly below average abundance.
-    -   The steelhead index suggests very high abundance relative to historical years, with the index tracking the 90th percentile currently. The recent BC update suggests that the steelhead return is the 3th highest on record and information from the river supports Tyee indicies.
+  - Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
+  - To date \~ 1,631,000 sockeye are estimated to have passed the Tyee test fishery.
+  - We are now near the end of the sockeye run through Tyee. While early estimates of final run size were encouraging, the in-season TRTC estimate has stabilized near 2M, and the escapement past Tyee is around 1.7M.
+  - The run through Tyee is nearly done, with over 95% of sockeye thorugh to date on average run-timing.
+  - While run-timing is one source of uncertainty in this estimate, catchability is also a large source of uncertainty. Uncertainty due to run-timing will decrease through the season, where the final catchability of the test fishery is only known post-season. The mid-point of the sockeye run was approximately July 24-26.
+  - The Chinook cumulative index is well below the historical median, and just at the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
+  - The chum index suggests high abundance relative to historical index values, and information from the river suggests high chum abundance.
+  - The pink salmon index initally suggested high abundance similar to 2024 for even-year pink, but has dropped off over the last couple of days with some bumps up (still higher than 2022).
+  - The coho index suggests slightly below average abundance.
+  - The steelhead index suggests very high abundance relative to historical years, with the index tracking the 90th percentile currently. The recent BC update suggests that the steelhead return is the 3th highest on record and information from the river supports Tyee indicies.
 
--   Babine
+- Babine
 
-    -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 474,000 large sockeye through to date, and \~ 23,000 jack sockeye to date.
-    -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
-    -   The Babine sockeye run-timing model suggests a return of ~ 570,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of ~638,000 (90% PIs at ~419,000 - 856,000). 
-    -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return. 
+  - The Babine fence started operations on July 15.
+  - Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 487,000 large sockeye through to date, and \~ 24,000 jack sockeye to date.
+  - Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence, with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
+  - The Babine sockeye run-timing model suggests a return of \~ 565,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of \~624,000 (90% PIs at \~431,000 - 816,000).
+  - Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return.
 
--   Kitwanga Fence
+- Kitwanga Fence
 
-    -   The Kitwanga fence started operations July 17. Information from the Kitwanga fence will be shared weekly by Gitanyow Fisheries Authority and can be found on the GFA website.
+  - The Kitwanga fence started operations July 17. Information from the Kitwanga fence will be shared weekly by Gitanyow Fisheries Authority and can be found on the GFA website.
 
--   First Nations Food Fisheries
+- First Nations Food Fisheries
 
-    -   First Nations food fisheries are mostly over in the marine approaches and ongoing in-river.
+  - First Nations food fisheries are mostly over in the marine approaches and ongoing in-river.
 
--   Commercial Fisheries
+- Commercial Fisheries
 
-    -   First Nations demonstration fisheries opened in the marine areas on July 8 and 9 targeting sockeye and are now done.
-    -   First Nations demonstration fisheries opened in-river July 16 and are ongoing, although low abundance in-river has constrained some fisheries.
-    -   Area C gillnet fisheries started July 10 targeting Skeena sockeye. There were openings on July 10/11, 13/14, 16/17, 19/20/21, 23/24/25, 28/29 and August 1/2.
-    -   Area A seine fisheries targeting Skeena sockeye opened July 15-19, 22-26, and July 29-August 2.
+  - First Nations demonstration fisheries opened in the marine areas on July 8 and 9 targeting sockeye and are now done.
+  - First Nations demonstration fisheries opened in-river July 16 and are ongoing, although low abundance in-river has constrained some fisheries.
+  - Area C gillnet fisheries started July 10 targeting Skeena sockeye. There were openings on July 10/11, 13/14, 16/17, 19/20/21, 23/24/25, 28/29 and August 1/2.
+  - Area A seine fisheries targeting Skeena sockeye opened July 15-19, 22-26, and July 29-August 2.
 
--   Recreational Fisheries
+- Recreational Fisheries
 
-    -   Recreational fisheries for sockeye in Areas 3-6 opened July 10 with a daily limit of 4 per day.
-    -   Recreational fisheries for Skeena sockeye in portions of Region 6 opened July 10 (portions of the Skeena mainstem) and August 1 (Babine Lake, Fulton River, Pinkut Creek) with a daily limit of 2 per day, and increased to a daily limit of 4 per day July 29-Sept 15.
-    -   Babine River opened to recreational fishing for sockeye on August 1-31 with a daily limit of 2 per day.
-    -   Recreational fisheries for Chinook in Area 3-5 opened at 1 per day on July 18, and 2 per day on August 1.
-    -   Due to concerns about sockeye abundance, the Babine River was closed to fishing for sockeye and the Skeena River mainstem daily limits were reduced to 2 per day effective August 17.
-    -   The Kispiox River was closed Aug. 24 to fishing for coho and pink salmon.
+  - Recreational fisheries for sockeye in Areas 3-6 opened July 10 with a daily limit of 4 per day.
+  - Recreational fisheries for Skeena sockeye in portions of Region 6 opened July 10 (portions of the Skeena mainstem) and August 1 (Babine Lake, Fulton River, Pinkut Creek) with a daily limit of 2 per day, and increased to a daily limit of 4 per day July 29-Sept 15.
+  - Babine River opened to recreational fishing for sockeye on August 1-31 with a daily limit of 2 per day.
+  - Recreational fisheries for Chinook in Area 3-5 opened at 1 per day on July 18, and 2 per day on August 1.
+  - Due to concerns about sockeye abundance, the Babine River was closed to fishing for sockeye and the Skeena River mainstem daily limits were reduced to 2 per day effective August 17.
+  - The Kispiox River was closed Aug. 24 to fishing for coho and pink salmon.
 
--   Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
+- Appendix A shows the daily and cumulative run-timing of Tyee since 2000 versus 2024.
 
--   Appendix B includes information on run-timing of specific Skeena Conservation Units/stocks.
+- Appendix B includes information on run-timing of specific Skeena Conservation Units/stocks.
 
--   Appendix C shows all Skeena fisheries notices from 2026.
+- Appendix C shows all Skeena fisheries notices from 2026.
 
 # Pre-Season Forecasts
 
@@ -426,7 +426,7 @@ make.hist.index.plot(daily, current, figures.x.date)
 
 ### Odd years
 
--   Will be updated next year!
+- Will be updated next year!
 
 ## Coho Salmon
 
@@ -932,11 +932,11 @@ cum_tyee_years
 
 Notes:
 
--   Based on NBRR update data (2000-2014) provided by Karl English July 2022. Will add in the newer data and some comparisons.
+- Based on NBRR update data (2000-2014) provided by Karl English July 2022. Will add in the newer data and some comparisons.
 
--   These are average run-timings.
+- These are average run-timings.
 
--   Explorations on the differences between the average and ANNUAL run-timing standard deviations are underway for stocks with appropriate sample size.
+- Explorations on the differences between the average and ANNUAL run-timing standard deviations are underway for stocks with appropriate sample size.
 
 ```{r}
 #| echo: false
