@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "September 4, 2026"
+subtitle: "September 8, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,17 +38,17 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-09-03")
-tyee.date<-"September 3"
+tyee.day<-as.Date("2026-09-07")
+tyee.date<-"September 7"
 
-fence.day<-as.Date("2026-09-03")
-fence.date<-"September 3"
+fence.day<-as.Date("2026-09-07")
+fence.date<-"September 7"
 
-today<-as.Date("2026-09-04")
+today<-as.Date("2026-09-08")
 
 #controls right hand extent of index and escapement figures
-figures.x.date<-as.Date("2026-09-14")
-babine.figures.x.high<-as.Date("2026-09-14")
+figures.x.date<-as.Date("2026-09-21")
+babine.figures.x.high<-as.Date("2026-09-21")
 
 #catch prep for trtc tables
 source("scripts/harvest control rule and tac plots.R")
@@ -68,7 +68,7 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Tyee Test Fishery
 
     -   Information from fisheries and the Tyee test fishery suggest that sockeye are mostly large this year, suggesting a high proportion of 5-year olds.
-    -   To date \~ 1,631,000 sockeye are estimated to have passed the Tyee test fishery.
+    -   To date \~ 1,632,000 sockeye are estimated to have passed the Tyee test fishery.
     -   We are now near the end of the sockeye run through Tyee. While early estimates of final run size were encouraging, the in-season TRTC estimate has stabilized near 2M, and the escapement past Tyee is around 1.7M.
     -   Catchability is only determined post-season, indications suggest that the sockeye multiplier was actually much lower than expected using the recent 4-yr mean, resulting in a Tyee overestimate (e.g. each fish caught was estiamted to represent more fish than were actually passing Tyee).
     -   The Chinook cumulative index is well below the historical median, and just at the recent 5-year mean and 10-year mean, suggesting continued low abundance for Skeena Chinook.
@@ -80,9 +80,9 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 487,000 large sockeye through to date, and \~ 24,000 jack sockeye to date.
-    -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence (~ 550,000 - 650,000), with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
-    -   The Babine sockeye run-timing model suggests a return of \~ 565,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of \~624,000 (90% PIs at \~431,000 - 816,000).
+    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 504,000 large sockeye through to date, and \~ 25,000 jack sockeye to date.
+    -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence (~ 525,000 - 618,000), with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
+    -   The Babine sockeye run-timing model suggests a return of \~ 555,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of \~600,000 (90% PIs at \~456,000 - 744,000).
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return.
 
 -   Kitwanga Fence
@@ -151,7 +151,7 @@ Tides influence the movement of sockeye and other salmon migrating into the Skee
 
 <figure>
 
-<img src="/images/tides8.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+<img src="/images/tides9.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
 
 <figcaption>Tides at Port Edward</figcaption>
 
