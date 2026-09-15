@@ -80,9 +80,9 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   Adult and jack sockeye have started coming through the fence in increasing numbers with a total of \~ 511,000 large sockeye through to date, and \~ 25,700 jack sockeye to date.
-    -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence (~ 525,000 - 594,000), with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
-    -   The Babine sockeye run-timing model suggests a return of \~ 548,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of \~583,000 (90% PIs at \~693,000 - 747,000).
+    -   A total of \~ 517,000 adult sockeye and \~ 26,000 jack sockeye have passed through Babine fence to date.
+    -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence (~ 525,000 - 576,000), with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
+    -   The Babine sockeye run-timing model suggests a return of \~ 541,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of \~567,000 (90% PIs at \~490,000 - 643,000).
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return.
 
 -   Kitwanga Fence
