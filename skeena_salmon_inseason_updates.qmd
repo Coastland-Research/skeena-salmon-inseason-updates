@@ -1,6 +1,6 @@
 ---
 title: "Skeena Salmon In-Season Update"
-subtitle: "September 18, 2026"
+subtitle: "September 21, 2026"
 format: html
 editor: visual
 editor_options: 
@@ -38,13 +38,13 @@ source("scripts/tyee_sockeye_plots.R")
 
 source("scripts/cumulative_index_by_year.R")
 
-tyee.day<-as.Date("2026-09-17")
-tyee.date<-"September 17"
+tyee.day<-as.Date("2026-09-20")
+tyee.date<-"September 20"
 
-fence.day<-as.Date("2026-09-17")
-fence.date<-"September 17"
+fence.day<-as.Date("2026-09-20")
+fence.date<-"September 20"
 
-today<-as.Date("2026-09-18")
+today<-as.Date("2026-09-21")
 
 #controls right hand extent of index and escapement figures
 figures.x.date<-as.Date("2026-09-30")
@@ -80,9 +80,9 @@ Updates will be done daily until Aug 22, and then will be done on Mondays, Wedne
 -   Babine
 
     -   The Babine fence started operations on July 15.
-    -   A total of \~ 521,000 adult sockeye and \~ 26,300 jack sockeye have passed through Babine fence to date.
-    -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence (~ 526,000 - 563,000), with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
-    -   The Babine sockeye run-timing model suggests a return of \~ 537,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of \~555,000 (90% PIs at \~500,000 - 610,000).
+    -   A total of \~ 526,000 adult sockeye and \~ 26,800 jack sockeye have passed through Babine fence to date.
+    -   Currently, Babine models (run-timing and linear regression) are suggesting very low abundance through the Babine fence (~ 529,000 - 551,000), with a large number of sockeye 'missing' between Tyee and Babine. The mid-point of the Babine sockeye run is mid-August.
+    -   The Babine sockeye run-timing model suggests a return of \~ 535,000 to Babine on average run-timing, and the linear regression model suggests a Babine return of \~545,000 (90% PIs at \~512,000 - 577,000).
     -   Babine jack sockeye counts are below both the 10-yr and 5-yr average to date, and similar to the 2025 jack return.
 
 -   Kitwanga Fence
@@ -151,7 +151,7 @@ Tides influence the movement of sockeye and other salmon migrating into the Skee
 
 <figure>
 
-<img src="/images/tides9.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
+<img src="/images/tides10.png" title="Tides at Port Edward" alt="Tides at Port Edward" width="700"/>
 
 <figcaption>Tides at Port Edward</figcaption>
 
